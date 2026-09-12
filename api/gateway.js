@@ -50,44 +50,38 @@ module.exports = async function handler(req, res) {
   try {
     let result;
 
-    switch (action) {
-      case 'register':
-        result = await register_(body.username, body.password, body.email);
-        break;
+  switch (action) {
+  case 'register':        result = await register_(body.username, body.password, body.email); break;
+  case 'login':           result = await login_(body.username, body.password); break;
+  case 'logout':          result = { success: true }; break;
 
-      case 'login':
-        result = await login_(body.username, body.password);
-        break;
+  case 'getHistory':      result = await getHistory_(body.token); break;
+  case 'saveHistory':     result = await saveHistory_(body); break;
+  case 'getQuestionPackage': result = await getQuestionPackage_(body.test_type, body.package); break;
 
-      case 'logout':
-        // Sesi berbasis JWT tidak butuh penghapusan di server;
-        // cukup frontend membuang tokennya sendiri.
-        result = { success: true };
-        break;
+  // ---- TAMBAHAN ----
+  case 'saveTestDetail':  result = await saveTestDetail_(body); break;
+  case 'getTestDetail':   result = await getTestDetail_(body); break;
 
-      case 'getHistory':
-        result = await getHistory_(body.token);
-        break;
+  case 'adminDashboard':         result = await adminDashboard_(body.token); break;
+  case 'adminGetUsers':          result = await adminGetUsers_(body.token); break;
+  case 'adminCreateUser':        result = await adminCreateUser_(body.token, body.user); break;
+  case 'adminResetUserPassword': result = await adminResetUserPassword_(body.token, body.user_id, body.mode, body.password); break;
+  case 'adminDeleteUser':        result = await adminDeleteUser_(body.token, body.user_id); break;
+  case 'adminGetResults':        result = await adminGetResults_(body.token, body.filters); break;
+  case 'adminGetQuestions':      result = await adminGetQuestions_(body.token, body.test_type, body.package, body.include_inactive); break;
+  case 'adminSaveQuestions':     result = await adminSaveQuestions_(body.token, body.questions); break;
+  case 'adminDeleteQuestion':    result = await adminDeleteQuestion_(body.token, body.question_id); break;
+  case 'adminGetScoreLabels':    result = await adminGetScoreLabels_(body.token, body.test_type); break;
+  case 'adminSaveScoreLabels':   result = await adminSaveScoreLabels_(body.token, body.test_type, body.labels); break;
+  // ------------------
 
-      case 'getQuestionPackage':
-        result = await getQuestionPackage_(body.test_type, body.package);
-        break;
+  case 'requestPasswordReset':   result = await requestPasswordReset_(body.identifier, body.appUrl); break;
+  case 'resetPassword':          result = await resetPassword_(body.token, body.password); break;
 
-      case 'saveHistory':
-        result = await saveHistory_(body);
-        break;
-
-      case 'requestPasswordReset':
-        result = await requestPasswordReset_(body.identifier, body.appUrl);
-        break;
-
-      case 'resetPassword':
-        result = await resetPassword_(body.token, body.password);
-        break;
-
-      default:
-        result = { success: false, message: 'Action tidak dikenali.' };
-    }
+  default:
+    result = { success: false, message: 'Action tidak dikenali.' };
+}
 
     return res.status(200).json(result);
   } catch (error) {
