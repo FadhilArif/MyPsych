@@ -322,7 +322,7 @@ async function requestPasswordReset_(identifier, appUrl) {
 
   if (updateError) throw updateError;
 
-  const base = String(appUrl || '').trim() || 'https://fa-latihan.vercel.app/';
+  const base = String(appUrl || '').trim() || 'https://my-psych-five.vercel.app/';
   const separator = base.indexOf('?') >= 0 ? '&' : '?';
   const resetUrl = base + separator + 'reset=' + encodeURIComponent(token);
 
