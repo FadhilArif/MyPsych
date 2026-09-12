@@ -716,7 +716,7 @@ const views = {
       } else {
         drawPdfText(
           lines,
-          'Data waktu per soal tidak disimpan di Google Sheets, jadi grafik detail tidak tersedia pada histori.',
+          'Sabar kak, ada error wkwkwk.',
           52,
           330,
           9
