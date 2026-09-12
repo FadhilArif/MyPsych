@@ -4,7 +4,8 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 // Alamat pengirim. Kalau belum verifikasi domain sendiri di Resend,
 // pakai 'onboarding@resend.dev' dulu (bawaan Resend, langsung jalan
 // tanpa setup DNS, cukup untuk tahap awal/testing).
-const MAIL_FROM = process.env.MAIL_FROM || 'Psychotest Practice <onboarding@resend.dev>';
+const MAIL_FROM = process.env.MAIL_FROM || 'MyPsych <onboarding@resend.dev>';
+const MAIL_REPLY_TO = process.env.MAIL_REPLY_TO || '';
 
 function getResend_() {
   if (!RESEND_API_KEY) {
@@ -32,12 +33,24 @@ async function sendResetPasswordEmail(email, username, resetUrl) {
     </div>
   `;
 
-  await resend.emails.send({
+  const payload = {
     from: MAIL_FROM,
-    to: email,
-    subject: 'Reset Password — Psychotest Practice',
-    html
-  });
+    to: [email],
+    subject: 'Reset Password — MyPsych',
+    html,
+    text: `Halo ${username},\n\nKami menerima permintaan reset password untuk akunmu di MyPsych. Buka tautan berikut untuk membuat password baru (berlaku 30 menit):\n${resetUrl}\n\nKalau kamu tidak meminta reset password, abaikan email ini.`
+  };
+
+  if (MAIL_REPLY_TO) payload.replyTo = MAIL_REPLY_TO;
+
+  const { error, data } = await resend.emails.send(payload);
+  if (error) {
+    const err = new Error(error.message || 'Resend gagal mengirim email.');
+    err.statusCode = error.statusCode || 500;
+    err.name = error.name || 'ResendError';
+    throw err;
+  }
+  return data;
 }
 
 async function sendNewPasswordEmail(email, username, newPassword) {
@@ -58,12 +71,24 @@ async function sendNewPasswordEmail(email, username, newPassword) {
     </div>
   `;
 
-  await resend.emails.send({
+  const payload = {
     from: MAIL_FROM,
-    to: email,
-    subject: 'Password Baru — Psychotest Practice',
-    html
-  });
+    to: [email],
+    subject: 'Password Baru — MyPsych',
+    html,
+    text: `Halo ${username},\n\nAdmin telah mereset password akunmu di MyPsych. Password baru: ${newPassword}\n\nSilakan login menggunakan password ini.`
+  };
+
+  if (MAIL_REPLY_TO) payload.replyTo = MAIL_REPLY_TO;
+
+  const { error, data } = await resend.emails.send(payload);
+  if (error) {
+    const err = new Error(error.message || 'Resend gagal mengirim email.');
+    err.statusCode = error.statusCode || 500;
+    err.name = error.name || 'ResendError';
+    throw err;
+  }
+  return data;
 }
 
 function escapeHtml_(value) {
