@@ -2,6 +2,7 @@ const { getSupabaseAdmin } = require('./_lib/supabaseAdmin');
 const {
   hashPassword,
   verifyPassword,
+  verifyPasswordAny,
   createSessionToken,
   verifySessionToken,
   isValidUsername,
@@ -66,6 +67,10 @@ module.exports = async function handler(req, res) {
 
       case 'getHistory':
         result = await getHistory_(body.token);
+        break;
+
+      case 'getQuestionPackage':
+        result = await getQuestionPackage_(body.test_type, body.package);
         break;
 
       case 'saveHistory':
@@ -178,13 +183,34 @@ async function login_(username, password) {
     return { success: false, message: 'Username atau password salah.' };
   }
 
-  const passwordOk = await verifyPassword(password, row.password_hash);
+  const { ok: passwordOk, needsUpgrade } = await verifyPasswordAny(
+    password,
+    row.password_hash,
+    row.salt
+  );
 
   if (!passwordOk) {
     return { success: false, message: 'Username atau password salah.' };
   }
 
   const userId = String(row['user-id'] || '');
+
+  // Akun migrasi dari Google Sheets (hash SHA256+salt lama) otomatis
+  // di-upgrade ke bcrypt begitu berhasil login sekali, tanpa perlu
+  // user melakukan apa pun.
+  if (needsUpgrade) {
+    try {
+      const upgradedHash = await hashPassword(password);
+      await supabase
+        .from('table_user')
+        .update({ password_hash: upgradedHash, salt: '' })
+        .eq('user-id', userId);
+    } catch (upgradeError) {
+      console.error('Gagal upgrade hash lama:', upgradeError);
+      // Tidak menggagalkan login walau upgrade gagal — coba lagi login berikutnya.
+    }
+  }
+
   const displayUsername = String(row.username || username);
   const role = String(row.role || 'user');
 
@@ -199,6 +225,54 @@ async function login_(username, password) {
       is_admin: role === 'admin'
     }
   };
+}
+
+async function getQuestionPackage_(testType, packageNumber) {
+  testType = String(testType || '').trim();
+  const pkg = Number(packageNumber) || 0;
+
+  if (!testType || !pkg) {
+    return { success: false, message: 'test_type dan package wajib diisi.' };
+  }
+
+  const supabase = getSupabaseAdmin();
+
+  const { data: rows, error } = await supabase
+    .from('question_bank')
+    .select('question_id, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active')
+    .eq('test_type', testType)
+    .eq('package', pkg)
+    .order('no_soal', { ascending: true });
+
+  if (error) throw error;
+
+  const activeRows = (rows || []).filter(row => row.active !== false);
+
+  if (!activeRows.length) {
+    return {
+      success: false,
+      message: 'Bank soal untuk ' + testType + ' paket ' + pkg + ' belum tersedia. Hubungi admin.'
+    };
+  }
+
+  const questions = activeRows.map(row => {
+    const options = {};
+    if (row.option_a) options.A = row.option_a;
+    if (row.option_b) options.B = row.option_b;
+    if (row.option_c) options.C = row.option_c;
+    if (row.option_d) options.D = row.option_d;
+    if (row.option_e) options.E = row.option_e;
+
+    return {
+      id: row.no_soal ?? row.question_id,
+      question: row.question,
+      options,
+      answer: row.answer,
+      discussion: row.discussion || ''
+    };
+  });
+
+  return { success: true, questions };
 }
 
 /* ============================================================
