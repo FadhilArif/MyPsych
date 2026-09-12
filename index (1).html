@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f8fc"><meta name="description" content="Latihan psikotes multi-tes">
+<title>Psychotest Practice — Latihan Psikotes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="app-shell">
+<section id="landingView" class="screen active"><div class="landing-wrap"><div class="landing-card card">
+<div class="brand-badge"><span class="brand-dot"></span>PSYCHOTEST PRACTICE</div><div class="hero-icon">🧠</div><div class="eyebrow">LATIHAN PSIKOTES</div>
+<h1>Latih kemampuanmu,<br><strong>selangkah demi selangkah.</strong></h1><p class="landing-subtitle">Kumpulan latihan psikotes dengan paket soal, hasil performa, histori, dan PDF yang bisa kamu simpan.</p>
+<div class="landing-actions"><button id="landingLoginBtn" class="secondary-btn large-btn">Masuk</button><button id="landingRegisterBtn" class="primary-btn large-btn">Buat Akun →</button></div>
+<button id="landingGuestBtn" class="guest-btn">Lanjut sebagai Tamu</button><p class="comfort-note">Mode tamu tetap bisa mengerjakan tes dan mengunduh PDF, tetapi hasil tidak masuk histori akun.</p>
+</div></div></section>
+
+<section id="authView" class="screen"><div class="auth-card card"><button id="backToLandingBtn" class="back-link">← Kembali</button><div class="eyebrow">AKUN PESERTA</div><h2 id="authTitle">Selamat datang kembali</h2><p id="authSubtitle" class="muted">Masuk untuk menyimpan histori latihan.</p>
+<div id="loginPane"><form id="loginForm"><label>Username<input id="loginUsername" maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false" required></label><label>Password<div class="password-field"><input id="loginPassword" type="password" autocomplete="current-password" required><button type="button" class="password-toggle" data-password-target="loginPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div></label><p id="loginError" class="form-error"></p><button class="primary-btn large-btn" type="submit">Masuk</button></form><p class="switch-auth"><button id="openForgotFromLogin" type="button">Lupa password?</button></p><p class="switch-auth">Belum punya akun? <button id="openRegisterFromLogin">Buat akun</button></p></div>
+<div id="registerPane" hidden><form id="registerForm"><label>Username<div class="input-wrap"><input id="registerUsername" maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="contoh: fadhil_123" required></div><p class="field-help">Gunakan hanya <strong>huruf kecil (a–z), angka (0–9), dan underscore (_)</strong>. Panjang 3–24 karakter.</p></label><label>Email<input id="registerEmail" type="email" autocomplete="email" placeholder="nama@email.com" required></label><label>Password<div class="password-field"><input id="registerPassword" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="registerPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div><p class="field-help">Minimal <strong>8 karakter</strong> dan harus mengandung <strong>huruf serta angka</strong>.</p></label><label>Konfirmasi password<div class="password-field"><input id="registerConfirm" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="registerConfirm" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div></label><p class="helper-text">Email dipakai untuk mengirim link reset kalau kamu lupa password. Tidak dibagikan ke pihak lain.</p><p id="registerError" class="form-error"></p><button class="primary-btn large-btn" type="submit">Buat Akun</button></form><p class="switch-auth">Sudah punya akun? <button id="openLoginFromRegister">Masuk</button></p></div>
+<div id="forgotPane" hidden><form id="forgotForm"><label>Username atau Email<input id="forgotIdentifier" autocomplete="username" required></label><p id="forgotError" class="form-error"></p><p id="forgotSuccess" class="form-success"></p><button class="primary-btn large-btn" type="submit">Kirim Link Reset</button></form><p class="switch-auth"><button id="backToLoginFromForgot" type="button">← Kembali ke Masuk</button></p></div>
+<div id="resetPane" hidden><form id="resetForm"><label>Password baru<div class="password-field"><input id="resetPassword" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="resetPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div><p class="field-help">Minimal <strong>8 karakter</strong> dan harus mengandung <strong>huruf serta angka</strong>.</p></label><label>Konfirmasi password baru<div class="password-field"><input id="resetConfirm" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="resetConfirm" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div></label><p id="resetError" class="form-error"></p><button class="primary-btn large-btn" type="submit">Ganti Password</button></form></div>
+</div></section>
+
+<section id="dashboardView" class="screen"><div class="dashboard-shell"><header class="topbar card"><div class="topbar-brand"><div class="brand-badge small"><span class="brand-dot"></span>PSYCHOTEST PRACTICE</div><div>Halo, <strong id="welcomeName">—</strong> 👋</div></div><button id="logoutBtn" class="ghost-btn">Keluar</button></header>
+<div class="dashboard-hero card"><div><div class="eyebrow">HOME</div><h2>Pilih latihan yang mau kamu kerjakan.</h2><p class="muted">Setiap tes memiliki 3 paket. Pilih paket, baca instruksi, lalu mulai latihan.</p></div><button id="viewHistoryBtn" class="secondary-btn">📜 Histori</button></div>
+<div class="dashboard-summary-grid">
+  <div class="dashboard-stat card"><span>Total tes</span><strong id="historyCount">0</strong><small>Riwayat akun</small></div>
+  <div class="dashboard-stat card"><span>Tes terakhir</span><strong id="latestDate">—</strong><small>Waktu pengerjaan terakhir</small></div>
+  <div class="dashboard-stat card"><span>Kecepatan</span><strong id="dashSpeed">—</strong><small>Hasil terakhir</small></div>
+  <div class="dashboard-stat card"><span>Ketelitian</span><strong id="dashAccuracy">—</strong><small>Hasil terakhir</small></div>
+  <div class="dashboard-stat card"><span>Konsistensi</span><strong id="dashConsistency">—</strong><small>Hasil terakhir</small></div>
+  <div class="dashboard-stat card"><span>Ketahanan</span><strong id="dashEndurance">—</strong><small>Hasil terakhir</small></div>
+ </div>
+<div id="testCatalog" class="test-catalog"></div></div></section>
+<section id="adminView" class="screen"><div class="admin-shell">
+  <header class="topbar card admin-topbar"><div class="topbar-brand"><div class="brand-badge small"><span class="brand-dot"></span>PSYCHOTEST PRACTICE</div><div><strong>Admin Panel</strong> · <span id="adminWelcomeName">—</span></div></div><button id="adminLogoutBtn" class="ghost-btn">Keluar</button></header>
+  <div class="admin-hero card"><div><div class="eyebrow">ADMINISTRATOR</div><h2>Pusat pengelolaan Psychotest</h2><p class="muted">Kelola peserta, hasil tes, bank soal, dan label nilai dari satu halaman.</p></div></div>
+  <div class="admin-stats-grid">
+    <div class="admin-stat card"><span>Peserta</span><strong id="adminUsersStat">0</strong><small>akun terdaftar</small></div>
+    <div class="admin-stat card"><span>Total tes</span><strong id="adminTestsStat">0</strong><small>hasil tersimpan</small></div>
+    <div class="admin-stat card"><span>Rata-rata skor</span><strong id="adminAverageStat">0%</strong><small>seluruh hasil</small></div>
+    <div class="admin-stat card"><span>Admin</span><strong id="adminAdminsStat">0</strong><small>akun berwenang</small></div>
+  </div>
+  <nav class="admin-nav card" aria-label="Menu admin">
+    <button type="button" data-admin-tab="overview">🏠 Overview</button>
+    <button type="button" data-admin-tab="users">👥 Peserta</button>
+    <button type="button" data-admin-tab="results">📊 Hasil Tes</button>
+    <button type="button" data-admin-tab="questions">🧩 Bank Soal</button>
+    <button type="button" data-admin-tab="labels">🏷️ Label Nilai</button>
+  </nav>
+  <div id="adminPanel"></div>
+</div></section>
+
+<section id="instructionView" class="screen"><div class="instruction-card card"><button id="backFromInstructionBtn" class="back-link">← Kembali</button><div class="section-heading"><div><div class="eyebrow" id="instructionEyebrow">INSTRUKSI</div><h2 id="instructionTitle">—</h2></div><div class="step-count" id="instructionPackage">Paket 1</div></div><p id="instructionLead" class="instruction-lead"></p><div id="instructionBody"></div><div class="warning-box"><strong>Catatan latihan:</strong> skor website ini adalah indikator latihan internal, bukan norma resmi seleksi kerja atau diagnosis psikologis.</div><button id="startTestBtn" class="primary-btn large-btn">Mulai Tes →</button></div></section>
+
+<section id="testView" class="screen test-screen"><div class="test-shell"><header class="test-header"><button id="testHomeBtn" class="home-btn">⌂</button><div class="progress-meta"><div class="meta-item"><span>Tes</span><strong id="testTypeLabel">—</strong></div><div class="meta-item"><span>Soal</span><strong id="questionCounter">1/20</strong></div><div class="meta-item"><span>Waktu</span><strong id="timeCounter">—</strong></div></div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></header>
+<div id="testContent" class="question-card"></div><div id="keypad" class="keypad"></div><div class="test-hint" id="testHint"></div></div></section>
+
+<section id="resultView" class="screen"><div class="result-card card"><div class="result-hero"><div class="success-icon">✓</div><div><div class="eyebrow">HASIL LATIHAN</div><h2 id="resultTitle">Tes selesai 🎉</h2><p id="resultIntro" class="result-intro"></p></div></div><div id="resultScores" class="score-grid"></div><div id="resultSummary" class="summary-grid"></div><div class="chart-wrap"><div class="chart-heading"><div><b>Grafik performa</b><span id="chartSubtitle">Performa pengerjaan.</span></div><span id="chartBadge" class="chart-badge">—</span></div><canvas id="performanceChart"></canvas></div><div class="disclaimer">Catatan: skor di website ini adalah skor latihan internal. Gunakan untuk melihat perkembangan latihan pribadi, bukan sebagai penilaian psikologis resmi.</div><div class="result-actions"><button id="downloadPdfBtn" class="primary-btn large-btn">Simpan dalam PDF</button><button id="resultHistoryBtn" class="secondary-btn large-btn">Lihat Histori</button><button id="finishBtn" class="ghost-btn large-btn">Kembali ke Home</button></div></div></section>
+
+<section id="historyView" class="screen"><div class="history-card card"><button id="backDashboardBtn" class="back-link">← Home</button><div class="section-heading"><div><div class="eyebrow">RIWAYAT LATIHAN</div><h2>Histori tesmu</h2></div><div class="history-total"><span id="historyPageCount">0</span> tes</div></div><p class="muted">Histori akun diambil langsung dari Google Sheets melalui Google Apps Script.</p><div id="emptyHistory" class="empty-state">Belum ada hasil tes.</div><div id="historyTable" class="table-wrap" hidden><table><thead><tr><th>#</th><th>Tanggal</th><th>Tes</th><th>Paket</th><th>Skor</th><th>Kecepatan</th><th>Ketelitian</th><th>Konsistensi</th><th>Ketahanan</th></tr></thead><tbody id="historyTableBody"></tbody></table></div></div></section>
+</main>
+
+<div id="guestModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">i</div><h3>Lanjut sebagai Tamu?</h3><p>Kamu tetap bisa mengerjakan semua latihan dan <strong>mengunduh hasil PDF</strong>. Namun hasil tidak disimpan ke akun atau histori.</p><div class="guest-note">✓ <span><b>Tes tetap berjalan normal</b><small>Semua fitur latihan dan hasil tetap tersedia.</small></span></div><div class="guest-note">↓ <span><b>PDF tetap bisa diunduh</b><small>Simpan PDF setelah selesai jika ingin menyimpan hasil.</small></span></div><div class="modal-actions"><button id="cancelGuestBtn" class="secondary-btn">Batal</button><button id="confirmGuestBtn" class="primary-btn">Ya, lanjut sebagai tamu</button></div></div></div>
+<div id="confirmModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">!</div><h3>Akhiri tes?</h3><p>Progress tes yang sedang berjalan akan dihapus. Hasil tidak akan dibuat.</p><div class="modal-actions"><button id="cancelEndTestBtn" class="secondary-btn">Batal</button><button id="confirmEndTestBtn" class="danger-btn">Ya, akhiri</button></div></div></div>
+<div id="toastRoot"></div><script src="app.js"></script>
+</body></html>
