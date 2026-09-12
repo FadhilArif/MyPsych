@@ -149,7 +149,6 @@ const views = {
     lastResult: null,
     finished: true,
     savingHistory: false,
-    kraepelinSecondsChoice: 15,
   };
 
   // ============================================================
@@ -819,8 +818,6 @@ const views = {
     Object.entries(TESTS).forEach(([id, test]) => {
       const card = document.createElement('article');
       card.className = 'test-card card';
-      const isKraepelin = id === 'kraepelin';
-
       card.innerHTML = `
         <div class="test-card-top">
           <div class="test-icon">${test.icon}</div>
@@ -830,29 +827,17 @@ const views = {
           </div>
         </div>
         <div class="package-row">
-          ${isKraepelin ? `
-          <select class="speed-select" aria-label="Waktu per soal Kraepelin">
-            <option value="15">15 detik/soal</option>
-            <option value="20">20 detik/soal</option>
-          </select>` : `
           <select class="package-select" aria-label="Paket ${escapeHtml(test.name)}">
             <option value="1">Paket 1</option>
             <option value="2">Paket 2</option>
             <option value="3">Paket 3</option>
-          </select>`}
+          </select>
           <button class="primary-btn" type="button">Mulai →</button>
         </div>
       `;
 
-      const select = card.querySelector('.package-select');
-      const speedSelect = card.querySelector('.speed-select');
-
+      const select = card.querySelector('select');
       card.querySelector('button').addEventListener('click', () => {
-        if (isKraepelin) {
-          state.kraepelinSecondsChoice = Number(speedSelect.value) || 15;
-          openInstruction(id, 1);
-          return;
-        }
         openInstruction(id, Number(select.value));
       });
 
@@ -1630,7 +1615,7 @@ async function loadKuantitatifPackage(packageNumber) {
 
     $('testTypeLabel').textContent = 'Kraepelin';
     $('questionCounter').textContent = `${answerIndex + 1}/26`;
-    $('timeCounter').textContent = `${state.kraepelinSecondsChoice}s`;
+    $('timeCounter').textContent = `${CONFIG.KRAEPELIN_SECONDS}s`;
     $('progressBar').style.width = `${((state.colIndex * 26 + answerIndex) / 1300) * 100}%`;
 
     $('testContent').innerHTML = `
@@ -1655,7 +1640,7 @@ async function loadKuantitatifPackage(packageNumber) {
 
   function startColumnTimer() {
     stopTimer();
-    const end = Date.now() + state.kraepelinSecondsChoice * 1000;
+    const end = Date.now() + CONFIG.KRAEPELIN_SECONDS * 1000;
 
     state.timerId = setInterval(() => {
       const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
@@ -1674,7 +1659,7 @@ async function loadKuantitatifPackage(packageNumber) {
     const elapsedSeconds = Math.max(
       0,
       Math.min(
-        state.kraepelinSecondsChoice,
+        CONFIG.KRAEPELIN_SECONDS,
         (Date.now() - state.questionStartedAt) / 1000
       )
     );
@@ -2069,7 +2054,6 @@ async function loadKuantitatifPackage(packageNumber) {
           qIndex: state.qIndex,
           questionStartedAt: state.questionStartedAt,
           testStartedAt: state.testStartedAt,
-          kraepelinSecondsChoice: state.kraepelinSecondsChoice,
         }),
       );
     } catch (error) {
@@ -2119,7 +2103,6 @@ async function loadKuantitatifPackage(packageNumber) {
     state.colIndex = Number(saved.colIndex) || 0;
     state.qIndex = Number(saved.qIndex) || 0;
     state.testStartedAt = Number(saved.testStartedAt) || Date.now();
-    state.kraepelinSecondsChoice = Number(saved.kraepelinSecondsChoice) || 15;
     state.finished = false;
 
     if (TESTS[state.test]?.kind === 'kraepelin') {
@@ -2661,7 +2644,7 @@ async function loadKuantitatifPackage(packageNumber) {
     .map(([id, test]) => ({ id, name: test.name }));
 
   function isAdmin() {
-    return state.session?.role === 'admin';
+    return state.session?.role === 'admin' || state.session?.is_admin === true;
   }
 
   function adminRequireAccess() {
