@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
 
 // Ganti/atur SESSION_SECRET di Environment Variables Vercel.
 // Ini kunci rahasia untuk menandatangani token sesi (JWT) —
@@ -45,47 +44,6 @@ function verifySessionToken(token) {
   }
 }
 
-function isBcryptHash(hash) {
-  return /^\$2[aby]\$/.test(String(hash || ''));
-}
-
-/**
- * Skema lama dari Apps Script: SHA256(salt + ':' + password), disimpan
- * sebagai hex string. Dipakai untuk akun hasil migrasi Google Sheets
- * yang belum pernah login lagi sejak pindah ke Supabase.
- */
-function legacyHash(password, salt) {
-  return crypto
-    .createHash('sha256')
-    .update(String(salt || '') + ':' + String(password))
-    .digest('hex');
-}
-
-function safeEqualHex(a, b) {
-  a = String(a || '').toLowerCase();
-  b = String(b || '').toLowerCase();
-  if (a.length !== b.length || !a.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i += 1) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
-
-/**
- * Verifikasi password terhadap hash yang mungkin format bcrypt (akun baru)
- * ATAU format lama SHA256+salt (akun migrasi dari Google Sheets).
- * Return { ok, needsUpgrade } — needsUpgrade true kalau berhasil login
- * pakai format lama, supaya gateway.js bisa langsung upgrade ke bcrypt.
- */
-async function verifyPasswordAny(password, hash, salt) {
-  if (isBcryptHash(hash)) {
-    const ok = await verifyPassword(password, hash);
-    return { ok, needsUpgrade: false };
-  }
-
-  const ok = safeEqualHex(legacyHash(password, salt), hash);
-  return { ok, needsUpgrade: ok };
-}
-
 function isValidUsername(username) {
   return /^[A-Za-z0-9_]{3,24}$/.test(String(username || ''));
 }
@@ -117,7 +75,6 @@ function generateRandomPassword(length = 10) {
 module.exports = {
   hashPassword,
   verifyPassword,
-  verifyPasswordAny,
   createSessionToken,
   verifySessionToken,
   isValidUsername,
