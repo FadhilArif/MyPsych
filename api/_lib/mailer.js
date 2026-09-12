@@ -1,102 +1,81 @@
-const { Resend } = require('resend');
+/**
+ * mailer.js — MyPsych
+ * Mengirim email lewat Google Apps Script Web App (Gmail),
+ * bukan lagi lewat Resend.
+ *
+ * Env vars yang dipakai:
+ *   APPSCRIPT_EMAIL_URL     — URL Web App (…/exec)
+ *   APPSCRIPT_EMAIL_SECRET  — sama dengan Script Property INTERNAL_SECRET
+ */
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-// Alamat pengirim. Kalau belum verifikasi domain sendiri di Resend,
-// pakai 'onboarding@resend.dev' dulu (bawaan Resend, langsung jalan
-// tanpa setup DNS, cukup untuk tahap awal/testing).
-const MAIL_FROM = process.env.MAIL_FROM || 'MyPsych <onboarding@resend.dev>';
-const MAIL_REPLY_TO = process.env.MAIL_REPLY_TO || '';
+const APPSCRIPT_EMAIL_URL = process.env.script.google.com/macros/s/AKfycbyy2D1lAYlZcoyO0-sdJNepJ5XSpyHtLW8NiNLxzOg-pz7v6jtr2FHFt-x6l7oYhK6l/exec;
+const APPSCRIPT_EMAIL_SECRET = process.env.cqd6R08BcIq12UeKoJ4TI4dFzVB3J655VMJx5ait066P;
+const APPSCRIPT_TIMEOUT_MS = 15000;
 
-function getResend_() {
-  if (!RESEND_API_KEY) {
-    throw new Error('RESEND_API_KEY belum diset di Environment Variables Vercel.');
+async function sendViaAppsScript_(payload) {
+  if (!APPSCRIPT_EMAIL_URL) {
+    throw new Error('APPSCRIPT_EMAIL_URL belum diset di Environment Variables Vercel.');
   }
-  return new Resend(RESEND_API_KEY);
+  if (!APPSCRIPT_EMAIL_SECRET) {
+    throw new Error('APPSCRIPT_EMAIL_SECRET belum diset di Environment Variables Vercel.');
+  }
+
+  const body = JSON.stringify({
+    secret: APPSCRIPT_EMAIL_SECRET,
+    ...payload
+  });
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), APPSCRIPT_TIMEOUT_MS);
+
+  let response;
+  try {
+    response = await fetch(APPSCRIPT_EMAIL_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      redirect: 'follow',
+      signal: controller.signal
+    });
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      throw new Error('Apps Script tidak merespons dalam ' + (APPSCRIPT_TIMEOUT_MS / 1000) + ' detik.');
+    }
+    throw new Error('Gagal menghubungi Apps Script: ' + (error.message || error));
+  } finally {
+    clearTimeout(timer);
+  }
+
+  let result;
+  try {
+    result = await response.json();
+  } catch (_) {
+    throw new Error('Respons Apps Script tidak valid (HTTP ' + response.status + ').');
+  }
+
+  if (!result || !result.success) {
+    throw new Error((result && result.message) || 'Apps Script gagal mengirim email.');
+  }
+
+  return result;
 }
 
 async function sendResetPasswordEmail(email, username, resetUrl) {
-  const resend = getResend_();
-
-  const html = `
-    <div style="font-family:Arial,Helvetica,sans-serif;max-width:480px;margin:0 auto;padding:24px;color:#18263b;">
-      <h2 style="margin:0 0 16px;">Reset Password</h2>
-      <p>Halo <b>${escapeHtml_(username)}</b>,</p>
-      <p>Kami menerima permintaan reset password untuk akunmu di <b>Psychotest Practice</b>. Klik tombol di bawah untuk membuat password baru (berlaku 30 menit):</p>
-      <p style="text-align:center;margin:28px 0;">
-        <a href="${escapeHtml_(resetUrl)}" style="background:#2f7df2;color:#ffffff;text-decoration:none;padding:12px 28px;border-radius:8px;font-weight:bold;display:inline-block;">
-          Reset Password Saya
-        </a>
-      </p>
-      <p style="color:#728196;font-size:13px;">Kalau tombolnya tidak bisa diklik, salin tautan ini ke browser: ${escapeHtml_(resetUrl)}</p>
-      <p>Kalau kamu tidak meminta ini, abaikan saja email ini — password lamamu tetap aman.</p>
-      <p>Salam,<br>Psychotest Practice</p>
-    </div>
-  `;
-
-  const payload = {
-    from: MAIL_FROM,
-    to: [email],
-    subject: 'Reset Password — MyPsych',
-    html,
-    text: `Halo ${username},\n\nKami menerima permintaan reset password untuk akunmu di MyPsych. Buka tautan berikut untuk membuat password baru (berlaku 30 menit):\n${resetUrl}\n\nKalau kamu tidak meminta reset password, abaikan email ini.`
-  };
-
-  if (MAIL_REPLY_TO) payload.replyTo = MAIL_REPLY_TO;
-
-  const { error, data } = await resend.emails.send(payload);
-  if (error) {
-    const err = new Error(error.message || 'Resend gagal mengirim email.');
-    err.statusCode = error.statusCode || 500;
-    err.name = error.name || 'ResendError';
-    throw err;
-  }
-  return data;
+  return sendViaAppsScript_({
+    kind: 'reset',
+    to: email,
+    username,
+    resetUrl
+  });
 }
 
 async function sendNewPasswordEmail(email, username, newPassword) {
-  const resend = getResend_();
-
-  const html = `
-    <div style="font-family:Arial,Helvetica,sans-serif;max-width:480px;margin:0 auto;padding:24px;color:#18263b;">
-      <h2 style="margin:0 0 16px;">Password Baru</h2>
-      <p>Halo <b>${escapeHtml_(username)}</b>,</p>
-      <p>Admin telah mereset password akunmu di <b>Psychotest Practice</b>. Ini password barumu:</p>
-      <p style="text-align:center;margin:24px 0;">
-        <span style="display:inline-block;background:#eff6ff;border-radius:8px;padding:12px 24px;font-size:20px;font-weight:bold;letter-spacing:1px;color:#2563eb;">
-          ${escapeHtml_(newPassword)}
-        </span>
-      </p>
-      <p>Silakan login dengan password ini, lalu segera ganti lagi kalau tersedia menu ganti password.</p>
-      <p>Salam,<br>Psychotest Practice</p>
-    </div>
-  `;
-
-  const payload = {
-    from: MAIL_FROM,
-    to: [email],
-    subject: 'Password Baru — MyPsych',
-    html,
-    text: `Halo ${username},\n\nAdmin telah mereset password akunmu di MyPsych. Password baru: ${newPassword}\n\nSilakan login menggunakan password ini.`
-  };
-
-  if (MAIL_REPLY_TO) payload.replyTo = MAIL_REPLY_TO;
-
-  const { error, data } = await resend.emails.send(payload);
-  if (error) {
-    const err = new Error(error.message || 'Resend gagal mengirim email.');
-    err.statusCode = error.statusCode || 500;
-    err.name = error.name || 'ResendError';
-    throw err;
-  }
-  return data;
-}
-
-function escapeHtml_(value) {
-  return String(value || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+  return sendViaAppsScript_({
+    kind: 'new-password',
+    to: email,
+    username,
+    newPassword
+  });
 }
 
 module.exports = { sendResetPasswordEmail, sendNewPasswordEmail };
