@@ -446,3 +446,516 @@ async function resetPassword_(token, newPassword) {
 
   return { success: true, message: 'Password berhasil diganti. Silakan login menggunakan password baru.' };
 }
+/* ============================================================
+   ADMIN PANEL
+   ============================================================ */
+
+function verifyAdmin_(token) {
+  const session = verifySessionToken(token);
+  if (!session) return { ok: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
+  if (session.role !== 'admin') return { ok: false, message: 'Akses admin ditolak.' };
+  return { ok: true, session };
+}
+
+function resolveLabel_(labels, testType, score) {
+  if (!Array.isArray(labels) || !labels.length) return '';
+  const match = labels.find(l =>
+    String(l.test_type) === String(testType) &&
+    score >= Number(l.min_score) &&
+    score <= Number(l.max_score)
+  );
+  return match?.label || '';
+}
+
+async function adminDashboard_(token) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const supabase = getSupabaseAdmin();
+
+  const [usersRes, historyRes, labelsRes] = await Promise.all([
+    supabase.from('table_user').select('"user-id", username, email, role, created_at'),
+    supabase.from('test_history')
+      .select('test_id, user_id, test_type, package, tanggal, score, correct, wrong, total, speed, accuracy, consistency, endurance')
+      .order('tanggal', { ascending: false })
+      .limit(500),
+    supabase.from('score_labels').select('*').order('urutan', { ascending: true })
+  ]);
+
+  if (usersRes.error) throw usersRes.error;
+  if (historyRes.error) throw historyRes.error;
+
+  const users = usersRes.data || [];
+  const results = historyRes.data || [];
+  const labels = labelsRes.error ? [] : (labelsRes.data || []);
+
+  const userMap = new Map();
+  users.forEach(u => userMap.set(String(u['user-id']), u));
+
+  const counts = new Map();
+  results.forEach(r => {
+    const uid = String(r.user_id || '');
+    counts.set(uid, (counts.get(uid) || 0) + 1);
+  });
+
+  const enrichedUsers = users.map(u => ({
+    user_id: u['user-id'],
+    username: u.username,
+    email: u.email || '',
+    role: u.role || 'user',
+    created_at: u.created_at,
+    test_count: counts.get(String(u['user-id'])) || 0
+  }));
+
+  const enrichedResults = results.map(r => {
+    const u = userMap.get(String(r.user_id || ''));
+    return {
+      ...r,
+      username: u?.username || r.user_id || '—',
+      email: u?.email || '',
+      label: resolveLabel_(labels, r.test_type, Number(r.score) || 0)
+    };
+  });
+
+  const admins = users.filter(u => (u.role || 'user') === 'admin').length;
+  const avgScore = results.length
+    ? Math.round(results.reduce((s, r) => s + (Number(r.score) || 0), 0) / results.length)
+    : 0;
+
+  return {
+    success: true,
+    stats: { users: users.length, admins, tests: results.length, avg_score: avgScore },
+    users: enrichedUsers,
+    results: enrichedResults,
+    labels
+  };
+}
+
+async function adminGetUsers_(token) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const supabase = getSupabaseAdmin();
+  const { data: users, error } = await supabase
+    .from('table_user')
+    .select('"user-id", username, email, role, created_at')
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+
+  const { data: history } = await supabase.from('test_history').select('user_id');
+  const counts = new Map();
+  (history || []).forEach(h => {
+    const uid = String(h.user_id || '');
+    counts.set(uid, (counts.get(uid) || 0) + 1);
+  });
+
+  return {
+    success: true,
+    users: (users || []).map(u => ({
+      user_id: u['user-id'],
+      username: u.username,
+      email: u.email || '',
+      role: u.role || 'user',
+      created_at: u.created_at,
+      test_count: counts.get(String(u['user-id'])) || 0
+    }))
+  };
+}
+
+async function adminCreateUser_(token, user) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  user = user || {};
+  const username = String(user.username || '').trim();
+  const email = String(user.email || '').trim().toLowerCase();
+  const password = String(user.password || '');
+
+  if (!isValidUsername(username)) return { success: false, message: 'Format username tidak valid.' };
+  if (password.length < 8) return { success: false, message: 'Password minimal 8 karakter.' };
+  if (email && !isValidEmail(email)) return { success: false, message: 'Format email tidak valid.' };
+
+  const supabase = getSupabaseAdmin();
+  const { data: existing, error: exErr } = await supabase
+    .from('table_user')
+    .select('"user-id", username, email');
+  if (exErr) throw exErr;
+
+  if (existing.some(r => String(r.username || '').toLowerCase() === username.toLowerCase())) {
+    return { success: false, message: 'Username sudah digunakan.' };
+  }
+  if (email && existing.some(r => String(r.email || '').toLowerCase() === email)) {
+    return { success: false, message: 'Email sudah digunakan.' };
+  }
+
+  const userId = nextUserId(existing.map(r => r['user-id']));
+  const passwordHash = await hashPassword(password);
+
+  const { error: insErr } = await supabase.from('table_user').insert({
+    'user-id': userId,
+    username,
+    email,
+    password_hash: passwordHash,
+    salt: '',
+    role: 'user',
+    created_at: new Date().toISOString()
+  });
+  if (insErr) throw insErr;
+
+  return { success: true, message: `Akun ${username} dibuat.`, user_id: userId };
+}
+
+async function adminResetUserPassword_(token, userId, mode, password) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  userId = String(userId || '').trim();
+  if (!userId) return { success: false, message: 'user_id wajib diisi.' };
+
+  const supabase = getSupabaseAdmin();
+  const { data: rows, error } = await supabase
+    .from('table_user')
+    .select('"user-id", username, email')
+    .eq('user-id', userId)
+    .limit(1);
+  if (error) throw error;
+
+  const row = rows && rows[0];
+  if (!row) return { success: false, message: 'Akun tidak ditemukan.' };
+
+  let newPassword;
+  if (mode === 'manual') {
+    newPassword = String(password || '');
+    if (newPassword.length < 8) {
+      return { success: false, message: 'Password manual minimal 8 karakter.' };
+    }
+  } else {
+    newPassword = generateRandomPassword(10);
+  }
+
+  const newHash = await hashPassword(newPassword);
+  const { error: updErr } = await supabase
+    .from('table_user')
+    .update({ password_hash: newHash, salt: '' })
+    .eq('user-id', userId);
+  if (updErr) throw updErr;
+
+  if (row.email) {
+    try {
+      await sendNewPasswordEmail(row.email, row.username, newPassword);
+    } catch (mailErr) {
+      console.error('Email password baru gagal:', mailErr);
+    }
+  }
+
+  return { success: true, username: row.username, temporary_password: newPassword };
+}
+
+async function adminDeleteUser_(token, userId) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  userId = String(userId || '').trim();
+  if (!userId) return { success: false, message: 'user_id wajib diisi.' };
+  if (userId === String(auth.session.user_id)) {
+    return { success: false, message: 'Tidak bisa menghapus akun sendiri.' };
+  }
+
+  const supabase = getSupabaseAdmin();
+  const { data: rows, error } = await supabase
+    .from('table_user')
+    .select('"user-id", role, username')
+    .eq('user-id', userId)
+    .limit(1);
+  if (error) throw error;
+
+  const row = rows && rows[0];
+  if (!row) return { success: false, message: 'Akun tidak ditemukan.' };
+  if ((row.role || 'user') === 'admin') {
+    return { success: false, message: 'Akun admin tidak bisa dihapus dari panel.' };
+  }
+
+  await supabase.from('test_detail').delete().eq('user_id', userId);
+  await supabase.from('test_history').delete().eq('user_id', userId);
+
+  const { error: delErr } = await supabase
+    .from('table_user')
+    .delete()
+    .eq('user-id', userId);
+  if (delErr) throw delErr;
+
+  return { success: true, message: `Akun ${row.username} dihapus.` };
+}
+
+async function adminGetResults_(token, filters) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  filters = filters || {};
+  const supabase = getSupabaseAdmin();
+
+  let query = supabase
+    .from('test_history')
+    .select('test_id, user_id, test_type, package, tanggal, score, correct, wrong, total, speed, accuracy, consistency, endurance')
+    .order('tanggal', { ascending: false })
+    .limit(500);
+
+  if (filters.test_type) query = query.eq('test_type', String(filters.test_type));
+  if (filters.min_score !== undefined && filters.min_score !== '' && filters.min_score !== null) {
+    const min = Number(filters.min_score);
+    if (Number.isFinite(min)) query = query.gte('score', min);
+  }
+  if (filters.max_score !== undefined && filters.max_score !== '' && filters.max_score !== null) {
+    const max = Number(filters.max_score);
+    if (Number.isFinite(max)) query = query.lte('score', max);
+  }
+
+  const { data: results, error } = await query;
+  if (error) throw error;
+
+  const { data: users } = await supabase
+    .from('table_user')
+    .select('"user-id", username, email');
+  const userMap = new Map();
+  (users || []).forEach(u => userMap.set(String(u['user-id']), u));
+
+  const { data: labels } = await supabase.from('score_labels').select('*');
+  const labelList = labels || [];
+
+  const usernameFilter = String(filters.username || '').trim().toLowerCase();
+
+  const enriched = (results || [])
+    .map(r => {
+      const u = userMap.get(String(r.user_id || ''));
+      return {
+        ...r,
+        username: u?.username || r.user_id || '—',
+        email: u?.email || '',
+        label: resolveLabel_(labelList, r.test_type, Number(r.score) || 0)
+      };
+    })
+    .filter(r => !usernameFilter || String(r.username).toLowerCase().includes(usernameFilter));
+
+  return { success: true, results: enriched };
+}
+
+async function adminGetQuestions_(token, testType, pkg, includeInactive) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const supabase = getSupabaseAdmin();
+  let query = supabase
+    .from('question_bank')
+    .select('question_id, test_type, package, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active')
+    .eq('test_type', String(testType || '').trim())
+    .order('package', { ascending: true })
+    .order('no_soal', { ascending: true });
+
+  if (pkg && Number(pkg) > 0) query = query.eq('package', Number(pkg));
+  if (!includeInactive) query = query.eq('active', true);
+
+  const { data: rows, error } = await query;
+  if (error) throw error;
+
+  return {
+    success: true,
+    questions: (rows || []).map(r => ({
+      question_id: r.question_id,
+      test_type: r.test_type,
+      package: r.package,
+      no_soal: r.no_soal,
+      question: r.question,
+      option_a: r.option_a,
+      option_b: r.option_b,
+      option_c: r.option_c,
+      option_d: r.option_d,
+      option_e: r.option_e,
+      answer: r.answer,
+      discussion: r.discussion || '',
+      active: r.active !== false
+    }))
+  };
+}
+
+async function adminSaveQuestions_(token, questions) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  if (!Array.isArray(questions) || !questions.length) {
+    return { success: false, message: 'questions kosong.' };
+  }
+
+  const supabase = getSupabaseAdmin();
+
+  const ids = questions.map(q => String(q.question_id || '')).filter(Boolean);
+  const { data: existing } = await supabase
+    .from('question_bank')
+    .select('question_id')
+    .in('question_id', ids);
+  const existingSet = new Set((existing || []).map(r => r.question_id));
+
+  let added = 0;
+  let updated = 0;
+
+  for (const q of questions) {
+    const qid = String(q.question_id || '').trim();
+    if (!qid) continue;
+
+    const options = q.options || {};
+    const record = {
+      question_id: qid,
+      test_type: String(q.test_type || '').trim(),
+      package: Number(q.package) || 1,
+      no_soal: Number(q.no_soal) || 1,
+      question: String(q.question || '').trim(),
+      option_a: String(options.A ?? q.option_a ?? ''),
+      option_b: String(options.B ?? q.option_b ?? ''),
+      option_c: String(options.C ?? q.option_c ?? ''),
+      option_d: String(options.D ?? q.option_d ?? ''),
+      option_e: String(options.E ?? q.option_e ?? ''),
+      answer: String(q.answer || '').trim().toUpperCase(),
+      discussion: String(q.discussion || ''),
+      active: true
+    };
+
+    if (existingSet.has(qid)) {
+      const { error } = await supabase
+        .from('question_bank')
+        .update(record)
+        .eq('question_id', qid);
+      if (error) throw error;
+      updated += 1;
+    } else {
+      const { error } = await supabase.from('question_bank').insert(record);
+      if (error) throw error;
+      added += 1;
+    }
+  }
+
+  return { success: true, added, updated, total: questions.length };
+}
+
+async function adminDeleteQuestion_(token, questionId) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const qid = String(questionId || '').trim();
+  if (!qid) return { success: false, message: 'question_id wajib diisi.' };
+
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase
+    .from('question_bank')
+    .update({ active: false })
+    .eq('question_id', qid);
+  if (error) throw error;
+
+  return { success: true, message: 'Soal dinonaktifkan.' };
+}
+
+async function adminGetScoreLabels_(token, testType) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const supabase = getSupabaseAdmin();
+  let query = supabase.from('score_labels').select('*').order('urutan', { ascending: true });
+  if (testType) query = query.eq('test_type', String(testType));
+
+  const { data, error } = await query;
+  if (error) return { success: true, labels: [] };
+  return { success: true, labels: data || [] };
+}
+
+async function adminSaveScoreLabels_(token, testType, labels) {
+  const auth = verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  testType = String(testType || '').trim();
+  if (!testType) return { success: false, message: 'test_type wajib diisi.' };
+  if (!Array.isArray(labels)) return { success: false, message: 'labels harus array.' };
+
+  const supabase = getSupabaseAdmin();
+
+  const { error: delErr } = await supabase
+    .from('score_labels')
+    .delete()
+    .eq('test_type', testType);
+  if (delErr) throw delErr;
+
+  if (labels.length) {
+    const records = labels
+      .map((l, i) => ({
+        test_type: testType,
+        label: String(l.label || '').trim(),
+        min_score: Number(l.min_score) || 0,
+        max_score: Number(l.max_score) || 100,
+        urutan: Number(l.urutan) || i + 1
+      }))
+      .filter(l => l.label);
+
+    if (records.length) {
+      const { error: insErr } = await supabase.from('score_labels').insert(records);
+      if (insErr) throw insErr;
+    }
+  }
+
+  return { success: true, message: 'Label tersimpan.' };
+}
+
+/* ============================================================
+   TEST DETAIL (dipakai tombol "Cetak PDF" di histori)
+   ============================================================ */
+
+async function saveTestDetail_(payload) {
+  const session = verifySessionToken(payload.token);
+  if (!session) return { success: false, message: 'Sesi login sudah berakhir.' };
+
+  const testId = String(payload.test_id || '').trim();
+  if (!testId) return { success: false, message: 'test_id wajib diisi.' };
+
+  const details = Array.isArray(payload.details) ? payload.details : [];
+  if (!details.length) return { success: true, saved: 0 };
+
+  const supabase = getSupabaseAdmin();
+  const records = details.map(d => ({
+    test_id: testId,
+    user_id: session.user_id,
+    test_type: String(d.test_type || ''),
+    package: Number(d.package) || 1,
+    no_soal: Number(d.no_soal) || 0,
+    kolom: d.kolom === '' || d.kolom === undefined ? null : Number(d.kolom),
+    no_soal_dalam_kolom:
+      d.no_soal_dalam_kolom === '' || d.no_soal_dalam_kolom === undefined
+        ? null
+        : Number(d.no_soal_dalam_kolom),
+    waktu_detik:
+      d.waktu_detik === '' || d.waktu_detik === undefined
+        ? null
+        : Number(d.waktu_detik),
+    jawaban: String(d.jawaban || ''),
+    benar: Boolean(d.benar)
+  }));
+
+  const { error } = await supabase.from('test_detail').insert(records);
+  if (error) throw error;
+
+  return { success: true, saved: records.length };
+}
+
+async function getTestDetail_(payload) {
+  const session = verifySessionToken(payload.token);
+  if (!session) return { success: false, message: 'Sesi login sudah berakhir.' };
+
+  const testId = String(payload.test_id || '').trim();
+  if (!testId) return { success: false, message: 'test_id wajib diisi.' };
+
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('test_detail')
+    .select('*')
+    .eq('test_id', testId)
+    .eq('user_id', session.user_id)
+    .order('no_soal', { ascending: true });
+  if (error) throw error;
+
+  return { success: true, details: data || [] };
+}
