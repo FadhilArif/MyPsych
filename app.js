@@ -829,19 +829,17 @@ const views = {
             <p>${test.description}</p>
           </div>
         </div>
-        ${isKraepelin ? `
         <div class="package-row">
+          ${isKraepelin ? `
           <select class="speed-select" aria-label="Waktu per soal Kraepelin">
             <option value="15">15 detik/soal</option>
             <option value="20">20 detik/soal</option>
-          </select>
-        </div>` : ''}
-        <div class="package-row">
+          </select>` : `
           <select class="package-select" aria-label="Paket ${escapeHtml(test.name)}">
             <option value="1">Paket 1</option>
             <option value="2">Paket 2</option>
             <option value="3">Paket 3</option>
-          </select>
+          </select>`}
           <button class="primary-btn" type="button">Mulai →</button>
         </div>
       `;
@@ -852,6 +850,8 @@ const views = {
       card.querySelector('button').addEventListener('click', () => {
         if (isKraepelin) {
           state.kraepelinSecondsChoice = Number(speedSelect.value) || 15;
+          openInstruction(id, 1);
+          return;
         }
         openInstruction(id, Number(select.value));
       });
