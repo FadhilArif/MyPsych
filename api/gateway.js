@@ -159,7 +159,7 @@ async function register_(username, password, email) {
 
   return {
     success: true,
-    session: { token, user_id: userId, username, is_admin: false }
+    session: { token, user_id: userId, username, role: 'user', is_admin: false }
   };
 }
 
@@ -222,6 +222,7 @@ async function login_(username, password) {
       token,
       user_id: userId,
       username: displayUsername,
+      role,
       is_admin: role === 'admin'
     }
   };
@@ -400,7 +401,12 @@ async function requestPasswordReset_(identifier, appUrl) {
   const separator = base.indexOf('?') >= 0 ? '&' : '?';
   const resetUrl = base + separator + 'reset=' + encodeURIComponent(token);
 
-  await sendResetPasswordEmail(row.email, row.username, resetUrl);
+  await sendResetPasswordEmail(row.email, row.username, resetUrl).catch(sendError => {
+    console.error('Gagal kirim email reset:', sendError);
+    throw new Error(
+      'Email reset gagal dikirim (masalah di penyedia email). Coba lagi nanti atau hubungi admin.'
+    );
+  });
 
   return genericSuccess;
 }
