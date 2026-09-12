@@ -1,4 +1,4 @@
-const { getSupabaseAdmin } = require('../lib/supabaseAdmin');
+const { getSupabaseAdmin } = require('./_lib/supabaseAdmin');
 const {
   hashPassword,
   verifyPassword,
@@ -8,8 +8,8 @@ const {
   isValidEmail,
   nextUserId,
   generateRandomPassword
-} = require('../lib/auth');
-const { sendResetPasswordEmail, sendNewPasswordEmail } = require('../lib/mailer');
+} = require('./_lib/auth');
+const { sendResetPasswordEmail, sendNewPasswordEmail } = require('./_lib/mailer');
 
 const USER_COLUMNS = 'user-id, username, email, password_hash, salt, role, created_at';
 const RESET_TOKEN_TTL_MS = 30 * 60 * 1000; // 30 menit
@@ -322,7 +322,7 @@ async function requestPasswordReset_(identifier, appUrl) {
 
   if (updateError) throw updateError;
 
-  const base = String(appUrl || '').trim() || 'https://fa-latihan.vercel.app/';
+  const base = String(appUrl || '').trim() || 'https://my-psych-five.vercel.app/';
   const separator = base.indexOf('?') >= 0 ? '&' : '?';
   const resetUrl = base + separator + 'reset=' + encodeURIComponent(token);
 
