@@ -8,8 +8,8 @@
  *   APPSCRIPT_EMAIL_SECRET  — sama dengan Script Property INTERNAL_SECRET
  */
 
-const APPSCRIPT_EMAIL_URL = process.env.script.google.com/macros/s/AKfycbyy2D1lAYlZcoyO0-sdJNepJ5XSpyHtLW8NiNLxzOg-pz7v6jtr2FHFt-x6l7oYhK6l/exec;
-const APPSCRIPT_EMAIL_SECRET = process.env.cqd6R08BcIq12UeKoJ4TI4dFzVB3J655VMJx5ait066P;
+const APPSCRIPT_EMAIL_URL = process.env.APPSCRIPT_EMAIL_URL;
+const APPSCRIPT_EMAIL_SECRET = process.env.APPSCRIPT_EMAIL_SECRET;
 const APPSCRIPT_TIMEOUT_MS = 15000;
 
 async function sendViaAppsScript_(payload) {
