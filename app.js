@@ -876,7 +876,6 @@ async function submitInterest(event) {
 
     const content = lines.join('\n');
 
-    const content = lines.join('\n');
 
     return createPdfBytes(
       content,
