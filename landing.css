@@ -1474,3 +1474,58 @@
 
   .lp-final-cta-actions .lp-btn-lg { width: 100%; }
 }
+/* ============================================================
+   FIX: Halaman About & view panjang
+   agar langsung tampil dari atas (bukan di-center vertikal)
+   ============================================================ */
+
+#aboutView.screen {
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 18px 0;
+}
+
+#aboutView .about-shell {
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+/* View panjang lain di masa depan bisa pakai class ini */
+.screen.screen-top {
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 18px 0;
+}
+
+.screen.screen-top > .card,
+.screen.screen-top > [class$="-shell"] {
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+@media (max-width: 620px) {
+  #aboutView.screen {
+    padding: 10px 0;
+  }
+}
+@media (max-width: 480px) {
+  .about-shell {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .about-hero h1 {
+    font-size: 1.55rem;
+  }
+
+  .about-step {
+    padding: 18px;
+  }
+
+  .about-principles h2,
+  .about-cta h2 {
+    font-size: 1.2rem;
+  }
+}
