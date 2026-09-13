@@ -68,6 +68,13 @@ module.exports = async function handler(req, res) {
         break;
       }
 
+        case 'subscribeInterest':
+  result = await subscribeInterest_(body.email, body.category, body.userId, body.note);
+  break;
+
+case 'adminGetInterests':
+  result = await adminGetInterests_(body.token, body.category);
+  break;
       case 'login': {
         const ok = await checkRateLimit('login', `${clientIp}:${String(body.username || '').toLowerCase()}`);
         if (!ok) {
@@ -905,7 +912,80 @@ async function adminSaveScoreLabels_(token, testType, labels) {
 
   return { success: true, message: 'Label tersimpan.' };
 }
+/* ============================================================
+   INTEREST SIGNUPS
+   ============================================================ */
 
+async function subscribeInterest_(email, category, userId, note) {
+  email = String(email || '').trim().toLowerCase();
+  category = String(category || '').trim().slice(0, 64);
+  userId = String(userId || '').trim();
+  note = String(note || '').trim().slice(0, 280);
+
+  if (!isValidEmail(email)) {
+    return { success: false, message: 'Format email tidak valid.' };
+  }
+  if (!category) {
+    return { success: false, message: 'Kategori tidak dikenali.' };
+  }
+
+  // Rate limit khusus — pakai 'register' limit (3/jam per IP)
+  // Sudah otomatis berlaku dari case handler, tapi kita bisa double-check di sini.
+
+  const supabase = getSupabaseAdmin();
+
+  // Cek duplikat
+  const { data: existing, error: checkErr } = await supabase
+    .from('interest_signups')
+    .select('id, status')
+    .eq('email', email)
+    .eq('category', category)
+    .limit(1);
+
+  if (checkErr) throw checkErr;
+
+  if (existing && existing.length) {
+    // Sudah pernah daftar — return success supaya tidak leak info
+    return {
+      success: true,
+      message: 'Kamu sudah terdaftar. Kami akan kabari saat siap.'
+    };
+  }
+
+  const { error: insertErr } = await supabase.from('interest_signups').insert({
+    email,
+    category,
+    user_id: userId || null,
+    note,
+    status: 'pending',
+    created_at: new Date().toISOString()
+  });
+  if (insertErr) throw insertErr;
+
+  return {
+    success: true,
+    message: 'Berhasil! Kami akan kabari lewat email saat fitur siap.'
+  };
+}
+
+async function adminGetInterests_(token, category) {
+  const auth = await verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const supabase = getSupabaseAdmin();
+  let query = supabase
+    .from('interest_signups')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(500);
+
+  if (category) query = query.eq('category', String(category));
+
+  const { data, error } = await query;
+  if (error) throw error;
+
+  return { success: true, signups: data || [] };
+}
 /* ============================================================
    PASSWORD RESET
    ============================================================ */
