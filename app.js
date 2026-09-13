@@ -3177,6 +3177,8 @@ async function loadKuantitatifPackage(packageNumber) {
     $('landingLoginBtn').addEventListener('click', () => showAuth('login'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
+    $('landingGuestBtn').addEventListener('click', () => { $('guestModal').hidden = false; });
+$('landingGuestBtnHero')?.addEventListener('click', () => { $('guestModal').hidden = false; });
 $('landingRegisterBtnHero')?.addEventListener('click', () => showAuth('register'));
 $('landingRegisterBtnKraepelin')?.addEventListener('click', () => showAuth('register'));
 $('landingRegisterBtnCv')?.addEventListener('click', () => showAuth('register'));
