@@ -3277,6 +3277,32 @@ $('landingRegisterBtnFinal')?.addEventListener('click', () => showAuth('register
   // INIT
   // ============================================================
 
+  async function loadStats() {
+  try {
+    const response = await api('stats');
+    if (!response?.success || !response.stats) return;
+    const { users, tests, questions } = response.stats;
+
+    document.querySelectorAll('[data-stat="users"]').forEach(el => {
+      el.textContent = formatNumber(users);
+    });
+    document.querySelectorAll('[data-stat="tests"]').forEach(el => {
+      el.textContent = formatNumber(tests);
+    });
+    document.querySelectorAll('[data-stat="questions"]').forEach(el => {
+      el.textContent = formatNumber(questions);
+    });
+  } catch (err) {
+    console.warn('[stats] gagal load:', err.message);
+    // Biarkan placeholder "…" — jangan crash
+  }
+}
+
+function formatNumber(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0','') + ' jt';
+  if (n >= 1000) return (n / 1000).toFixed(1).replace('.0','') + ' rb';
+  return String(n);
+}
   async function init() {
     bind();
 
@@ -3311,6 +3337,8 @@ $('landingRegisterBtnFinal')?.addEventListener('click', () => showAuth('register
         return;
       }
 
+      // Setelah renderCatalog() dan sebelum showView
+loadStats();
       showView('dashboard');
 
       try {
