@@ -67,7 +67,10 @@ module.exports = async function handler(req, res) {
         result = await register_(body.username, body.password, body.email);
         break;
       }
-
+      case 'trackPdfDownload':
+        result = await trackPdfDownload_(body.token, body.test_id);
+        break;
+        
         case 'subscribeInterest':
   result = await subscribeInterest_(body.email, body.category, body.userId, body.note);
   break;
@@ -242,6 +245,51 @@ async function logAdminAction_(session, action, targetId, targetLabel, success, 
   }
 }
 
+/* ============================================================
+   PDF DOWNLOAD TRACKING
+   ============================================================ */
+
+async function trackPdfDownload_(token, testId) {
+  testId = String(testId || '').trim();
+  if (!testId) return { success: false, message: 'test_id wajib diisi.' };
+
+  // Token opsional — guest juga boleh cetak PDF
+  let userId = null;
+  if (token) {
+    const session = await verifySessionWithRevocation_(token);
+    if (session) userId = session.user_id;
+  }
+
+  try {
+    const supabase = getSupabaseAdmin();
+
+    // Kalau user login, cek duplikat per test_id (unique)
+    if (userId) {
+      const { data: existing } = await supabase
+        .from('pdf_downloads')
+        .select('id')
+        .eq('test_id', testId)
+        .eq('user_id', userId)
+        .limit(1);
+
+      if (existing && existing.length) {
+        return { success: true, duplicate: true };
+      }
+    }
+
+    const { error } = await supabase.from('pdf_downloads').insert({
+      test_id: testId,
+      user_id: userId,
+      created_at: new Date().toISOString()
+    });
+    if (error) throw error;
+
+    return { success: true };
+  } catch (err) {
+    console.error('[trackPdfDownload] error:', err && err.message);
+    return { success: false, message: 'Tracking gagal (silent).' };
+  }
+}
 /**
  * Verify session dengan cek revocation list.
  * Return session payload kalau valid, null kalau:
