@@ -619,6 +619,32 @@ async function submitInterest(event) {
     );
   }
 
+    function getWrongInfoForPdf(result) {
+    // Untuk MCQ
+    if (Array.isArray(result.wrongNumbers) && result.wrongNumbers.length) {
+      const list = result.wrongNumbers.slice(0, 15);
+      const extra = result.wrongNumbers.length - list.length;
+      let text = `No. ${list.join(', ')}`;
+      if (extra > 0) text += `, + ${extra} lainnya`;
+      return text;
+    }
+
+    // Untuk Kraepelin — ambil kolom dengan akurasi < 60%
+    if (Array.isArray(result.correctPerColumn) && result.correctPerColumn.length) {
+      const weak = [];
+      result.correctPerColumn.forEach((correct, idx) => {
+        if (correct / 26 < 0.6) weak.push(`Kolom ${idx + 1} (${correct}/26)`);
+      });
+      if (!weak.length) return null;
+      const list = weak.slice(0, 6);
+      const extra = weak.length - list.length;
+      let text = list.join(', ');
+      if (extra > 0) text += `, + ${extra} lainnya`;
+      return text;
+    }
+
+    return null;
+  }
   async function buildPdf(result, participant) {
     const templateResponse = await fetch(
       './pdf-template.jpg',
@@ -650,6 +676,16 @@ async function submitInterest(event) {
     lines.push('/Im1 Do');
     lines.push('Q');
 
+        // ---- BARU: Section "Perlu Diperbaiki" ----
+    const wrongInfo = getWrongInfoForPdf(result);
+
+    if (wrongInfo) {
+      lines.push('0.10 0.19 0.30 rg');
+      drawPdfText(lines, 'Perlu Diperbaiki', 52, 255, 10);
+
+      lines.push('0.38 0.43 0.50 rg');
+      drawPdfText(lines, wrongInfo, 52, 240, 8);
+    }
     // Warna dasar teks hasil.
     lines.push('0.10 0.19 0.30 rg');
 
@@ -1135,6 +1171,14 @@ async function submitInterest(event) {
         'PDF histori berhasil dibuat.',
         'success'
       );
+        try {
+        await api('trackPdfDownload', {
+          token: state.session?.token || '',
+          test_id: item.test_id || ''
+        });
+      } catch (_) {
+        // Silent
+      }
     } catch (error) {
       console.error(
         'History PDF error:',
@@ -2655,6 +2699,14 @@ trackEvent('test_start', { type: state.test, package: state.package });
       setTimeout(() => URL.revokeObjectURL(url), 1000);
 
       toast('PDF berhasil disimpan.', 'success');
+        try {
+        await api('trackPdfDownload', {
+          token: state.session?.token || '',
+          test_id: result.testId || state.currentTestId || ''
+        });
+      } catch (_) {
+        // Silent — tracking bukan critical
+      }
     } catch (error) {
       console.error('PDF error:', error);
       toast('PDF gagal dibuat.', 'warning', 4500);
