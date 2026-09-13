@@ -873,7 +873,6 @@ async function submitInterest(event) {
       lines.push('0.38 0.43 0.50 rg');
       drawPdfText(lines, wrongInfo, 52, 130, 9);
     }
-
     const content = lines.join('\n');
 
 
