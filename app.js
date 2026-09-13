@@ -1237,7 +1237,7 @@ async function submitInterest(event) {
       error.textContent = 'Konfirmasi password belum sama.';
       return;
     }
-
+trackEvent('register_attempt');
     busy(button, 'Membuat akun…', true);
 
     try {
@@ -1285,6 +1285,7 @@ async function submitInterest(event) {
           saveSession();
           $('loginForm').reset();
           await goDashboard('Login berhasil.');
+          trackEvent('register_success');
           return;
         } catch (errorObject) {
           lastError = errorObject;
@@ -3342,11 +3343,9 @@ $('interestModal')?.addEventListener('click', (e) => {
     });
 
     $('registerForm').addEventListener('submit', (event) => {
-      event.preventDefault();
-      register();
-      trackEvent('register_attempt');
-      trackEvent('register_success');
-    });
+  event.preventDefault();
+  register();
+});
 
     $('resumeTestBtn')?.addEventListener('click', resumePersistedTest);
     $('startPracticeBtn')?.addEventListener('click', () => openInstruction('kraepelin', 1));
@@ -3411,6 +3410,7 @@ function formatNumber(n) {
     state.isGuest = false;
 
     renderCatalog();
+    loadStats();  // ← pindah ke luar, biar selalu dipanggil
 
     if (state.session) {
       $('welcomeName').textContent = state.session.username;
