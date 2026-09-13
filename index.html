@@ -538,7 +538,82 @@
 
 <section id="historyView" class="screen"><div class="history-card card"><button id="backDashboardBtn" class="back-link">← Home</button><div class="section-heading"><div><div class="eyebrow">RIWAYAT LATIHAN</div><h2>Histori tesmu</h2></div><div class="history-total"><span id="historyPageCount">0</span> tes</div></div><p class="muted">Histori akun tersimpan aman di cloud database..</p><div id="emptyHistory" class="empty-state">Belum ada hasil tes.</div><div id="historyTable" class="table-wrap" hidden><table><thead><tr><th>#</th><th>Tanggal</th><th>Tes</th><th>Paket</th><th>Skor</th><th>Kecepatan</th><th>Ketelitian</th><th>Konsistensi</th><th>Ketahanan</th></tr></thead><tbody id="historyTableBody"></tbody></table></div></div></section>
 </main>
+<section id="aboutView" class="screen">
+  <div class="about-shell card">
+    <button id="backFromAboutBtn" class="back-link">← Kembali</button>
 
+    <div class="about-hero">
+      <span class="eyebrow">TENTANG KAMI</span>
+      <h1>Dari frustrasi, jadi sesuatu yang berguna.</h1>
+      <p class="muted about-lead">
+        MyPsych lahir dari pengalaman pribadi saat mempersiapkan seleksi kerja —
+        mencari tempat latihan psikotes yang <em>benar-benar</em> gratis, jujur,
+        dan serius. Setelah tidak menemukannya, kami memutuskan untuk membuatnya sendiri.
+      </p>
+    </div>
+
+    <div class="about-timeline">
+      <div class="about-step">
+        <div class="about-step-year">2024</div>
+        <div class="about-step-body">
+          <h3>Awal mula</h3>
+          <p>Dimulai dari frustrasi saat cari tempat latihan psikotes gratis. Banyak platform yang menyembunyikan biaya di belakang paywall, banyak juga yang kualitasnya tidak sesuai ekspektasi. Waktu itu kami pikir: kenapa harus bayar untuk latihan yang bisa diulang?</p>
+        </div>
+      </div>
+      <div class="about-step">
+        <div class="about-step-year">2025</div>
+        <div class="about-step-body">
+          <h3>Dibangun dengan sengaja</h3>
+          <p>MyPsych dibangun sebagai project open development — setiap fitur dipikirkan dari sisi calon peserta psikotes, bukan dari sisi bisnis. Kami tanya: apa yang benar-benar dibutuhkan? Jawabannya: latihan yang bisa diulang, hasil yang bisa diukur, dan laporan yang bisa disimpan.</p>
+          <p>Kraepelin jadi fitur utama karena itu tes paling ikonik di seleksi Indonesia — dan paling jarang tersedia dalam versi latihan yang serius.</p>
+        </div>
+      </div>
+      <div class="about-step about-step-current">
+        <div class="about-step-year">2026</div>
+        <div class="about-step-body">
+          <h3>Sekarang</h3>
+          <p><strong data-stat="users">…</strong> peserta aktif sudah mengerjakan <strong data-stat="tests">…</strong> tes. Semua gratis, semua terbuka. Tidak ada iklan, tidak ada paywall, tidak ada data yang dijual.</p>
+          <p>Dan ini baru awal.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-principles">
+      <h2>Prinsip yang kami pegang</h2>
+      <div class="about-principles-grid">
+        <div class="about-principle">
+          <div class="about-principle-icon">🆓</div>
+          <h3>Gratis berarti gratis</h3>
+          <p>Tidak ada paywall tersembunyi. Semua tes, semua laporan, semua grafik.</p>
+        </div>
+        <div class="about-principle">
+          <div class="about-principle-icon">🔒</div>
+          <h3>Data kamu, bukan komoditas</h3>
+          <p>Tidak dijual, tidak dibagikan, tidak diiklankan. Titik.</p>
+        </div>
+        <div class="about-principle">
+          <div class="about-principle-icon">📊</div>
+          <h3>Bisa diukur</h3>
+          <p>Setiap latihan tercatat. Kamu bisa lihat perkembangannya sendiri.</p>
+        </div>
+        <div class="about-principle">
+          <div class="about-principle-icon">🚫</div>
+          <h3>Bukan pengganti psikolog</h3>
+          <p>MyPsych alat latihan, bukan diagnosis. Kami jujur soal ini.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-cta">
+      <h2>Siap mulai latihan?</h2>
+      <p class="muted">Gratis, tanpa kartu kredit, tanpa batas.</p>
+      <div class="about-cta-actions">
+        <button id="aboutRegisterBtn" class="primary-btn large-btn">Daftar Sekarang →</button>
+        <button id="aboutGuestBtn" class="secondary-btn large-btn">Coba sebagai Tamu</button>
+      </div>
+    </div>
+  </div>
+</section>
 <div id="guestModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">i</div><h3>Lanjut sebagai Tamu?</h3><p>Kamu tetap bisa mengerjakan semua latihan dan <strong>mengunduh hasil PDF</strong>. Namun hasil tidak disimpan ke akun atau histori.</p><div class="guest-note">✓ <span><b>Tes tetap berjalan normal</b><small>Semua fitur latihan dan hasil tetap tersedia.</small></span></div><div class="guest-note">↓ <span><b>PDF tetap bisa diunduh</b><small>Simpan PDF setelah selesai jika ingin menyimpan hasil.</small></span></div><div class="modal-actions"><button id="cancelGuestBtn" class="secondary-btn">Batal</button><button id="confirmGuestBtn" class="primary-btn">Ya, lanjut sebagai tamu</button></div></div></div>
 <div id="confirmModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">!</div><h3>Akhiri tes?</h3><p>Progress tes yang sedang berjalan akan dihapus. Hasil tidak akan dibuat.</p><div class="modal-actions"><button id="cancelEndTestBtn" class="secondary-btn">Batal</button><button id="confirmEndTestBtn" class="danger-btn">Ya, akhiri</button></div></div></div>
 <div id="interestModal" class="modal-backdrop" hidden>
