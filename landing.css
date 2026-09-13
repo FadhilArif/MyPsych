@@ -1423,19 +1423,52 @@
 }
 
 @media (max-width: 640px) {
-  .lp-navbar-inner {
+
+   .lp-navbar-inner {
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    padding: 10px 0;
   }
+  /* Perkecil mockup di HP supaya section berikutnya cepat terlihat */
+  .lp-mockup-content { padding: 14px 16px 18px; }
+  .lp-mockup-greeting h4 { font-size: 0.85rem; }
+  .lp-mockup-stat strong { font-size: 0.95rem; }
+  .lp-mockup-chart-bars { height: 70px; }
+  .lp-mockup-chart-title { font-size: 0.7rem; }
+  .lp-mockup-url { font-size: 0.65rem; }
   .lp-nav-links {
     order: 3;
     width: 100%;
     justify-content: flex-start;
-    gap: 18px;
+    gap: 16px;
     overflow-x: auto;
-    padding-bottom: 4px;
+    overflow-y: hidden;
+    padding: 4px 0 8px;
+    /* Scrollbar disembunyikan tapi tetap bisa di-scroll */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Snap ke awal supaya tidak ada potongan huruf */
+    scroll-snap-type: x proximity;
   }
-  .lp-nav-links a { font-size: 0.82rem; }
+  .lp-nav-links::-webkit-scrollbar { display: none; }
+
+  .lp-nav-links a {
+    font-size: 0.82rem;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .lp-nav-actions {
+    flex-shrink: 0;
+    gap: 6px;
+  }
+
+  .lp-nav-actions .lp-btn-ghost,
+  .lp-nav-actions .lp-btn-primary {
+    padding: 9px 14px;
+    font-size: 0.85rem;
+  }
+}
 
   .lp-container { width: calc(100% - 32px); }
 
