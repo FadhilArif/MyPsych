@@ -3253,16 +3253,14 @@ document.querySelectorAll('[data-goto="about"]').forEach((el) => {
 $('backFromAboutBtn')?.addEventListener('click', () => showView('landing'));
 $('aboutRegisterBtn')?.addEventListener('click', () => showAuth('register'));
 $('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = false; });
-    $('landingLoginBtn').addEventListener('click', () => showAuth('login'));
+       $('landingLoginBtn').addEventListener('click', () => showAuth('login'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
-    $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
-    $('landingGuestBtn').addEventListener('click', () => { $('guestModal').hidden = false; });
-$('landingGuestBtnHero')?.addEventListener('click', () => { $('guestModal').hidden = false; });
-$('landingRegisterBtnHero')?.addEventListener('click', () => showAuth('register'));
-$('landingRegisterBtnKraepelin')?.addEventListener('click', () => showAuth('register'));
-$('landingRegisterBtnCv')?.addEventListener('click', () => showAuth('register'));
-$('landingRegisterBtnFinal')?.addEventListener('click', () => showAuth('register'));
-    $('landingGuestBtn').addEventListener('click', () => { $('guestModal').hidden = false; });
+    $('landingGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = false; });
+    $('landingGuestBtnHero')?.addEventListener('click', () => { $('guestModal').hidden = false; });
+    $('landingRegisterBtnHero')?.addEventListener('click', () => showAuth('register'));
+    $('landingRegisterBtnKraepelin')?.addEventListener('click', () => showAuth('register'));
+    $('landingRegisterBtnCv')?.addEventListener('click', () => showAuth('register'));
+    $('landingRegisterBtnFinal')?.addEventListener('click', () => showAuth('register'));
 // Interest modal
 document.querySelectorAll('[data-interest]').forEach((btn) => {
   btn.addEventListener('click', () => openInterestModal(btn.dataset.interest));
