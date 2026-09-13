@@ -237,7 +237,7 @@ async function submitInterest(event) {
     window.scrollTo(0, 0);
   }
 
-  function toast(message, type = 'info', duration = 2800) {
+  function toast(message, type = 'info', duration = 2800, onClick = null) {
     const root = $('toastRoot');
     if (!root) return;
 
@@ -245,6 +245,15 @@ async function submitInterest(event) {
     const el = document.createElement('div');
     el.className = `toast ${type}`;
     el.textContent = message;
+
+    if (onClick) {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', () => {
+        onClick();
+        el.remove();
+      });
+    }
+
     root.appendChild(el);
 
     setTimeout(() => el.remove(), duration);
@@ -3262,7 +3271,6 @@ $('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = f
     $('landingGuestBtnHero')?.addEventListener('click', () => { $('guestModal').hidden = false; });
     $('landingRegisterBtnHero')?.addEventListener('click', () => showAuth('register'));
     $('landingRegisterBtnKraepelin')?.addEventListener('click', () => showAuth('register'));
-    $('landingRegisterBtnCv')?.addEventListener('click', () => showAuth('register'));
     $('landingRegisterBtnFinal')?.addEventListener('click', () => showAuth('register'));
 // Interest modal
 document.querySelectorAll('[data-interest]').forEach((btn) => {
@@ -3350,7 +3358,6 @@ $('interestModal')?.addEventListener('click', (e) => {
 });
 
     $('resumeTestBtn')?.addEventListener('click', resumePersistedTest);
-    $('startPracticeBtn')?.addEventListener('click', () => openInstruction('kraepelin', 1));
 
     window.addEventListener('keydown', (event) => {
       if (document.body.dataset.view !== 'test') return;
@@ -3412,7 +3419,7 @@ function formatNumber(n) {
     state.isGuest = false;
 
     renderCatalog();
-    loadStats();  // ← pindah ke luar, biar selalu dipanggil
+    loadStats();
 
     if (state.session) {
       $('welcomeName').textContent = state.session.username;
@@ -3426,8 +3433,6 @@ function formatNumber(n) {
         return;
       }
 
-      // Setelah renderCatalog() dan sebelum showView
-loadStats();
       showView('dashboard');
 
       try {
@@ -3437,8 +3442,12 @@ loadStats();
       }
 
       if (loadPersistedTest()) {
-        // Dashboard Fase 4 tetap ringan; user memilih lanjutkan dari data lokal.
-        toast('Ada progress tes yang tersimpan. Kamu bisa melanjutkannya dari sesi ini.', 'info', 4200);
+        toast(
+          'Ada progress tes yang tersimpan. Klik untuk melanjutkan →',
+          'info',
+          6000,
+          resumePersistedTest
+        );
       }
     } else {
       showView('landing');
