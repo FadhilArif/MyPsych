@@ -1,0 +1,808 @@
+{
+  "kategori": "Numerical",
+  "total_paket": 3,
+  "soal_per_paket": 20,
+  "paket": [
+    {
+      "id_paket": 1,
+      "nama_paket": "Paket 1",
+      "deskripsi": "Soal tes numerical (deret angka) dasar dan penalaran pola paket 1",
+      "soal": [
+        {
+          "id": 1,
+          "question": "2, 4, 6, 8, ...",
+          "options": {
+            "A": "10",
+            "B": "12",
+            "C": "14",
+            "D": "16",
+            "E": "18"
+          },
+          "answer": "A",
+          "discussion": "Pola deret: +2. 8 + 2 = 10."
+        },
+        {
+          "id": 2,
+          "question": "3, 6, 9, 12, ...",
+          "options": {
+            "A": "13",
+            "B": "14",
+            "C": "15",
+            "D": "16",
+            "E": "17"
+          },
+          "answer": "C",
+          "discussion": "Pola deret: +3. 12 + 3 = 15."
+        },
+        {
+          "id": 3,
+          "question": "100, 95, 90, 85, ...",
+          "options": {
+            "A": "70",
+            "B": "75",
+            "C": "80",
+            "D": "82",
+            "E": "85"
+          },
+          "answer": "C",
+          "discussion": "Pola deret: -5. 85 - 5 = 80."
+        },
+        {
+          "id": 4,
+          "question": "1, 4, 9, 16, ...",
+          "options": {
+            "A": "20",
+            "B": "23",
+            "C": "24",
+            "D": "25",
+            "E": "36"
+          },
+          "answer": "D",
+          "discussion": "Pola bilangan kuadrat: 1², 2², 3², 4², 5² = 25."
+        },
+        {
+          "id": 5,
+          "question": "5, 10, 20, 40, ...",
+          "options": {
+            "A": "60",
+            "B": "70",
+            "C": "80",
+            "D": "90",
+            "E": "100"
+          },
+          "answer": "C",
+          "discussion": "Pola deret: x2. 40 x 2 = 80."
+        },
+        {
+          "id": 6,
+          "question": "12, 14, 18, 24, ...",
+          "options": {
+            "A": "28",
+            "B": "30",
+            "C": "32",
+            "D": "34",
+            "E": "36"
+          },
+          "answer": "C",
+          "discussion": "Pola deret bertingkat: +2, +4, +6, +8. 24 + 8 = 32."
+        },
+        {
+          "id": 7,
+          "question": "3, 5, 8, 12, 17, ...",
+          "options": {
+            "A": "21",
+            "B": "22",
+            "C": "23",
+            "D": "24",
+            "E": "25"
+          },
+          "answer": "C",
+          "discussion": "Pola deret bertingkat: +2, +3, +4, +5, +6. 17 + 6 = 23."
+        },
+        {
+          "id": 8,
+          "question": "50, 48, 44, 38, ...",
+          "options": {
+            "A": "30",
+            "B": "32",
+            "C": "34",
+            "D": "36",
+            "E": "38"
+          },
+          "answer": "A",
+          "discussion": "Pola deret bertingkat: -2, -4, -6, -8. 38 - 8 = 30."
+        },
+        {
+          "id": 9,
+          "question": "1, 3, 9, 27, ...",
+          "options": {
+            "A": "54",
+            "B": "64",
+            "C": "72",
+            "D": "81",
+            "E": "90"
+          },
+          "answer": "D",
+          "discussion": "Pola deret: x3. 27 x 3 = 81."
+        },
+        {
+          "id": 10,
+          "question": "2, 5, 10, 17, 26, ...",
+          "options": {
+            "A": "35",
+            "B": "36",
+            "C": "37",
+            "D": "38",
+            "E": "39"
+          },
+          "answer": "C",
+          "discussion": "Pola deret bertingkat: +3, +5, +7, +9, +11. 26 + 11 = 37."
+        },
+        {
+          "id": 11,
+          "question": "10, 11, 13, 16, 20, ...",
+          "options": {
+            "A": "23",
+            "B": "24",
+            "C": "25",
+            "D": "26",
+            "E": "27"
+          },
+          "answer": "C",
+          "discussion": "Pola deret bertingkat: +1, +2, +3, +4, +5. 20 + 5 = 25."
+        },
+        {
+          "id": 12,
+          "question": "64, 32, 16, 8, ...",
+          "options": {
+            "A": "2",
+            "B": "4",
+            "C": "6",
+            "D": "8",
+            "E": "10"
+          },
+          "answer": "B",
+          "discussion": "Pola deret: dibagi 2. 8 / 2 = 4."
+        },
+        {
+          "id": 13,
+          "question": "4, 12, 36, 108, ...",
+          "options": {
+            "A": "216",
+            "B": "284",
+            "C": "312",
+            "D": "324",
+            "E": "432"
+          },
+          "answer": "D",
+          "discussion": "Pola deret: x3. 108 x 3 = 324."
+        },
+        {
+          "id": 14,
+          "question": "5, 6, 8, 11, 15, ...",
+          "options": {
+            "A": "18",
+            "B": "19",
+            "C": "20",
+            "D": "21",
+            "E": "22"
+          },
+          "answer": "C",
+          "discussion": "Pola deret bertingkat: +1, +2, +3, +4, +5. 15 + 5 = 20."
+        },
+        {
+          "id": 15,
+          "question": "2, 6, 12, 20, 30, ...",
+          "options": {
+            "A": "40",
+            "B": "42",
+            "C": "44",
+            "D": "46",
+            "E": "48"
+          },
+          "answer": "B",
+          "discussion": "Pola deret bertingkat: +4, +6, +8, +10, +12. 30 + 12 = 42."
+        },
+        {
+          "id": 16,
+          "question": "1, 8, 27, 64, ...",
+          "options": {
+            "A": "81",
+            "B": "100",
+            "C": "121",
+            "D": "125",
+            "E": "144"
+          },
+          "answer": "D",
+          "discussion": "Pola bilangan kubik: 1³, 2³, 3³, 4³, 5³ = 125."
+        },
+        {
+          "id": 17,
+          "question": "1, 2, 6, 24, ...",
+          "options": {
+            "A": "48",
+            "B": "72",
+            "C": "96",
+            "D": "120",
+            "E": "144"
+          },
+          "answer": "D",
+          "discussion": "Pola faktorial/perkalian bertingkat: x2, x3, x4, x5. 24 x 5 = 120."
+        },
+        {
+          "id": 18,
+          "question": "7, 10, 14, 19, 25, ...",
+          "options": {
+            "A": "30",
+            "B": "31",
+            "C": "32",
+            "D": "33",
+            "E": "34"
+          },
+          "answer": "C",
+          "discussion": "Pola deret bertingkat: +3, +4, +5, +6, +7. 25 + 7 = 32."
+        },
+        {
+          "id": 19,
+          "question": "100, 90, 70, 40, ...",
+          "options": {
+            "A": "-10",
+            "B": "0",
+            "C": "10",
+            "D": "20",
+            "E": "30"
+          },
+          "answer": "B",
+          "discussion": "Pola deret bertingkat: -10, -20, -30, -40. 40 - 40 = 0."
+        },
+        {
+          "id": 20,
+          "question": "2, 3, 5, 7, 11, ...",
+          "options": {
+            "A": "12",
+            "B": "13",
+            "C": "14",
+            "D": "15",
+            "E": "17"
+          },
+          "answer": "B",
+          "discussion": "Pola deret bilangan prima berurutan. Prima setelah 11 adalah 13."
+        }
+      ]
+    },
+    {
+      "id_paket": 2,
+      "nama_paket": "Paket 2",
+      "deskripsi": "Soal tes numerical (deret angka) menengah dan penalaran pola paket 2",
+      "soal": [
+        {
+          "id": 1,
+          "question": "2, 5, 4, 7, 6, 9, ...",
+          "options": {
+            "A": "7",
+            "B": "8",
+            "C": "10",
+            "D": "11",
+            "E": "12"
+          },
+          "answer": "B",
+          "discussion": "Pola lompat 1 (selang-seling). Deret 1: 2, 4, 6, 8. Deret 2: 5, 7, 9, 11. Jawaban dari deret 1 = 8."
+        },
+        {
+          "id": 2,
+          "question": "1, 2, 3, 5, 8, ...",
+          "options": {
+            "A": "11",
+            "B": "12",
+            "C": "13",
+            "D": "14",
+            "E": "15"
+          },
+          "answer": "C",
+          "discussion": "Deret Fibonacci (penjumlahan 2 angka sebelumnya). 3 + 5 = 8, maka 5 + 8 = 13."
+        },
+        {
+          "id": 3,
+          "question": "10, 5, 12, 6, 14, 7, ...",
+          "options": {
+            "A": "15",
+            "B": "16",
+            "C": "17",
+            "D": "18",
+            "E": "19"
+          },
+          "answer": "B",
+          "discussion": "Pola 2 operasi berulang: /2, +7, /2, +8 ... atau deret lompat (10, 12, 14, 16) dan (5, 6, 7, 8). 14 + 2 = 16."
+        },
+        {
+          "id": 4,
+          "question": "3, 4, 7, 11, 18, ...",
+          "options": {
+            "A": "27",
+            "B": "28",
+            "C": "29",
+            "D": "30",
+            "E": "31"
+          },
+          "answer": "C",
+          "discussion": "Deret seperti Fibonacci. 3+4=7, 4+7=11, 7+11=18, maka 11+18 = 29."
+        },
+        {
+          "id": 5,
+          "question": "9, 11, 15, 23, 39, ...",
+          "options": {
+            "A": "61",
+            "B": "65",
+            "C": "71",
+            "D": "75",
+            "E": "81"
+          },
+          "answer": "C",
+          "discussion": "Penambahan dengan pangkat 2: +2, +4, +8, +16, +32. 39 + 32 = 71."
+        },
+        {
+          "id": 6,
+          "question": "100, 50, 200, 100, 400, ...",
+          "options": {
+            "A": "200",
+            "B": "250",
+            "C": "300",
+            "D": "450",
+            "E": "800"
+          },
+          "answer": "A",
+          "discussion": "Pola 2 operasi: dibagi 2, lalu dikali 4. 400 / 2 = 200."
+        },
+        {
+          "id": 7,
+          "question": "8, 11, 22, 25, 50, ...",
+          "options": {
+            "A": "52",
+            "B": "53",
+            "C": "55",
+            "D": "75",
+            "E": "100"
+          },
+          "answer": "B",
+          "discussion": "Pola 2 operasi: +3, x2, +3, x2, +3. 50 + 3 = 53."
+        },
+        {
+          "id": 8,
+          "question": "1, 2, 4, 7, 11, 16, ...",
+          "options": {
+            "A": "20",
+            "B": "21",
+            "C": "22",
+            "D": "23",
+            "E": "24"
+          },
+          "answer": "C",
+          "discussion": "Penambahan berurutan: +1, +2, +3, +4, +5, +6. 16 + 6 = 22."
+        },
+        {
+          "id": 9,
+          "question": "15, 14, 12, 9, 5, ...",
+          "options": {
+            "A": "0",
+            "B": "1",
+            "C": "2",
+            "D": "3",
+            "E": "4"
+          },
+          "answer": "A",
+          "discussion": "Pengurangan berurutan: -1, -2, -3, -4, -5. 5 - 5 = 0."
+        },
+        {
+          "id": 10,
+          "question": "20, 19, 17, 14, 10, ...",
+          "options": {
+            "A": "3",
+            "B": "4",
+            "C": "5",
+            "D": "6",
+            "E": "7"
+          },
+          "answer": "C",
+          "discussion": "Pengurangan berurutan: -1, -2, -3, -4, -5. 10 - 5 = 5."
+        },
+        {
+          "id": 11,
+          "question": "2, 4, 12, 48, ...",
+          "options": {
+            "A": "144",
+            "B": "192",
+            "C": "240",
+            "D": "288",
+            "E": "336"
+          },
+          "answer": "C",
+          "discussion": "Perkalian berurutan: x2, x3, x4, x5. 48 x 5 = 240."
+        },
+        {
+          "id": 12,
+          "question": "3, 9, 27, 81, ...",
+          "options": {
+            "A": "162",
+            "B": "243",
+            "C": "324",
+            "D": "729",
+            "E": "810"
+          },
+          "answer": "B",
+          "discussion": "Pola perkalian: x3, x3, x3, x3. 81 x 3 = 243."
+        },
+        {
+          "id": 13,
+          "question": "5, 7, 10, 14, 19, 25, ...",
+          "options": {
+            "A": "30",
+            "B": "31",
+            "C": "32",
+            "D": "33",
+            "E": "34"
+          },
+          "answer": "C",
+          "discussion": "Penambahan berurutan: +2, +3, +4, +5, +6, +7. 25 + 7 = 32."
+        },
+        {
+          "id": 14,
+          "question": "4, 7, 13, 25, 49, ...",
+          "options": {
+            "A": "95",
+            "B": "96",
+            "C": "97",
+            "D": "98",
+            "E": "99"
+          },
+          "answer": "C",
+          "discussion": "Pola operasi: (x2) - 1. (4x2-1)=7, (7x2-1)=13, (49x2-1)=97."
+        },
+        {
+          "id": 15,
+          "question": "2, 3, 6, 18, 108, ...",
+          "options": {
+            "A": "972",
+            "B": "1080",
+            "C": "1296",
+            "D": "1944",
+            "E": "2160"
+          },
+          "answer": "D",
+          "discussion": "Pola perkalian dua suku sebelumnya: 2x3=6, 3x6=18, 6x18=108, 18x108=1944."
+        },
+        {
+          "id": 16,
+          "question": "3, 8, 15, 24, 35, ...",
+          "options": {
+            "A": "46",
+            "B": "47",
+            "C": "48",
+            "D": "49",
+            "E": "50"
+          },
+          "answer": "C",
+          "discussion": "Pola deret penambahan ganjil: +5, +7, +9, +11, +13. 35 + 13 = 48."
+        },
+        {
+          "id": 17,
+          "question": "10, 20, 15, 30, 25, ...",
+          "options": {
+            "A": "35",
+            "B": "40",
+            "C": "45",
+            "D": "50",
+            "E": "55"
+          },
+          "answer": "D",
+          "discussion": "Pola 2 operasi berulang: x2, -5, x2, -5, x2. 25 x 2 = 50."
+        },
+        {
+          "id": 18,
+          "question": "40, 20, 60, 30, 90, 45, ...",
+          "options": {
+            "A": "115",
+            "B": "120",
+            "C": "125",
+            "D": "130",
+            "E": "135"
+          },
+          "answer": "E",
+          "discussion": "Pola 2 operasi berulang: /2, x3, /2, x3. 45 x 3 = 135."
+        },
+        {
+          "id": 19,
+          "question": "1, 4, 13, 40, 121, ...",
+          "options": {
+            "A": "362",
+            "B": "363",
+            "C": "364",
+            "D": "365",
+            "E": "366"
+          },
+          "answer": "C",
+          "discussion": "Pola operasi: (x3) + 1. (121x3) + 1 = 363 + 1 = 364."
+        },
+        {
+          "id": 20,
+          "question": "80, 40, 44, 22, 26, 13, ...",
+          "options": {
+            "A": "15",
+            "B": "16",
+            "C": "17",
+            "D": "18",
+            "E": "19"
+          },
+          "answer": "C",
+          "discussion": "Pola 2 operasi berulang: /2, +4, /2, +4. 13 + 4 = 17."
+        }
+      ]
+    },
+    {
+      "id_paket": 3,
+      "nama_paket": "Paket 3",
+      "deskripsi": "Soal tes numerical (deret angka) lanjutan dan penalaran pola paket 3",
+      "soal": [
+        {
+          "id": 1,
+          "question": "5, 25, 6, 36, 7, ...",
+          "options": {
+            "A": "14",
+            "B": "28",
+            "C": "42",
+            "D": "49",
+            "E": "56"
+          },
+          "answer": "D",
+          "discussion": "Pola pasangan bilangan dan kuadratnya: 5 -> 5², 6 -> 6², 7 -> 7² = 49."
+        },
+        {
+          "id": 2,
+          "question": "2, 3, 5, 8, 13, 21, ...",
+          "options": {
+            "A": "32",
+            "B": "33",
+            "C": "34",
+            "D": "35",
+            "E": "36"
+          },
+          "answer": "C",
+          "discussion": "Deret Fibonacci: 13 + 21 = 34."
+        },
+        {
+          "id": 3,
+          "question": "2, 5, 11, 23, 47, ...",
+          "options": {
+            "A": "93",
+            "B": "94",
+            "C": "95",
+            "D": "96",
+            "E": "97"
+          },
+          "answer": "C",
+          "discussion": "Pola operasi: (x2) + 1. 47 x 2 = 94, lalu 94 + 1 = 95."
+        },
+        {
+          "id": 4,
+          "question": "3, 8, 23, 68, 203, ...",
+          "options": {
+            "A": "606",
+            "B": "607",
+            "C": "608",
+            "D": "609",
+            "E": "610"
+          },
+          "answer": "C",
+          "discussion": "Pola operasi: (x3) - 1. (203 x 3) - 1 = 609 - 1 = 608."
+        },
+        {
+          "id": 5,
+          "question": "11, 13, 17, 19, 23, 29, ...",
+          "options": {
+            "A": "31",
+            "B": "33",
+            "C": "35",
+            "D": "37",
+            "E": "39"
+          },
+          "answer": "A",
+          "discussion": "Deret bilangan prima berurutan. Setelah 29 adalah 31."
+        },
+        {
+          "id": 6,
+          "question": "1, 8, 9, 64, 25, 216, ...",
+          "options": {
+            "A": "36",
+            "B": "49",
+            "C": "64",
+            "D": "125",
+            "E": "343"
+          },
+          "answer": "B",
+          "discussion": "Pola selang-seling antara pangkat dua dan pangkat tiga: 1², 2³, 3², 4³, 5², 6³, 7². 7² = 49."
+        },
+        {
+          "id": 7,
+          "question": "10, 12, 24, 26, 52, 54, ...",
+          "options": {
+            "A": "104",
+            "B": "106",
+            "C": "108",
+            "D": "110",
+            "E": "112"
+          },
+          "answer": "C",
+          "discussion": "Pola operasi: +2, x2, +2, x2, +2, x2. 54 x 2 = 108."
+        },
+        {
+          "id": 8,
+          "question": "4, 5, 9, 14, 23, ...",
+          "options": {
+            "A": "35",
+            "B": "36",
+            "C": "37",
+            "D": "38",
+            "E": "39"
+          },
+          "answer": "C",
+          "discussion": "Pola tipe Fibonacci (penjumlahan 2 angka sebelumnya). 14 + 23 = 37."
+        },
+        {
+          "id": 9,
+          "question": "7, 26, 63, 124, 215, ...",
+          "options": {
+            "A": "341",
+            "B": "342",
+            "C": "343",
+            "D": "344",
+            "E": "345"
+          },
+          "answer": "B",
+          "discussion": "Pola kubik dikurangi 1 (n³ - 1): 2³-1, 3³-1, 4³-1, 5³-1, 6³-1, 7³-1 = 343 - 1 = 342."
+        },
+        {
+          "id": 10,
+          "question": "120, 24, 6, 2, 1, ...",
+          "options": {
+            "A": "0",
+            "B": "1/2",
+            "C": "1",
+            "D": "2",
+            "E": "3"
+          },
+          "answer": "C",
+          "discussion": "Pola pembagian berurutan menurun: /5, /4, /3, /2, /1. 1 / 1 = 1."
+        },
+        {
+          "id": 11,
+          "question": "4, 6, 12, 14, 28, 30, ...",
+          "options": {
+            "A": "58",
+            "B": "60",
+            "C": "62",
+            "D": "64",
+            "E": "66"
+          },
+          "answer": "B",
+          "discussion": "Pola operasi: +2, x2, +2, x2, +2, x2. 30 x 2 = 60."
+        },
+        {
+          "id": 12,
+          "question": "1/2, 1/4, 1/8, 1/16, ...",
+          "options": {
+            "A": "1/20",
+            "B": "1/24",
+            "C": "1/32",
+            "D": "1/64",
+            "E": "1/128"
+          },
+          "answer": "C",
+          "discussion": "Pola pecahan dikali 1/2. 1/16 x 1/2 = 1/32."
+        },
+        {
+          "id": 13,
+          "question": "50, 49, 46, 41, 34, ...",
+          "options": {
+            "A": "22",
+            "B": "23",
+            "C": "24",
+            "D": "25",
+            "E": "26"
+          },
+          "answer": "D",
+          "discussion": "Pola pengurangan ganjil: -1, -3, -5, -7, -9. 34 - 9 = 25."
+        },
+        {
+          "id": 14,
+          "question": "2, 10, 30, 68, 130, ...",
+          "options": {
+            "A": "210",
+            "B": "216",
+            "C": "222",
+            "D": "228",
+            "E": "234"
+          },
+          "answer": "C",
+          "discussion": "Pola n³ + n: 1³+1, 2³+2, 3³+3, 4³+4, 5³+5, 6³+6 = 216 + 6 = 222."
+        },
+        {
+          "id": 15,
+          "question": "33, 30, 26, 21, 15, ...",
+          "options": {
+            "A": "7",
+            "B": "8",
+            "C": "9",
+            "D": "10",
+            "E": "11"
+          },
+          "answer": "B",
+          "discussion": "Pola pengurangan bertingkat: -3, -4, -5, -6, -7. 15 - 7 = 8."
+        },
+        {
+          "id": 16,
+          "question": "2, 3, 10, 15, 26, ...",
+          "options": {
+            "A": "34",
+            "B": "35",
+            "C": "36",
+            "D": "37",
+            "E": "38"
+          },
+          "answer": "B",
+          "discussion": "Pola kuadrat bergantian tambah/kurang 1: 1²+1, 2²-1, 3²+1, 4²-1, 5²+1, 6²-1 = 36-1 = 35."
+        },
+        {
+          "id": 17,
+          "question": "99, 90, 80, 69, 57, ...",
+          "options": {
+            "A": "42",
+            "B": "43",
+            "C": "44",
+            "D": "45",
+            "E": "46"
+          },
+          "answer": "C",
+          "discussion": "Pola pengurangan bertingkat: -9, -10, -11, -12, -13. 57 - 13 = 44."
+        },
+        {
+          "id": 18,
+          "question": "1, 2, 2, 4, 8, 32, ...",
+          "options": {
+            "A": "64",
+            "B": "128",
+            "C": "256",
+            "D": "512",
+            "E": "1024"
+          },
+          "answer": "C",
+          "discussion": "Pola perkalian dua angka sebelumnya: 1x2=2, 2x2=4, 2x4=8, 4x8=32, 8x32=256."
+        },
+        {
+          "id": 19,
+          "question": "1, 3, 4, 7, 11, 18, ...",
+          "options": {
+            "A": "27",
+            "B": "28",
+            "C": "29",
+            "D": "30",
+            "E": "31"
+          },
+          "answer": "C",
+          "discussion": "Pola tipe Fibonacci (penjumlahan 2 angka sebelumnya): 11 + 18 = 29."
+        },
+        {
+          "id": 20,
+          "question": "20, 22, 19, 21, 18, 20, ...",
+          "options": {
+            "A": "16",
+            "B": "17",
+            "C": "18",
+            "D": "19",
+            "E": "20"
+          },
+          "answer": "B",
+          "discussion": "Pola operasi: +2, -3, +2, -3, +2, -3. 20 - 3 = 17."
+        }
+      ]
+    }
+  ]
+}

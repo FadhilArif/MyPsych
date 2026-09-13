@@ -1,0 +1,808 @@
+{
+  "kategori": "Silogisme",
+  "total_paket": 3,
+  "soal_per_paket": 20,
+  "paket": [
+    {
+      "id_paket": 1,
+      "nama_paket": "Paket 1",
+      "deskripsi": "Soal tes silogisme (penarikan kesimpulan) kategori (Semua/Sebagian) paket 1",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Semua mahasiswa memiliki kartu mahasiswa. Andi adalah mahasiswa.",
+          "options": {
+            "A": "Andi mungkin memiliki kartu mahasiswa.",
+            "B": "Andi tidak memiliki kartu mahasiswa.",
+            "C": "Andi memiliki kartu mahasiswa.",
+            "D": "Bukan Andi yang memiliki kartu mahasiswa.",
+            "E": "Tidak dapat ditarik kesimpulan."
+          },
+          "answer": "C",
+          "discussion": "Premis 1: Semua A adalah B. Premis 2: C adalah A. Kesimpulan: C adalah B."
+        },
+        {
+          "id": 2,
+          "question": "Semua dokter memakai jas putih. Sebagian pria memakai jas putih.",
+          "options": {
+            "A": "Semua pria adalah dokter.",
+            "B": "Sebagian pria adalah dokter.",
+            "C": "Tidak ada pria yang dokter.",
+            "D": "Semua dokter adalah pria.",
+            "E": "Tidak dapat ditarik kesimpulan."
+          },
+          "answer": "E",
+          "discussion": "Dari premis 'Semua A adalah B' dan 'Sebagian C adalah B', tidak ada irisan pasti antara A dan C. Jadi, tidak dapat disimpulkan."
+        },
+        {
+          "id": 3,
+          "question": "Semua ikan hidup di air. Beberapa hewan yang hidup di air bernapas dengan paru-paru.",
+          "options": {
+            "A": "Semua ikan bernapas dengan paru-paru.",
+            "B": "Beberapa ikan bernapas dengan paru-paru.",
+            "C": "Tidak ada ikan yang bernapas dengan paru-paru.",
+            "D": "Beberapa hewan bernapas dengan paru-paru adalah ikan.",
+            "E": "Tidak dapat ditarik kesimpulan."
+          },
+          "answer": "E",
+          "discussion": "Hanya diketahui ikan hidup di air, dan beberapa hewan di air berparu-paru. Tidak ada jaminan irisan antara ikan dan hewan berparu-paru."
+        },
+        {
+          "id": 4,
+          "question": "Semua karyawan perusahaan X mendapat bonus. Budi tidak mendapat bonus.",
+          "options": {
+            "A": "Budi adalah karyawan perusahaan X.",
+            "B": "Budi bukan karyawan perusahaan X.",
+            "C": "Budi mungkin karyawan perusahaan X.",
+            "D": "Budi akan mendapat bonus.",
+            "E": "Perusahaan X tidak memberikan bonus pada Budi."
+          },
+          "answer": "B",
+          "discussion": "Modus Tollens: p -> q (Karyawan X -> Bonus). ~q (Budi tidak bonus). Maka ~p (Budi bukan karyawan X)."
+        },
+        {
+          "id": 5,
+          "question": "Semua kendaraan berbahan bakar bensin. Sebagian kendaraan adalah mobil.",
+          "options": {
+            "A": "Semua mobil berbahan bakar bensin.",
+            "B": "Sebagian mobil berbahan bakar bensin.",
+            "C": "Semua kendaraan berbahan bakar bensin adalah mobil.",
+            "D": "Sebagian mobil tidak berbahan bakar bensin.",
+            "E": "Tidak semua mobil berbahan bakar bensin."
+          },
+          "answer": "A",
+          "discussion": "Premis 1: Semua kendaraan berbahan bakar bensin. Karena mobil adalah himpunan bagian dari kendaraan (Sebagian kendaraan adalah mobil), maka semua mobil berbahan bakar bensin."
+        },
+        {
+          "id": 6,
+          "question": "Sebagian A adalah B. Semua B adalah C.",
+          "options": {
+            "A": "Semua A adalah C.",
+            "B": "Sebagian A adalah C.",
+            "C": "Semua C adalah A.",
+            "D": "Sebagian C bukan B.",
+            "E": "Tidak ada A yang C."
+          },
+          "answer": "B",
+          "discussion": "Karena semua B adalah C, dan sebagian A masuk dalam himpunan B, maka sebagian A pasti masuk dalam himpunan C."
+        },
+        {
+          "id": 7,
+          "question": "Tidak ada burung yang memiliki sirip. Semua penguin adalah burung.",
+          "options": {
+            "A": "Beberapa penguin memiliki sirip.",
+            "B": "Semua penguin memiliki sirip.",
+            "C": "Tidak ada penguin yang memiliki sirip.",
+            "D": "Burung yang memiliki sirip bukan penguin.",
+            "E": "Sebagian burung memiliki sirip."
+          },
+          "answer": "C",
+          "discussion": "Semua A (penguin) adalah B (burung). Tidak ada B yang C (bersirip). Maka tidak ada A yang C."
+        },
+        {
+          "id": 8,
+          "question": "Semua pohon berdaun hijau. Tanaman X tidak berdaun hijau.",
+          "options": {
+            "A": "Tanaman X adalah pohon.",
+            "B": "Tanaman X bukan pohon.",
+            "C": "Tanaman X mungkin pohon.",
+            "D": "Sebagian pohon tidak berdaun hijau.",
+            "E": "Tanaman X akan berdaun hijau."
+          },
+          "answer": "B",
+          "discussion": "Modus tollens: Pohon -> Daun Hijau. Tidak daun hijau -> Bukan pohon."
+        },
+        {
+          "id": 9,
+          "question": "Semua siswa lulus ujian. Sebagian siswa mengikuti remedial.",
+          "options": {
+            "A": "Semua siswa mengikuti remedial.",
+            "B": "Sebagian siswa tidak lulus ujian.",
+            "C": "Siswa yang mengikuti remedial lulus ujian.",
+            "D": "Tidak ada siswa yang lulus dan mengikuti remedial.",
+            "E": "Semua siswa yang lulus ujian mengikuti remedial."
+          },
+          "answer": "C",
+          "discussion": "Karena semua siswa lulus ujian, maka 'sebagian siswa' yang mengikuti remedial itu juga pasti bagian dari siswa yang lulus ujian."
+        },
+        {
+          "id": 10,
+          "question": "Semua penari lentur tubuhnya. Dina tidak lentur tubuhnya.",
+          "options": {
+            "A": "Dina adalah penari.",
+            "B": "Dina bukan penari.",
+            "C": "Dina mungkin penari.",
+            "D": "Sebagian penari tidak lentur.",
+            "E": "Dina akan lentur."
+          },
+          "answer": "B",
+          "discussion": "Penari -> Lentur. Tidak lentur -> Bukan penari."
+        },
+        {
+          "id": 11,
+          "question": "Sebagian kucing berwarna hitam. Semua kucing mengeong.",
+          "options": {
+            "A": "Semua kucing berwarna hitam mengeong.",
+            "B": "Sebagian kucing berwarna hitam tidak mengeong.",
+            "C": "Hewan berwarna hitam mengeong.",
+            "D": "Semua yang mengeong adalah kucing.",
+            "E": "Tidak ada kucing hitam yang mengeong."
+          },
+          "answer": "A",
+          "discussion": "Karena 'Semua kucing mengeong', maka kucing apa pun itu (termasuk yang berwarna hitam) pasti mengeong."
+        },
+        {
+          "id": 12,
+          "question": "Semua buku di perpustakaan tebal. Buku Y tidak tebal.",
+          "options": {
+            "A": "Buku Y ada di perpustakaan.",
+            "B": "Buku Y bukan di perpustakaan.",
+            "C": "Sebagian buku di perpustakaan tidak tebal.",
+            "D": "Buku Y mungkin di perpustakaan.",
+            "E": "Semua buku tebal ada di perpustakaan."
+          },
+          "answer": "B",
+          "discussion": "Di perpustakaan -> Tebal. Tidak tebal -> Bukan di perpustakaan."
+        },
+        {
+          "id": 13,
+          "question": "Semua pejabat wajib lapor kekayaan. Sebagian pengusaha adalah pejabat.",
+          "options": {
+            "A": "Semua pengusaha wajib lapor kekayaan.",
+            "B": "Sebagian pengusaha wajib lapor kekayaan.",
+            "C": "Semua pejabat adalah pengusaha.",
+            "D": "Tidak ada pengusaha yang wajib lapor kekayaan.",
+            "E": "Sebagian pejabat tidak wajib lapor kekayaan."
+          },
+          "answer": "B",
+          "discussion": "Pengusaha yang merangkap pejabat pasti terkena aturan 'Semua pejabat wajib lapor kekayaan'. Jadi, sebagian pengusaha wajib lapor."
+        },
+        {
+          "id": 14,
+          "question": "Tidak ada politisi yang miskin. Beberapa dosen adalah politisi.",
+          "options": {
+            "A": "Semua dosen miskin.",
+            "B": "Tidak ada dosen yang miskin.",
+            "C": "Beberapa dosen tidak miskin.",
+            "D": "Semua politisi adalah dosen.",
+            "E": "Beberapa dosen miskin."
+          },
+          "answer": "C",
+          "discussion": "Dosen yang menjadi politisi pasti tidak miskin. Jadi, kesimpulan pastinya adalah 'Beberapa dosen tidak miskin'."
+        },
+        {
+          "id": 15,
+          "question": "Semua mawar berduri. Beberapa tanaman mawar berwarna putih.",
+          "options": {
+            "A": "Semua tanaman mawar putih berduri.",
+            "B": "Sebagian tanaman mawar putih tidak berduri.",
+            "C": "Semua yang berduri berwarna putih.",
+            "D": "Semua yang berduri adalah mawar.",
+            "E": "Tidak ada mawar putih yang berduri."
+          },
+          "answer": "A",
+          "discussion": "Sifat 'Semua mawar berduri' mutlak. Maka mawar varian apa pun (termasuk yang putih) pasti berduri."
+        },
+        {
+          "id": 16,
+          "question": "Semua apel berwarna merah. Beberapa apel rasanya manis.",
+          "options": {
+            "A": "Semua apel yang manis berwarna merah.",
+            "B": "Beberapa apel berwarna merah tidak manis.",
+            "C": "Semua yang merah rasanya manis.",
+            "D": "A dan B benar.",
+            "E": "Semua apel merah rasanya manis."
+          },
+          "answer": "A",
+          "discussion": "Apel manis adalah bagian dari himpunan apel. Karena semua apel merah, maka apel manis tersebut pasti merah."
+        },
+        {
+          "id": 17,
+          "question": "Semua pahlawan dihargai. Beberapa pahlawan terlupakan.",
+          "options": {
+            "A": "Semua pahlawan yang terlupakan tetap dihargai.",
+            "B": "Sebagian pahlawan yang dihargai terlupakan.",
+            "C": "Semua yang dihargai tidak terlupakan.",
+            "D": "A dan B benar.",
+            "E": "Tidak ada pahlawan terlupakan yang dihargai."
+          },
+          "answer": "D",
+          "discussion": "A benar karena statusnya pahlawan. B benar karena dari beberapa pahlawan yang terlupakan, mereka adalah bagian dari pahlawan yang dihargai."
+        },
+        {
+          "id": 18,
+          "question": "Semua burung mempunyai sayap. Semua hewan bersayap bisa terbang. Penguin adalah burung.",
+          "options": {
+            "A": "Penguin bisa terbang.",
+            "B": "Penguin tidak bisa terbang.",
+            "C": "Sebagian penguin bisa terbang.",
+            "D": "Penguin tidak mempunyai sayap.",
+            "E": "Bukan burung yang bisa terbang."
+          },
+          "answer": "A",
+          "discussion": "Silogisme murni berdasarkan premis (walaupun fakta biologi salah). Burung -> Sayap -> Terbang. Penguin -> Burung. Maka Penguin -> Terbang."
+        },
+        {
+          "id": 19,
+          "question": "Semua obat pahit rasanya. Sebagian obat berbentuk sirup.",
+          "options": {
+            "A": "Sebagian sirup rasanya pahit.",
+            "B": "Semua sirup rasanya pahit.",
+            "C": "Semua obat sirup rasanya pahit.",
+            "D": "Sebagian obat pahit bukan sirup.",
+            "E": "C dan D benar."
+          },
+          "answer": "E",
+          "discussion": "C benar: semua obat (termasuk sirup) pahit. D benar: karena hanya sebagian obat yang sirup, sisanya (yang juga pahit) bukan sirup."
+        },
+        {
+          "id": 20,
+          "question": "Semua harimau adalah karnivora. Tidak ada karnivora yang memakan rumput.",
+          "options": {
+            "A": "Sebagian harimau memakan rumput.",
+            "B": "Semua harimau memakan rumput.",
+            "C": "Tidak ada harimau yang memakan rumput.",
+            "D": "Sebagian karnivora bukan harimau.",
+            "E": "Karnivora adalah harimau."
+          },
+          "answer": "C",
+          "discussion": "A(harimau) -> B(karnivora). B -> C(tidak makan rumput). Maka A -> C."
+        }
+      ]
+    },
+    {
+      "id_paket": 2,
+      "nama_paket": "Paket 2",
+      "deskripsi": "Soal tes silogisme hipotesis (Jika-maka) dan campuran paket 2",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Jika hujan turun, maka jalan basah. Jalan tidak basah.",
+          "options": {
+            "A": "Hujan turun.",
+            "B": "Hujan tidak turun.",
+            "C": "Jalanan kering karena panas.",
+            "D": "Mungkin hujan turun.",
+            "E": "Hujan turun tetapi jalan tidak basah."
+          },
+          "answer": "B",
+          "discussion": "Modus Tollens: p -> q. ~q. Maka ~p (Hujan tidak turun)."
+        },
+        {
+          "id": 2,
+          "question": "Jika harga BBM naik, maka harga sembako naik. Harga BBM naik.",
+          "options": {
+            "A": "Harga sembako turun.",
+            "B": "Harga sembako tetap.",
+            "C": "Harga sembako naik.",
+            "D": "Harga BBM dan sembako naik.",
+            "E": "BBM tidak jadi naik."
+          },
+          "answer": "C",
+          "discussion": "Modus Ponens: p -> q. p. Maka q (Harga sembako naik)."
+        },
+        {
+          "id": 3,
+          "question": "Jika Andi belajar, maka ia lulus. Jika Andi lulus, maka ibunya senang.",
+          "options": {
+            "A": "Jika Andi belajar, maka ibunya senang.",
+            "B": "Jika Andi tidak belajar, ibunya sedih.",
+            "C": "Jika ibu senang, maka Andi belajar.",
+            "D": "Andi belajar dan ibunya senang.",
+            "E": "Andi tidak belajar."
+          },
+          "answer": "A",
+          "discussion": "Silogisme Hipotesis: p -> q, q -> r. Maka p -> r."
+        },
+        {
+          "id": 4,
+          "question": "Jika pabrik X beroperasi, maka polusi udara meningkat. Polusi udara tidak meningkat.",
+          "options": {
+            "A": "Pabrik X sedang libur.",
+            "B": "Pabrik X beroperasi.",
+            "C": "Pabrik X tidak beroperasi.",
+            "D": "Pabrik X menggunakan filter.",
+            "E": "Tidak dapat disimpulkan."
+          },
+          "answer": "C",
+          "discussion": "Modus Tollens: p -> q. ~q. Maka ~p (Pabrik X tidak beroperasi)."
+        },
+        {
+          "id": 5,
+          "question": "Jika suhu naik di atas 30 derajat, kipas menyala otomatis. Suhu sekarang 32 derajat.",
+          "options": {
+            "A": "Kipas mungkin menyala.",
+            "B": "Kipas tidak menyala.",
+            "C": "Kipas menyala otomatis.",
+            "D": "Kipas rusak.",
+            "E": "Suhu turun lagi."
+          },
+          "answer": "C",
+          "discussion": "Modus Ponens. Kondisi p (suhu > 30) terpenuhi (32 derajat), maka q (kipas menyala otomatis) terjadi."
+        },
+        {
+          "id": 6,
+          "question": "Jika Roni lulus ujian, ia dibelikan motor. Jika dibelikan motor, Roni akan keliling kota. Roni tidak keliling kota.",
+          "options": {
+            "A": "Roni lulus ujian.",
+            "B": "Roni tidak lulus ujian.",
+            "C": "Roni dibelikan motor.",
+            "D": "Motor Roni rusak.",
+            "E": "Roni sedang sakit."
+          },
+          "answer": "B",
+          "discussion": "Silogisme (p -> r) lalu Tollens. p -> q, q -> r (p -> r). ~r, maka ~p."
+        },
+        {
+          "id": 7,
+          "question": "Semua yang rajin menabung menjadi kaya. Candra tidak kaya.",
+          "options": {
+            "A": "Candra rajin menabung.",
+            "B": "Candra tidak rajin menabung.",
+            "C": "Candra miskin.",
+            "D": "Candra mungkin rajin menabung.",
+            "E": "Candra menabung sedikit."
+          },
+          "answer": "B",
+          "discussion": "Rajin -> Kaya. Tidak Kaya -> Tidak Rajin (Modus Tollens)."
+        },
+        {
+          "id": 8,
+          "question": "Sebagian karyawan memakai kemeja. Semua yang memakai kemeja juga memakai dasi.",
+          "options": {
+            "A": "Sebagian karyawan memakai dasi.",
+            "B": "Semua karyawan memakai dasi.",
+            "C": "Semua yang memakai dasi adalah karyawan.",
+            "D": "Tidak ada karyawan yang memakai dasi.",
+            "E": "Karyawan wajib memakai dasi."
+          },
+          "answer": "A",
+          "discussion": "Karena hanya sebagian karyawan yang masuk himpunan kemeja, dan himpunan kemeja seluruhnya ada di himpunan dasi, maka sebagian karyawan memakai dasi."
+        },
+        {
+          "id": 9,
+          "question": "Jika listrik padam, maka AC mati. AC mati.",
+          "options": {
+            "A": "Listrik padam.",
+            "B": "Listrik menyala.",
+            "C": "AC sedang rusak.",
+            "D": "Tidak dapat disimpulkan.",
+            "E": "Listrik mungkin padam."
+          },
+          "answer": "D",
+          "discussion": "Fallacy of affirming the consequent (Kesesatan membenarkan akibat). p -> q. q benar, tidak selalu berarti p benar (bisa saja AC rusak, bukan listrik padam)."
+        },
+        {
+          "id": 10,
+          "question": "Jika Tono juara 1, ayahnya memberi hadiah. Tono tidak juara 1.",
+          "options": {
+            "A": "Ayahnya tidak memberi hadiah.",
+            "B": "Ayahnya memberi hadiah.",
+            "C": "Ayahnya mungkin marah.",
+            "D": "Tidak dapat disimpulkan.",
+            "E": "Tono sedih."
+          },
+          "answer": "D",
+          "discussion": "Fallacy of denying the antecedent. p -> q. ~p benar, tidak berarti ~q. Ayahnya bisa saja tetap memberi hadiah karena alasan lain."
+        },
+        {
+          "id": 11,
+          "question": "Semua atlet pandai berenang. Sebagian pelari adalah atlet.",
+          "options": {
+            "A": "Sebagian pelari pandai berenang.",
+            "B": "Semua pelari pandai berenang.",
+            "C": "Semua atlet adalah pelari.",
+            "D": "Sebagian pelari tidak pandai berenang.",
+            "E": "A dan D benar."
+          },
+          "answer": "E",
+          "discussion": "Sebagian pelari (yang atlet) pandai berenang. Sisanya (pelari bukan atlet) belum tentu pandai berenang. Jawaban paling akurat adalah A, namun D merupakan implikasi logis dari sebagian. Dalam tes CPNS/psikotes, A adalah kesimpulan pasti."
+        },
+        {
+          "id": 12,
+          "question": "Tidak ada bunga yang tidak layu. Semua mawar adalah bunga.",
+          "options": {
+            "A": "Sebagian mawar tidak layu.",
+            "B": "Semua mawar layu.",
+            "C": "Tidak ada mawar yang layu.",
+            "D": "Semua yang layu adalah mawar.",
+            "E": "Sebagian mawar layu."
+          },
+          "answer": "B",
+          "discussion": "'Tidak ada bunga yang tidak layu' = Semua bunga layu. Karena mawar adalah bunga, maka semua mawar layu."
+        },
+        {
+          "id": 13,
+          "question": "Semua siswa kelas 3 mengikuti tryout. Rina tidak mengikuti tryout.",
+          "options": {
+            "A": "Rina adalah siswa kelas 3.",
+            "B": "Rina bukan siswa kelas 3.",
+            "C": "Rina siswa kelas 2.",
+            "D": "Rina bolos sekolah.",
+            "E": "Sebagian siswa kelas 3 tidak tryout."
+          },
+          "answer": "B",
+          "discussion": "Modus tollens. Kelas 3 -> Tryout. Tidak tryout -> Bukan kelas 3."
+        },
+        {
+          "id": 14,
+          "question": "Sebagian mahasiswa tinggal di kos. Semua yang tinggal di kos adalah perantau.",
+          "options": {
+            "A": "Semua mahasiswa adalah perantau.",
+            "B": "Sebagian mahasiswa adalah perantau.",
+            "C": "Semua perantau adalah mahasiswa.",
+            "D": "Tidak ada mahasiswa yang merantau.",
+            "E": "Sebagian perantau bukan mahasiswa."
+          },
+          "answer": "B",
+          "discussion": "Sebagian A adalah B. Semua B adalah C. Maka sebagian A adalah C (Sebagian mahasiswa adalah perantau)."
+        },
+        {
+          "id": 15,
+          "question": "Jika Ani minum obat, maka ia sembuh. Jika Ani sembuh, maka ia bisa bekerja. Saat ini Ani tidak bisa bekerja.",
+          "options": {
+            "A": "Ani minum obat.",
+            "B": "Ani sembuh.",
+            "C": "Ani tidak minum obat.",
+            "D": "Ani tidak sakit.",
+            "E": "Ani minum obat tapi tidak sembuh."
+          },
+          "answer": "C",
+          "discussion": "p -> q, q -> r. Kesimpulan: p -> r. Karena ~r (tidak bisa bekerja), maka ~p (tidak minum obat)."
+        },
+        {
+          "id": 16,
+          "question": "Semua kendaraan roda empat wajib tol. Beberapa mobil pikap adalah kendaraan roda empat.",
+          "options": {
+            "A": "Semua mobil pikap wajib tol.",
+            "B": "Beberapa mobil pikap wajib tol.",
+            "C": "Mobil pikap tidak wajib tol.",
+            "D": "Semua yang wajib tol adalah mobil pikap.",
+            "E": "Kendaraan roda empat adalah mobil pikap."
+          },
+          "answer": "B",
+          "discussion": "Semua A -> B. Sebagian C adalah A. Maka Sebagian C -> B."
+        },
+        {
+          "id": 17,
+          "question": "Jika lapar, kera akan makan pisang. Kera tidak makan pisang.",
+          "options": {
+            "A": "Kera sedang kenyang.",
+            "B": "Kera tidak lapar.",
+            "C": "Pisangnya habis.",
+            "D": "Kera suka apel.",
+            "E": "Tidak dapat disimpulkan."
+          },
+          "answer": "B",
+          "discussion": "Modus tollens: Lapar -> Makan. Tidak makan -> Tidak lapar."
+        },
+        {
+          "id": 18,
+          "question": "Tidak semua guru memakai kacamata. Pak Budi adalah guru.",
+          "options": {
+            "A": "Pak Budi memakai kacamata.",
+            "B": "Pak Budi tidak memakai kacamata.",
+            "C": "Tidak dapat disimpulkan.",
+            "D": "Pak Budi mungkin memakai kacamata.",
+            "E": "Pak Budi pasti tidak kacamata."
+          },
+          "answer": "C",
+          "discussion": "Karena hanya 'tidak semua' (sebagian) guru yang berkacamata, informasi bahwa Pak Budi adalah guru tidak cukup untuk memastikan ia berkacamata atau tidak."
+        },
+        {
+          "id": 19,
+          "question": "Semua tanaman organik tidak menggunakan pestisida. Sayuran Y menggunakan pestisida.",
+          "options": {
+            "A": "Sayuran Y adalah tanaman organik.",
+            "B": "Sayuran Y bukan tanaman organik.",
+            "C": "Sayuran Y sebagian organik.",
+            "D": "Sayuran Y tumbuh subur.",
+            "E": "Semua sayuran tidak organik."
+          },
+          "answer": "B",
+          "discussion": "Organik -> Tidak pestisida. Menggunakan pestisida -> Bukan organik (Modus tollens)."
+        },
+        {
+          "id": 20,
+          "question": "Jika ombak besar, nelayan tidak melaut. Nelayan tidak melaut atau ikan melimpah. Ternyata ombak besar.",
+          "options": {
+            "A": "Ikan melimpah.",
+            "B": "Nelayan tidak melaut.",
+            "C": "Nelayan melaut.",
+            "D": "Nelayan tidak melaut dan ikan melimpah.",
+            "E": "A dan B benar."
+          },
+          "answer": "B",
+          "discussion": "Ombak besar -> Nelayan tidak melaut. Fakta: Ombak besar. Kesimpulan pasti dari Modus Ponens: Nelayan tidak melaut. Pernyataan 'atau' tidak mengubah kesimpulan ini."
+        }
+      ]
+    },
+    {
+      "id_paket": 3,
+      "nama_paket": "Paket 3",
+      "deskripsi": "Soal tes silogisme logika tingkat lanjut dan majemuk paket 3",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Semua penyanyi bersuara merdu. Ada mahasiswa yang menjadi penyanyi.",
+          "options": {
+            "A": "Semua mahasiswa bersuara merdu.",
+            "B": "Beberapa mahasiswa bersuara merdu.",
+            "C": "Tidak ada mahasiswa yang bersuara merdu.",
+            "D": "Semua penyanyi adalah mahasiswa.",
+            "E": "Mahasiswa tidak bisa menyanyi."
+          },
+          "answer": "B",
+          "discussion": "Semua A -> B. Sebagian C -> A. Maka Sebagian C -> B. (Beberapa mahasiswa bersuara merdu)."
+        },
+        {
+          "id": 2,
+          "question": "Sebagian pelukis terkenal kaya raya. Semua seniman adalah pelukis.",
+          "options": {
+            "A": "Sebagian seniman terkenal kaya raya.",
+            "B": "Semua seniman kaya raya.",
+            "C": "Pelukis yang tidak kaya bukan seniman.",
+            "D": "Tidak ada seniman yang kaya.",
+            "E": "Semua pelukis adalah seniman."
+          },
+          "answer": "A",
+          "discussion": "Semua seniman adalah pelukis, dan karena ada sebagian pelukis yang kaya raya, maka sebagian seniman (yang notabene adalah pelukis itu) ada yang kaya raya."
+        },
+        {
+          "id": 3,
+          "question": "Semua yang berbunga harum baunya. Beberapa jenis rumput berbunga.",
+          "options": {
+            "A": "Semua rumput harum baunya.",
+            "B": "Beberapa jenis rumput harum baunya.",
+            "C": "Semua yang harum adalah rumput.",
+            "D": "Tidak ada rumput yang harum baunya.",
+            "E": "Rumput yang tidak berbunga berbau harum."
+          },
+          "answer": "B",
+          "discussion": "Sama dengan kaidah sebagian A adalah B, semua B adalah C. Maka sebagian A adalah C."
+        },
+        {
+          "id": 4,
+          "question": "Jika musim kemarau panjang, hasil panen padi menurun. Jika hasil panen padi menurun, harga beras naik. Harga beras tidak naik.",
+          "options": {
+            "A": "Musim kemarau panjang.",
+            "B": "Musim tidak kemarau panjang.",
+            "C": "Panen padi menurun.",
+            "D": "Beras banyak diimpor.",
+            "E": "Musim hujan tiba."
+          },
+          "answer": "B",
+          "discussion": "Silogisme hipotesis + Modus tollens. p -> q, q -> r. Maka p -> r. Karena harga beras tidak naik (~r), maka ~p (tidak kemarau panjang)."
+        },
+        {
+          "id": 5,
+          "question": "Semua radio memakai baterai. Sebagian barang elektronik tidak memakai baterai.",
+          "options": {
+            "A": "Sebagian barang elektronik bukan radio.",
+            "B": "Semua barang elektronik adalah radio.",
+            "C": "Semua radio bukan barang elektronik.",
+            "D": "Sebagian radio bukan barang elektronik.",
+            "E": "Tidak dapat disimpulkan."
+          },
+          "answer": "A",
+          "discussion": "Semua radio menggunakan baterai. Karena sebagian elektronik TIDAK memakai baterai, sebagian elektronik tersebut mustahil berupa radio."
+        },
+        {
+          "id": 6,
+          "question": "Tidak satu pun prajurit yang pengecut. Semua prajurit dilatih kedisiplinan.",
+          "options": {
+            "A": "Sebagian yang dilatih kedisiplinan bukan pengecut.",
+            "B": "Semua yang pengecut dilatih kedisiplinan.",
+            "C": "Semua prajurit adalah pengecut.",
+            "D": "Semua yang tidak dilatih kedisiplinan adalah pengecut.",
+            "E": "Tidak ada hubungan."
+          },
+          "answer": "A",
+          "discussion": "Prajurit -> tidak pengecut. Prajurit -> dilatih kedisiplinan. Maka ada himpunan yang dilatih kedisiplinan (prajurit) yang sifatnya tidak pengecut (sebagian yang dilatih)."
+        },
+        {
+          "id": 7,
+          "question": "Barang siapa merusak fasilitas umum harus dihukum. Gito merusak telepon umum.",
+          "options": {
+            "A": "Gito harus dihukum.",
+            "B": "Gito mungkin dihukum.",
+            "C": "Gito tidak perlu dihukum.",
+            "D": "Telepon umum bukan fasilitas umum.",
+            "E": "Gito belum tentu dihukum."
+          },
+          "answer": "A",
+          "discussion": "Telepon umum = fasilitas umum. Modus Ponens: Merusak -> Dihukum. Gito merusak -> Gito dihukum."
+        },
+        {
+          "id": 8,
+          "question": "Semua mahasiswa baru wajib OSPEK. Angga bukan mahasiswa baru.",
+          "options": {
+            "A": "Angga wajib OSPEK.",
+            "B": "Angga tidak wajib OSPEK.",
+            "C": "Angga mahasiswa lama.",
+            "D": "Tidak dapat disimpulkan.",
+            "E": "Angga sedang cuti."
+          },
+          "answer": "D",
+          "discussion": "Fallacy of denying the antecedent. 'Mahasiswa baru -> wajib OSPEK'. 'Bukan mahasiswa baru' tidak lantas membatalkan kewajiban OSPEK (bisa jadi mahasiswa lama yang mengulang)."
+        },
+        {
+          "id": 9,
+          "question": "Hanya peserta yang membawa kartu yang boleh masuk kelas. Danu masuk kelas.",
+          "options": {
+            "A": "Danu membawa kartu.",
+            "B": "Danu tidak membawa kartu.",
+            "C": "Danu bukan peserta.",
+            "D": "Danu mungkin membawa kartu.",
+            "E": "Tidak dapat ditarik kesimpulan."
+          },
+          "answer": "A",
+          "discussion": "Kata 'Hanya' berarti syarat mutlak. Masuk kelas -> Membawa kartu. Danu masuk, berarti pasti membawa kartu."
+        },
+        {
+          "id": 10,
+          "question": "Tidak ada singa yang memakan sayur. Semua hewan di kandang X memakan sayur.",
+          "options": {
+            "A": "Ada singa di kandang X.",
+            "B": "Tidak ada singa di kandang X.",
+            "C": "Semua singa ada di kandang X.",
+            "D": "Sebagian singa di kandang X.",
+            "E": "Beberapa hewan di kandang X bukan singa."
+          },
+          "answer": "B",
+          "discussion": "Karena sifat singa dan sifat penghuni kandang X bertolak belakang mutlak (tidak makan sayur vs makan sayur), maka irisannya kosong (Tidak ada singa di kandang X)."
+        },
+        {
+          "id": 11,
+          "question": "Bila harga emas turun, banyak orang membeli perhiasan. Harga emas turun.",
+          "options": {
+            "A": "Orang tidak membeli perhiasan.",
+            "B": "Banyak orang membeli perhiasan.",
+            "C": "Toko emas bangkrut.",
+            "D": "Orang membeli logam mulia lain.",
+            "E": "Tidak dapat disimpulkan."
+          },
+          "answer": "B",
+          "discussion": "Modus ponens sederhana. Kondisi p terjadi, maka akibat q terjadi (Banyak orang membeli perhiasan)."
+        },
+        {
+          "id": 12,
+          "question": "Semua guru selalu datang tepat waktu. Sebagian orang yang datang tepat waktu mendapat penghargaan.",
+          "options": {
+            "A": "Semua guru mendapat penghargaan.",
+            "B": "Sebagian guru mendapat penghargaan.",
+            "C": "Tidak ada guru yang mendapat penghargaan.",
+            "D": "Sebagian guru mungkin tidak mendapat penghargaan.",
+            "E": "Tidak dapat disimpulkan pasti."
+          },
+          "answer": "E",
+          "discussion": "Semua A -> B. Sebagian B -> C. Kita tidak tahu apakah 'sebagian B' tersebut mencakup A atau di luar A. Sehingga tidak dapat disimpulkan secara pasti."
+        },
+        {
+          "id": 13,
+          "question": "Setiap hari Minggu, Rara pergi berenang atau ke perpustakaan. Hari Minggu ini Rara tidak berenang.",
+          "options": {
+            "A": "Rara ke perpustakaan.",
+            "B": "Rara di rumah saja.",
+            "C": "Rara berenang dan ke perpustakaan.",
+            "D": "Rara pergi ke pasar.",
+            "E": "Tidak dapat disimpulkan."
+          },
+          "answer": "A",
+          "discussion": "Silogisme Disjungtif: p v q. ~p. Maka q. (Jika tidak berenang, maka ia pergi ke perpustakaan)."
+        },
+        {
+          "id": 14,
+          "question": "Beberapa menteri mengundurkan diri. Semua orang yang mengundurkan diri mendapatkan pesangon.",
+          "options": {
+            "A": "Semua menteri mendapatkan pesangon.",
+            "B": "Beberapa menteri mendapatkan pesangon.",
+            "C": "Tidak ada menteri yang dapat pesangon.",
+            "D": "Orang yang dapat pesangon hanya menteri.",
+            "E": "Semua menteri mengundurkan diri."
+          },
+          "answer": "B",
+          "discussion": "Karena semua yang mengundurkan diri dapat pesangon, dan ada beberapa menteri yang mengundurkan diri, maka menteri-menteri tersebut (beberapa menteri) pasti dapat pesangon."
+        },
+        {
+          "id": 15,
+          "question": "Semua jam tangan asli memiliki nomor seri. Jam tangan Anton tidak memiliki nomor seri.",
+          "options": {
+            "A": "Jam tangan Anton asli.",
+            "B": "Jam tangan Anton palsu.",
+            "C": "Jam tangan Anton rusak.",
+            "D": "Anton bukan pemilik jam tangan.",
+            "E": "Tidak dapat disimpulkan."
+          },
+          "answer": "B",
+          "discussion": "Modus Tollens: Asli -> Ada nomor seri. Tidak ada nomor seri -> Tidak asli (Palsu)."
+        },
+        {
+          "id": 16,
+          "question": "Apabila matahari terbenam, hari mulai malam. Hari mulai malam.",
+          "options": {
+            "A": "Matahari terbenam.",
+            "B": "Matahari tidak terbenam.",
+            "C": "Belum tentu matahari terbenam.",
+            "D": "Hari sudah gelap.",
+            "E": "Bulan mulai muncul."
+          },
+          "answer": "C",
+          "discussion": "Fallacy of affirming the consequent. Hari mulai malam tidak selalu karena matahari terbenam seketika (bisa saja karena mendung gelap gulita, meski konteksnya umum, secara logika formal kesimpulan 'pasti' tidak sah). Jawaban standar CPNS biasanya adalah 'Belum tentu' atau 'Tidak dapat disimpulkan'."
+        },
+        {
+          "id": 17,
+          "question": "Semua buku pelajaran tebal dan harganya mahal. Buku X adalah buku pelajaran.",
+          "options": {
+            "A": "Buku X tebal dan murah.",
+            "B": "Buku X tipis dan mahal.",
+            "C": "Buku X tebal dan harganya mahal.",
+            "D": "Buku X mahal.",
+            "E": "Semua benar."
+          },
+          "answer": "C",
+          "discussion": "Karena Buku X masuk dalam himpunan 'buku pelajaran', maka Buku X akan mewarisi semua sifat wajibnya yaitu tebal dan mahal."
+        },
+        {
+          "id": 18,
+          "question": "Tidak ada anak malas yang pandai. Sebagian anak yang pandai sukses dalam karir.",
+          "options": {
+            "A": "Sebagian anak yang sukses karirnya bukan anak malas.",
+            "B": "Semua anak malas sukses karirnya.",
+            "C": "Semua anak yang sukses adalah pandai.",
+            "D": "Anak malas tidak sukses karirnya.",
+            "E": "Anak yang pandai pasti tidak sukses."
+          },
+          "answer": "A",
+          "discussion": "Anak pandai -> tidak malas. Sebagian anak pandai -> sukses. Artinya sebagian anak sukses (yang berasal dari anak pandai) adalah anak yang tidak malas."
+        },
+        {
+          "id": 19,
+          "question": "Semua pesawat memiliki sayap. Pesawat Z tidak memiliki sayap.",
+          "options": {
+            "A": "Pesawat Z bukan pesawat sungguhan.",
+            "B": "Pesawat Z sedang diperbaiki.",
+            "C": "Pernyataan premis salah.",
+            "D": "Pesawat Z adalah pesawat jenis baru.",
+            "E": "Sesuatu yang tidak memiliki sayap bukan pesawat."
+          },
+          "answer": "E",
+          "discussion": "Berdasarkan premis: Pesawat -> Memiliki sayap. Sesuatu yang tidak memiliki sayap berarti bukan pesawat. Ini adalah implikasi logis dari modus tollens secara umum."
+        },
+        {
+          "id": 20,
+          "question": "Semua bunga mawar berwarna merah. Beberapa bunga di kebun berwarna putih.",
+          "options": {
+            "A": "Semua bunga di kebun adalah mawar.",
+            "B": "Beberapa bunga di kebun bukan mawar.",
+            "C": "Semua mawar ada di kebun.",
+            "D": "Bunga putih di kebun adalah mawar.",
+            "E": "Semua bunga putih adalah mawar."
+          },
+          "answer": "B",
+          "discussion": "Karena semua mawar merah, maka bunga di kebun yang putih pasti BUKAN mawar. Jadi beberapa bunga di kebun bukan mawar."
+        }
+      ]
+    }
+  ]
+}

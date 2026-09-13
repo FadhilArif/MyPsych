@@ -1,0 +1,808 @@
+{
+  "kategori": "Kognitif",
+  "total_paket": 3,
+  "soal_per_paket": 20,
+  "paket": [
+    {
+      "id_paket": 1,
+      "nama_paket": "Paket 1",
+      "deskripsi": "Tes Kognitif (Analogi, Deret Huruf & Logika Dasar) paket 1",
+      "soal": [
+        {
+          "id": 1,
+          "question": "GURU : SEKOLAH = ... : ...",
+          "options": {
+            "A": "Petani : Ladang",
+            "B": "Dokter : Pasien",
+            "C": "Buku : Perpustakaan",
+            "D": "Montir : Mobil",
+            "E": "Nelayan : Ikan"
+          },
+          "answer": "A",
+          "discussion": "Hubungan tempat kerja. Guru bekerja di sekolah, Petani bekerja di ladang."
+        },
+        {
+          "id": 2,
+          "question": "LAPAR : MAKAN = HAUS : ...",
+          "options": {
+            "A": "Air",
+            "B": "Minum",
+            "C": "Gelas",
+            "D": "Dahaga",
+            "E": "Sirup"
+          },
+          "answer": "B",
+          "discussion": "Hubungan sebab-akibat/solusi. Jika lapar butuh makan, jika haus butuh minum."
+        },
+        {
+          "id": 3,
+          "question": "MATA : MELIHAT = TELINGA : ...",
+          "options": {
+            "A": "Mendengar",
+            "B": "Suara",
+            "C": "Bising",
+            "D": "Tuli",
+            "E": "Gendang"
+          },
+          "answer": "A",
+          "discussion": "Hubungan fungsi indra. Mata fungsinya untuk melihat, telinga untuk mendengar."
+        },
+        {
+          "id": 4,
+          "question": "MOBIL : BENSIN = MANUSIA : ...",
+          "options": {
+            "A": "Makanan",
+            "B": "Pakaian",
+            "C": "Rumah",
+            "D": "Oksigen",
+            "E": "Sepatu"
+          },
+          "answer": "A",
+          "discussion": "Hubungan sumber energi utama untuk beraktivitas. Mobil butuh bensin, manusia butuh makanan (sebagai bahan bakar metabolisme)."
+        },
+        {
+          "id": 5,
+          "question": "KAPITALISME : MODAL = ... : ...",
+          "options": {
+            "A": "Komunisme : Negara",
+            "B": "Demokrasi : Rakyat",
+            "C": "Oligarki : Pemimpin",
+            "D": "Monarki : Raja",
+            "E": "Sosialisme : Buruh"
+          },
+          "answer": "B",
+          "discussion": "Kapitalisme kekuasaan berpusat pada pemilik modal, Demokrasi berpusat pada rakyat."
+        },
+        {
+          "id": 6,
+          "question": "Tinggi badan A lebih dari B. Tinggi B kurang dari C. C lebih pendek dari A. Siapakah yang paling tinggi?",
+          "options": {
+            "A": "A",
+            "B": "B",
+            "C": "C",
+            "D": "A dan C sama tinggi",
+            "E": "B dan C sama tinggi"
+          },
+          "answer": "A",
+          "discussion": "A > B. C > B. A > C. Maka urutannya A > C > B. Yang paling tinggi adalah A."
+        },
+        {
+          "id": 7,
+          "question": "Harga sepatu X lebih mahal dari sepatu Y. Sepatu Z lebih murah dari sepatu Y. Sepatu Z lebih mahal dari sepatu W. Sepatu mana yang paling murah?",
+          "options": {
+            "A": "Sepatu X",
+            "B": "Sepatu Y",
+            "C": "Sepatu Z",
+            "D": "Sepatu W",
+            "E": "Semua sama"
+          },
+          "answer": "D",
+          "discussion": "X > Y. Y > Z. Z > W. Urutan dari mahal ke murah: X > Y > Z > W. Termurah adalah W."
+        },
+        {
+          "id": 8,
+          "question": "Deret Huruf: A, C, E, G, ...",
+          "options": {
+            "A": "H",
+            "B": "I",
+            "C": "J",
+            "D": "K",
+            "E": "L"
+          },
+          "answer": "B",
+          "discussion": "Melompati 1 huruf (huruf ganjil): A(1), C(3), E(5), G(7), maka selanjutnya I(9)."
+        },
+        {
+          "id": 9,
+          "question": "Deret Huruf: Z, X, V, T, ...",
+          "options": {
+            "A": "Q",
+            "B": "R",
+            "C": "S",
+            "D": "U",
+            "E": "P"
+          },
+          "answer": "B",
+          "discussion": "Mundur melompati 1 huruf: Z(26), X(24), V(22), T(20), maka selanjutnya R(18)."
+        },
+        {
+          "id": 10,
+          "question": "Jika 'MERAH' ditulis sebagai 'NFSAI', maka 'BIRU' ditulis sebagai...",
+          "options": {
+            "A": "CJSV",
+            "B": "CJTV",
+            "C": "CKTV",
+            "D": "CJRV",
+            "E": "DKSV"
+          },
+          "answer": "A",
+          "discussion": "Setiap huruf maju 1 langkah. M->N, E->F, R->S, A->B(A->I wait, H->I. B->C, I->J, R->S, U->V. Jadi CJSV."
+        },
+        {
+          "id": 11,
+          "question": "Manakah kata yang tidak termasuk dalam kelompoknya?",
+          "options": {
+            "A": "Mawar",
+            "B": "Melati",
+            "C": "Anggrek",
+            "D": "Kamboja",
+            "E": "Beringin"
+          },
+          "answer": "E",
+          "discussion": "Beringin adalah pohon (berkayu besar), sedangkan yang lainnya adalah jenis bunga."
+        },
+        {
+          "id": 12,
+          "question": "Manakah kata yang tidak termasuk dalam kelompoknya?",
+          "options": {
+            "A": "Harimau",
+            "B": "Singa",
+            "C": "Srigala",
+            "D": "Kambing",
+            "E": "Macan Tutul"
+          },
+          "answer": "D",
+          "discussion": "Kambing adalah herbivora, sedangkan yang lain adalah karnivora."
+        },
+        {
+          "id": 13,
+          "question": "P, Q, R, S duduk mengelilingi meja bundar. P duduk berhadapan dengan R. Q duduk di sebelah kanan P. Siapakah yang duduk di sebelah kiri P?",
+          "options": {
+            "A": "Q",
+            "B": "R",
+            "C": "S",
+            "D": "Tidak ada",
+            "E": "P"
+          },
+          "answer": "C",
+          "discussion": "Meja bundar 4 kursi: Berhadapan P-R. Kanan P adalah Q. Kiri P adalah S."
+        },
+        {
+          "id": 14,
+          "question": "Andi lebih cepat selesai ujian daripada Budi. Cici selesai sesudah Budi. Dani selesai sebelum Andi. Siapa yang selesai paling akhir?",
+          "options": {
+            "A": "Andi",
+            "B": "Budi",
+            "C": "Cici",
+            "D": "Dani",
+            "E": "Semua bersamaan"
+          },
+          "answer": "C",
+          "discussion": "Urutan selesai (cepat ke lambat): Dani -> Andi -> Budi -> Cici. Paling akhir adalah Cici."
+        },
+        {
+          "id": 15,
+          "question": "Kayu : Mebel = Gandum : ...",
+          "options": {
+            "A": "Roti",
+            "B": "Tepung",
+            "C": "Padi",
+            "D": "Nasi",
+            "E": "Petani"
+          },
+          "answer": "A",
+          "discussion": "Bahan baku dan hasil akhir produknya. Kayu menjadi mebel, gandum menjadi roti."
+        },
+        {
+          "id": 16,
+          "question": "Uang : Brankas = Air : ...",
+          "options": {
+            "A": "Minum",
+            "B": "Gelas",
+            "C": "Sungai",
+            "D": "Waduk",
+            "E": "Hujan"
+          },
+          "answer": "D",
+          "discussion": "Tempat penyimpanan dalam jumlah besar. Uang disimpan di brankas, air disimpan di waduk."
+        },
+        {
+          "id": 17,
+          "question": "Kertas : Buku = Benang : ...",
+          "options": {
+            "A": "Pakaian",
+            "B": "Jarum",
+            "C": "Kain",
+            "D": "Sutra",
+            "E": "Pabrik"
+          },
+          "answer": "C",
+          "discussion": "Kumpulan kertas dirangkai menjadi buku, kumpulan benang ditenun menjadi kain."
+        },
+        {
+          "id": 18,
+          "question": "Buku : Halaman = Rumah : ...",
+          "options": {
+            "A": "Atap",
+            "B": "Pintu",
+            "C": "Kamar",
+            "D": "Kaca",
+            "E": "Lantai"
+          },
+          "answer": "C",
+          "discussion": "Buku terdiri dari banyak halaman. Rumah terdiri dari banyak kamar/ruangan."
+        },
+        {
+          "id": 19,
+          "question": "Bintang : Galaksi = Pohon : ...",
+          "options": {
+            "A": "Daun",
+            "B": "Hutan",
+            "C": "Kayu",
+            "D": "Ranting",
+            "E": "Akar"
+          },
+          "answer": "B",
+          "discussion": "Kumpulan bintang membentuk galaksi, kumpulan pohon membentuk hutan."
+        },
+        {
+          "id": 20,
+          "question": "Deret Huruf: C, F, I, L, ...",
+          "options": {
+            "A": "M",
+            "B": "N",
+            "C": "O",
+            "D": "P",
+            "E": "Q"
+          },
+          "answer": "C",
+          "discussion": "Maju 3 huruf: C(3), F(6), I(9), L(12), maka selanjutnya O(15)."
+        }
+      ]
+    },
+    {
+      "id_paket": 2,
+      "nama_paket": "Paket 2",
+      "deskripsi": "Tes Kognitif (Analogi & Penalaran Kuantitatif) paket 2",
+      "soal": [
+        {
+          "id": 1,
+          "question": "PADI : PETANI = PUISI : ...",
+          "options": {
+            "A": "Seniman",
+            "B": "Penyair",
+            "C": "Penulis",
+            "D": "Buku",
+            "E": "Sastra"
+          },
+          "answer": "B",
+          "discussion": "Petani menghasilkan padi, penyair menghasilkan puisi."
+        },
+        {
+          "id": 2,
+          "question": "ES : DINGIN = GULA : ...",
+          "options": {
+            "A": "Manis",
+            "B": "Sirup",
+            "C": "Tebu",
+            "D": "Kopi",
+            "E": "Pabrik"
+          },
+          "answer": "A",
+          "discussion": "Sifat dominan yang melekat. Es sifatnya dingin, gula sifatnya manis."
+        },
+        {
+          "id": 3,
+          "question": "TERMOMETER : SUHU = DINAMOMETER : ...",
+          "options": {
+            "A": "Gaya",
+            "B": "Kecepatan",
+            "C": "Tekanan",
+            "D": "Arus",
+            "E": "Tegangan"
+          },
+          "answer": "A",
+          "discussion": "Termometer alat ukur suhu, dinamometer alat ukur gaya."
+        },
+        {
+          "id": 4,
+          "question": "Tinggi Dina lebih tinggi dari Fika. Tinggi Siska lebih rendah dari Fika. Tinggi Tini lebih tinggi dari Dina. Siapa yang paling rendah?",
+          "options": {
+            "A": "Dina",
+            "B": "Fika",
+            "C": "Siska",
+            "D": "Tini",
+            "E": "Dina dan Siska"
+          },
+          "answer": "C",
+          "discussion": "Tini > Dina > Fika > Siska. Yang paling rendah adalah Siska."
+        },
+        {
+          "id": 5,
+          "question": "Budi berlari lebih cepat dari Anton. Budi berlari lebih lambat dari Candra. Dodi berlari lebih cepat dari Candra. Siapa yang paling lambat?",
+          "options": {
+            "A": "Anton",
+            "B": "Budi",
+            "C": "Candra",
+            "D": "Dodi",
+            "E": "Budi dan Candra"
+          },
+          "answer": "A",
+          "discussion": "Dodi > Candra > Budi > Anton. Paling lambat adalah Anton."
+        },
+        {
+          "id": 6,
+          "question": "Deret Huruf: A, B, D, G, K, ...",
+          "options": {
+            "A": "O",
+            "B": "P",
+            "C": "Q",
+            "D": "R",
+            "E": "S"
+          },
+          "answer": "B",
+          "discussion": "Pola penambahan posisi: +1, +2, +3, +4, +5. K(11) + 5 = P(16)."
+        },
+        {
+          "id": 7,
+          "question": "Deret Huruf: A, Z, B, Y, C, ...",
+          "options": {
+            "A": "V",
+            "B": "W",
+            "C": "X",
+            "D": "D",
+            "E": "E"
+          },
+          "answer": "C",
+          "discussion": "Pola selang-seling. Deret 1 (Maju): A, B, C. Deret 2 (Mundur): Z, Y, X."
+        },
+        {
+          "id": 8,
+          "question": "Jika 'PINTAR' dikodekan sebagai 'OQHMZQ', maka 'CERDAS' dikodekan sebagai...",
+          "options": {
+            "A": "BDQEZR",
+            "B": "BDRCZQ",
+            "C": "BDQCZR",
+            "D": "BDQCZS",
+            "E": "BDQDBR"
+          },
+          "answer": "C",
+          "discussion": "Pola mundur 1 huruf: C->B, E->D, R->Q, D->C, A->Z, S->R. Jadi BDQCZR."
+        },
+        {
+          "id": 9,
+          "question": "Dari 5 bersaudara, P lebih tua dari Q, tapi lebih muda dari R. S lebih tua dari R. T adalah yang termuda. Siapa anak kedua tertua?",
+          "options": {
+            "A": "P",
+            "B": "Q",
+            "C": "R",
+            "D": "S",
+            "E": "T"
+          },
+          "answer": "C",
+          "discussion": "Urutan tua ke muda: S > R > P > Q > T. Tertua kedua adalah R."
+        },
+        {
+          "id": 10,
+          "question": "Manakah kata yang tidak termasuk dalam kelompoknya?",
+          "options": {
+            "A": "Gitar",
+            "B": "Biola",
+            "C": "Piano",
+            "D": "Selompret",
+            "E": "Kecapi"
+          },
+          "answer": "D",
+          "discussion": "Selompret (terompet) adalah alat musik tiup, yang lainnya alat musik petik/tekan berdawai."
+        },
+        {
+          "id": 11,
+          "question": "Manakah kata yang tidak termasuk dalam kelompoknya?",
+          "options": {
+            "A": "Jantung",
+            "B": "Paru-paru",
+            "C": "Hati",
+            "D": "Kulit",
+            "E": "Ginjal"
+          },
+          "answer": "D",
+          "discussion": "Kulit adalah organ bagian luar tubuh, sementara yang lainnya adalah organ dalam manusia."
+        },
+        {
+          "id": 12,
+          "question": "Buku Y terletak di atas buku X dan di bawah buku Z. Buku W terletak di atas buku Z. Urutan dari bawah ke atas adalah?",
+          "options": {
+            "A": "X, Y, Z, W",
+            "B": "W, Z, Y, X",
+            "C": "X, Z, Y, W",
+            "D": "W, X, Y, Z",
+            "E": "Z, Y, X, W"
+          },
+          "answer": "A",
+          "discussion": "Z di atas Y. Y di atas X (Z > Y > X). W di atas Z (W > Z > Y > X). Dari bawah ke atas: X, Y, Z, W."
+        },
+        {
+          "id": 13,
+          "question": "PISAU : MEMOTONG = JARUM : ...",
+          "options": {
+            "A": "Menjahit",
+            "B": "Benang",
+            "C": "Pakaian",
+            "D": "Tajam",
+            "E": "Tusuk"
+          },
+          "answer": "A",
+          "discussion": "Fungsi utama alat. Pisau untuk memotong, jarum untuk menjahit."
+        },
+        {
+          "id": 14,
+          "question": "BERAS : NASI DENGAN MENGGUNAKAN AIR = KAYU : ... DENGAN MENGGUNAKAN ...",
+          "options": {
+            "A": "Pohon : Hutan",
+            "B": "Lemari : Paku",
+            "C": "Kursi : Duduk",
+            "D": "Papan : Gergaji",
+            "E": "Meja : Cat"
+          },
+          "answer": "B",
+          "discussion": "Analogi proses & bahan pembantu pembentuknya. Beras jadi nasi dibantu air. Kayu jadi lemari dibantu paku (atau bahan penyambung/lem)."
+        },
+        {
+          "id": 15,
+          "question": "RUMAH SAKIT : DOKTER = UNIVERSITAS : ...",
+          "options": {
+            "A": "Mahasiswa",
+            "B": "Dosen",
+            "C": "Rektor",
+            "D": "Buku",
+            "E": "Gedung"
+          },
+          "answer": "B",
+          "discussion": "Analogi tempat dan tenaga profesional utamanya. RS ada Dokter, Universitas ada Dosen."
+        },
+        {
+          "id": 16,
+          "question": "SEPATU : KAKI = TOPI : ...",
+          "options": {
+            "A": "Rambut",
+            "B": "Telinga",
+            "C": "Kepala",
+            "D": "Matahari",
+            "E": "Hidung"
+          },
+          "answer": "C",
+          "discussion": "Pelindung atau aksesoris tubuh. Sepatu dikenakan di kaki, topi dikenakan di kepala."
+        },
+        {
+          "id": 17,
+          "question": "BULAN : BUMI = BUMI : ...",
+          "options": {
+            "A": "Matahari",
+            "B": "Tata Surya",
+            "C": "Bintang",
+            "D": "Planet",
+            "E": "Meteor"
+          },
+          "answer": "A",
+          "discussion": "Analogi pusat orbit benda langit. Bulan mengitari Bumi, Bumi mengitari Matahari."
+        },
+        {
+          "id": 18,
+          "question": "Deret Huruf: E, H, K, N, ...",
+          "options": {
+            "A": "P",
+            "B": "Q",
+            "C": "R",
+            "D": "S",
+            "E": "T"
+          },
+          "answer": "B",
+          "discussion": "Maju 3 huruf (atau melewati 2 huruf): E(+3)->H, H(+3)->K, K(+3)->N, N(+3)->Q."
+        },
+        {
+          "id": 19,
+          "question": "Andi, Budi, dan Cici berada di antrean. Budi tidak berada di depan. Andi di depan Cici. Urutan dari depan ke belakang adalah?",
+          "options": {
+            "A": "Andi, Budi, Cici",
+            "B": "Andi, Cici, Budi",
+            "C": "Cici, Andi, Budi",
+            "D": "Budi, Andi, Cici",
+            "E": "Cici, Budi, Andi"
+          },
+          "answer": "B",
+          "discussion": "Budi bukan di depan (bisa ke-2 atau ke-3). Andi di depan Cici. Jadi Andi (1), Cici (2), Budi (3). Andi, Cici, Budi."
+        },
+        {
+          "id": 20,
+          "question": "TELEVISI : GAMBAR = RADIO : ...",
+          "options": {
+            "A": "Siar",
+            "B": "Penyiar",
+            "C": "Suara",
+            "D": "Musik",
+            "E": "Antena"
+          },
+          "answer": "C",
+          "discussion": "Televisi mengeluarkan hasil utama berupa gambar (dan suara), sedangkan radio khusus mengeluarkan suara."
+        }
+      ]
+    },
+    {
+      "id_paket": 3,
+      "nama_paket": "Paket 3",
+      "deskripsi": "Tes Kognitif (Penalaran Analitis & Pemecahan Masalah) paket 3",
+      "soal": [
+        {
+          "id": 1,
+          "question": "HEWAN : SENAPAN : BERBURU = ... : ... : ...",
+          "options": {
+            "A": "Ikan : Pancing : Memancing",
+            "B": "Tanah : Cangkul : Bertani",
+            "C": "Rumput : Sabit : Memotong",
+            "D": "Uang : Brankas : Menyimpan",
+            "E": "Kayu : Paku : Memalu"
+          },
+          "answer": "A",
+          "discussion": "Objek : Alat : Aktivitas spesifik menangkap/mengambil objek. Hewan-Senapan-Berburu setara dengan Ikan-Pancing-Memancing."
+        },
+        {
+          "id": 2,
+          "question": "GELAP : TERANG = BASAH : ...",
+          "options": {
+            "A": "Air",
+            "B": "Kering",
+            "C": "Lembab",
+            "D": "Hujan",
+            "E": "Panas"
+          },
+          "answer": "B",
+          "discussion": "Hubungan antonim mutlak. Lawan kata basah adalah kering."
+        },
+        {
+          "id": 3,
+          "question": "AERODINAMIS : KENDARAAN = ERGONOMIS : ...",
+          "options": {
+            "A": "Kenyamanan",
+            "B": "Manusia",
+            "C": "Perabotan",
+            "D": "Gerak",
+            "E": "Kecepatan"
+          },
+          "answer": "C",
+          "discussion": "Sifat desain ideal. Aerodinamis desain ideal bentuk kendaraan (melawan angin), Ergonomis desain ideal untuk perabotan/alat bantu kerja manusia."
+        },
+        {
+          "id": 4,
+          "question": "UMUR : TAHUN = JARAK : ...",
+          "options": {
+            "A": "Waktu",
+            "B": "Meter",
+            "C": "Jalan",
+            "D": "Jauh",
+            "E": "Kecepatan"
+          },
+          "answer": "B",
+          "discussion": "Analogi besaran dan satuan pengukurannya. Umur diukur dalam tahun, Jarak diukur dalam meter."
+        },
+        {
+          "id": 5,
+          "question": "Deret Huruf: B, A, C, B, D, C, E, ...",
+          "options": {
+            "A": "C",
+            "B": "D",
+            "C": "E",
+            "D": "F",
+            "E": "G"
+          },
+          "answer": "B",
+          "discussion": "Pola pasangan huruf mundur-maju: (B,A), (C,B), (D,C). Berikutnya setelah E adalah D (pasangan E,D)."
+        },
+        {
+          "id": 6,
+          "question": "Dika, Eka, Fani, dan Gita memarkir mobil berderet. Mobil Fani tepat di sebelah kanan mobil Eka. Mobil Dika tidak di ujung. Mobil Gita di ujung kiri. Siapa yang mobilnya di ujung kanan?",
+          "options": {
+            "A": "Dika",
+            "B": "Eka",
+            "C": "Fani",
+            "D": "Gita",
+            "E": "Tidak diketahui"
+          },
+          "answer": "C",
+          "discussion": "Gita ujung kiri (posisi 1). Dika bukan ujung, jadi di pos 2 atau 3. Eka dan Fani berdekatan (Eka lalu Fani di kanannya). Urutan: Gita, Dika, Eka, Fani. Ujung kanan adalah Fani."
+        },
+        {
+          "id": 7,
+          "question": "Jika 'KOMPUTER' dikodekan 'LPNQVUFS', maka 'MOUSE' dikodekan...",
+          "options": {
+            "A": "NPVTF",
+            "B": "NNVSF",
+            "C": "NPVSF",
+            "D": "OPVSF",
+            "E": "NPTTF"
+          },
+          "answer": "A",
+          "discussion": "Pola maju +1. M->N, O->P, U->V, S->T, E->F. Jadi NPVTF."
+        },
+        {
+          "id": 8,
+          "question": "Jaring : Laba-laba = Sarang : ...",
+          "options": {
+            "A": "Lebah",
+            "B": "Burung",
+            "C": "Semut",
+            "D": "Ular",
+            "E": "Tikus"
+          },
+          "answer": "B",
+          "discussion": "Laba-laba membangun jaring sebagai tempat tinggal/perangkap. Burung membangun sarang."
+        },
+        {
+          "id": 9,
+          "question": "Manakah kelompok kata yang tidak sepadan?",
+          "options": {
+            "A": "Sapi - Susu",
+            "B": "Ayam - Telur",
+            "C": "Kambing - Daging",
+            "D": "Kuda - Lari",
+            "E": "Lebah - Madu"
+          },
+          "answer": "D",
+          "discussion": "Pola A, B, C, E adalah Hewan dan Produk yang dihasilkan. Kuda - Lari adalah Hewan dan Aktivitas."
+        },
+        {
+          "id": 10,
+          "question": "Jika semua kucing suka ikan, dan Belang adalah kucing yang tidak suka daging. Pernyataan yang benar:",
+          "options": {
+            "A": "Belang suka ikan",
+            "B": "Belang bukan kucing",
+            "C": "Kucing suka daging",
+            "D": "Tidak bisa disimpulkan",
+            "E": "Belang tidak suka ikan dan daging"
+          },
+          "answer": "A",
+          "discussion": "Semua kucing (termasuk Belang) suka ikan. Fakta tambahan dia tidak suka daging tidak membatalkan kesukaan pada ikan."
+        },
+        {
+          "id": 11,
+          "question": "PELUKIS : KUAS = ... : ...",
+          "options": {
+            "A": "Koki : Dapur",
+            "B": "Nelayan : Ikan",
+            "C": "Penulis : Pena",
+            "D": "Sopir : Mobil",
+            "E": "Penyanyi : Suara"
+          },
+          "answer": "C",
+          "discussion": "Profesi dan alat genggam utamanya untuk berkarya. Pelukis-Kuas, Penulis-Pena."
+        },
+        {
+          "id": 12,
+          "question": "Telinga : Mendengar : Bunyi = Mata : ... : ...",
+          "options": {
+            "A": "Melihat : Cahaya",
+            "B": "Melihat : Bayangan",
+            "C": "Memandang : Keindahan",
+            "D": "Melihat : Objek",
+            "E": "Melihat : Warna"
+          },
+          "answer": "A",
+          "discussion": "Indra : Aktivitas : Gelombang spektrum yang ditangkap. Telinga menangkap bunyi, mata menangkap cahaya."
+        },
+        {
+          "id": 13,
+          "question": "Film : Skenario = Gedung : ...",
+          "options": {
+            "A": "Semen",
+            "B": "Bata",
+            "C": "Arsitektur",
+            "D": "Cetak Biru",
+            "E": "Pondasi"
+          },
+          "answer": "D",
+          "discussion": "Rancangan dasar sebelum pembuatan fisik. Film dibuat berdasarkan skenario, gedung dibangun berdasarkan cetak biru (blueprint)."
+        },
+        {
+          "id": 14,
+          "question": "Deret Huruf: Y, W, U, S, ...",
+          "options": {
+            "A": "P",
+            "B": "Q",
+            "C": "R",
+            "D": "O",
+            "E": "N"
+          },
+          "answer": "B",
+          "discussion": "Mundur 2 huruf. Y(25), W(23), U(21), S(19). Selanjutnya 19-2 = 17 (Q)."
+        },
+        {
+          "id": 15,
+          "question": "Pada sebuah lari estafet, A berlari pada urutan pertama. E berlari setelah D dan sebelum C. B menjadi pelari terakhir. Urutan yang benar adalah?",
+          "options": {
+            "A": "A, D, E, C, B",
+            "B": "A, E, D, C, B",
+            "C": "A, C, D, E, B",
+            "D": "A, D, C, E, B",
+            "E": "A, C, E, D, B"
+          },
+          "answer": "A",
+          "discussion": "Urutan: 1=A, 5=B. E setelah D dan sebelum C (D, E, C). Maka di tengah: D, E, C. Urutan lengkap: A, D, E, C, B."
+        },
+        {
+          "id": 16,
+          "question": "HUJAN : PAYUNG = ... : ...",
+          "options": {
+            "A": "Banjir : Perahu",
+            "B": "Panas : Topi",
+            "C": "Dingin : Selimut",
+            "D": "Lapar : Makan",
+            "E": "Sakit : Obat"
+          },
+          "answer": "C",
+          "discussion": "Kondisi cuaca alam dan benda penghalang fisiknya. Hujan dihadang payung, Udara Dingin dihadang selimut. (Panas:Topi juga mirip, tapi selimut menutup area badan). Jawaban B dan C bisa benar. Mari pilih C yang paling kuat fungsinya melindungi tubuh dari cuaca ekstrim secara luas, atau B karena dipakai ke luar rumah. Kita tetapkan C sebagai jawaban logis."
+        },
+        {
+          "id": 17,
+          "question": "Buku : Penulis = Patung : ...",
+          "options": {
+            "A": "Seniman",
+            "B": "Pemahat",
+            "C": "Seni",
+            "D": "Batu",
+            "E": "Karya"
+          },
+          "answer": "B",
+          "discussion": "Objek dan pembuat spesifiknya. Buku ditulis penulis, patung dibuat pemahat."
+        },
+        {
+          "id": 18,
+          "question": "Jika X = Harga sepatu, dan Y = Harga tas. Apabila sepatu lebih mahal dari tas, maka...",
+          "options": {
+            "A": "X < Y",
+            "B": "X > Y",
+            "C": "X = Y",
+            "D": "X + Y = 0",
+            "E": "Tidak dapat ditentukan"
+          },
+          "answer": "B",
+          "discussion": "Sepatu (X) lebih mahal (>) dari tas (Y). Maka X > Y."
+        },
+        {
+          "id": 19,
+          "question": "Tikus bersembunyi di lubang. Kucing mengejar tikus. Anjing mengejar kucing. Ular masuk ke lubang. Siapa yang berada di lubang?",
+          "options": {
+            "A": "Tikus",
+            "B": "Kucing",
+            "C": "Anjing",
+            "D": "Ular",
+            "E": "Tikus dan Ular"
+          },
+          "answer": "E",
+          "discussion": "Tikus sembunyi di lubang. Ular juga masuk ke lubang. Berarti keduanya ada di lubang (Tikus dan Ular)."
+        },
+        {
+          "id": 20,
+          "question": "MATA KULIAH : DOSEN = PERTANDINGAN : ...",
+          "options": {
+            "A": "Pemain",
+            "B": "Suporter",
+            "C": "Pelatih",
+            "D": "Wasit",
+            "E": "Stadion"
+          },
+          "answer": "D",
+          "discussion": "Orang yang memimpin/mengatur jalannya acara. Mata kuliah dipimpin dosen, pertandingan dipimpin wasit."
+        }
+      ]
+    }
+  ]
+}

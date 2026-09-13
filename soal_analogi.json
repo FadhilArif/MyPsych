@@ -1,0 +1,808 @@
+{
+  "kategori": "Analogi Verbal",
+  "total_paket": 3,
+  "soal_per_paket": 20,
+  "paket": [
+    {
+      "id_paket": 1,
+      "nama_paket": "Paket 1",
+      "deskripsi": "Soal tes analogi verbal dasar dan padanan kata umum paket 1",
+      "soal": [
+        {
+          "id": 1,
+          "question": "GURU : SEKOLAH",
+          "options": {
+            "A": "Petani : Sawah",
+            "B": "Dokter : Pasien",
+            "C": "Buku : Perpustakaan",
+            "D": "Montir : Mobil",
+            "E": "Nelayan : Laut"
+          },
+          "answer": "A",
+          "discussion": "Hubungan profesi dan tempat kerjanya. Guru bekerja di sekolah, petani bekerja di sawah."
+        },
+        {
+          "id": 2,
+          "question": "LAPAR : MAKAN",
+          "options": {
+            "A": "Haus : Air",
+            "B": "Kantuk : Tidur",
+            "C": "Lelah : Kerja",
+            "D": "Sakit : Obat",
+            "E": "Bodoh : Belajar"
+          },
+          "answer": "B",
+          "discussion": "Hubungan kondisi tubuh dan respons pemulihannya yang paling natural. Lapar diatasi dengan makan, kantuk diatasi dengan tidur."
+        },
+        {
+          "id": 3,
+          "question": "MATA : MELIHAT",
+          "options": {
+            "A": "Telinga : Mendengar",
+            "B": "Hidung : Wangi",
+            "C": "Lidah : Makanan",
+            "D": "Tangan : Memegang",
+            "E": "Kaki : Sepatu"
+          },
+          "answer": "A",
+          "discussion": "Hubungan organ tubuh dan fungsi utamanya. Mata untuk melihat, telinga untuk mendengar."
+        },
+        {
+          "id": 4,
+          "question": "MOBIL : BENSIN",
+          "options": {
+            "A": "Kereta : Rel",
+            "B": "Pesawat : Pilot",
+            "C": "Manusia : Makanan",
+            "D": "Kapal : Laut",
+            "E": "Sepeda : Roda"
+          },
+          "answer": "C",
+          "discussion": "Hubungan objek dan sumber energi penggeraknya. Mobil membutuhkan bensin, manusia membutuhkan makanan."
+        },
+        {
+          "id": 5,
+          "question": "SENDOK : MAKAN",
+          "options": {
+            "A": "Pisau : Sayur",
+            "B": "Gunting : Kertas",
+            "C": "Pena : Buku",
+            "D": "Kuas : Dinding",
+            "E": "Cangkul : Tanah"
+          },
+          "answer": "B",
+          "discussion": "Hubungan alat dan fungsi utamanya. Sendok untuk makan, gunting untuk memotong kertas."
+        },
+        {
+          "id": 6,
+          "question": "SEPATU : KAKI",
+          "options": {
+            "A": "Topi : Kepala",
+            "B": "Cincin : Jari",
+            "C": "Baju : Badan",
+            "D": "Sarung tangan : Tangan",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Sepatu dikenakan di kaki. Semua pilihan memiliki pola hubungan benda dan bagian tubuh tempat dikenakannya."
+        },
+        {
+          "id": 7,
+          "question": "PISAU : MEMOTONG",
+          "options": {
+            "A": "Pena : Menulis",
+            "B": "Buku : Membaca",
+            "C": "Rumah : Tinggal",
+            "D": "Jalan : Lewat",
+            "E": "Kamera : Foto"
+          },
+          "answer": "A",
+          "discussion": "Hubungan alat dan fungsi aksi dasarnya. Pisau untuk memotong, pena untuk menulis."
+        },
+        {
+          "id": 8,
+          "question": "Buku : Halaman",
+          "options": {
+            "A": "Rumah : Pintu",
+            "B": "Pohon : Daun",
+            "C": "Gedung : Lantai",
+            "D": "Bulan : Hari",
+            "E": "Tahun : Bulan"
+          },
+          "answer": "C",
+          "discussion": "Hubungan bagian struktur fisik komposit. Buku tersusun atas halaman, gedung tersusun atas lantai."
+        },
+        {
+          "id": 9,
+          "question": "AIR : HAUS",
+          "options": {
+            "A": "Nasi : Kenyang",
+            "B": "Ilmu : Bodoh",
+            "C": "Api : Panas",
+            "D": "Angin : Dingin",
+            "E": "Cahaya : Gelap"
+          },
+          "answer": "B",
+          "discussion": "Solusi untuk mengatasi suatu kondisi kekurangan. Haus diatasi dengan air, kebodohan diatasi dengan ilmu."
+        },
+        {
+          "id": 10,
+          "question": "KAYU : MEBEL",
+          "options": {
+            "A": "Gandum : Roti",
+            "B": "Sapi : Susu",
+            "C": "Besi : Logam",
+            "D": "Pohon : Hutan",
+            "E": "Benang : Kain"
+          },
+          "answer": "A",
+          "discussion": "Hubungan bahan baku dan produk hasil olahan utamanya. Kayu menjadi mebel, gandum menjadi roti."
+        },
+        {
+          "id": 11,
+          "question": "BERAS : NASI",
+          "options": {
+            "A": "Kain : Baju",
+            "B": "Susu : Keju",
+            "C": "Kedelai : Tahu",
+            "D": "A dan C benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Perubahan wujud dari bahan mentah ke produk matang/olahan pangan. Beras menjadi nasi, kain menjadi baju, susu menjadi keju, kedelai menjadi tahu."
+        },
+        {
+          "id": 12,
+          "question": "API : PANAS",
+          "options": {
+            "A": "Es : Dingin",
+            "B": "Gula : Manis",
+            "C": "Batu : Keras",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Hubungan benda dan sifat mutlak yang melekat pada benda tersebut."
+        },
+        {
+          "id": 13,
+          "question": "TERMOMETER : SUHU",
+          "options": {
+            "A": "Barometer : Tekanan",
+            "B": "Kecepatan : Stopwatch",
+            "C": "Massa : Timbangan",
+            "D": "Panas : Api",
+            "E": "Jam : Waktu"
+          },
+          "answer": "A",
+          "discussion": "Alat ukur dan besaran fisika yang diukurnya. Termometer mengukur suhu, barometer mengukur tekanan udara."
+        },
+        {
+          "id": 14,
+          "question": "KAREM : GELAP (Koreksi: MALAM : GELAP = SIANG : ...)",
+          "options": {
+            "A": "Terang",
+            "B": "Panas",
+            "C": "Matahari",
+            "D": "Pagi",
+            "E": "Sore"
+          },
+          "answer": "A",
+          "discussion": "Malam suasananya gelap, siang suasananya terang."
+        },
+        {
+          "id": 15,
+          "question": "PADI : SAWAH",
+          "options": {
+            "A": "Ikan : Laut",
+            "B": "Kopi : Kebun",
+            "C": "Apel : Pohon",
+            "D": "Rumput : Lapangan",
+            "E": "Unta : Gurun"
+          },
+          "answer": "B",
+          "discussion": "Tanaman budidaya dan habitat tempat penanamannya secara umum."
+        },
+        {
+          "id": 16,
+          "question": "KERTAS : POHON",
+          "options": {
+            "A": "Kain : Kapas",
+            "B": "Plastik : Minyak",
+            "C": "Madu : Lebah",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "D",
+          "discussion": "Bahan buatan manusia dan bahan baku alam asalnya. Kertas dari pohon, kain dari kapas, plastik dari minyak bumi."
+        },
+        {
+          "id": 17,
+          "question": "DOKTER : RUMAH SAKIT",
+          "options": {
+            "A": "Hakim : Pengadilan",
+            "B": "Guru : Kelas",
+            "C": "Koki : Dapur",
+            "D": "A dan C benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Profesi dan tempat spesifik mereka menjalankan tugas profesinya."
+        },
+        {
+          "id": 18,
+          "question": "BULAN : BUMI",
+          "options": {
+            "A": "Bumi : Matahari",
+            "B": "Bintang : Planet",
+            "C": "Komet : Meteor",
+            "D": "Mars : Venus",
+            "E": "Satelit : Roket"
+          },
+          "answer": "A",
+          "discussion": "Hubungan benda langit satelit alami yang mengitari pusat orbitnya. Bulan mengitari Bumi, Bumi mengitari Matahari."
+        },
+        {
+          "id": 19,
+          "question": "SUARA : AUDIO",
+          "options": {
+            "A": "Gambar : Visual",
+            "B": "Tulisan : Audio",
+            "C": "Warna : Gelap",
+            "D": "Rasa : Hidung",
+            "E": "Bau : Telinga"
+          },
+          "answer": "A",
+          "discussion": "Hubungan elemen panca indra dan istilah medianya. Suara berkaitan dengan audio, gambar berkaitan dengan visual."
+        },
+        {
+          "id": 20,
+          "question": "OTAK : BERPIKIR",
+          "options": {
+            "A": "Jantung : Memompa",
+            "B": "Paru-paru : Bernapas",
+            "C": "Perut : Mencerna",
+            "D": "A, B, dan C benar",
+            "E": "Hanya A dan B"
+          },
+          "answer": "D",
+          "discussion": "Organ tubuh manusia dan fungsi biologis utamanya. Semua pilihan di A, B, dan C benar."
+        }
+      ]
+    },
+    {
+      "id_paket": 2,
+      "nama_paket": "Paket 2",
+      "deskripsi": "Soal tes analogi verbal menengah dan hubungan relasi majemuk paket 2",
+      "soal": [
+        {
+          "id": 1,
+          "question": "ASTRONOT : RUANG ANGKASA",
+          "options": {
+            "A": "Pilot : Kokpit",
+            "B": "Nahkoda : Kapal",
+            "C": "Dokter : Klinik",
+            "D": "Penyelam : Laut",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Profesi dan arena lingkungan tempat kerja operasionalnya."
+        },
+        {
+          "id": 2,
+          "question": "CABAI : PEDAS",
+          "options": {
+            "A": "Garam : Asin",
+            "B": "Gula : Manis",
+            "C": "Jeruk : Asam",
+            "D": "Pare : Pahit",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Bumbu/makanan dan rasa khas dominannya."
+        },
+        {
+          "id": 3,
+          "question": "GUDANG : BARANG",
+          "options": {
+            "A": "Perpustakaan : Buku",
+            "B": "Garasi : Mobil",
+            "C": "Dompet : Uang",
+            "D": "Museum : Artefak",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Tempat penyimpanan khusus dan benda yang disimpan di dalamnya."
+        },
+        {
+          "id": 4,
+          "question": "KAMus : KATA",
+          "options": {
+            "A": "Atlas : Peta",
+            "B": "Ensiklopedia : Pengetahuan",
+            "C": "Buku Resep : Masakan",
+            "D": "A, B, dan C benar",
+            "E": "Album : Foto"
+          },
+          "answer": "D",
+          "discussion": "Buku referensi dan isi informasi utama yang dikandungnya."
+        },
+        {
+          "id": 5,
+          "question": "LALAT : TERBANG",
+          "options": {
+            "A": "Ular : Melata",
+            "B": "Kucing : Berjalan",
+            "C": "Kangguru : Melompat",
+            "D": "Ikan : Berenang",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Hewan dan cara bergerak khas utamanya di alam."
+        },
+        {
+          "id": 6,
+          "question": "KULIT : SEPATU",
+          "options": {
+            "A": "Karet : Ban",
+            "B": "Besi : Pagar",
+            "C": "Kayu : Kursi",
+            "D": "Kain : Baju",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Bahan material pembuat dan barang jadi yang dihasilkan."
+        },
+        {
+          "id": 7,
+          "question": "BATU : KERAS",
+          "options": {
+            "A": "Busa : Empuk",
+            "B": "Besi : Kuat",
+            "C": "Kapas : Lembut",
+            "D": "A dan C benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Benda dan karakteristik fisik utamanya."
+        },
+        {
+          "id": 8,
+          "question": "PUISI : PENYAIR",
+          "options": {
+            "A": "Lagu : Komponis",
+            "B": "Lukisan : Pelukis",
+            "C": "Novel : Pengarang",
+            "D": "Patung : Pemahat",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Karya seni kreatif dan penciptanya masing-masing."
+        },
+        {
+          "id": 9,
+          "question": "KARET : POHON KARET",
+          "options": {
+            "A": "Susu : Sapi",
+            "B": "Madu : Lebah",
+            "C": "Minyak : Kelapa sawit",
+            "D": "Getah : Pinus",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Cairan/produk ekstrak alami dan sumber penghasilnya."
+        },
+        {
+          "id": 10,
+          "question": "JAM : WAKTU",
+          "options": {
+            "A": "Termometer : Suhu",
+            "B": "Speedometer : Kecepatan",
+            "C": "Timbangan : Berat",
+            "D": "Voltmeter : Tegangan",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Alat pengukur dan besaran fenomena yang diukurnya."
+        },
+        {
+          "id": 11,
+          "question": "HUTAN : POHON",
+          "options": {
+            "A": "Armada : Kapal",
+            "B": "Batalyon : Prajurit",
+            "C": "Perpustakaan : Buku",
+            "D": "Rasi bintang : Bintang",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Kelompok kolektif satuan besar dan komponen pembentuk individunya."
+        },
+        {
+          "id": 12,
+          "question": "API : KEBABAKAN (Koreksi: API : ABU)",
+          "options": {
+            "A": "Es : Air",
+            "B": "Kayu : Arang",
+            "C": "Besi : Karat",
+            "D": "Manusia : Tulang",
+            "E": "A dan B benar"
+          },
+          "answer": "E",
+          "discussion": "Benda asal dan sisa residu atau wujud perubahannya."
+        },
+        {
+          "id": 13,
+          "question": "KIKUK : GERAK",
+          "options": {
+            "A": "Gagap : Bicara",
+            "B": "Buta : Lihat",
+            "C": "Tuli : Dengar",
+            "D": "Lelah : Jalan",
+            "E": "A, B, dan C benar"
+          },
+          "answer": "E",
+          "discussion": "Kondisi hambatan fungsi dan organ/aktivitas yang terganggu."
+        },
+        {
+          "id": 14,
+          "question": "MELOMPAT : TINGGI",
+          "options": {
+            "A": "Berlari : Cepat",
+            "B": "Berjalan : Jauh",
+            "C": "Menyelam : Dalam",
+            "D": "Memanjat : Curam",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Kata kerja aktivitas motorik dan parameter ukurannya."
+        },
+        {
+          "id": 15,
+          "question": "BENSIN : ENERGI",
+          "options": {
+            "A": "Makanan : Tenaga",
+            "B": "Minyak : Panas",
+            "C": "Listrik : Cahaya",
+            "D": "A, B, dan C benar",
+            "E": "Obat : Sehat"
+          },
+          "answer": "D",
+          "discussion": "Sumber daya bahan bakar dan bentuk konversi manfaat energi yang dihasilkan."
+        },
+        {
+          "id": 16,
+          "question": "DOSEN : MAHASISWA",
+          "options": {
+            "A": "Guru : Siswa",
+            "B": "Pelatih : Atlet",
+            "C": "Master : Murid",
+            "D": "Mentor : Mentee",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Hubungan pengajar/pembimbing dan anak didiknya."
+        },
+        {
+          "id": 17,
+          "question": "MATAHARI : TERANG",
+          "options": {
+            "A": "Bulan : Malam",
+            "B": "Api : Hangat",
+            "C": "Lampu : Sinar",
+            "D": "Bintang : Kelap-kelip",
+            "E": "Salju : Dingin"
+          },
+          "answer": "B",
+          "discussion": "Sumber alam dan efek pancaran langsungnya."
+        },
+        {
+          "id": 18,
+          "question": "LAPAR : MAKANAN",
+          "options": {
+            "A": "Haus : Minuman",
+            "B": "Lelah : Istirahat",
+            "C": "Penasaran : Jawaban",
+            "D": "A, B, dan C benar",
+            "E": "Bosankah : Tidur"
+          },
+          "answer": "D",
+          "discussion": "Rasa dorongan kebutuhan biologis/psikologis dan objek pemuasnya."
+        },
+        {
+          "id": 19,
+          "question": "HAKIM : PENGADILAN",
+          "options": {
+            "A": "Wasit : Lapangan",
+            "B": "Polisi : Pos",
+            "C": "Jaksa : Kejaksaan",
+            "D": "Dokter : Rumah Sakit",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Pejabat penegak hukum/pengatur aturan dan tempat kerjanya."
+        },
+        {
+          "id": 20,
+          "question": "KORAN : INFORMASI",
+          "options": {
+            "A": "Buku : Ilmu",
+            "B": "Film : Hiburan",
+            "C": "Lagu : Seni",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Media publikasi dan fungsi pemenuhan kebutuhan utama bagi konsumennya."
+        }
+      ]
+    },
+    {
+      "id_paket": 3,
+      "nama_paket": "Paket 3",
+      "deskripsi": "Soal tes analogi verbal tingkat lanjut dan analogi abstrak paket 3",
+      "soal": [
+        {
+          "id": 1,
+          "question": "EPIDEMI : PENYAKIT",
+          "options": {
+            "A": "Inflasi : Ekonomi",
+            "B": "Inovasi : Teknologi",
+            "C": "Eskalasi : Konflik",
+            "D": "A dan C benar",
+            "E": "Semua benar"
+          },
+          "answer": "D",
+          "discussion": "Lonjakan fenomena negatif secara meluas. Epidemi (penyakit meluas), Inflasi (harga meluas), Eskalasi (konflik meluas)."
+        },
+        {
+          "id": 2,
+          "question": "PATUH : ATURAN",
+          "options": {
+            "A": "Setia : Janji",
+            "B": "Taat : Hukum",
+            "C": "Hormat : Guru",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Sikap ketaatan moral dan hal yang ditaatinya."
+        },
+        {
+          "id": 3,
+          "question": "PROLOG : DIALOG",
+          "options": {
+            "A": "Mukaddimah : Isi",
+            "B": "Pemasangan : Pengoperasian",
+            "C": "Pembukaan : Penutup",
+            "D": "Awal : Akhir",
+            "E": "Teori : Praktik"
+          },
+          "answer": "A",
+          "discussion": "Bagian awal pengantar karya dan bagian inti utamanya."
+        },
+        {
+          "id": 4,
+          "question": "KABUT : AWAN",
+          "options": {
+            "A": "Embun : Hujan",
+            "B": "Es : Air",
+            "C": "Uap : Air",
+            "D": "Salju : Es",
+            "E": "Badai : Angin"
+          },
+          "answer": "B",
+          "discussion": "Fenomena uap air berkondensasi di dekat permukaan bumi (kabut) setara dengan di udara tinggi (awan). Perbandingan wujud mikrokosmos."
+        },
+        {
+          "id": 5,
+          "question": "DERMAWAN : DERMA",
+          "options": {
+            "A": "Pahlawan : Jasa",
+            "B": "Ilmuwan : Ilmu",
+            "C": "Hartawan : Harta",
+            "D": "Bangsawan : Darah",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Sifat/gelar orang dan atribut kelebihan utama yang dimilikinya."
+        },
+        {
+          "id": 6,
+          "question": "KAPAL : PELABUHAN",
+          "options": {
+            "A": "Pesawat : Bandara",
+            "B": "Kereta : Stasiun",
+            "C": "Bus : Terminal",
+            "D": "Mobil : Garasi",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Kendaraan dan tempat pemberhentian/pangkalan resminya."
+        },
+        {
+          "id": 7,
+          "question": "OMBAK : PANTAI",
+          "options": {
+            "A": "Angin : Pohon",
+            "B": "Lahar : Gunung",
+            "C": "Air : Bendungan",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "D",
+          "discussion": "Fenomena alam cair/gas yang membentur struktur geografis daratan."
+        },
+        {
+          "id": 8,
+          "question": "KACAMATA : MATA",
+          "options": {
+            "A": "Helm : Kepala",
+            "B": "Sabuk : Pinggang",
+            "C": "Sarung tangan : Tangan",
+            "D": "Masker : Hidung",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Alat pelindung/bantu optik dan organ spesifik yang dilindunginya."
+        },
+        {
+          "id": 9,
+          "question": "GIGI : KUNYAH",
+          "options": {
+            "A": "Mata : Kedip",
+            "B": "Tangan : Ambil",
+            "C": "Kaki : Jalan",
+            "D": "Lidah : Rasa",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Anggota tubuh bagian spesifik dan fungsi mekanis utamanya."
+        },
+        {
+          "id": 10,
+          "question": "BENSIN : MOTOR",
+          "options": {
+            "A": "Listrik : Lampu",
+            "B": "Batubara : Pembangkit",
+            "C": "Angin : Kincir",
+            "D": "Matahari : Solar sel",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Sumber energi penggerak dan perangkat mesin penerimanya."
+        },
+        {
+          "id": 11,
+          "question": "SKetsa : LUKISAN",
+          "options": {
+            "A": "Rencana : Aksi",
+            "B": "Pondasi : Gedung",
+            "C": "Naskah : Film",
+            "D": "A, B, dan C benar",
+            "E": "Semua salah"
+          },
+          "answer": "D",
+          "discussion": "Rancangan draf kasar awal dan bentuk hasil jadi utuhnya."
+        },
+        {
+          "id": 12,
+          "question": "KERTAS : BUKU",
+          "options": {
+            "A": "Bata : Dinding",
+            "B": "Benang : Kain",
+            "C": "Pohon : Hutan",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "D",
+          "discussion": "Komponen satuan material penyusun dan struktur objek gabungannya."
+        },
+        {
+          "id": 13,
+          "question": "PENDAKIAN : PUNCAK",
+          "options": {
+            "A": "Belajar : Pintar",
+            "B": "Latihan : Juara",
+            "C": "Perjuangan : Kemenangan",
+            "D": "A, B, dan C benar",
+            "E": "Semua salah"
+          },
+          "answer": "D",
+          "discussion": "Proses usaha bersusah payah dan target akhir kesuksesannya."
+        },
+        {
+          "id": 14,
+          "question": "ANAK : ORANG TUA",
+          "options": {
+            "A": "Murid : Guru",
+            "B": "Bibit : Pohon",
+            "C": "Kloning : Induk",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "D",
+          "discussion": "Generasi penerus turunan biologis/pendidikan dan sumber asalnya."
+        },
+        {
+          "id": 15,
+          "question": "PENYAKIT : DOKTER",
+          "options": {
+            "A": "Masalah : Konsultan",
+            "B": "Kasus : Pengacara",
+            "C": "Kerusakan : Mekanik",
+            "D": "A, B, dan C benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Kondisi gangguan/masalah dan tenaga ahli profesional penanganannya."
+        },
+        {
+          "id": 16,
+          "question": "DIAM : BICARA",
+          "options": {
+            "A": "Gelap : Terang",
+            "B": "Malas : Rajin",
+            "C": "Bodoh : Pintar",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Pasangan kata sifat yang saling berlawanan (antonim)."
+        },
+        {
+          "id": 17,
+          "question": "BINTANG : LANGIT",
+          "options": {
+            "A": "Ikan : Laut",
+            "B": "Rumput : Tanah",
+            "C": "Pohon : Hutan",
+            "D": "Burung : Udara",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Habitat atau ruang tempat keberadaan objek secara natural."
+        },
+        {
+          "id": 18,
+          "question": "KIPAS : UDARA",
+          "options": {
+            "A": "Pompa : Ban",
+            "B": "Turbin : Air",
+            "C": "Lampu : Cahaya",
+            "D": "A dan B benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Alat mekanik peniup/pemberi tekanan dan fluida media yang digerakkannya."
+        },
+        {
+          "id": 19,
+          "question": "SEKOLAH : BEL",
+          "options": {
+            "A": "Pabrik : Sirine",
+            "B": "Kantor : Alarm",
+            "C": "Masjid : Bedug",
+            "D": "A dan C benar",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Institusi sosial dan alat penanda waktu/informasi khasnya."
+        },
+        {
+          "id": 20,
+          "question": "BUNGA : BUAH",
+          "options": {
+            "A": "Gadis : Ibu",
+            "B": "Telur : Ayam",
+            "C": "Ulat : Kupu-kupu",
+            "D": "Biji : Pohon",
+            "E": "Semua benar"
+          },
+          "answer": "E",
+          "discussion": "Fase tahap awal kehidupan/struktur dan fase perkembangan matang lanjutannya."
+        }
+      ]
+    }
+  ]
+}

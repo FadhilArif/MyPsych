@@ -1,0 +1,808 @@
+{
+  "kategori": "Sinonim Verbal",
+  "total_paket": 3,
+  "soal_per_paket": 20,
+  "paket": [
+    {
+      "id_paket": 1,
+      "nama_paket": "Paket 1",
+      "deskripsi": "Soal tes sinonim kata dasar-menengah (sering keluar) paket 1",
+      "soal": [
+        {
+          "id": 1,
+          "question": "ABREVlASI",
+          "options": {
+            "A": "Pemendekan",
+            "B": "Pembagian",
+            "C": "Penggabungan",
+            "D": "Penambahan",
+            "E": "Penghapusan"
+          },
+          "answer": "A",
+          "discussion": "Abreviasi bersinonim dengan pemendekan; singkatan."
+        },
+        {
+          "id": 2,
+          "question": "ADAPTASI",
+          "options": {
+            "A": "Pemisahan",
+            "B": "Penyesuaian",
+            "C": "Pengenalan",
+            "D": "Penolakan",
+            "E": "Perubahan"
+          },
+          "answer": "B",
+          "discussion": "Adaptasi berarti penyesuaian diri terhadap lingkungan atau kondisi baru."
+        },
+        {
+          "id": 3,
+          "question": "AGITASI",
+          "options": {
+            "A": "Kedamaian",
+            "B": "Perlawanan",
+            "C": "Hasutan",
+            "D": "Bujukan",
+            "E": "Ketakutan"
+          },
+          "answer": "C",
+          "discussion": "Agitasi berarti hasutan kepada orang banyak (untuk mengadakan huru-hara, pemberontakan, dsb)."
+        },
+        {
+          "id": 4,
+          "question": "AKSELERASI",
+          "options": {
+            "A": "Kecepatan",
+            "B": "Perlambatan",
+            "C": "Percepatan",
+            "D": "Keindahan",
+            "E": "Pergerakan"
+          },
+          "answer": "C",
+          "discussion": "Akselerasi memiliki makna yang sama dengan percepatan."
+        },
+        {
+          "id": 5,
+          "question": "ANOMALI",
+          "options": {
+            "A": "Keteraturan",
+            "B": "Penyimpangan",
+            "C": "Kesamaan",
+            "D": "Perbedaan",
+            "E": "Kebiasaan"
+          },
+          "answer": "B",
+          "discussion": "Anomali berarti ketidaknormalan; penyimpangan dari yang biasa."
+        },
+        {
+          "id": 6,
+          "question": "APRIORI",
+          "options": {
+            "A": "Prasangka",
+            "B": "Pengalaman",
+            "C": "Pembuktian",
+            "D": "Pengetahuan",
+            "E": "Sesudah"
+          },
+          "answer": "A",
+          "discussion": "Apriori berarti anggapan sebelum mengetahui atau menyelidiki keadaan yang sebenarnya (anggapan awal/prasangka)."
+        },
+        {
+          "id": 7,
+          "question": "ASUMSI",
+          "options": {
+            "A": "Kepastian",
+            "B": "Fakta",
+            "C": "Kenyataan",
+            "D": "Dugaan",
+            "E": "Bukti"
+          },
+          "answer": "D",
+          "discussion": "Asumsi bersinonim dengan dugaan, anggapan, atau hipotesis."
+        },
+        {
+          "id": 8,
+          "question": "BOGEL",
+          "options": {
+            "A": "Kecil",
+            "B": "Gemuk",
+            "C": "Kerdil",
+            "D": "Kurus",
+            "E": "Pendek"
+          },
+          "answer": "C",
+          "discussion": "Bogel berarti kerdil atau sangat pendek (tentang orang)."
+        },
+        {
+          "id": 9,
+          "question": "BONAFIDE",
+          "options": {
+            "A": "Kaya",
+            "B": "Dapat dipercaya",
+            "C": "Terkenal",
+            "D": "Palsu",
+            "E": "Besar"
+          },
+          "answer": "B",
+          "discussion": "Bonafide berarti dapat dipercaya dengan baik; tulus hati (tentang perusahaan dan sebagainya)."
+        },
+        {
+          "id": 10,
+          "question": "DIKOTOMI",
+          "options": {
+            "A": "Penggabungan",
+            "B": "Pembagian dua",
+            "C": "Persamaan",
+            "D": "Perbedaan",
+            "E": "Kelompok"
+          },
+          "answer": "B",
+          "discussion": "Dikotomi adalah pembagian atas dua kelompok yang saling bertentangan."
+        },
+        {
+          "id": 11,
+          "question": "EKLEKTIK",
+          "options": {
+            "A": "Pilih-pilih",
+            "B": "Campuran",
+            "C": "Eksentrik",
+            "D": "Murni",
+            "E": "Asli"
+          },
+          "answer": "A",
+          "discussion": "Eklektik berarti memilih yang terbaik dari berbagai sumber."
+        },
+        {
+          "id": 12,
+          "question": "ELUSIF",
+          "options": {
+            "A": "Mudah",
+            "B": "Jelas",
+            "C": "Sukar dipahami",
+            "D": "Pasti",
+            "E": "Nyata"
+          },
+          "answer": "C",
+          "discussion": "Elusif berarti sukar dipahami atau sukar diartikan."
+        },
+        {
+          "id": 13,
+          "question": "EPILOG",
+          "options": {
+            "A": "Pembukaan",
+            "B": "Kata Pengantar",
+            "C": "Penutup",
+            "D": "Pendahuluan",
+            "E": "Daftar Isi"
+          },
+          "answer": "C",
+          "discussion": "Epilog adalah bagian penutup pada karya sastra (novel, naskah drama)."
+        },
+        {
+          "id": 14,
+          "question": "EKSPLISIT",
+          "options": {
+            "A": "Tersembunyi",
+            "B": "Tersirat",
+            "C": "Gamblang",
+            "D": "Rahasia",
+            "E": "Kabur"
+          },
+          "answer": "C",
+          "discussion": "Eksplisit berarti gamblang, tegas, terus terang, tidak berselubung."
+        },
+        {
+          "id": 15,
+          "question": "HETEROGEN",
+          "options": {
+            "A": "Beraneka ragam",
+            "B": "Seragam",
+            "C": "Sama",
+            "D": "Tunggal",
+            "E": "Menyatu"
+          },
+          "answer": "A",
+          "discussion": "Heterogen berarti terdiri atas berbagai unsur yang berbeda sifat atau beraneka ragam."
+        },
+        {
+          "id": 16,
+          "question": "HOLISTIK",
+          "options": {
+            "A": "Sebagian",
+            "B": "Menyeluruh",
+            "C": "Kecil",
+            "D": "Terpisah",
+            "E": "Khusus"
+          },
+          "answer": "B",
+          "discussion": "Holistik berarti berhubungan dengan sistem keseluruhan sebagai suatu kesatuan (menyeluruh)."
+        },
+        {
+          "id": 17,
+          "question": "IMPLISIT",
+          "options": {
+            "A": "Jelas",
+            "B": "Tegas",
+            "C": "Tersirat",
+            "D": "Nyata",
+            "E": "Terbuka"
+          },
+          "answer": "C",
+          "discussion": "Implisit berarti termasuk (terkandung) di dalamnya meskipun tidak dinyatakan secara jelas atau terang-terangan (tersirat)."
+        },
+        {
+          "id": 18,
+          "question": "INFILTRASI",
+          "options": {
+            "A": "Penyelundupan",
+            "B": "Pemisahan",
+            "C": "Penyusupan",
+            "D": "Penggabungan",
+            "E": "Perlindungan"
+          },
+          "answer": "C",
+          "discussion": "Infiltrasi berarti penyusupan (tentang tentara dsb)."
+        },
+        {
+          "id": 19,
+          "question": "INJEKSI",
+          "options": {
+            "A": "Penyedotan",
+            "B": "Suntikan",
+            "C": "Penarikan",
+            "D": "Pembuangan",
+            "E": "Pengeluaran"
+          },
+          "answer": "B",
+          "discussion": "Injeksi bersinonim dengan suntikan atau memasukkan cairan ke dalam tubuh."
+        },
+        {
+          "id": 20,
+          "question": "KAPITAL",
+          "options": {
+            "A": "Buruh",
+            "B": "Pemimpin",
+            "C": "Modal",
+            "D": "Keuntungan",
+            "E": "Bunga"
+          },
+          "answer": "C",
+          "discussion": "Kapital dalam konteks ekonomi berarti modal yang digunakan untuk produksi."
+        }
+      ]
+    },
+    {
+      "id_paket": 2,
+      "nama_paket": "Paket 2",
+      "deskripsi": "Soal tes sinonim kata menengah-lanjutan paket 2",
+      "soal": [
+        {
+          "id": 1,
+          "question": "KLEPTOMANIA",
+          "options": {
+            "A": "Penyakit tidur",
+            "B": "Gila belanja",
+            "C": "Penyakit suka mencuri",
+            "D": "Takut tempat sempit",
+            "E": "Suka berbohong"
+          },
+          "answer": "C",
+          "discussion": "Kleptomania adalah kelainan jiwa berupa keinginan yang tak tertahankan untuk mencuri."
+        },
+        {
+          "id": 2,
+          "question": "KOGNITIF",
+          "options": {
+            "A": "Perasaan",
+            "B": "Tindakan",
+            "C": "Pemahaman",
+            "D": "Keterampilan",
+            "E": "Gerakan"
+          },
+          "answer": "C",
+          "discussion": "Kognitif berhubungan dengan pengenalan, pemahaman, dan pemerolehan pengetahuan."
+        },
+        {
+          "id": 3,
+          "question": "KOLUSI",
+          "options": {
+            "A": "Kerjasama rahasia",
+            "B": "Perpecahan",
+            "C": "Persaingan",
+            "D": "Korupsi",
+            "E": "Permusuhan"
+          },
+          "answer": "A",
+          "discussion": "Kolusi adalah kerja sama rahasia untuk maksud tidak terpuji (persekongkolan)."
+        },
+        {
+          "id": 4,
+          "question": "KOMPLEKS",
+          "options": {
+            "A": "Sederhana",
+            "B": "Rumit",
+            "C": "Mudah",
+            "D": "Tunggal",
+            "E": "Kecil"
+          },
+          "answer": "B",
+          "discussion": "Kompleks berarti mengandung beberapa unsur yang pelik, rumit, sulit, atau saling berhubungan."
+        },
+        {
+          "id": 5,
+          "question": "KOMPREHENSIF",
+          "options": {
+            "A": "Sempit",
+            "B": "Terbatas",
+            "C": "Menyeluruh",
+            "D": "Khusus",
+            "E": "Sebagian"
+          },
+          "answer": "C",
+          "discussion": "Komprehensif berarti bersifat mampu menangkap dengan baik; luas dan lengkap (menyeluruh)."
+        },
+        {
+          "id": 6,
+          "question": "KONDUSIF",
+          "options": {
+            "A": "Kacau",
+            "B": "Mendukung",
+            "C": "Menghambat",
+            "D": "Bahaya",
+            "E": "Merugikan"
+          },
+          "answer": "B",
+          "discussion": "Kondusif berarti memberi peluang pada hasil yang diinginkan yang bersifat mendukung."
+        },
+        {
+          "id": 7,
+          "question": "KONFRONTASI",
+          "options": {
+            "A": "Pertentangan",
+            "B": "Perdamaian",
+            "C": "Persetujuan",
+            "D": "Kerjasama",
+            "E": "Kompensasi"
+          },
+          "answer": "A",
+          "discussion": "Konfrontasi berarti permusuhan atau pertentangan langsung."
+        },
+        {
+          "id": 8,
+          "question": "KONSENSUS",
+          "options": {
+            "A": "Perpecahan",
+            "B": "Permusuhan",
+            "C": "Mufakat",
+            "D": "Sensus",
+            "E": "Perdebatan"
+          },
+          "answer": "C",
+          "discussion": "Konsensus bersinonim dengan kesepakatan kata atau mufakat bersama."
+        },
+        {
+          "id": 9,
+          "question": "KREDIBILITAS",
+          "options": {
+            "A": "Kekayaan",
+            "B": "Kepercayaan",
+            "C": "Ketakutan",
+            "D": "Kecepatan",
+            "E": "Ketelitian"
+          },
+          "answer": "B",
+          "discussion": "Kredibilitas berarti perihal dapat dipercaya."
+        },
+        {
+          "id": 10,
+          "question": "LAIK",
+          "options": {
+            "A": "Layak",
+            "B": "Buruk",
+            "C": "Palsu",
+            "D": "Tua",
+            "E": "Muda"
+          },
+          "answer": "A",
+          "discussion": "Laik bersinonim dengan memenuhi syarat; pantas; layak."
+        },
+        {
+          "id": 11,
+          "question": "LATEN",
+          "options": {
+            "A": "Tampak",
+            "B": "Tersembunyi",
+            "C": "Jelas",
+            "D": "Nyata",
+            "E": "Pasti"
+          },
+          "answer": "B",
+          "discussion": "Laten berarti tersembunyi, terpendam, tidak kelihatan (tetapi mempunyai potensi untuk muncul)."
+        },
+        {
+          "id": 12,
+          "question": "LEGAL",
+          "options": {
+            "A": "Sah",
+            "B": "Ilegal",
+            "C": "Palsu",
+            "D": "Batal",
+            "E": "Rahasia"
+          },
+          "answer": "A",
+          "discussion": "Legal berarti sesuai dengan ketentuan hukum atau sah."
+        },
+        {
+          "id": 13,
+          "question": "MITIGASI",
+          "options": {
+            "A": "Penyelamatan",
+            "B": "Pencegahan",
+            "C": "Pengurangan risiko",
+            "D": "Pemulihan",
+            "E": "Pembangunan"
+          },
+          "answer": "C",
+          "discussion": "Mitigasi adalah tindakan mengurangi dampak atau risiko, sering digunakan dalam kebencanaan."
+        },
+        {
+          "id": 14,
+          "question": "MOBILITAS",
+          "options": {
+            "A": "Kecepatan",
+            "B": "Pergerakan",
+            "C": "Kemacetan",
+            "D": "Kendaraan",
+            "E": "Ketenangan"
+          },
+          "answer": "B",
+          "discussion": "Mobilitas berarti kesiapsiagaan untuk bergerak atau pergerakan (perpindahan)."
+        },
+        {
+          "id": 15,
+          "question": "NOMADIK",
+          "options": {
+            "A": "Menetap",
+            "B": "Berpindah-pindah",
+            "C": "Berkelompok",
+            "D": "Menyendiri",
+            "E": "Bertani"
+          },
+          "answer": "B",
+          "discussion": "Nomadik atau nomaden berarti cara hidup berpindah-pindah, tidak menetap di suatu tempat."
+        },
+        {
+          "id": 16,
+          "question": "OPOSISI",
+          "options": {
+            "A": "Dukungan",
+            "B": "Kawan",
+            "C": "Pertentangan",
+            "D": "Pengikut",
+            "E": "Penguasa"
+          },
+          "answer": "C",
+          "discussion": "Oposisi berarti partai penentang di dewan perwakilan dsb; golongan yang menentang golongan yang berkuasa."
+        },
+        {
+          "id": 17,
+          "question": "OPTIMAL",
+          "options": {
+            "A": "Minimal",
+            "B": "Sedang",
+            "C": "Terbaik",
+            "D": "Kurang",
+            "E": "Buruk"
+          },
+          "answer": "C",
+          "discussion": "Optimal berarti terbaik, tertinggi, atau paling menguntungkan."
+        },
+        {
+          "id": 18,
+          "question": "OTENTIK",
+          "options": {
+            "A": "Asli",
+            "B": "Palsu",
+            "C": "Tiruan",
+            "D": "Baru",
+            "E": "Kuno"
+          },
+          "answer": "A",
+          "discussion": "Otentik (atau autentik) berarti dapat dipercaya, asli, tulen, sah."
+        },
+        {
+          "id": 19,
+          "question": "PARADOKS",
+          "options": {
+            "A": "Kesesuaian",
+            "B": "Pernyataan bertentangan",
+            "C": "Sama",
+            "D": "Keajaiban",
+            "E": "Kebohongan"
+          },
+          "answer": "B",
+          "discussion": "Paradoks adalah pernyataan yang seolah-olah bertentangan (berlawanan) dengan pendapat umum tetapi kenyataannya mengandung kebenaran."
+        },
+        {
+          "id": 20,
+          "question": "PEDAGOGI",
+          "options": {
+            "A": "Ilmu penyakit",
+            "B": "Ilmu pendidikan",
+            "C": "Ilmu jiwa",
+            "D": "Ilmu bumi",
+            "E": "Ilmu tumbuhan"
+          },
+          "answer": "B",
+          "discussion": "Pedagogi adalah ilmu tentang pendidikan anak; ilmu mendidik."
+        }
+      ]
+    },
+    {
+      "id_paket": 3,
+      "nama_paket": "Paket 3",
+      "deskripsi": "Soal tes sinonim kosakata serapan/sastra paket 3",
+      "soal": [
+        {
+          "id": 1,
+          "question": "PREDIKSI",
+          "options": {
+            "A": "Kepastian",
+            "B": "Prakiraan",
+            "C": "Fakta",
+            "D": "Kejadian",
+            "E": "Kenyataan"
+          },
+          "answer": "B",
+          "discussion": "Prediksi berarti ramalan atau prakiraan (perkiraan) tentang sesuatu."
+        },
+        {
+          "id": 2,
+          "question": "PROGRESIF",
+          "options": {
+            "A": "Mundur",
+            "B": "Maju",
+            "C": "Tetap",
+            "D": "Lambat",
+            "E": "Berhenti"
+          },
+          "answer": "B",
+          "discussion": "Progresif berarti ke arah kemajuan; berhaluan ke arah perbaikan sekarang (berkembang/maju)."
+        },
+        {
+          "id": 3,
+          "question": "PROMINEN",
+          "options": {
+            "A": "Biasa",
+            "B": "Kecil",
+            "C": "Terkemuka",
+            "D": "Tersembunyi",
+            "E": "Rendah"
+          },
+          "answer": "C",
+          "discussion": "Prominen berarti terkemuka (tentang orang); menonjol."
+        },
+        {
+          "id": 4,
+          "question": "REMEDIAL",
+          "options": {
+            "A": "Hukuman",
+            "B": "Penghargaan",
+            "C": "Perbaikan",
+            "D": "Ujian",
+            "E": "Pengayaan"
+          },
+          "answer": "C",
+          "discussion": "Remedial bersifat menyembuhkan; bersifat membetulkan atau perbaikan."
+        },
+        {
+          "id": 5,
+          "question": "RESIDU",
+          "options": {
+            "A": "Inti",
+            "B": "Sisa",
+            "C": "Awal",
+            "D": "Hasil",
+            "E": "Proses"
+          },
+          "answer": "B",
+          "discussion": "Residu bersinonim dengan ampas, endapan, atau sisa."
+        },
+        {
+          "id": 6,
+          "question": "RETORIKA",
+          "options": {
+            "A": "Ilmu berpidato",
+            "B": "Ilmu menulis",
+            "C": "Ilmu debat",
+            "D": "Ilmu membaca",
+            "E": "Ilmu sastra"
+          },
+          "answer": "A",
+          "discussion": "Retorika adalah seni atau ilmu berbicara (berpidato)."
+        },
+        {
+          "id": 7,
+          "question": "SIGNIFIKAN",
+          "options": {
+            "A": "Kecil",
+            "B": "Biasa",
+            "C": "Penting",
+            "D": "Cepat",
+            "E": "Lambat"
+          },
+          "answer": "C",
+          "discussion": "Signifikan berarti penting atau berarti."
+        },
+        {
+          "id": 8,
+          "question": "SINKRON",
+          "options": {
+            "A": "Berbeda",
+            "B": "Sejalan",
+            "C": "Bercabang",
+            "D": "Berlawanan",
+            "E": "Terpisah"
+          },
+          "answer": "B",
+          "discussion": "Sinkron berarti terjadi atau berlaku pada waktu yang sama; serentak; sejalan."
+        },
+        {
+          "id": 9,
+          "question": "SPORADIS",
+          "options": {
+            "A": "Terus-menerus",
+            "B": "Jarang-jarang",
+            "C": "Bersamaan",
+            "D": "Merata",
+            "E": "Cepat"
+          },
+          "answer": "B",
+          "discussion": "Sporadis berarti keadaan penyebaran dsb yang tidak merata (jarang-jarang/kadang-kadang)."
+        },
+        {
+          "id": 10,
+          "question": "STAGNAN",
+          "options": {
+            "A": "Mengalir",
+            "B": "Mandek",
+            "C": "Maju",
+            "D": "Cepat",
+            "E": "Berkembang"
+          },
+          "answer": "B",
+          "discussion": "Stagnan berarti dalam keadaan terhenti (tidak bergerak, tidak aktif, tidak jalan); mandek."
+        },
+        {
+          "id": 11,
+          "question": "STANDAR",
+          "options": {
+            "A": "Baku",
+            "B": "Beda",
+            "C": "Aneh",
+            "D": "Asing",
+            "E": "Bebas"
+          },
+          "answer": "A",
+          "discussion": "Standar bersinonim dengan ukuran tertentu yang dipakai sebagai patokan atau baku."
+        },
+        {
+          "id": 12,
+          "question": "TAKSA",
+          "options": {
+            "A": "Jelas",
+            "B": "Ganda",
+            "C": "Kabur",
+            "D": "Satu",
+            "E": "Terang"
+          },
+          "answer": "B",
+          "discussion": "Taksa berarti bermakna ganda atau ambigu."
+        },
+        {
+          "id": 13,
+          "question": "TENTATIF",
+          "options": {
+            "A": "Pasti",
+            "B": "Tetap",
+            "C": "Sementara",
+            "D": "Akhir",
+            "E": "Cepat"
+          },
+          "answer": "C",
+          "discussion": "Tentatif berarti belum pasti; masih dapat diubah (sementara)."
+        },
+        {
+          "id": 14,
+          "question": "TRANSISI",
+          "options": {
+            "A": "Peralihan",
+            "B": "Menetap",
+            "C": "Awal",
+            "D": "Akhir",
+            "E": "Tetap"
+          },
+          "answer": "A",
+          "discussion": "Transisi adalah masa peralihan dari satu keadaan, tempat, tindakan, dan sebagainya ke keadaan yang lain."
+        },
+        {
+          "id": 15,
+          "question": "URGENSI",
+          "options": {
+            "A": "Kecil",
+            "B": "Kepentingan",
+            "C": "Kelambatan",
+            "D": "Kemudahan",
+            "E": "Keteraturan"
+          },
+          "answer": "B",
+          "discussion": "Urgensi berarti keharusan yang mendesak; hal yang sangat penting."
+        },
+        {
+          "id": 16,
+          "question": "VAKANSI",
+          "options": {
+            "A": "Bekerja",
+            "B": "Belajar",
+            "C": "Liburan",
+            "D": "Kosong",
+            "E": "Lowongan"
+          },
+          "answer": "C",
+          "discussion": "Vakansi berarti masa libur atau liburan."
+        },
+        {
+          "id": 17,
+          "question": "VALID",
+          "options": {
+            "A": "Batal",
+            "B": "Salah",
+            "C": "Sah",
+            "D": "Gagal",
+            "E": "Ragu"
+          },
+          "answer": "C",
+          "discussion": "Valid berarti sah; sahih; menurut cara yang semestinya."
+        },
+        {
+          "id": 18,
+          "question": "VANDALISME",
+          "options": {
+            "A": "Pembangunan",
+            "B": "Perawatan",
+            "C": "Perusakan",
+            "D": "Perlindungan",
+            "E": "Keindahan"
+          },
+          "answer": "C",
+          "discussion": "Vandalisme adalah perbuatan merusak dan menghancurkan barang berharga/fasilitas."
+        },
+        {
+          "id": 19,
+          "question": "VIRTUAL",
+          "options": {
+            "A": "Nyata",
+            "B": "Fisik",
+            "C": "Maya",
+            "D": "Asli",
+            "E": "Dekat"
+          },
+          "answer": "C",
+          "discussion": "Virtual berarti tidak nyata atau maya (seperti di dunia internet)."
+        },
+        {
+          "id": 20,
+          "question": "ZONASI",
+          "options": {
+            "A": "Penyatuan",
+            "B": "Pembauran",
+            "C": "Pembagian wilayah",
+            "D": "Penghapusan batas",
+            "E": "Perluasan"
+          },
+          "answer": "C",
+          "discussion": "Zonasi berarti pembagian ke dalam zona atau wilayah-wilayah tertentu."
+        }
+      ]
+    }
+  ]
+}
