@@ -10,7 +10,9 @@ const {
   isValidEmail,
   nextUserId,
   generateRandomPassword,
-  generateResetToken
+  generateResetToken,
+  hashToken,
+  decodeTokenExp
 } = require('./_lib/auth');
 const { sendResetPasswordEmail, sendNewPasswordEmail } = require('./_lib/mailer');
 
@@ -77,7 +79,7 @@ module.exports = async function handler(req, res) {
       }
 
       case 'logout':
-        result = { success: true };
+        result = await logout_(body.token);
         break;
 
       case 'getHistory':
@@ -205,6 +207,44 @@ async function logAdminAction_(session, action, targetId, targetLabel, success, 
   }
 }
 
+/**
+ * Verify session dengan cek revocation list.
+ * Return session payload kalau valid, null kalau:
+ *  - JWT tidak valid
+ *  - Token ada di revoked_tokens
+ */
+async function verifySessionWithRevocation_(token) {
+  const session = verifySessionToken(token);
+  if (!session) return null;
+
+  try {
+    const supabase = getSupabaseAdmin();
+    const tokenHash = hashToken(token);
+    const { data, error } = await supabase
+      .from('revoked_tokens')
+      .select('id')
+      .eq('token_hash', tokenHash)
+      .limit(1);
+
+    if (error) {
+      // Kalau DB error, fail-open (anggap valid) supaya tidak lock user
+      // Karena service_role dan RLS, ini seharusnya tidak terjadi.
+      console.error('[revocation] DB error:', error.message);
+      return session;
+    }
+
+    if (data && data.length) {
+      // Token sudah di-revoke
+      return null;
+    }
+
+    return session;
+  } catch (err) {
+    console.error('[revocation] error:', err && err.message);
+    return session; // fail-open
+  }
+}
+
 /* ============================================================
    AUTH
    ============================================================ */
@@ -279,6 +319,35 @@ async function login_(username, password) {
   };
 }
 
+async function logout_(token) {
+  if (!token) return { success: true };
+
+  try {
+    const session = verifySessionToken(token);
+    if (!session) return { success: true }; // sudah invalid, tidak perlu di-revoke
+
+    const supabase = getSupabaseAdmin();
+    const tokenHash = hashToken(token);
+    const exp = decodeTokenExp(token);
+    const expiresAt = exp ? new Date(exp).toISOString() : new Date(Date.now() + 6 * 3600 * 1000).toISOString();
+
+    // Insert atau update kalau sudah ada
+    await supabase.from('revoked_tokens').upsert({
+      token_hash: tokenHash,
+      user_id: session.user_id,
+      reason: 'logout',
+      revoked_at: new Date().toISOString(),
+      expires_at: expiresAt
+    }, { onConflict: 'token_hash' });
+
+    return { success: true };
+  } catch (err) {
+    console.error('[logout] revoke gagal:', err && err.message);
+    // Tetap return success supaya user tetap ter-logout di frontend
+    return { success: true };
+  }
+}
+
 async function getQuestionPackage_(testType, packageNumber) {
   testType = String(testType || '').trim();
   const pkg = Number(packageNumber) || 0;
@@ -320,7 +389,7 @@ async function getQuestionPackage_(testType, packageNumber) {
    ============================================================ */
 
 async function getHistory_(token) {
-  const session = verifySessionToken(token);
+  const session = await verifySessionWithRevocation_(token);
   if (!session) return { success: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
 
   const supabase = getSupabaseAdmin();
@@ -335,7 +404,7 @@ async function getHistory_(token) {
 }
 
 async function saveHistory_(payload) {
-  const session = verifySessionToken(payload.token);
+  const session = await verifySessionWithRevocation_(payload.token);
   if (!session) return { success: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
 
   const numericFields = ['score', 'correct', 'wrong', 'total', 'speed', 'accuracy', 'consistency', 'endurance'];
@@ -366,11 +435,11 @@ async function saveHistory_(payload) {
 }
 
 /* ============================================================
-   TEST DETAIL — DENGAN VALIDASI OWNERSHIP
+   TEST DETAIL
    ============================================================ */
 
 async function saveTestDetail_(payload) {
-  const session = verifySessionToken(payload.token);
+  const session = await verifySessionWithRevocation_(payload.token);
   if (!session) return { success: false, message: 'Sesi login sudah berakhir.' };
 
   const testId = String(payload.test_id || '').trim();
@@ -410,7 +479,7 @@ async function saveTestDetail_(payload) {
 }
 
 async function getTestDetail_(payload) {
-  const session = verifySessionToken(payload.token);
+  const session = await verifySessionWithRevocation_(payload.token);
   if (!session) return { success: false, message: 'Sesi login sudah berakhir.' };
 
   const testId = String(payload.test_id || '').trim();
@@ -430,8 +499,8 @@ async function getTestDetail_(payload) {
    ADMIN
    ============================================================ */
 
-function verifyAdmin_(token) {
-  const session = verifySessionToken(token);
+async function verifyAdmin_(token) {
+  const session = await verifySessionWithRevocation_(token);
   if (!session) return { ok: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
   if (session.role !== 'admin') return { ok: false, message: 'Akses admin ditolak.' };
   return { ok: true, session };
@@ -448,7 +517,7 @@ function resolveLabel_(labels, testType, score) {
 }
 
 async function adminDashboard_(token) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   const supabase = getSupabaseAdmin();
@@ -501,7 +570,7 @@ async function adminDashboard_(token) {
 }
 
 async function adminGetUsers_(token) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   const supabase = getSupabaseAdmin();
@@ -528,7 +597,7 @@ async function adminGetUsers_(token) {
 }
 
 async function adminCreateUser_(token, user) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   user = user || {};
@@ -564,7 +633,7 @@ async function adminCreateUser_(token, user) {
 }
 
 async function adminResetUserPassword_(token, userId, mode, password) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   userId = String(userId || '').trim();
@@ -602,7 +671,7 @@ async function adminResetUserPassword_(token, userId, mode, password) {
 }
 
 async function adminDeleteUser_(token, userId) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   userId = String(userId || '').trim();
@@ -630,7 +699,7 @@ async function adminDeleteUser_(token, userId) {
 }
 
 async function adminGetResults_(token, filters) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   filters = filters || {};
@@ -675,7 +744,7 @@ async function adminGetResults_(token, filters) {
 }
 
 async function adminGetQuestions_(token, testType, pkg, includeInactive) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   const supabase = getSupabaseAdmin();
@@ -703,7 +772,7 @@ async function adminGetQuestions_(token, testType, pkg, includeInactive) {
 }
 
 async function adminSaveQuestions_(token, questions) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
   if (!Array.isArray(questions) || !questions.length) return { success: false, message: 'questions kosong.' };
 
@@ -751,7 +820,7 @@ async function adminSaveQuestions_(token, questions) {
 }
 
 async function adminDeleteQuestion_(token, questionId) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   const qid = String(questionId || '').trim();
@@ -767,7 +836,7 @@ async function adminDeleteQuestion_(token, questionId) {
 }
 
 async function adminGetScoreLabels_(token, testType) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   const supabase = getSupabaseAdmin();
@@ -780,7 +849,7 @@ async function adminGetScoreLabels_(token, testType) {
 }
 
 async function adminSaveScoreLabels_(token, testType, labels) {
-  const auth = verifyAdmin_(token);
+  const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
 
   testType = String(testType || '').trim();
@@ -812,7 +881,7 @@ async function adminSaveScoreLabels_(token, testType, labels) {
 }
 
 /* ============================================================
-   PASSWORD RESET — DENGAN COOLDOWN PER AKUN
+   PASSWORD RESET
    ============================================================ */
 
 async function requestPasswordReset_(identifier, appUrl) {
@@ -837,7 +906,6 @@ async function requestPasswordReset_(identifier, appUrl) {
   const now = new Date();
   const today = now.toISOString().slice(0, 10);
 
-  // ---- Cek cooldown 5 menit ----
   if (row.reset_requested_at) {
     const elapsed = now.getTime() - new Date(row.reset_requested_at).getTime();
     if (elapsed < RESET_COOLDOWN_MS) {
@@ -854,7 +922,6 @@ async function requestPasswordReset_(identifier, appUrl) {
     }
   }
 
-  // ---- Cek limit harian ----
   let todayCount = 0;
   if (row.reset_request_date === today) {
     todayCount = Number(row.reset_request_count_today) || 0;
@@ -867,7 +934,6 @@ async function requestPasswordReset_(identifier, appUrl) {
     };
   }
 
-  // ---- Generate token & simpan ----
   const token = generateResetToken();
   const expiresAt = new Date(Date.now() + RESET_TOKEN_TTL_MS).toISOString();
 
