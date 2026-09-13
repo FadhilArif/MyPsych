@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kebijakan Privasi — MyPsych</title>
+<link rel="stylesheet" href="landing.css">
+<style>
+  body { max-width: 760px; margin: 0 auto; padding: 40px 24px; font-family: 'Inter', sans-serif; color: #18263b; line-height: 1.75; }
+  h1 { font-size: 1.9rem; letter-spacing: -0.03em; margin-bottom: 8px; }
+  h2 { font-size: 1.25rem; margin-top: 32px; color: #1f67d1; letter-spacing: -0.02em; }
+  h3 { font-size: 1.05rem; margin-top: 22px; }
+  .meta { color: #728196; font-size: 0.85rem; margin-bottom: 24px; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  code { background: #f0f5fb; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; color: #1f67d1; }
+  a { color: #2f7df2; }
+  .back { display: inline-block; margin-bottom: 20px; color: #738299; text-decoration: none; font-weight: 700; }
+  .back:hover { color: #2f7df2; }
+</style>
+</head>
+<body>
+
+<a href="/" class="back">← Kembali ke MyPsych</a>
+
+<h1>Kebijakan Privasi</h1>
+<p class="meta">Berlaku sejak: [tanggal, mis. 13 September 2026] · Terakhir diubah: [tanggal]</p>
+
+<p>MyPsych ("kami") menghargai privasi kamu. Dokumen ini menjelaskan data apa yang kami kumpulkan, bagaimana kami menggunakannya, dan hak-hak kamu sebagai pengguna.</p>
+
+<h2>1. Data yang Kami Kumpulkan</h2>
+
+<h3>a. Data yang kamu berikan langsung</h3>
+<ul>
+  <li><strong>Username</strong> — untuk identifikasi akun</li>
+  <li><strong>Alamat email</strong> — untuk reset password dan komunikasi penting</li>
+  <li><strong>Password</strong> — disimpan dalam bentuk <em>hash</em> (bcrypt), tidak pernah dalam bentuk asli</li>
+</ul>
+
+<h3>b. Data yang dihasilkan saat menggunakan layanan</h3>
+<ul>
+  <li><strong>Hasil tes</strong> — skor, kecepatan, ketelitian, konsistensi, ketahanan</li>
+  <li><strong>Detail jawaban</strong> — jawaban per soal, waktu per soal</li>
+  <li><strong>Waktu pengerjaan</strong> — timestamp kapan kamu mengerjakan tes</li>
+</ul>
+
+<h3>c. Data teknis</h3>
+<ul>
+  <li><strong>Alamat IP</strong> — untuk mencegah penyalahgunaan (rate limiting)</li>
+  <li><strong>User agent browser</strong> — untuk kompatibilitas</li>
+  <li><strong>Log audit</strong> — untuk keamanan sistem</li>
+</ul>
+
+<h2>2. Bagaimana Kami Menggunakan Data</h2>
+<ul>
+  <li>Menampilkan hasil tes dan histori latihanmu</li>
+  <li>Menghasilkan laporan PDF</li>
+  <li>Mengirim email reset password kalau kamu memintanya</li>
+  <li>Melindungi sistem dari penyalahgunaan (rate limit, anti-spam)</li>
+  <li>Memperbaiki layanan secara umum (statistik anonim)</li>
+</ul>
+
+<p><strong>Kami tidak menggunakan data untuk:</strong></p>
+<ul>
+  <li>Iklan atau profiling komersial</li>
+  <li>Menjual atau menyewakan ke pihak ketiga</li>
+  <li>Pelatihan model AI publik</li>
+</ul>
+
+<h2>3. Di Mana Data Disimpan</h2>
+<p>Data disimpan di infrastruktur cloud pihak ketiga yang terpercaya:</p>
+<ul>
+  <li><strong>Supabase</strong> (database utama) — enkripsi at-rest</li>
+  <li><strong>Vercel</strong> (backend) — HTTPS, enkripsi transit</li>
+  <li><strong>Google Apps Script</strong> (pengiriman email) — HANYA menerima email + template, tidak menyimpan data</li>
+</ul>
+
+<h2>4. Berapa Lama Data Disimpan</h2>
+<ul>
+  <li><strong>Data akun</strong> — selama akun aktif</li>
+  <li><strong>Hasil tes</strong> — selama akun aktif</li>
+  <li><strong>Log audit</strong> — maksimal 90 hari</li>
+  <li><strong>Token reset password</strong> — 30 menit atau sampai digunakan</li>
+</ul>
+<p>Kalau kamu menghapus akun, kami akan menghapus semua data terkait dalam waktu maksimal 30 hari.</p>
+
+<h2>5. Hak Kamu</h2>
+<p>Sesuai UU Perlindungan Data Pribadi (UU PDP) Indonesia dan GDPR untuk pengguna Eropa:</p>
+<ul>
+  <li><strong>Hak akses</strong> — melihat data yang kami simpan tentangmu</li>
+  <li><strong>Hak koreksi</strong> — memperbaiki data yang salah</li>
+  <li><strong>Hak hapus</strong> — meminta penghapusan akun dan seluruh data</li>
+  <li><strong>Hak ekspor</strong> — meminta salinan data dalam format terbuka (JSON)</li>
+</ul>
+
+<p>Untuk menggunakan hak-hak ini, hubungi kami di <a href="mailto:psikotesbyfadhil@gmail.com">psikotesbyfadhil@gmail.com</a>.</p>
+
+<h2>6. Keamanan</h2>
+<p>Kami menerapkan praktik keamanan berikut:</p>
+<ul>
+  <li>Password di-hash dengan bcrypt (standar industri)</li>
+  <li>Koneksi terenkripsi HTTPS end-to-end</li>
+  <li>Rate limiting untuk mencegah brute force dan spam</li>
+  <li>Audit log untuk aksi administratif</li>
+  <li>Row Level Security di database</li>
+</ul>
+<p>Meski begitu, tidak ada sistem yang 100% aman. Kalau ada indikasi kebocoran data, kami akan menginformasikan ke pengguna dalam waktu 72 jam.</p>
+
+<h2>7. Cookie dan Storage</h2>
+<p>Kami menggunakan:</p>
+<ul>
+  <li><strong>LocalStorage</strong> — untuk menyimpan sesi login di browser kamu</li>
+  <li><strong>Tidak ada cookie tracking pihak ketiga</strong></li>
+  <li><strong>Tidak ada Google Analytics / Facebook Pixel</strong></li>
+</ul>
+<p>Kamu bisa menghapus data lokal kapan saja lewat pengaturan browser. Efek: kamu akan otomatis logout.</p>
+
+<h2>8. Anak di Bawah Umur</h2>
+<p>MyPsych tidak ditujukan untuk anak di bawah 13 tahun. Kalau kamu orang tua dan tahu anakmu mendaftar tanpa izin, hubungi kami untuk menghapus akun.</p>
+
+<h2>9. Perubahan Kebijakan</h2>
+<p>Kami dapat mengubah kebijakan ini dari waktu ke waktu. Perubahan signifikan akan kami beritahu lewat email terdaftar.</p>
+
+<h2>10. Kontak</h2>
+<p>Untuk pertanyaan tentang privasi:</p>
+<ul>
+  <li>Email: <a href="mailto:psikotesbyfadhil@gmail.com">psikotesbyfadhil@gmail.com</a></li>
+  <li>Pengelola: Fadhil Arif</li>
+</ul>
+
+<p style="margin-top:40px;padding-top:20px;border-top:1px solid #e3ebf4;color:#8a97a8;font-size:0.85rem;text-align:center;">© 2026 MyPsych · Dibuat di Indonesia</p>
+
+</body>
+</html>
