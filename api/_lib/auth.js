@@ -2,12 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-// Ganti/atur SESSION_SECRET di Environment Variables Vercel.
-// Ini kunci rahasia untuk menandatangani token sesi (JWT) —
-// pengganti CacheService di Apps Script dulu. Siapa pun yang tahu
-// nilai ini bisa memalsukan sesi, jadi harus rahasia & panjang/acak.
 const SESSION_SECRET = process.env.SESSION_SECRET;
-const SESSION_TTL = '6h'; // sama seperti SESSION_TTL_SECONDS dulu (6 jam)
+const SESSION_TTL = '6h';
 
 function requireSessionSecret_() {
   if (!SESSION_SECRET) {
@@ -29,15 +25,9 @@ function createSessionToken(payload) {
   return jwt.sign(payload, SESSION_SECRET, { expiresIn: SESSION_TTL });
 }
 
-/**
- * Return session payload kalau token valid, atau null kalau tidak valid/kedaluwarsa.
- * Tidak melempar error — dipakai untuk pengecekan biasa (login opsional).
- */
 function verifySessionToken(token) {
   requireSessionSecret_();
-
   if (!token) return null;
-
   try {
     return jwt.verify(String(token), SESSION_SECRET);
   } catch (_) {
@@ -49,11 +39,6 @@ function isBcryptHash(hash) {
   return /^\$2[aby]\$/.test(String(hash || ''));
 }
 
-/**
- * Skema lama dari Apps Script: SHA256(salt + ':' + password), disimpan
- * sebagai hex string. Dipakai untuk akun hasil migrasi Google Sheets
- * yang belum pernah login lagi sejak pindah ke Supabase.
- */
 function legacyHash(password, salt) {
   return crypto
     .createHash('sha256')
@@ -70,12 +55,6 @@ function safeEqualHex(a, b) {
   return diff === 0;
 }
 
-/**
- * Verifikasi password terhadap hash yang mungkin format bcrypt (akun baru)
- * ATAU format lama SHA256+salt (akun migrasi dari Google Sheets).
- * Return { ok, needsUpgrade } — needsUpgrade true kalau berhasil login
- * pakai format lama, supaya gateway.js bisa langsung upgrade ke bcrypt.
- */
 async function verifyPasswordAny(password, hash, salt) {
   if (isBcryptHash(hash)) {
     const ok = await verifyPassword(password, hash);
@@ -105,13 +84,26 @@ function nextUserId(existingIds) {
   return 'U' + String(max + 1).padStart(5, '0');
 }
 
+/**
+ * Generate password acak yang aman secara kriptografis.
+ * Sebelumnya pakai Math.random() yang bisa diprediksi.
+ * Sekarang pakai crypto.randomInt().
+ */
 function generateRandomPassword(length = 10) {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
   let result = '';
   for (let i = 0; i < length; i += 1) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+    result += chars.charAt(crypto.randomInt(0, chars.length));
   }
   return result;
+}
+
+/**
+ * Generate reset token yang aman (64 karakter hex dari 32 byte random).
+ * Dipakai oleh requestPasswordReset_ di gateway.js.
+ */
+function generateResetToken() {
+  return crypto.randomBytes(32).toString('hex');
 }
 
 module.exports = {
@@ -123,5 +115,6 @@ module.exports = {
   isValidUsername,
   isValidEmail,
   nextUserId,
-  generateRandomPassword
+  generateRandomPassword,
+  generateResetToken
 };
