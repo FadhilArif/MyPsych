@@ -659,7 +659,7 @@ async function adminDashboard_(token) {
     results: enrichedResults,
     labels
   };
-
+}
 async function adminGetUsers_(token) {
   const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
