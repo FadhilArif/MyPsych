@@ -676,16 +676,7 @@ async function submitInterest(event) {
     lines.push('/Im1 Do');
     lines.push('Q');
 
-        // ---- BARU: Section "Perlu Diperbaiki" ----
-    const wrongInfo = getWrongInfoForPdf(result);
-
-    if (wrongInfo) {
-      lines.push('0.10 0.19 0.30 rg');
-      drawPdfText(lines, 'Perlu Diperbaiki', 52, 255, 10);
-
-      lines.push('0.38 0.43 0.50 rg');
-      drawPdfText(lines, wrongInfo, 52, 240, 8);
-    }
+  
     // Warna dasar teks hasil.
     lines.push('0.10 0.19 0.30 rg');
 
@@ -858,13 +849,32 @@ async function submitInterest(event) {
       195,
       8
     );
-    drawPdfText(
+        drawPdfText(
       lines,
       'perkembangan latihan pribadi, bukan sebagai penilaian psikologis resmi.',
       52,
       183,
       8
     );
+
+    // ---- Perlu Diperbaiki (di bawah Catatan) ----
+    const wrongInfo = getWrongInfoForPdf(result);
+
+    if (wrongInfo) {
+      // Garis pemisah
+      lines.push('0.85 0.89 0.94 RG');
+      drawPdfLine(lines, 52, 165, 543, 165);
+
+      // Header
+      lines.push('0.80 0.20 0.20 rg');
+      drawPdfText(lines, 'Perlu Diperbaiki', 52, 148, 10);
+
+      // Nomor soal
+      lines.push('0.38 0.43 0.50 rg');
+      drawPdfText(lines, wrongInfo, 52, 130, 9);
+    }
+
+    const content = lines.join('\n');
 
     const content = lines.join('\n');
 
