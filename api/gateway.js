@@ -16,6 +16,8 @@ const { sendResetPasswordEmail, sendNewPasswordEmail } = require('./_lib/mailer'
 
 const USER_COLUMNS = 'user-id, username, email, password_hash, salt, role, created_at';
 const RESET_TOKEN_TTL_MS = 30 * 60 * 1000;
+const RESET_COOLDOWN_MS = 5 * 60 * 1000;
+const RESET_DAILY_LIMIT = 5;
 
 module.exports = async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -42,7 +44,6 @@ module.exports = async function handler(req, res) {
   const action = String(body.action || '').trim();
   const clientIp = getClientIp_(req);
 
-  // ---------- Rate limit global untuk semua POST ----------
   const gatewayOk = await checkRateLimit('gateway', clientIp);
   if (!gatewayOk) {
     return res.status(429).json({
@@ -380,12 +381,8 @@ async function saveTestDetail_(payload) {
 
   const supabase = getSupabaseAdmin();
 
-  // ---- Validasi ownership: pastikan test_id belum dimiliki user lain ----
   const { data: existing, error: existingError } = await supabase
-    .from('test_detail')
-    .select('user_id')
-    .eq('test_id', testId)
-    .limit(1);
+    .from('test_detail').select('user_id').eq('test_id', testId).limit(1);
   if (existingError) throw existingError;
   if (existing && existing.length && String(existing[0].user_id) !== String(session.user_id)) {
     return { success: false, message: 'test_id tidak valid.' };
@@ -815,7 +812,7 @@ async function adminSaveScoreLabels_(token, testType, labels) {
 }
 
 /* ============================================================
-   PASSWORD RESET — PAKAI generateResetToken
+   PASSWORD RESET — DENGAN COOLDOWN PER AKUN
    ============================================================ */
 
 async function requestPasswordReset_(identifier, appUrl) {
@@ -828,19 +825,61 @@ async function requestPasswordReset_(identifier, appUrl) {
 
   const supabase = getSupabaseAdmin();
   const { data: rows, error } = await supabase
-    .from('table_user').select('"user-id", username, email')
-    .or(`username.ilike.${identifier},email.ilike.${identifier}`).limit(1);
+    .from('table_user')
+    .select('"user-id", username, email, reset_requested_at, reset_request_count_today, reset_request_date')
+    .or(`username.ilike.${identifier},email.ilike.${identifier}`)
+    .limit(1);
   if (error) throw error;
 
   const row = rows && rows[0];
   if (!row || !row.email) return genericSuccess;
 
-  // ---- Token aman (64 hex char dari crypto.randomBytes(32)) ----
+  const now = new Date();
+  const today = now.toISOString().slice(0, 10);
+
+  // ---- Cek cooldown 5 menit ----
+  if (row.reset_requested_at) {
+    const elapsed = now.getTime() - new Date(row.reset_requested_at).getTime();
+    if (elapsed < RESET_COOLDOWN_MS) {
+      const waitSec = Math.ceil((RESET_COOLDOWN_MS - elapsed) / 1000);
+      const minutes = Math.floor(waitSec / 60);
+      const seconds = waitSec % 60;
+      const label = minutes > 0
+        ? `${minutes} menit ${seconds} detik`
+        : `${seconds} detik`;
+      return {
+        success: false,
+        message: `Mohon tunggu ${label} sebelum meminta link reset lagi.`
+      };
+    }
+  }
+
+  // ---- Cek limit harian ----
+  let todayCount = 0;
+  if (row.reset_request_date === today) {
+    todayCount = Number(row.reset_request_count_today) || 0;
+  }
+
+  if (todayCount >= RESET_DAILY_LIMIT) {
+    return {
+      success: false,
+      message: `Batas permintaan reset hari ini sudah tercapai (${RESET_DAILY_LIMIT}x). Coba lagi besok atau hubungi admin.`
+    };
+  }
+
+  // ---- Generate token & simpan ----
   const token = generateResetToken();
   const expiresAt = new Date(Date.now() + RESET_TOKEN_TTL_MS).toISOString();
 
   const { error: updateError } = await supabase
-    .from('table_user').update({ reset_token: token, reset_token_expires: expiresAt })
+    .from('table_user')
+    .update({
+      reset_token: token,
+      reset_token_expires: expiresAt,
+      reset_requested_at: now.toISOString(),
+      reset_request_count_today: todayCount + 1,
+      reset_request_date: today
+    })
     .eq('user-id', row['user-id']);
   if (updateError) throw updateError;
 
@@ -876,7 +915,13 @@ async function resetPassword_(token, newPassword) {
 
   const newHash = await hashPassword(newPassword);
   const { error: updateError } = await supabase
-    .from('table_user').update({ password_hash: newHash, reset_token: null, reset_token_expires: null })
+    .from('table_user')
+    .update({
+      password_hash: newHash,
+      reset_token: null,
+      reset_token_expires: null,
+      reset_requested_at: null
+    })
     .eq('user-id', row['user-id']);
   if (updateError) throw updateError;
 
