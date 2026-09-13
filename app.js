@@ -2036,11 +2036,27 @@ trackEvent('test_start', { type: state.test, package: state.package });
         }
       });
 
-      counts.push(columnCount);
-      correctPerColumn.push(columnCorrect); // <-- BARU
+            counts.push(columnCount);
+      correctPerColumn.push(columnCorrect);
     });
 
-    // ... (sisanya sama)
+    const total = CONFIG.KRAEPELIN_COLUMNS * CONFIG.KRAEPELIN_QUESTIONS;
+    const average = mean(counts);
+    const standardDeviation = Math.sqrt(
+      mean(counts.map((count) => (count - average) ** 2)),
+    );
+
+    const consistency = Math.round(
+      clamp(100 - (average ? standardDeviation / average : 1) * 100),
+    );
+
+    const first = mean(counts.slice(0, 10));
+    const middle = mean(counts.slice(20, 30));
+    const last = mean(counts.slice(40, 50));
+    const baseline = Math.max(1, mean([first, middle]));
+    const endurance = Math.round(
+      clamp(100 - Math.max(0, (baseline - last) / baseline) * 100),
+    );
 
     return {
       type: 'kraepelin',
@@ -2049,9 +2065,11 @@ trackEvent('test_start', { type: state.test, package: state.package });
       score: Math.round((correct / total) * 100),
       speed: Math.round((answered / total) * 100),
       accuracy: answered ? Math.round((correct / answered) * 100) : 0,
-      consistency, endurance, average,
+      consistency,
+      endurance,
+      average,
       chart: counts,
-      correctPerColumn, // <-- BARU
+      correctPerColumn,
     };
   }
 
@@ -2101,30 +2119,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
       wrongNumbers, // <-- BARU
     };
   }
-    );
-
-    return {
-      type: state.test,
-      package: state.package,
-      answered,
-      correct,
-      wrong,
-      total,
-      score: accuracy,
-      speed,
-      accuracy,
-      consistency,
-      endurance,
-      average: mean(
-        state.answers.map(
-          (answer) =>
-            answer === null ? 0 : 1
-        )
-      ),
-      chart,
-    };
-  }
-
+   
   // ============================================================
   // PERSIST ACTIVE TEST
   // ============================================================
