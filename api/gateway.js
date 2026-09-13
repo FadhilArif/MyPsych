@@ -604,10 +604,11 @@ async function adminDashboard_(token) {
   if (!auth.ok) return { success: false, message: auth.message };
 
   const supabase = getSupabaseAdmin();
-  const [usersRes, historyRes, labelsRes] = await Promise.all([
+  const [usersRes, historyRes, labelsRes, pdfRes] = await Promise.all([
     supabase.from('table_user').select('"user-id", username, email, role, created_at'),
     supabase.from('test_history').select('test_id, user_id, test_type, package, tanggal, score, correct, wrong, total, speed, accuracy, consistency, endurance').order('tanggal', { ascending: false }).limit(500),
-    supabase.from('score_labels').select('*').order('urutan', { ascending: true })
+    supabase.from('score_labels').select('*').order('urutan', { ascending: true }),
+    supabase.from('pdf_downloads').select('*', { count: 'exact', head: true })
   ]);
 
   if (usersRes.error) throw usersRes.error;
@@ -645,12 +646,19 @@ async function adminDashboard_(token) {
     ? Math.round(results.reduce((s, r) => s + (Number(r.score) || 0), 0) / results.length)
     : 0;
 
-  return {
+   return {
     success: true,
-    stats: { users: users.length, admins, tests: results.length, avg_score: avgScore },
-    users: enrichedUsers, results: enrichedResults, labels
+    stats: {
+      users: users.length,
+      admins,
+      tests: results.length,
+      avg_score: avgScore,
+      pdf_downloads: pdfRes.count || 0   // <-- BARU
+    },
+    users: enrichedUsers,
+    results: enrichedResults,
+    labels
   };
-}
 
 async function adminGetUsers_(token) {
   const auth = await verifyAdmin_(token);
