@@ -1,4 +1,5 @@
 const { getSupabaseAdmin } = require('./_lib/supabaseAdmin');
+const { checkRateLimit } = require('./_lib/rateLimit');
 const {
   hashPassword,
   verifyPassword,
@@ -8,17 +9,13 @@ const {
   isValidUsername,
   isValidEmail,
   nextUserId,
-  generateRandomPassword
+  generateRandomPassword,
+  generateResetToken
 } = require('./_lib/auth');
 const { sendResetPasswordEmail, sendNewPasswordEmail } = require('./_lib/mailer');
 
 const USER_COLUMNS = 'user-id, username, email, password_hash, salt, role, created_at';
-const RESET_TOKEN_TTL_MS = 30 * 60 * 1000; // 30 menit
-
-// Token reset password disimpan di memori proses saja untuk contoh ini.
-// Catatan: di Vercel serverless, tiap invocation bisa instance berbeda,
-// jadi untuk produksi sebaiknya token reset disimpan di tabel Supabase.
-// (Lihat catatan TODO di requestPasswordReset / resetPassword di bawah.)
+const RESET_TOKEN_TTL_MS = 30 * 60 * 1000;
 
 module.exports = async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -37,61 +34,175 @@ module.exports = async function handler(req, res) {
 
   let body = req.body;
   if (typeof body === 'string') {
-    try {
-      body = JSON.parse(body);
-    } catch (_) {
-      return res.status(400).json({ success: false, message: 'Payload JSON tidak valid.' });
-    }
+    try { body = JSON.parse(body); }
+    catch (_) { return res.status(400).json({ success: false, message: 'Payload JSON tidak valid.' }); }
   }
   body = body || {};
 
   const action = String(body.action || '').trim();
+  const clientIp = getClientIp_(req);
+
+  // ---------- Rate limit global untuk semua POST ----------
+  const gatewayOk = await checkRateLimit('gateway', clientIp);
+  if (!gatewayOk) {
+    return res.status(429).json({
+      success: false,
+      message: 'Terlalu banyak permintaan dari jaringan ini. Coba lagi sebentar.'
+    });
+  }
 
   try {
     let result;
 
-  switch (action) {
-  case 'register':        result = await register_(body.username, body.password, body.email); break;
-  case 'login':           result = await login_(body.username, body.password); break;
-  case 'logout':          result = { success: true }; break;
+    switch (action) {
+      case 'register': {
+        const ok = await checkRateLimit('register', clientIp);
+        if (!ok) {
+          result = { success: false, message: 'Terlalu banyak registrasi dari jaringan ini. Coba lagi nanti.' };
+          break;
+        }
+        result = await register_(body.username, body.password, body.email);
+        break;
+      }
 
-  case 'getHistory':      result = await getHistory_(body.token); break;
-  case 'saveHistory':     result = await saveHistory_(body); break;
-  case 'getQuestionPackage': result = await getQuestionPackage_(body.test_type, body.package); break;
+      case 'login': {
+        const ok = await checkRateLimit('login', `${clientIp}:${String(body.username || '').toLowerCase()}`);
+        if (!ok) {
+          result = { success: false, message: 'Terlalu banyak percobaan login. Tunggu 1 menit lalu coba lagi.' };
+          break;
+        }
+        result = await login_(body.username, body.password);
+        break;
+      }
 
-  // ---- TAMBAHAN ----
-  case 'saveTestDetail':  result = await saveTestDetail_(body); break;
-  case 'getTestDetail':   result = await getTestDetail_(body); break;
+      case 'logout':
+        result = { success: true };
+        break;
 
-  case 'adminDashboard':         result = await adminDashboard_(body.token); break;
-  case 'adminGetUsers':          result = await adminGetUsers_(body.token); break;
-  case 'adminCreateUser':        result = await adminCreateUser_(body.token, body.user); break;
-  case 'adminResetUserPassword': result = await adminResetUserPassword_(body.token, body.user_id, body.mode, body.password); break;
-  case 'adminDeleteUser':        result = await adminDeleteUser_(body.token, body.user_id); break;
-  case 'adminGetResults':        result = await adminGetResults_(body.token, body.filters); break;
-  case 'adminGetQuestions':      result = await adminGetQuestions_(body.token, body.test_type, body.package, body.include_inactive); break;
-  case 'adminSaveQuestions':     result = await adminSaveQuestions_(body.token, body.questions); break;
-  case 'adminDeleteQuestion':    result = await adminDeleteQuestion_(body.token, body.question_id); break;
-  case 'adminGetScoreLabels':    result = await adminGetScoreLabels_(body.token, body.test_type); break;
-  case 'adminSaveScoreLabels':   result = await adminSaveScoreLabels_(body.token, body.test_type, body.labels); break;
-  // ------------------
+      case 'getHistory':
+        result = await getHistory_(body.token);
+        break;
 
-  case 'requestPasswordReset':   result = await requestPasswordReset_(body.identifier, body.appUrl); break;
-  case 'resetPassword':          result = await resetPassword_(body.token, body.password); break;
+      case 'saveHistory':
+        result = await saveHistory_(body);
+        break;
 
-  default:
-    result = { success: false, message: 'Action tidak dikenali.' };
-}
+      case 'getQuestionPackage':
+        result = await getQuestionPackage_(body.test_type, body.package);
+        break;
+
+      case 'saveTestDetail':
+        result = await saveTestDetail_(body);
+        break;
+
+      case 'getTestDetail':
+        result = await getTestDetail_(body);
+        break;
+
+      case 'adminDashboard':
+        result = await adminDashboard_(body.token);
+        break;
+
+      case 'adminGetUsers':
+        result = await adminGetUsers_(body.token);
+        break;
+
+      case 'adminCreateUser':
+        result = await adminCreateUser_(body.token, body.user);
+        break;
+
+      case 'adminResetUserPassword':
+        result = await adminResetUserPassword_(body.token, body.user_id, body.mode, body.password);
+        break;
+
+      case 'adminDeleteUser':
+        result = await adminDeleteUser_(body.token, body.user_id);
+        break;
+
+      case 'adminGetResults':
+        result = await adminGetResults_(body.token, body.filters);
+        break;
+
+      case 'adminGetQuestions':
+        result = await adminGetQuestions_(body.token, body.test_type, body.package, body.include_inactive);
+        break;
+
+      case 'adminSaveQuestions':
+        result = await adminSaveQuestions_(body.token, body.questions);
+        break;
+
+      case 'adminDeleteQuestion':
+        result = await adminDeleteQuestion_(body.token, body.question_id);
+        break;
+
+      case 'adminGetScoreLabels':
+        result = await adminGetScoreLabels_(body.token, body.test_type);
+        break;
+
+      case 'adminSaveScoreLabels':
+        result = await adminSaveScoreLabels_(body.token, body.test_type, body.labels);
+        break;
+
+      case 'requestPasswordReset': {
+        const ok = await checkRateLimit('reset', clientIp);
+        if (!ok) {
+          result = {
+            success: false,
+            message: 'Terlalu banyak permintaan reset. Coba lagi nanti atau hubungi admin.'
+          };
+          break;
+        }
+        result = await requestPasswordReset_(body.identifier, body.appUrl);
+        break;
+      }
+
+      case 'resetPassword':
+        result = await resetPassword_(body.token, body.password);
+        break;
+
+      default:
+        result = { success: false, message: 'Action tidak dikenali.' };
+    }
 
     return res.status(200).json(result);
   } catch (error) {
-    console.error(error);
+    console.error('[gateway] action=%s error=%s', action, error && error.message);
     return res.status(200).json({
       success: false,
       message: 'Terjadi kesalahan server: ' + String((error && error.message) || error)
     });
   }
 };
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+
+function getClientIp_(req) {
+  const fwd = req.headers['x-forwarded-for'];
+  if (fwd) return String(fwd).split(',')[0].trim();
+  const real = req.headers['x-real-ip'];
+  if (real) return String(real);
+  return 'unknown';
+}
+
+async function logAdminAction_(session, action, targetId, targetLabel, success, message) {
+  try {
+    const supabase = getSupabaseAdmin();
+    await supabase.from('admin_audit_log').insert({
+      admin_user_id: session.user_id,
+      admin_username: session.username || '',
+      action,
+      target_id: targetId || '',
+      target_label: targetLabel || '',
+      success: success !== false,
+      message: message || '',
+      created_at: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('[audit] gagal log:', err && err.message);
+  }
+}
 
 /* ============================================================
    AUTH
@@ -102,59 +213,33 @@ async function register_(username, password, email) {
   password = String(password || '');
   email = String(email || '').trim().toLowerCase();
 
-  if (!isValidUsername(username)) {
-    return { success: false, message: 'Format username tidak valid.' };
-  }
-  if (password.length < 8) {
-    return { success: false, message: 'Password minimal 8 karakter.' };
-  }
-  if (!isValidEmail(email)) {
-    return { success: false, message: 'Format email tidak valid.' };
-  }
+  if (!isValidUsername(username)) return { success: false, message: 'Format username tidak valid.' };
+  if (password.length < 8) return { success: false, message: 'Password minimal 8 karakter.' };
+  if (!isValidEmail(email)) return { success: false, message: 'Format email tidak valid.' };
 
   const supabase = getSupabaseAdmin();
-
   const { data: existing, error: existingError } = await supabase
-    .from('table_user')
-    .select('"user-id", username, email');
-
+    .from('table_user').select('"user-id", username, email');
   if (existingError) throw existingError;
 
-  const duplicateUsername = existing.some(
-    row => String(row.username || '').toLowerCase() === username.toLowerCase()
-  );
-  if (duplicateUsername) {
+  if (existing.some(r => String(r.username || '').toLowerCase() === username.toLowerCase()))
     return { success: false, message: 'Username sudah digunakan.' };
-  }
-
-  const duplicateEmail = existing.some(
-    row => String(row.email || '').toLowerCase() === email
-  );
-  if (duplicateEmail) {
+  if (existing.some(r => String(r.email || '').toLowerCase() === email))
     return { success: false, message: 'Email sudah digunakan.' };
-  }
 
-  const userId = nextUserId(existing.map(row => row['user-id']));
+  const userId = nextUserId(existing.map(r => r['user-id']));
   const passwordHash = await hashPassword(password);
 
   const { error: insertError } = await supabase.from('table_user').insert({
-    'user-id': userId,
-    username,
-    email,
-    password_hash: passwordHash,
-    salt: '', // tidak dipakai lagi (bcrypt menyimpan salt di dalam hash-nya sendiri)
+    'user-id': userId, username, email,
+    password_hash: passwordHash, salt: '',
     role: 'user',
     created_at: new Date().toISOString()
   });
-
   if (insertError) throw insertError;
 
   const token = createSessionToken({ user_id: userId, username, role: 'user' });
-
-  return {
-    success: true,
-    session: { token, user_id: userId, username, role: 'user', is_admin: false }
-  };
+  return { success: true, session: { token, user_id: userId, username, role: 'user', is_admin: false } };
 }
 
 async function login_(username, password) {
@@ -162,92 +247,52 @@ async function login_(username, password) {
   password = String(password || '');
 
   const supabase = getSupabaseAdmin();
-
   const { data: rows, error } = await supabase
-    .from('table_user')
-    .select(USER_COLUMNS)
-    .ilike('username', username)
-    .limit(1);
-
+    .from('table_user').select(USER_COLUMNS).ilike('username', username).limit(1);
   if (error) throw error;
 
   const row = rows && rows[0];
+  if (!row) return { success: false, message: 'Username atau password salah.' };
 
-  if (!row) {
-    return { success: false, message: 'Username atau password salah.' };
-  }
-
-  const { ok: passwordOk, needsUpgrade } = await verifyPasswordAny(
-    password,
-    row.password_hash,
-    row.salt
-  );
-
-  if (!passwordOk) {
-    return { success: false, message: 'Username atau password salah.' };
-  }
+  const { ok: passwordOk, needsUpgrade } = await verifyPasswordAny(password, row.password_hash, row.salt);
+  if (!passwordOk) return { success: false, message: 'Username atau password salah.' };
 
   const userId = String(row['user-id'] || '');
 
-  // Akun migrasi dari Google Sheets (hash SHA256+salt lama) otomatis
-  // di-upgrade ke bcrypt begitu berhasil login sekali, tanpa perlu
-  // user melakukan apa pun.
   if (needsUpgrade) {
     try {
       const upgradedHash = await hashPassword(password);
-      await supabase
-        .from('table_user')
-        .update({ password_hash: upgradedHash, salt: '' })
-        .eq('user-id', userId);
+      await supabase.from('table_user').update({ password_hash: upgradedHash, salt: '' }).eq('user-id', userId);
     } catch (upgradeError) {
       console.error('Gagal upgrade hash lama:', upgradeError);
-      // Tidak menggagalkan login walau upgrade gagal — coba lagi login berikutnya.
     }
   }
 
   const displayUsername = String(row.username || username);
   const role = String(row.role || 'user');
-
   const token = createSessionToken({ user_id: userId, username: displayUsername, role });
 
   return {
     success: true,
-    session: {
-      token,
-      user_id: userId,
-      username: displayUsername,
-      role,
-      is_admin: role === 'admin'
-    }
+    session: { token, user_id: userId, username: displayUsername, role, is_admin: role === 'admin' }
   };
 }
 
 async function getQuestionPackage_(testType, packageNumber) {
   testType = String(testType || '').trim();
   const pkg = Number(packageNumber) || 0;
-
-  if (!testType || !pkg) {
-    return { success: false, message: 'test_type dan package wajib diisi.' };
-  }
+  if (!testType || !pkg) return { success: false, message: 'test_type dan package wajib diisi.' };
 
   const supabase = getSupabaseAdmin();
-
   const { data: rows, error } = await supabase
     .from('question_bank')
     .select('question_id, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active')
-    .eq('test_type', testType)
-    .eq('package', pkg)
-    .order('no_soal', { ascending: true });
-
+    .eq('test_type', testType).eq('package', pkg).order('no_soal', { ascending: true });
   if (error) throw error;
 
   const activeRows = (rows || []).filter(row => row.active !== false);
-
   if (!activeRows.length) {
-    return {
-      success: false,
-      message: 'Bank soal untuk ' + testType + ' paket ' + pkg + ' belum tersedia. Hubungi admin.'
-    };
+    return { success: false, message: 'Bank soal untuk ' + testType + ' paket ' + pkg + ' belum tersedia. Hubungi admin.' };
   }
 
   const questions = activeRows.map(row => {
@@ -257,7 +302,6 @@ async function getQuestionPackage_(testType, packageNumber) {
     if (row.option_c) options.C = row.option_c;
     if (row.option_d) options.D = row.option_d;
     if (row.option_e) options.E = row.option_e;
-
     return {
       id: row.no_soal ?? row.question_id,
       question: row.question,
@@ -276,19 +320,14 @@ async function getQuestionPackage_(testType, packageNumber) {
 
 async function getHistory_(token) {
   const session = verifySessionToken(token);
-
-  if (!session) {
-    return { success: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
-  }
+  if (!session) return { success: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
 
   const supabase = getSupabaseAdmin();
-
   const { data: rows, error } = await supabase
     .from('test_history')
     .select('test_id, user_id, test_type, package, tanggal, score, correct, wrong, total, speed, accuracy, consistency, endurance')
     .eq('user_id', session.user_id)
     .order('tanggal', { ascending: false });
-
   if (error) throw error;
 
   return { success: true, history: rows || [] };
@@ -296,158 +335,102 @@ async function getHistory_(token) {
 
 async function saveHistory_(payload) {
   const session = verifySessionToken(payload.token);
-
-  if (!session) {
-    return { success: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
-  }
+  if (!session) return { success: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
 
   const numericFields = ['score', 'correct', 'wrong', 'total', 'speed', 'accuracy', 'consistency', 'endurance'];
-
   for (const field of numericFields) {
     const value = Number(payload[field]);
-    if (!Number.isFinite(value) || value < 0) {
-      return { success: false, message: 'Nilai ' + field + ' tidak valid.' };
-    }
+    if (!Number.isFinite(value) || value < 0) return { success: false, message: 'Nilai ' + field + ' tidak valid.' };
   }
 
   const testType = String(payload.test_type || '').trim();
-  if (!testType) {
-    return { success: false, message: 'test_type wajib diisi.' };
-  }
+  if (!testType) return { success: false, message: 'test_type wajib diisi.' };
 
   const testId = String(payload.test_id || ('T-' + Date.now())).slice(0, 80);
   const packageNumber = Number(payload.package) || 1;
   const tanggal = String(payload.tanggal || new Date().toISOString());
 
   const supabase = getSupabaseAdmin();
-
   const { error } = await supabase.from('test_history').insert({
-    test_id: testId,
-    user_id: session.user_id,
-    test_type: testType,
-    package: packageNumber,
-    tanggal,
-    score: Number(payload.score),
-    correct: Number(payload.correct),
-    wrong: Number(payload.wrong),
-    total: Number(payload.total),
-    speed: Number(payload.speed),
-    accuracy: Number(payload.accuracy),
-    consistency: Number(payload.consistency),
-    endurance: Number(payload.endurance)
+    test_id: testId, user_id: session.user_id, test_type: testType,
+    package: packageNumber, tanggal,
+    score: Number(payload.score), correct: Number(payload.correct),
+    wrong: Number(payload.wrong), total: Number(payload.total),
+    speed: Number(payload.speed), accuracy: Number(payload.accuracy),
+    consistency: Number(payload.consistency), endurance: Number(payload.endurance)
   });
-
   if (error) throw error;
 
   return { success: true, test_id: testId };
 }
 
 /* ============================================================
-   PASSWORD RESET
-   ============================================================
-   CATATAN PENTING: implementasi di bawah menyimpan token reset di
-   TABEL Supabase (bukan di memori server), supaya tetap berfungsi
-   walau permintaan reset dan submit password baru ditangani oleh
-   instance server Vercel yang berbeda (ini normal untuk serverless).
-   Tabel yang dipakai: table_user kolom reset_token & reset_token_expires.
-   Kalau kolom ini belum ada, tambahkan dulu di Supabase:
-     alter table public.table_user
-       add column if not exists reset_token text,
-       add column if not exists reset_token_expires timestamptz;
-*/
+   TEST DETAIL — DENGAN VALIDASI OWNERSHIP
+   ============================================================ */
 
-async function requestPasswordReset_(identifier, appUrl) {
-  identifier = String(identifier || '').trim();
+async function saveTestDetail_(payload) {
+  const session = verifySessionToken(payload.token);
+  if (!session) return { success: false, message: 'Sesi login sudah berakhir.' };
 
-  const genericSuccess = {
-    success: true,
-    message: 'Kalau akun ditemukan, link reset sudah dikirim ke email terdaftar.'
-  };
+  const testId = String(payload.test_id || '').trim();
+  if (!testId) return { success: false, message: 'test_id wajib diisi.' };
 
-  if (!identifier) {
-    return { success: false, message: 'Username atau email wajib diisi.' };
-  }
+  const details = Array.isArray(payload.details) ? payload.details : [];
+  if (!details.length) return { success: true, saved: 0 };
 
   const supabase = getSupabaseAdmin();
 
-  const { data: rows, error } = await supabase
-    .from('table_user')
-    .select('"user-id", username, email')
-    .or(`username.ilike.${identifier},email.ilike.${identifier}`)
+  // ---- Validasi ownership: pastikan test_id belum dimiliki user lain ----
+  const { data: existing, error: existingError } = await supabase
+    .from('test_detail')
+    .select('user_id')
+    .eq('test_id', testId)
     .limit(1);
+  if (existingError) throw existingError;
+  if (existing && existing.length && String(existing[0].user_id) !== String(session.user_id)) {
+    return { success: false, message: 'test_id tidak valid.' };
+  }
 
+  const records = details.map(d => ({
+    test_id: testId,
+    user_id: session.user_id,
+    test_type: String(d.test_type || ''),
+    package: Number(d.package) || 1,
+    no_soal: Number(d.no_soal) || 0,
+    kolom: d.kolom === '' || d.kolom === undefined ? null : Number(d.kolom),
+    no_soal_dalam_kolom: d.no_soal_dalam_kolom === '' || d.no_soal_dalam_kolom === undefined
+      ? null : Number(d.no_soal_dalam_kolom),
+    waktu_detik: d.waktu_detik === '' || d.waktu_detik === undefined
+      ? null : Number(String(d.waktu_detik).replace(',', '.')),
+    jawaban: String(d.jawaban || ''),
+    benar: Boolean(d.benar)
+  }));
+
+  const { error } = await supabase.from('test_detail').insert(records);
   if (error) throw error;
 
-  const row = rows && rows[0];
-  if (!row || !row.email) return genericSuccess;
-
-  const token = generateRandomPassword(24) + generateRandomPassword(24);
-  const expiresAt = new Date(Date.now() + RESET_TOKEN_TTL_MS).toISOString();
-
-  const { error: updateError } = await supabase
-    .from('table_user')
-    .update({ reset_token: token, reset_token_expires: expiresAt })
-    .eq('user-id', row['user-id']);
-
-  if (updateError) throw updateError;
-
-  const base = String(appUrl || '').trim() || 'https://my-psych-five.vercel.app/';
-  const separator = base.indexOf('?') >= 0 ? '&' : '?';
-  const resetUrl = base + separator + 'reset=' + encodeURIComponent(token);
-
-  await sendResetPasswordEmail(row.email, row.username, resetUrl).catch(sendError => {
-    console.error('Gagal kirim email reset:', sendError);
-    throw new Error(
-      'Email reset gagal dikirim (masalah di penyedia email). Coba lagi nanti atau hubungi admin.'
-    );
-  });
-
-  return genericSuccess;
+  return { success: true, saved: records.length };
 }
 
-async function resetPassword_(token, newPassword) {
-  token = String(token || '').trim();
-  newPassword = String(newPassword || '');
+async function getTestDetail_(payload) {
+  const session = verifySessionToken(payload.token);
+  if (!session) return { success: false, message: 'Sesi login sudah berakhir.' };
 
-  if (!token) {
-    return { success: false, message: 'Token reset tidak valid.' };
-  }
-  if (newPassword.length < 8) {
-    return { success: false, message: 'Password minimal 8 karakter.' };
-  }
+  const testId = String(payload.test_id || '').trim();
+  if (!testId) return { success: false, message: 'test_id wajib diisi.' };
 
   const supabase = getSupabaseAdmin();
-
-  const { data: rows, error } = await supabase
-    .from('table_user')
-    .select('"user-id", reset_token, reset_token_expires')
-    .eq('reset_token', token)
-    .limit(1);
-
+  const { data, error } = await supabase
+    .from('test_detail').select('*')
+    .eq('test_id', testId).eq('user_id', session.user_id)
+    .order('no_soal', { ascending: true });
   if (error) throw error;
 
-  const row = rows && rows[0];
-
-  if (!row || !row.reset_token_expires || new Date(row.reset_token_expires).getTime() < Date.now()) {
-    return {
-      success: false,
-      message: 'Link reset sudah tidak berlaku atau sudah digunakan. Silakan minta link baru.'
-    };
-  }
-
-  const newHash = await hashPassword(newPassword);
-
-  const { error: updateError } = await supabase
-    .from('table_user')
-    .update({ password_hash: newHash, reset_token: null, reset_token_expires: null })
-    .eq('user-id', row['user-id']);
-
-  if (updateError) throw updateError;
-
-  return { success: true, message: 'Password berhasil diganti. Silakan login menggunakan password baru.' };
+  return { success: true, details: data || [] };
 }
+
 /* ============================================================
-   ADMIN PANEL
+   ADMIN
    ============================================================ */
 
 function verifyAdmin_(token) {
@@ -472,13 +455,9 @@ async function adminDashboard_(token) {
   if (!auth.ok) return { success: false, message: auth.message };
 
   const supabase = getSupabaseAdmin();
-
   const [usersRes, historyRes, labelsRes] = await Promise.all([
     supabase.from('table_user').select('"user-id", username, email, role, created_at'),
-    supabase.from('test_history')
-      .select('test_id, user_id, test_type, package, tanggal, score, correct, wrong, total, speed, accuracy, consistency, endurance')
-      .order('tanggal', { ascending: false })
-      .limit(500),
+    supabase.from('test_history').select('test_id, user_id, test_type, package, tanggal, score, correct, wrong, total, speed, accuracy, consistency, endurance').order('tanggal', { ascending: false }).limit(500),
     supabase.from('score_labels').select('*').order('urutan', { ascending: true })
   ]);
 
@@ -499,20 +478,15 @@ async function adminDashboard_(token) {
   });
 
   const enrichedUsers = users.map(u => ({
-    user_id: u['user-id'],
-    username: u.username,
-    email: u.email || '',
-    role: u.role || 'user',
-    created_at: u.created_at,
+    user_id: u['user-id'], username: u.username, email: u.email || '',
+    role: u.role || 'user', created_at: u.created_at,
     test_count: counts.get(String(u['user-id'])) || 0
   }));
 
   const enrichedResults = results.map(r => {
     const u = userMap.get(String(r.user_id || ''));
     return {
-      ...r,
-      username: u?.username || r.user_id || '—',
-      email: u?.email || '',
+      ...r, username: u?.username || r.user_id || '—', email: u?.email || '',
       label: resolveLabel_(labels, r.test_type, Number(r.score) || 0)
     };
   });
@@ -525,9 +499,7 @@ async function adminDashboard_(token) {
   return {
     success: true,
     stats: { users: users.length, admins, tests: results.length, avg_score: avgScore },
-    users: enrichedUsers,
-    results: enrichedResults,
-    labels
+    users: enrichedUsers, results: enrichedResults, labels
   };
 }
 
@@ -537,8 +509,7 @@ async function adminGetUsers_(token) {
 
   const supabase = getSupabaseAdmin();
   const { data: users, error } = await supabase
-    .from('table_user')
-    .select('"user-id", username, email, role, created_at')
+    .from('table_user').select('"user-id", username, email, role, created_at')
     .order('created_at', { ascending: false });
   if (error) throw error;
 
@@ -552,11 +523,8 @@ async function adminGetUsers_(token) {
   return {
     success: true,
     users: (users || []).map(u => ({
-      user_id: u['user-id'],
-      username: u.username,
-      email: u.email || '',
-      role: u.role || 'user',
-      created_at: u.created_at,
+      user_id: u['user-id'], username: u.username, email: u.email || '',
+      role: u.role || 'user', created_at: u.created_at,
       test_count: counts.get(String(u['user-id'])) || 0
     }))
   };
@@ -576,31 +544,24 @@ async function adminCreateUser_(token, user) {
   if (email && !isValidEmail(email)) return { success: false, message: 'Format email tidak valid.' };
 
   const supabase = getSupabaseAdmin();
-  const { data: existing, error: exErr } = await supabase
-    .from('table_user')
-    .select('"user-id", username, email');
+  const { data: existing, error: exErr } = await supabase.from('table_user').select('"user-id", username, email');
   if (exErr) throw exErr;
 
-  if (existing.some(r => String(r.username || '').toLowerCase() === username.toLowerCase())) {
+  if (existing.some(r => String(r.username || '').toLowerCase() === username.toLowerCase()))
     return { success: false, message: 'Username sudah digunakan.' };
-  }
-  if (email && existing.some(r => String(r.email || '').toLowerCase() === email)) {
+  if (email && existing.some(r => String(r.email || '').toLowerCase() === email))
     return { success: false, message: 'Email sudah digunakan.' };
-  }
 
   const userId = nextUserId(existing.map(r => r['user-id']));
   const passwordHash = await hashPassword(password);
 
   const { error: insErr } = await supabase.from('table_user').insert({
-    'user-id': userId,
-    username,
-    email,
-    password_hash: passwordHash,
-    salt: '',
-    role: 'user',
-    created_at: new Date().toISOString()
+    'user-id': userId, username, email, password_hash: passwordHash, salt: '',
+    role: 'user', created_at: new Date().toISOString()
   });
   if (insErr) throw insErr;
+
+  await logAdminAction_(auth.session, 'adminCreateUser', userId, username, true, '');
 
   return { success: true, message: `Akun ${username} dibuat.`, user_id: userId };
 }
@@ -614,10 +575,7 @@ async function adminResetUserPassword_(token, userId, mode, password) {
 
   const supabase = getSupabaseAdmin();
   const { data: rows, error } = await supabase
-    .from('table_user')
-    .select('"user-id", username, email')
-    .eq('user-id', userId)
-    .limit(1);
+    .from('table_user').select('"user-id", username, email').eq('user-id', userId).limit(1);
   if (error) throw error;
 
   const row = rows && rows[0];
@@ -626,27 +584,22 @@ async function adminResetUserPassword_(token, userId, mode, password) {
   let newPassword;
   if (mode === 'manual') {
     newPassword = String(password || '');
-    if (newPassword.length < 8) {
-      return { success: false, message: 'Password manual minimal 8 karakter.' };
-    }
+    if (newPassword.length < 8) return { success: false, message: 'Password manual minimal 8 karakter.' };
   } else {
     newPassword = generateRandomPassword(10);
   }
 
   const newHash = await hashPassword(newPassword);
   const { error: updErr } = await supabase
-    .from('table_user')
-    .update({ password_hash: newHash, salt: '' })
-    .eq('user-id', userId);
+    .from('table_user').update({ password_hash: newHash, salt: '' }).eq('user-id', userId);
   if (updErr) throw updErr;
 
   if (row.email) {
-    try {
-      await sendNewPasswordEmail(row.email, row.username, newPassword);
-    } catch (mailErr) {
-      console.error('Email password baru gagal:', mailErr);
-    }
+    try { await sendNewPasswordEmail(row.email, row.username, newPassword); }
+    catch (mailErr) { console.error('Email password baru gagal:', mailErr); }
   }
+
+  await logAdminAction_(auth.session, 'adminResetUserPassword', userId, row.username, true, mode || 'generated');
 
   return { success: true, username: row.username, temporary_password: newPassword };
 }
@@ -657,32 +610,24 @@ async function adminDeleteUser_(token, userId) {
 
   userId = String(userId || '').trim();
   if (!userId) return { success: false, message: 'user_id wajib diisi.' };
-  if (userId === String(auth.session.user_id)) {
-    return { success: false, message: 'Tidak bisa menghapus akun sendiri.' };
-  }
+  if (userId === String(auth.session.user_id)) return { success: false, message: 'Tidak bisa menghapus akun sendiri.' };
 
   const supabase = getSupabaseAdmin();
   const { data: rows, error } = await supabase
-    .from('table_user')
-    .select('"user-id", role, username')
-    .eq('user-id', userId)
-    .limit(1);
+    .from('table_user').select('"user-id", role, username').eq('user-id', userId).limit(1);
   if (error) throw error;
 
   const row = rows && rows[0];
   if (!row) return { success: false, message: 'Akun tidak ditemukan.' };
-  if ((row.role || 'user') === 'admin') {
-    return { success: false, message: 'Akun admin tidak bisa dihapus dari panel.' };
-  }
+  if ((row.role || 'user') === 'admin') return { success: false, message: 'Akun admin tidak bisa dihapus dari panel.' };
 
   await supabase.from('test_detail').delete().eq('user_id', userId);
   await supabase.from('test_history').delete().eq('user_id', userId);
 
-  const { error: delErr } = await supabase
-    .from('table_user')
-    .delete()
-    .eq('user-id', userId);
+  const { error: delErr } = await supabase.from('table_user').delete().eq('user-id', userId);
   if (delErr) throw delErr;
+
+  await logAdminAction_(auth.session, 'adminDeleteUser', userId, row.username, true, '');
 
   return { success: true, message: `Akun ${row.username} dihapus.` };
 }
@@ -697,8 +642,7 @@ async function adminGetResults_(token, filters) {
   let query = supabase
     .from('test_history')
     .select('test_id, user_id, test_type, package, tanggal, score, correct, wrong, total, speed, accuracy, consistency, endurance')
-    .order('tanggal', { ascending: false })
-    .limit(500);
+    .order('tanggal', { ascending: false }).limit(500);
 
   if (filters.test_type) query = query.eq('test_type', String(filters.test_type));
   if (filters.min_score !== undefined && filters.min_score !== '' && filters.min_score !== null) {
@@ -713,9 +657,7 @@ async function adminGetResults_(token, filters) {
   const { data: results, error } = await query;
   if (error) throw error;
 
-  const { data: users } = await supabase
-    .from('table_user')
-    .select('"user-id", username, email');
+  const { data: users } = await supabase.from('table_user').select('"user-id", username, email');
   const userMap = new Map();
   (users || []).forEach(u => userMap.set(String(u['user-id']), u));
 
@@ -724,17 +666,13 @@ async function adminGetResults_(token, filters) {
 
   const usernameFilter = String(filters.username || '').trim().toLowerCase();
 
-  const enriched = (results || [])
-    .map(r => {
-      const u = userMap.get(String(r.user_id || ''));
-      return {
-        ...r,
-        username: u?.username || r.user_id || '—',
-        email: u?.email || '',
-        label: resolveLabel_(labelList, r.test_type, Number(r.score) || 0)
-      };
-    })
-    .filter(r => !usernameFilter || String(r.username).toLowerCase().includes(usernameFilter));
+  const enriched = (results || []).map(r => {
+    const u = userMap.get(String(r.user_id || ''));
+    return {
+      ...r, username: u?.username || r.user_id || '—', email: u?.email || '',
+      label: resolveLabel_(labelList, r.test_type, Number(r.score) || 0)
+    };
+  }).filter(r => !usernameFilter || String(r.username).toLowerCase().includes(usernameFilter));
 
   return { success: true, results: enriched };
 }
@@ -748,8 +686,7 @@ async function adminGetQuestions_(token, testType, pkg, includeInactive) {
     .from('question_bank')
     .select('question_id, test_type, package, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active')
     .eq('test_type', String(testType || '').trim())
-    .order('package', { ascending: true })
-    .order('no_soal', { ascending: true });
+    .order('package', { ascending: true }).order('no_soal', { ascending: true });
 
   if (pkg && Number(pkg) > 0) query = query.eq('package', Number(pkg));
   if (!includeInactive) query = query.eq('active', true);
@@ -760,19 +697,10 @@ async function adminGetQuestions_(token, testType, pkg, includeInactive) {
   return {
     success: true,
     questions: (rows || []).map(r => ({
-      question_id: r.question_id,
-      test_type: r.test_type,
-      package: r.package,
-      no_soal: r.no_soal,
-      question: r.question,
-      option_a: r.option_a,
-      option_b: r.option_b,
-      option_c: r.option_c,
-      option_d: r.option_d,
-      option_e: r.option_e,
-      answer: r.answer,
-      discussion: r.discussion || '',
-      active: r.active !== false
+      question_id: r.question_id, test_type: r.test_type, package: r.package, no_soal: r.no_soal,
+      question: r.question, option_a: r.option_a, option_b: r.option_b, option_c: r.option_c,
+      option_d: r.option_d, option_e: r.option_e, answer: r.answer,
+      discussion: r.discussion || '', active: r.active !== false
     }))
   };
 }
@@ -780,23 +708,14 @@ async function adminGetQuestions_(token, testType, pkg, includeInactive) {
 async function adminSaveQuestions_(token, questions) {
   const auth = verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
-
-  if (!Array.isArray(questions) || !questions.length) {
-    return { success: false, message: 'questions kosong.' };
-  }
+  if (!Array.isArray(questions) || !questions.length) return { success: false, message: 'questions kosong.' };
 
   const supabase = getSupabaseAdmin();
-
   const ids = questions.map(q => String(q.question_id || '')).filter(Boolean);
-  const { data: existing } = await supabase
-    .from('question_bank')
-    .select('question_id')
-    .in('question_id', ids);
+  const { data: existing } = await supabase.from('question_bank').select('question_id').in('question_id', ids);
   const existingSet = new Set((existing || []).map(r => r.question_id));
 
-  let added = 0;
-  let updated = 0;
-
+  let added = 0, updated = 0;
   for (const q of questions) {
     const qid = String(q.question_id || '').trim();
     if (!qid) continue;
@@ -819,10 +738,7 @@ async function adminSaveQuestions_(token, questions) {
     };
 
     if (existingSet.has(qid)) {
-      const { error } = await supabase
-        .from('question_bank')
-        .update(record)
-        .eq('question_id', qid);
+      const { error } = await supabase.from('question_bank').update(record).eq('question_id', qid);
       if (error) throw error;
       updated += 1;
     } else {
@@ -831,6 +747,8 @@ async function adminSaveQuestions_(token, questions) {
       added += 1;
     }
   }
+
+  await logAdminAction_(auth.session, 'adminSaveQuestions', '', `${added} added, ${updated} updated`, true, '');
 
   return { success: true, added, updated, total: questions.length };
 }
@@ -843,11 +761,10 @@ async function adminDeleteQuestion_(token, questionId) {
   if (!qid) return { success: false, message: 'question_id wajib diisi.' };
 
   const supabase = getSupabaseAdmin();
-  const { error } = await supabase
-    .from('question_bank')
-    .update({ active: false })
-    .eq('question_id', qid);
+  const { error } = await supabase.from('question_bank').update({ active: false }).eq('question_id', qid);
   if (error) throw error;
+
+  await logAdminAction_(auth.session, 'adminDeleteQuestion', qid, '', true, '');
 
   return { success: true, message: 'Soal dinonaktifkan.' };
 }
@@ -874,23 +791,17 @@ async function adminSaveScoreLabels_(token, testType, labels) {
   if (!Array.isArray(labels)) return { success: false, message: 'labels harus array.' };
 
   const supabase = getSupabaseAdmin();
-
-  const { error: delErr } = await supabase
-    .from('score_labels')
-    .delete()
-    .eq('test_type', testType);
+  const { error: delErr } = await supabase.from('score_labels').delete().eq('test_type', testType);
   if (delErr) throw delErr;
 
   if (labels.length) {
-    const records = labels
-      .map((l, i) => ({
-        test_type: testType,
-        label: String(l.label || '').trim(),
-        min_score: Number(l.min_score) || 0,
-        max_score: Number(l.max_score) || 100,
-        urutan: Number(l.urutan) || i + 1
-      }))
-      .filter(l => l.label);
+    const records = labels.map((l, i) => ({
+      test_type: testType,
+      label: String(l.label || '').trim(),
+      min_score: Number(l.min_score) || 0,
+      max_score: Number(l.max_score) || 100,
+      urutan: Number(l.urutan) || i + 1
+    })).filter(l => l.label);
 
     if (records.length) {
       const { error: insErr } = await supabase.from('score_labels').insert(records);
@@ -898,64 +809,76 @@ async function adminSaveScoreLabels_(token, testType, labels) {
     }
   }
 
+  await logAdminAction_(auth.session, 'adminSaveScoreLabels', testType, `${labels.length} labels`, true, '');
+
   return { success: true, message: 'Label tersimpan.' };
 }
 
 /* ============================================================
-   TEST DETAIL (dipakai tombol "Cetak PDF" di histori)
+   PASSWORD RESET — PAKAI generateResetToken
    ============================================================ */
 
-async function saveTestDetail_(payload) {
-  const session = verifySessionToken(payload.token);
-  if (!session) return { success: false, message: 'Sesi login sudah berakhir.' };
-
-  const testId = String(payload.test_id || '').trim();
-  if (!testId) return { success: false, message: 'test_id wajib diisi.' };
-
-  const details = Array.isArray(payload.details) ? payload.details : [];
-  if (!details.length) return { success: true, saved: 0 };
+async function requestPasswordReset_(identifier, appUrl) {
+  identifier = String(identifier || '').trim();
+  const genericSuccess = {
+    success: true,
+    message: 'Kalau akun ditemukan, link reset sudah dikirim ke email terdaftar.'
+  };
+  if (!identifier) return { success: false, message: 'Username atau email wajib diisi.' };
 
   const supabase = getSupabaseAdmin();
-  const records = details.map(d => ({
-    test_id: testId,
-    user_id: session.user_id,
-    test_type: String(d.test_type || ''),
-    package: Number(d.package) || 1,
-    no_soal: Number(d.no_soal) || 0,
-    kolom: d.kolom === '' || d.kolom === undefined ? null : Number(d.kolom),
-    no_soal_dalam_kolom:
-      d.no_soal_dalam_kolom === '' || d.no_soal_dalam_kolom === undefined
-        ? null
-        : Number(d.no_soal_dalam_kolom),
-    waktu_detik:
-      d.waktu_detik === '' || d.waktu_detik === undefined
-        ? null
-        : Number(d.waktu_detik),
-    jawaban: String(d.jawaban || ''),
-    benar: Boolean(d.benar)
-  }));
-
-  const { error } = await supabase.from('test_detail').insert(records);
+  const { data: rows, error } = await supabase
+    .from('table_user').select('"user-id", username, email')
+    .or(`username.ilike.${identifier},email.ilike.${identifier}`).limit(1);
   if (error) throw error;
 
-  return { success: true, saved: records.length };
+  const row = rows && rows[0];
+  if (!row || !row.email) return genericSuccess;
+
+  // ---- Token aman (64 hex char dari crypto.randomBytes(32)) ----
+  const token = generateResetToken();
+  const expiresAt = new Date(Date.now() + RESET_TOKEN_TTL_MS).toISOString();
+
+  const { error: updateError } = await supabase
+    .from('table_user').update({ reset_token: token, reset_token_expires: expiresAt })
+    .eq('user-id', row['user-id']);
+  if (updateError) throw updateError;
+
+  const base = String(appUrl || '').trim() || 'https://my-psych-five.vercel.app/';
+  const separator = base.indexOf('?') >= 0 ? '&' : '?';
+  const resetUrl = base + separator + 'reset=' + encodeURIComponent(token);
+
+  await sendResetPasswordEmail(row.email, row.username, resetUrl).catch(sendError => {
+    console.error('Gagal kirim email reset:', sendError);
+    throw new Error('Email reset gagal dikirim (masalah di penyedia email). Coba lagi nanti atau hubungi admin.');
+  });
+
+  return genericSuccess;
 }
 
-async function getTestDetail_(payload) {
-  const session = verifySessionToken(payload.token);
-  if (!session) return { success: false, message: 'Sesi login sudah berakhir.' };
+async function resetPassword_(token, newPassword) {
+  token = String(token || '').trim();
+  newPassword = String(newPassword || '');
 
-  const testId = String(payload.test_id || '').trim();
-  if (!testId) return { success: false, message: 'test_id wajib diisi.' };
+  if (!token) return { success: false, message: 'Token reset tidak valid.' };
+  if (newPassword.length < 8) return { success: false, message: 'Password minimal 8 karakter.' };
 
   const supabase = getSupabaseAdmin();
-  const { data, error } = await supabase
-    .from('test_detail')
-    .select('*')
-    .eq('test_id', testId)
-    .eq('user_id', session.user_id)
-    .order('no_soal', { ascending: true });
+  const { data: rows, error } = await supabase
+    .from('table_user').select('"user-id", reset_token, reset_token_expires')
+    .eq('reset_token', token).limit(1);
   if (error) throw error;
 
-  return { success: true, details: data || [] };
+  const row = rows && rows[0];
+  if (!row || !row.reset_token_expires || new Date(row.reset_token_expires).getTime() < Date.now()) {
+    return { success: false, message: 'Link reset sudah tidak berlaku atau sudah digunakan. Silakan minta link baru.' };
+  }
+
+  const newHash = await hashPassword(newPassword);
+  const { error: updateError } = await supabase
+    .from('table_user').update({ password_hash: newHash, reset_token: null, reset_token_expires: null })
+    .eq('user-id', row['user-id']);
+  if (updateError) throw updateError;
+
+  return { success: true, message: 'Password berhasil diganti. Silakan login menggunakan password baru.' };
 }
