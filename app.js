@@ -3,7 +3,7 @@
 
   // ============================================================
   // PSYCHOTEST PRACTICE — PHASE 4
-  // Multi-test + Google Sheets + PDF fallback
+  // 
   // ============================================================
 
   const CONFIG = Object.freeze({
@@ -1118,7 +1118,7 @@ const views = {
         ? 'Lupa password'
         : 'Selamat datang kembali';
     $('authSubtitle').textContent = registerMode
-      ? 'Akun digunakan untuk menyimpan histori latihan di Google Sheets.'
+      ? 'Akun digunakan untuk menyimpan histori latihan dan memantau perkembanganmu.'
       : forgotMode
         ? 'Masukkan username atau email akunmu, kami kirimkan link reset password ke email terdaftar.'
         : 'Masuk untuk melanjutkan latihan dan melihat histori.';
@@ -1396,7 +1396,7 @@ const views = {
   });
 
   async function loadQuestionPackage(testId, packageNumber) {
-    // Akun peserta terdaftar memprioritaskan bank soal di Google Sheets.
+    // Akun peserta terdaftar memprioritaskan bank soal di supabase.
     // Kalau bank belum dimigrasikan, fallback tetap menggunakan JSON GitHub lama.
     if (state.session?.token && !state.isGuest) {
       try {
@@ -2343,7 +2343,7 @@ async function loadKuantitatifPackage(packageNumber) {
 
       try {
         await refreshHistory();
-        toast('Hasil tersimpan ke Google Sheets.', 'success');
+        toast('Hasil tersimpan ke Safety Database.', 'success');
       } catch (error) {
         console.warn('Refresh histori gagal:', error);
       }
@@ -2361,7 +2361,7 @@ async function loadKuantitatifPackage(packageNumber) {
 
     $('resultIntro').innerHTML = state.isGuest
       ? 'Hasil mode <strong>Tamu</strong> tidak disimpan ke histori. <strong>Download PDF</strong> untuk menyimpan salinannya.'
-      : `Hasil <strong>${escapeHtml(name)}</strong> sudah dikirim ke Google Sheets. Download PDF untuk menyimpan salinan detailnya.`;
+      : `Hasil <strong>${escapeHtml(name)}</strong> sudah tersimpan di akunmu. Download PDF untuk menyimpan salinan detailnya.`;
 
     const scores = [
       ['speed', 'Kecepatan', result.speed],
@@ -2746,14 +2746,14 @@ async function loadKuantitatifPackage(packageNumber) {
         </div>
         <div class="admin-card card">
           <h3>Akses cepat</h3>
-          <p class="muted">Kelola data tanpa membuka Google Sheets secara manual.</p>
+          <p class="muted">Kelola data tanpa membuka database secara manual.</p>
           <div class="admin-quick-grid">
             <button type="button" class="secondary-btn" data-admin-tab="users">👥 Kelola Peserta</button>
             <button type="button" class="secondary-btn" data-admin-tab="results">📊 Lihat Nilai</button>
             <button type="button" class="secondary-btn" data-admin-tab="questions">🧩 Bank Soal</button>
             <button type="button" class="secondary-btn" data-admin-tab="labels">🏷️ Label Nilai</button>
           </div>
-          <div class="warning-box"><strong>Catatan:</strong> perubahan bank soal dan label langsung tersimpan ke Google Sheets.</div>
+          <div class="warning-box"><strong>Catatan:</strong> perubahan bank soal dan label langsung tersimpan ke Safety Database.</div>
         </div>
       </div>
     `;
@@ -3033,7 +3033,7 @@ async function loadKuantitatifPackage(packageNumber) {
   async function adminMigrateAllQuestions() {
     const button = $('adminMigrateAllQuestionsBtn');
     if (!button) return;
-    if (!window.confirm('Migrasikan semua 6 bank soal JSON ke Google Sheets? Data dengan question_id yang sama akan diperbarui, bukan diduplikasi.')) return;
+    if (!window.confirm('Migrasikan semua 6 bank soal JSON ke Safety Database? Data dengan question_id yang sama akan diperbarui, bukan diduplikasi.')) return;
 
     const files = Object.entries(QUESTION_FILES);
     let total = 0;
