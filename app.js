@@ -3176,6 +3176,11 @@ async function loadKuantitatifPackage(packageNumber) {
 
     $('landingLoginBtn').addEventListener('click', () => showAuth('login'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
+    $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
+$('landingRegisterBtnHero')?.addEventListener('click', () => showAuth('register'));
+$('landingRegisterBtnKraepelin')?.addEventListener('click', () => showAuth('register'));
+$('landingRegisterBtnCv')?.addEventListener('click', () => showAuth('register'));
+$('landingRegisterBtnFinal')?.addEventListener('click', () => showAuth('register'));
     $('landingGuestBtn').addEventListener('click', () => { $('guestModal').hidden = false; });
 
     $('cancelGuestBtn').addEventListener('click', () => { $('guestModal').hidden = true; });
