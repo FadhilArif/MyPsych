@@ -1247,6 +1247,7 @@ trackEvent('register_attempt');
       saveSession();
       $('registerForm').reset();
       await goDashboard('Akun berhasil dibuat.');
+      trackEvent('register_success');
     } catch (errorObject) {
       error.textContent = errorObject.message || 'Gagal membuat akun.';
     } finally {
@@ -1285,7 +1286,6 @@ trackEvent('register_attempt');
           saveSession();
           $('loginForm').reset();
           await goDashboard('Login berhasil.');
-          trackEvent('register_success');
           return;
         } catch (errorObject) {
           lastError = errorObject;
@@ -2398,6 +2398,8 @@ trackEvent('test_start', { type: state.test, package: state.package });
     state.lastResult = result;
     clearPersistedTest();
 
+    trackEvent('test_finish', { type: state.test, package: state.package, score: result.score });
+
     renderResult(result);
     drawChart(result);
     showView('result');
@@ -2417,7 +2419,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
       try {
         await refreshHistory();
-        toast('Hasil tersimpan ke Safety Database.', 'success');
+        toast('Hasil tersimpan ke database.', 'success');
       } catch (error) {
         console.warn('Refresh histori gagal:', error);
       }
@@ -2827,7 +2829,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
             <button type="button" class="secondary-btn" data-admin-tab="questions">🧩 Bank Soal</button>
             <button type="button" class="secondary-btn" data-admin-tab="labels">🏷️ Label Nilai</button>
           </div>
-          <div class="warning-box"><strong>Catatan:</strong> perubahan bank soal dan label langsung tersimpan ke Safety Database.</div>
+          <div class="warning-box"><strong>Catatan:</strong> perubahan bank soal dan label langsung tersimpan ke database.</div>
         </div>
       </div>
     `;
@@ -3107,7 +3109,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
   async function adminMigrateAllQuestions() {
     const button = $('adminMigrateAllQuestionsBtn');
     if (!button) return;
-    if (!window.confirm('Migrasikan semua 6 bank soal JSON ke Safety Database? Data dengan question_id yang sama akan diperbarui, bukan diduplikasi.')) return;
+    if (!window.confirm('Migrasikan semua 6 bank soal JSON ke database? Data dengan question_id yang sama akan diperbarui, bukan diduplikasi.')) return;
 
     const files = Object.entries(QUESTION_FILES);
     let total = 0;
