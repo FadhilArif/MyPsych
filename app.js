@@ -126,6 +126,7 @@ const views = {
   result: $('resultView'),
   history: $('historyView'),
   admin: $('adminView'),
+  about: $('aboutView'),
 };
   
   const state = {
@@ -3245,7 +3246,13 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
   function bind() {
     bindPasswordToggles();
-
+// About page
+document.querySelectorAll('[data-goto="about"]').forEach((el) => {
+  el.addEventListener('click', () => { showView('about'); loadStats(); });
+});
+$('backFromAboutBtn')?.addEventListener('click', () => showView('landing'));
+$('aboutRegisterBtn')?.addEventListener('click', () => showAuth('register'));
+$('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = false; });
     $('landingLoginBtn').addEventListener('click', () => showAuth('login'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
