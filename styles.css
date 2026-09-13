@@ -955,6 +955,7 @@ body[data-view=test] .app-shell {
   color:#34455e;
   font-size:.72rem;
   font-weight:700;
+  pointer-events:auto;
 }
 
 .toast.success {
