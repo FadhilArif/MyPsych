@@ -211,7 +211,7 @@
             <span class="lp-category-count">—</span>
             <span>Coming Soon</span>
           </div>
-          <span class="lp-category-link">Beri tahu saya →</span>
+         <button type="button" class="lp-category-link" data-interest="kepribadian" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;">Beri tahu saya →</button>
         </article>
 
         <article class="lp-category-card lp-category-coming">
@@ -223,7 +223,7 @@
             <span class="lp-category-count">—</span>
             <span>Coming Soon</span>
           </div>
-          <span class="lp-category-link">Beri tahu saya →</span>
+         <button type="button" class="lp-category-link" data-interest="kepribadian" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;">Beri tahu saya →</button>
         </article>
       </div>
     </div>
@@ -340,7 +340,7 @@
             <span class="lp-ppf-text">Arah karier 5 tahun ke depan</span>
           </div>
         </div>
-        <button id="landingRegisterBtnCv" class="lp-btn-secondary lp-btn-lg">Beri tahu saya saat siap →</button>
+       <button type="button" id="interestCvBtn" class="lp-btn-secondary lp-btn-lg" data-interest="cv-ats">Beri tahu saya saat siap →</button>
       </div>
       <div class="lp-cv-visual">
         <div class="lp-cv-preview">
@@ -541,5 +541,26 @@
 
 <div id="guestModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">i</div><h3>Lanjut sebagai Tamu?</h3><p>Kamu tetap bisa mengerjakan semua latihan dan <strong>mengunduh hasil PDF</strong>. Namun hasil tidak disimpan ke akun atau histori.</p><div class="guest-note">✓ <span><b>Tes tetap berjalan normal</b><small>Semua fitur latihan dan hasil tetap tersedia.</small></span></div><div class="guest-note">↓ <span><b>PDF tetap bisa diunduh</b><small>Simpan PDF setelah selesai jika ingin menyimpan hasil.</small></span></div><div class="modal-actions"><button id="cancelGuestBtn" class="secondary-btn">Batal</button><button id="confirmGuestBtn" class="primary-btn">Ya, lanjut sebagai tamu</button></div></div></div>
 <div id="confirmModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">!</div><h3>Akhiri tes?</h3><p>Progress tes yang sedang berjalan akan dihapus. Hasil tidak akan dibuat.</p><div class="modal-actions"><button id="cancelEndTestBtn" class="secondary-btn">Batal</button><button id="confirmEndTestBtn" class="danger-btn">Ya, akhiri</button></div></div></div>
-<div id="toastRoot"></div><script src="app.js"></script>
+<div id="interestModal" class="modal-backdrop" hidden>
+  <div class="modal-card card">
+    <div class="modal-icon">🔔</div>
+    <h3 id="interestTitle">Beri tahu saya saat siap</h3>
+    <p id="interestSubtitle" class="muted">Kami akan kirim email begitu fitur ini tersedia. Tidak ada spam, cuma kabar sekali.</p>
+    <form id="interestForm" style="margin-top:16px;text-align:left;">
+      <label>Email
+        <input id="interestEmail" type="email" placeholder="nama@email.com" required autocomplete="email">
+      </label>
+      <label style="margin-top:10px;">Catatan (opsional)
+        <input id="interestNote" maxlength="280" placeholder="Mis. fitur apa yang paling ditunggu">
+      </label>
+      <p id="interestError" class="form-error"></p>
+      <p id="interestSuccess" class="form-success"></p>
+      <div class="modal-actions" style="margin-top:14px;">
+        <button type="button" id="cancelInterestBtn" class="secondary-btn">Batal</button>
+        <button type="submit" class="primary-btn">Kirim</button>
+      </div>
+    </form>
+  </div>
+</div>
+  <div id="toastRoot"></div><script src="app.js"></script>
 </body></html>
