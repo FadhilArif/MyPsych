@@ -93,7 +93,9 @@ module.exports = async function handler(req, res) {
       case 'getQuestionPackage':
         result = await getQuestionPackage_(body.test_type, body.package);
         break;
-
+case 'stats':
+  result = await stats_();
+  break;
       case 'saveTestDetail':
         result = await saveTestDetail_(body);
         break;
@@ -180,7 +182,31 @@ module.exports = async function handler(req, res) {
 /* ============================================================
    HELPERS
    ============================================================ */
+async function stats_() {
+  try {
+    const supabase = getSupabaseAdmin();
+    const [usersRes, testsRes, questionsRes] = await Promise.all([
+      supabase.from('table_user').select('*', { count: 'exact', head: true }),
+      supabase.from('test_history').select('*', { count: 'exact', head: true }),
+      supabase.from('question_bank').select('*', { count: 'exact', head: true }).eq('active', true)
+    ]);
 
+    return {
+      success: true,
+      stats: {
+        users: usersRes.count || 0,
+        tests: testsRes.count || 0,
+        questions: questionsRes.count || 0
+      }
+    };
+  } catch (err) {
+    console.error('[stats] error:', err && err.message);
+    return {
+      success: true,
+      stats: { users: 0, tests: 0, questions: 0 }
+    };
+  }
+}
 function getClientIp_(req) {
   const fwd = req.headers['x-forwarded-for'];
   if (fwd) return String(fwd).split(',')[0].trim();
