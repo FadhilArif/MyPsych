@@ -84,11 +84,6 @@ function nextUserId(existingIds) {
   return 'U' + String(max + 1).padStart(5, '0');
 }
 
-/**
- * Generate password acak yang aman secara kriptografis.
- * Sebelumnya pakai Math.random() yang bisa diprediksi.
- * Sekarang pakai crypto.randomInt().
- */
 function generateRandomPassword(length = 10) {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
   let result = '';
@@ -98,12 +93,29 @@ function generateRandomPassword(length = 10) {
   return result;
 }
 
-/**
- * Generate reset token yang aman (64 karakter hex dari 32 byte random).
- * Dipakai oleh requestPasswordReset_ di gateway.js.
- */
 function generateResetToken() {
   return crypto.randomBytes(32).toString('hex');
+}
+
+/**
+ * Hash token JWT untuk disimpan di revoked_tokens.
+ * Pakai SHA256 karena token sudah random dan panjang — tidak butuh bcrypt.
+ */
+function hashToken(token) {
+  return crypto.createHash('sha256').update(String(token)).digest('hex');
+}
+
+/**
+ * Decode JWT tanpa verify, untuk ambil exp (dipakai saat revoke
+ * supaya kita tahu kapan harus cleanup revoked_tokens).
+ */
+function decodeTokenExp(token) {
+  try {
+    const decoded = jwt.decode(String(token));
+    return decoded?.exp ? decoded.exp * 1000 : null;
+  } catch (_) {
+    return null;
+  }
 }
 
 module.exports = {
@@ -116,5 +128,7 @@ module.exports = {
   isValidEmail,
   nextUserId,
   generateRandomPassword,
-  generateResetToken
+  generateResetToken,
+  hashToken,
+  decodeTokenExp
 };
