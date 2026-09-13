@@ -2820,6 +2820,18 @@ trackEvent('test_start', { type: state.test, package: state.package });
         <div><div class="eyebrow">OVERVIEW</div><h2>Ringkasan sistem</h2></div>
         <button type="button" class="secondary-btn" id="adminRefreshBtn">↻ Refresh</button>
       </div>
+            <div class="admin-stats-grid" style="margin-bottom: 14px;">
+        <div class="admin-stat card">
+          <span>PDF Dicetak</span>
+          <strong>${Number(state.admin.stats.pdf_downloads) || 0}</strong>
+          <small>laporan diunduh user</small>
+        </div>
+        <div class="admin-stat card">
+          <span>Conversion</span>
+          <strong>${state.admin.stats.tests ? Math.round((state.admin.stats.pdf_downloads / state.admin.stats.tests) * 100) : 0}%</strong>
+          <small>tes → PDF</small>
+        </div>
+      </div>
       <div class="admin-grid-two">
         <div class="admin-card card">
           <h3>Aktivitas terbaru</h3>
