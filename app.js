@@ -151,7 +151,16 @@ const views = {
     savingHistory: false,
     kraepelinSecondsChoice: 15,
   };
-
+  // ============================================================
+  // HELPER
+  // ============================================================
+function trackEvent(name, props = {}) {
+  try {
+    if (window.va) {
+      window.va('event', { name, ...props });
+    }
+  } catch (_) {}
+}
   // ============================================================
   // VIEW / TOAST
   // ============================================================
@@ -801,6 +810,7 @@ const views = {
     saveSession();
     $('welcomeName').textContent = 'Tamu';
     renderCatalog();
+    trackEvent('guest_enter');
     showView('dashboard');
   }
 
@@ -1563,7 +1573,7 @@ async function loadKuantitatifPackage(packageNumber) {
   if (!state.test || !TESTS[state.test]) {
     return;
   }
-
+trackEvent('test_start', { type: state.test, package: state.package });
   const button = $('startTestBtn');
 
   stopTimer();
@@ -3259,6 +3269,8 @@ $('landingRegisterBtnFinal')?.addEventListener('click', () => showAuth('register
     $('registerForm').addEventListener('submit', (event) => {
       event.preventDefault();
       register();
+      trackEvent('register_attempt');
+      trackEvent('register_success');
     });
 
     $('resumeTestBtn')?.addEventListener('click', resumePersistedTest);
