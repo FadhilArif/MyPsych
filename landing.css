@@ -1592,3 +1592,22 @@
     padding: 10px 0;
   }
 }
+/* ============================================================
+   FIX: paksa hanya view aktif yang tampil
+   Mencegah view lain "nyangkut" terlihat di atas
+   ============================================================ */
+
+.app-shell > .screen:not(.active) {
+  display: none !important;
+}
+
+/* About view pakai block, bukan flex */
+#aboutView.screen.active {
+  display: block !important;
+  padding: 18px 0;
+}
+
+#aboutView .about-shell {
+  margin: 0 auto;
+  flex-shrink: 0;
+}
