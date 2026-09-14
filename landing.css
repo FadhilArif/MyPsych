@@ -1593,17 +1593,17 @@
   }
 }
 /* ============================================================
-   FIX: paksa hanya view aktif yang tampil
-   Mencegah view lain "nyangkut" terlihat di atas
+   FIX: main tidak perlu min-height saat About aktif
+   Karena #aboutView ada di luar <main>
    ============================================================ */
 
-.app-shell > .screen:not(.active) {
-  display: none !important;
+body[data-view="about"] main.app-shell {
+  min-height: 0;
+  padding: 0;
 }
-
-/* About view pakai block, bukan flex */
-#aboutView.screen.active {
-  display: block !important;
+#aboutView.screen {
+  align-items: flex-start;
+  justify-content: center;
   padding: 18px 0;
 }
 
