@@ -619,32 +619,51 @@ async function submitInterest(event) {
     );
   }
 
-    function getWrongInfoForPdf(result) {
-    // Untuk MCQ
+     function shortenText_(text, max = 68) {
+    const t = String(text || '').replace(/\s+/g, ' ').trim();
+    if (t.length <= max) return t;
+    return t.slice(0, max - 1).trim() + '…';
+  }
+
+  function getWrongLinesForPdf(result, maxLines = 5) {
+    const lines = [];
+
+    // MCQ: tampilkan "No. X: teks soal"
+    if (Array.isArray(result.wrongDetails) && result.wrongDetails.length) {
+      result.wrongDetails.slice(0, maxLines).forEach((w) => {
+        lines.push(`No. ${w.no}: ${shortenText_(w.text)}`);
+      });
+      const extra = result.wrongDetails.length - maxLines;
+      if (extra > 0) lines.push(`+ ${extra} soal lainnya (lihat di website)`);
+      return lines;
+    }
+
+    // Fallback: kalau wrongDetails tidak ada tapi wrongNumbers ada
     if (Array.isArray(result.wrongNumbers) && result.wrongNumbers.length) {
-      const list = result.wrongNumbers.slice(0, 15);
+      const list = result.wrongNumbers.slice(0, 20);
       const extra = result.wrongNumbers.length - list.length;
       let text = `No. ${list.join(', ')}`;
       if (extra > 0) text += `, + ${extra} lainnya`;
-      return text;
+      lines.push(text);
+      return lines;
     }
 
-    // Untuk Kraepelin — ambil kolom dengan akurasi < 60%
+    // Kraepelin: kolom lemah
     if (Array.isArray(result.correctPerColumn) && result.correctPerColumn.length) {
       const weak = [];
       result.correctPerColumn.forEach((correct, idx) => {
-        if (correct / 26 < 0.6) weak.push(`Kolom ${idx + 1} (${correct}/26)`);
+        if (correct / 26 < 0.6) weak.push(`Kolom ${idx + 1} (${correct}/26 benar)`);
       });
-      if (!weak.length) return null;
-      const list = weak.slice(0, 6);
-      const extra = weak.length - list.length;
-      let text = list.join(', ');
-      if (extra > 0) text += `, + ${extra} lainnya`;
-      return text;
+      if (!weak.length) return lines;
+      weak.slice(0, 6).forEach((w) => lines.push(w));
+      const extra = weak.length - 6;
+      if (extra > 0) lines.push(`+ ${extra} kolom lainnya`);
+      return lines;
     }
 
-    return null;
+    return lines;
   }
+  
   async function buildPdf(result, participant) {
     const templateResponse = await fetch(
       './pdf-template.jpg',
@@ -858,9 +877,9 @@ async function submitInterest(event) {
     );
 
     // ---- Perlu Diperbaiki (di bawah Catatan) ----
-    const wrongInfo = getWrongInfoForPdf(result);
+    const wrongLines = getWrongLinesForPdf(result, 5);
 
-    if (wrongInfo) {
+    if (wrongLines.length) {
       // Garis pemisah
       lines.push('0.85 0.89 0.94 RG');
       drawPdfLine(lines, 52, 165, 543, 165);
@@ -869,9 +888,13 @@ async function submitInterest(event) {
       lines.push('0.80 0.20 0.20 rg');
       drawPdfText(lines, 'Perlu Diperbaiki', 52, 148, 10);
 
-      // Nomor soal
+      // Daftar soal yang salah (multi-baris)
       lines.push('0.38 0.43 0.50 rg');
-      drawPdfText(lines, wrongInfo, 52, 130, 9);
+      let yPos = 132;
+      wrongLines.forEach((lineText) => {
+        drawPdfText(lines, lineText, 52, yPos, 9);
+        yPos -= 13;
+      });
     }
     const content = lines.join('\n');
 
@@ -1131,19 +1154,55 @@ async function submitInterest(event) {
         state.lastResult.testId === item.test_id
       ) {
         result = state.lastResult;
-      } else {
+          } else {
         result = historyItemToResult(item);
 
-        // Histori dibuat dari TestHistory, lalu detail soal
-        // diambil dari TestDetail agar grafik bisa direkonstruksi.
+        // Ambil detail jawaban per soal dari TestDetail
         try {
           const details = await loadTestDetail(item.test_id);
           enrichHistoryResultWithDetail(result, details);
         } catch (detailError) {
           console.warn('Detail histori tidak tersedia:', detailError);
         }
-      }
 
+
+          function enrichWrongDetailsWithQuestions(result, questions) {
+    if (!Array.isArray(questions) || !questions.length) return result;
+    if (!Array.isArray(result.wrongNumbers) || !result.wrongNumbers.length) return result;
+
+    // Map nomor soal -> objek soal
+    const byNo = new Map();
+    questions.forEach((q) => {
+      const no = Number(q.id ?? q.no_soal);
+      if (Number.isInteger(no)) byNo.set(no, q);
+    });
+
+    result.wrongDetails = result.wrongNumbers.map((no) => {
+      const q = byNo.get(no);
+      return {
+        no,
+        text: String(q?.question || ''),
+        userAnswer: null,
+        correctAnswer: null,
+        options: q?.options ? Object.values(q.options).map(String) : [],
+      };
+    });
+
+    return result;
+  }
+        // Ambil teks soal dari bank soal untuk memperkaya wrongDetails
+        try {
+          const qp = await api('getQuestionPackage', {
+            test_type: item.test_type,
+            package: item.package,
+          });
+          if (qp?.success && Array.isArray(qp.questions)) {
+            enrichWrongDetailsWithQuestions(result, qp.questions);
+          }
+        } catch (questionError) {
+          console.warn('Teks soal histori tidak tersedia:', questionError);
+        }
+      }
       const participant =
         state.session?.username || 'Peserta';
 
@@ -2111,10 +2170,21 @@ trackEvent('test_start', { type: state.test, package: state.package });
       };
     });
 
-    // ---- BARU: Kumpulkan nomor soal yang salah ----
+     // ---- Kumpulkan detail soal yang salah ----
     const wrongNumbers = [];
+    const wrongDetails = [];
+
     chart.forEach((item, idx) => {
-      if (!item.correct) wrongNumbers.push(idx + 1);
+      if (item.correct) return;
+      const q = state.questions[idx];
+      wrongNumbers.push(idx + 1);
+      wrongDetails.push({
+        no: idx + 1,
+        text: String(q?.text || ''),
+        userAnswer: state.answers[idx],
+        correctAnswer: q?.correct,
+        options: Array.isArray(q?.options) ? q.options : [],
+      });
     });
 
     return {
@@ -2124,7 +2194,8 @@ trackEvent('test_start', { type: state.test, package: state.package });
       score: accuracy, speed, accuracy, consistency, endurance,
       average: mean(state.answers.map((a) => (a === null ? 0 : 1))),
       chart,
-      wrongNumbers, // <-- BARU
+      wrongNumbers,
+      wrongDetails,
     };
   }
    
@@ -2354,11 +2425,20 @@ trackEvent('test_start', { type: state.test, package: state.package });
       return result;
     }
 
-    result.chart = sorted.map((item) => ({
+       result.chart = sorted.map((item) => ({
       time: Number(item.waktu_detik || 0),
       correct: Boolean(item.benar),
       answered: String(item.jawaban ?? '') !== '',
     }));
+
+    // Hitung ulang wrongNumbers dari detail
+    const wrongNumbers = [];
+    sorted.forEach((item, idx) => {
+      if (!item.benar) {
+        wrongNumbers.push(Number(item.no_soal) || idx + 1);
+      }
+    });
+    result.wrongNumbers = wrongNumbers;
 
     return result;
   }
