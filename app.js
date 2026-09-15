@@ -1833,8 +1833,8 @@ trackEvent('test_start', { type: state.test, package: state.package });
       <div class="question-mark">?</div>
       <div class="big-number">${bottom}</div>
     `;
-
     $('keypad').innerHTML = '';
+    $('keypad').className = 'keypad keypad-numeric';
     [7, 8, 9, 4, 5, 6, 1, 2, 3, 0].forEach((digit) => {
       const button = document.createElement('button');
       button.type = 'button';
@@ -1940,7 +1940,8 @@ trackEvent('test_start', { type: state.test, package: state.package });
       <h2>${escapeHtml(question.text)}</h2>
     `;
 
-    $('keypad').innerHTML = '';
+        $('keypad').innerHTML = '';
+    $('keypad').className = 'keypad keypad-answer';
 
     question.options.forEach((option, optionIndex) => {
       const button = document.createElement('button');
