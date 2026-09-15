@@ -1115,36 +1115,27 @@ body[data-view=test] .app-shell {
   }
 }
 /* ============================================================
-   KEYPAD KRAEPELIN — Layout Nokia (3x3 + 0 di tengah)
+   KEYPAD KRAEPELIN
+   Desktop: 2 kolom (default lama) · Mobile: 3×3 + 0 di tengah
    ============================================================ */
 
-.keypad.keypad-numeric {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(4, auto);
-  width: min(420px, 100%);
-  gap: 8px;
-}
-
-.keypad.keypad-numeric .digit-btn {
-  min-height: 52px;
-  font-size: 1.15rem;
-}
-
-.keypad.keypad-numeric .zero-btn {
-  grid-column: 2;
-  grid-row: 4;
-}
-
-/* Override mobile rule — numeric tetap 3 kolom */
+/* Mobile only — layout Nokia */
 @media(max-width:620px) {
   .keypad.keypad-numeric {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(4, auto);
     width: min(360px, 100%);
     gap: 6px;
   }
+
   .keypad.keypad-numeric .digit-btn {
     min-height: 46px;
     font-size: 1rem;
+  }
+
+  .keypad.keypad-numeric .zero-btn {
+    grid-column: 2;
+    grid-row: 4;
   }
 }
 /* ============================================================
