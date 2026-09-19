@@ -40,11 +40,11 @@
       </a>
 
       <div class="shell-nav-label">KATEGORI</div>
-      <a class="shell-nav-item shell-nav-highlight" data-goto="kraepelin" type="button">
-        <span class="shell-nav-icon">🔥</span>
-        <span>Kraepelin</span>
-        <span class="shell-nav-tag">Populer</span>
-      </a>
+  <a class="shell-nav-item shell-nav-highlight" data-test="kraepelin" type="button">
+  <span class="shell-nav-icon">🔥</span>
+  <span>Kraepelin</span>
+  <span class="shell-nav-tag">Populer</span>
+</a>
     </nav>
 
     <div class="shell-footer">
@@ -569,16 +569,333 @@
 <div id="resetPane" hidden><form id="resetForm"><label>Password baru<div class="password-field"><input id="resetPassword" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="resetPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div><p class="field-help">Minimal <strong>8 karakter</strong> dan harus mengandung <strong>huruf serta angka</strong>.</p></label><label>Konfirmasi password baru<div class="password-field"><input id="resetConfirm" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="resetConfirm" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div></label><p id="resetError" class="form-error"></p><button class="primary-btn large-btn" type="submit">Ganti Password</button></form></div>
 </div></section>
 
-<section id="dashboardView" class="screen"><div class="dashboard-shell"><header class="topbar card"><div class="topbar-brand"><div class="brand-badge small"><span class="brand-dot"></span>PSYCHOTEST PRACTICE</div><div>Halo, <strong id="welcomeName">—</strong> 👋</div></div><button id="logoutBtn" class="ghost-btn">Keluar</button></header>
-<div class="dashboard-hero card"><div><div class="eyebrow">HOME</div><h2>Pilih latihan yang mau kamu kerjakan.</h2><p class="muted">Setiap tes memiliki 3 paket. Pilih paket, baca instruksi, lalu mulai latihan.</p></div><button id="viewHistoryBtn" class="secondary-btn">📜 Histori</button></div>
-<div class="dashboard-summary-grid">
-  <div class="dashboard-stat card"><span>Total tes</span><strong id="historyCount">0</strong><small>Riwayat akun</small></div>
-  <div class="dashboard-stat card"><span>Tes terakhir</span><strong id="latestDate">—</strong><small>Waktu pengerjaan terakhir</small></div>
-  <div class="dashboard-stat card"><span>Kecepatan</span><strong id="dashSpeed">—</strong><small>Hasil terakhir</small></div>
-  <div class="dashboard-stat card"><span>Ketelitian</span><strong id="dashAccuracy">—</strong><small>Hasil terakhir</small></div>
-  <div class="dashboard-stat card"><span>Konsistensi</span><strong id="dashConsistency">—</strong><small>Hasil terakhir</small></div>
-  <div class="dashboard-stat card"><span>Ketahanan</span><strong id="dashEndurance">—</strong><small>Hasil terakhir</small></div>
- </div>
+<section id="dashboardView" class="screen"><div class="dash-shell">
+
+  <div class="dash-hero">
+    <div class="dash-hero-text">
+      <div class="eyebrow">SELAMAT DATANG</div>
+      <h2>Halo, <span class="text-blue" id="welcomeName">—</span> 👋</h2>
+      <p>Pilih kategori latihan yang sesuai kebutuhanmu. Semua gratis, tanpa batas.</p>
+    </div>
+    <div class="dash-hero-stats">
+      <div class="dash-stat">
+        <strong id="historyCount">0</strong>
+        <span>Total tes</span>
+      </div>
+      <div class="dash-stat">
+        <strong id="dashSpeed">—</strong>
+        <span>Kecepatan</span>
+      </div>
+      <div class="dash-stat">
+        <strong id="dashAccuracy">—</strong>
+        <span>Ketelitian</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h3>Kategori Latihan</h3>
+    <p>3 kategori utama untuk berbagai kebutuhan seleksi.</p>
+  </div>
+
+  <div class="cat-grid">
+
+    <article class="cat-card cat-highlight">
+      <div class="cat-badge">🔥 UNGGULAN</div>
+      <div class="cat-icon">🧮</div>
+      <h4>Kraepelin</h4>
+      <p>Tes ritme kerja paling ikonik di seleksi Indonesia. Latih kecepatan, ketelitian, dan ketahanan mentalmu.</p>
+      <div class="cat-meta">1 tes · 50 kolom · 13 menit</div>
+      <button type="button" class="cat-btn cat-btn-primary" data-test="kraepelin">Mulai Latihan →</button>
+    </article>
+
+    <article class="cat-card">
+      <div class="cat-icon icon-blue">📘</div>
+      <h4>SKD (CPNS)</h4>
+      <p>Seleksi Kompetensi Dasar untuk CPNS &amp; PPPK. TWK, TIU, dan TKP sesuai kisi-kisi resmi.</p>
+      <div class="cat-meta">3 kategori · 110 soal</div>
+      <button type="button" class="cat-btn cat-btn-secondary" data-view="skd">Lihat Kategori →</button>
+    </article>
+
+    <article class="cat-card">
+      <div class="cat-icon icon-green">🧩</div>
+      <h4>Psikotes Umum</h4>
+      <p>Tes penalaran, verbal, numerik, dan logika untuk seleksi kerja umum, BUMN, dan swasta.</p>
+      <div class="cat-meta">6 tes · 3 paket masing-masing</div>
+      <button type="button" class="cat-btn cat-btn-secondary" data-view="psikotes">Lihat Kategori →</button>
+    </article>
+
+  </div>
+
+</div></section>
+         <!-- ============================================================
+     SKD VIEW
+     ============================================================ -->
+<section id="skdView" class="screen">
+  <div class="page-shell">
+    <button type="button" class="back-link" data-view="dashboard">← Kembali ke Dashboard</button>
+
+    <div class="section-head">
+      <div class="eyebrow">SELEKSI KOMPETENSI DASAR</div>
+      <h2>SKD (CPNS &amp; PPPK)</h2>
+      <p>3 kategori sesuai kisi-kisi resmi BKN.</p>
+    </div>
+
+    <div class="skd-grid">
+
+      <article class="skd-card">
+        <div class="skd-badge">SEGERA</div>
+        <div class="skd-icon">🇮🇩</div>
+        <h4>TWK</h4>
+        <p class="skd-fullname">Tes Wawasan Kebangsaan</p>
+        <ul class="skd-topics">
+          <li>Nasionalisme</li>
+          <li>Integritas</li>
+          <li>Bela Negara</li>
+          <li>Pilar Negara</li>
+          <li>Bahasa Negara</li>
+        </ul>
+        <div class="skd-meta">
+          <span>30 soal</span><span>·</span><span>25 menit</span>
+        </div>
+      </article>
+
+      <article class="skd-card skd-active" data-view="tiu">
+        <div class="skd-icon icon-blue">🧠</div>
+        <h4>TIU</h4>
+        <p class="skd-fullname">Tes Intelegensi Umum</p>
+        <ul class="skd-topics">
+          <li>Verbal</li>
+          <li>Numerik</li>
+          <li>Figural</li>
+        </ul>
+        <div class="skd-meta">
+          <span>35 soal</span><span>·</span><span>40 menit</span>
+        </div>
+      </article>
+
+      <article class="skd-card">
+        <div class="skd-badge">SEGERA</div>
+        <div class="skd-icon">🤝</div>
+        <h4>TKP</h4>
+        <p class="skd-fullname">Tes Karakteristik Pribadi</p>
+        <ul class="skd-topics">
+          <li>Pelayanan Publik</li>
+          <li>Jejaring Kerja</li>
+          <li>Sosial Budaya</li>
+          <li>TIK</li>
+          <li>Profesionalisme</li>
+          <li>Anti Radikal</li>
+        </ul>
+        <div class="skd-meta">
+          <span>45 soal</span><span>·</span><span>35 menit</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TIU VIEW
+     ============================================================ -->
+<section id="tiuView" class="screen">
+  <div class="page-shell">
+    <button type="button" class="back-link" data-view="skd">← Kembali ke SKD</button>
+
+    <div class="section-head">
+      <div class="eyebrow">SKD · TES INTELEGENSI UMUM</div>
+      <h2>TIU — Tes Intelegensi Umum</h2>
+      <p>3 kemampuan utama. Setiap kemampuan bisa dilatih per sub-tes dengan 3 paket soal.</p>
+    </div>
+
+    <!-- Verbal -->
+    <div class="tiu-group">
+      <div class="tiu-head">
+        <div class="tiu-icon icon-blue">📝</div>
+        <div>
+          <h4>Kemampuan Verbal</h4>
+          <p>Memahami makna kata dan hubungan antar-konsep.</p>
+        </div>
+      </div>
+      <div class="test-grid">
+        <button type="button" class="test-item" data-test="sinonim">
+          <div class="test-icon">🔤</div>
+          <div class="test-info">
+            <strong>Sinonim Verbal</strong>
+            <small>3 paket · 20 soal</small>
+          </div>
+          <span class="test-arrow">→</span>
+        </button>
+        <button type="button" class="test-item" data-test="analogi">
+          <div class="test-icon">🔗</div>
+          <div class="test-info">
+            <strong>Analogi</strong>
+            <small>3 paket · 20 soal</small>
+          </div>
+          <span class="test-arrow">→</span>
+        </button>
+        <button type="button" class="test-item" data-test="silogisme">
+          <div class="test-icon">🧠</div>
+          <div class="test-info">
+            <strong>Silogisme</strong>
+            <small>3 paket · 20 soal</small>
+          </div>
+          <span class="test-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Numerik -->
+    <div class="tiu-group">
+      <div class="tiu-head">
+        <div class="tiu-icon icon-blue">🔢</div>
+        <div>
+          <h4>Kemampuan Numerik</h4>
+          <p>Logika angka, deret, persentase, dan operasi hitung.</p>
+        </div>
+      </div>
+      <div class="test-grid">
+        <button type="button" class="test-item" data-test="kuantitatif">
+          <div class="test-icon">➗</div>
+          <div class="test-info">
+            <strong>Kuantitatif</strong>
+            <small>3 paket · 20 soal</small>
+          </div>
+          <span class="test-arrow">→</span>
+        </button>
+        <button type="button" class="test-item" data-test="numerical">
+          <div class="test-icon">🔢</div>
+          <div class="test-info">
+            <strong>Numerical</strong>
+            <small>3 paket · 20 soal</small>
+          </div>
+          <span class="test-arrow">→</span>
+        </button>
+        <button type="button" class="test-item test-disabled" disabled>
+          <div class="test-icon">🧮</div>
+          <div class="test-info">
+            <strong>Berhitung Cepat</strong>
+            <small>Segera hadir</small>
+          </div>
+          <span class="test-badge">Segera</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Figural -->
+    <div class="tiu-group">
+      <div class="tiu-head">
+        <div class="tiu-icon icon-blue">🎨</div>
+        <div>
+          <h4>Kemampuan Figural</h4>
+          <p>Pola visual, hubungan gambar, dan penalaran spasial.</p>
+        </div>
+      </div>
+      <div class="test-grid">
+        <button type="button" class="test-item test-disabled" disabled>
+          <div class="test-icon">🖼️</div>
+          <div class="test-info">
+            <strong>Analogi Figural</strong>
+            <small>Segera hadir</small>
+          </div>
+          <span class="test-badge">Segera</span>
+        </button>
+        <button type="button" class="test-item test-disabled" disabled>
+          <div class="test-icon">❌</div>
+          <div class="test-info">
+            <strong>Ketidaksamaan</strong>
+            <small>Segera hadir</small>
+          </div>
+          <span class="test-badge">Segera</span>
+        </button>
+        <button type="button" class="test-item test-disabled" disabled>
+          <div class="test-icon">🔢</div>
+          <div class="test-info">
+            <strong>Serial</strong>
+            <small>Segera hadir</small>
+          </div>
+          <span class="test-badge">Segera</span>
+        </button>
+        <button type="button" class="test-item" data-test="kognitif">
+          <div class="test-icon">🧩</div>
+          <div class="test-info">
+            <strong>Tes Kognitif</strong>
+            <small>3 paket · 20 soal</small>
+          </div>
+          <span class="test-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     PSIKOTES UMUM VIEW
+     ============================================================ -->
+<section id="psikotesView" class="screen">
+  <div class="page-shell">
+    <button type="button" class="back-link" data-view="dashboard">← Kembali ke Dashboard</button>
+
+    <div class="section-head">
+      <div class="eyebrow">PSIKOTES UMUM</div>
+      <h2>Psikotes Umum</h2>
+      <p>Tes penalaran, verbal, numerik, dan logika untuk seleksi kerja umum.</p>
+    </div>
+
+    <div class="test-grid lg">
+      <button type="button" class="test-item" data-test="kuantitatif">
+        <div class="test-icon">➗</div>
+        <div class="test-info">
+          <strong>Kuantitatif</strong>
+          <small>3 paket · 20 soal</small>
+        </div>
+        <span class="test-arrow">→</span>
+      </button>
+      <button type="button" class="test-item" data-test="numerical">
+        <div class="test-icon">🔢</div>
+        <div class="test-info">
+          <strong>Numerical</strong>
+          <small>3 paket · 20 soal</small>
+        </div>
+        <span class="test-arrow">→</span>
+      </button>
+      <button type="button" class="test-item" data-test="sinonim">
+        <div class="test-icon">🔤</div>
+        <div class="test-info">
+          <strong>Sinonim Verbal</strong>
+          <small>3 paket · 20 soal</small>
+        </div>
+        <span class="test-arrow">→</span>
+      </button>
+      <button type="button" class="test-item" data-test="silogisme">
+        <div class="test-icon">🧠</div>
+        <div class="test-info">
+          <strong>Silogisme</strong>
+          <small>3 paket · 20 soal</small>
+        </div>
+        <span class="test-arrow">→</span>
+      </button>
+      <button type="button" class="test-item" data-test="analogi">
+        <div class="test-icon">🔗</div>
+        <div class="test-info">
+          <strong>Analogi</strong>
+          <small>3 paket · 20 soal</small>
+        </div>
+        <span class="test-arrow">→</span>
+      </button>
+      <button type="button" class="test-item" data-test="kognitif">
+        <div class="test-icon">🧩</div>
+        <div class="test-info">
+          <strong>Tes Kognitif</strong>
+          <small>3 paket · 20 soal</small>
+        </div>
+        <span class="test-arrow">→</span>
+      </button>
+    </div>
+  </div>
+</section>
 <div id="testCatalog" class="test-catalog"></div></div></section>
 <section id="adminView" class="screen"><div class="admin-shell">
   <header class="topbar card admin-topbar"><div class="topbar-brand"><div class="brand-badge small"><span class="brand-dot"></span>PSYCHOTEST PRACTICE</div><div><strong>Admin Panel</strong> · <span id="adminWelcomeName">—</span></div></div><button id="adminLogoutBtn" class="ghost-btn">Keluar</button></header>
