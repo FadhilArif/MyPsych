@@ -513,3 +513,50 @@ body[data-view="about"] .shell {
     padding: 0 16px;
   }
 }
+/* ============================================================
+   TEST VIEW — lepas dari shell context
+   Pakai position: fixed supaya full viewport (seperti sebelumnya)
+   tanpa tergantung height parent chain
+   ============================================================ */
+
+body[data-view="test"] .shell {
+  grid-template-columns: 1fr;
+  min-height: 100dvh;
+}
+
+body[data-view="test"] .shell-sidebar,
+body[data-view="test"] .shell-topbar {
+  display: none !important;
+}
+
+body[data-view="test"] .shell-main {
+  min-height: 100dvh;
+}
+
+body[data-view="test"] .app-shell {
+  padding: 0 !important;
+  min-height: 100dvh;
+}
+
+/* Test view lepas dari konteks shell */
+body[data-view="test"] .test-screen.active {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  min-height: 100dvh;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg, #f5f8fc);
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+  overflow: hidden;
+}
+
+body[data-view="test"] .test-shell {
+  width: min(820px, calc(100vw - 14px));
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
