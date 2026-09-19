@@ -272,6 +272,9 @@ const views = {
   history: $('historyView'),
   admin: $('adminView'),
   about: $('aboutView'),
+  skd: $('skdView'),
+  tiu: $('tiuView'),
+  psikotes: $('psikotesView'),
 };
   
   const state = {
@@ -387,7 +390,7 @@ async function submitInterest(event) {
   // SHELL — Fase 2
   // ============================================================
 
-  const SHELLED_VIEWS = ['dashboard', 'admin', 'history'];
+  const SHELLED_VIEWS = ['dashboard', 'admin', 'history', 'skd', 'tiu', 'psikotes'];
 
   const SHELL_TITLES = {
     landing: 'Beranda',
@@ -3582,6 +3585,7 @@ $('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = f
     
 
     // === Fase 2: Shell navigation ===
+      // === Fase 2: Shell navigation ===
     document.querySelectorAll('.shell-nav-item[data-view]').forEach((el) => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
@@ -3589,10 +3593,23 @@ $('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = f
       });
     });
 
-    document.querySelectorAll('.shell-nav-item[data-goto="kraepelin"]').forEach((el) => {
+    // === Fase 3: View navigation (dashboard buttons, back links, skd cards) ===
+    document.querySelectorAll('[data-view]:not(body):not(.shell-nav-item)').forEach((el) => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
-        openInstruction('kraepelin', 1);
+        const viewName = el.dataset.view;
+        if (viewName) showView(viewName);
+      });
+    });
+
+    // === Fase 3: Test item clicks → open instruction ===
+    document.querySelectorAll('[data-test]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const testId = el.dataset.test;
+        if (!testId) return;
+        const pkg = Number(el.dataset.pkg) || 1;
+        openInstruction(testId, pkg);
       });
     });
 
