@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="id">
 <head>
-  
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f5f8fc"><meta name="description" content="Latihan psikotes multi-tes">
 <title>Psychotest Practice — Latihan Psikotes</title><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
@@ -9,10 +8,80 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="landing.css">
-  <script defer src="/_vercel/insights/script.js"></script>
+<link rel="stylesheet" href="shell.css">
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<main class="app-shell">
+
+<!-- ============================================================
+     SHELL WRAPPER (BARU)
+     ============================================================ -->
+<div class="shell" id="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="shell-sidebar" id="shellSidebar">
+    <div class="shell-brand">
+      <div class="shell-brand-logo">🧠</div>
+      <div class="shell-brand-text">
+        <strong>MyPsych</strong>
+        <small>Latihan Psikotes</small>
+      </div>
+    </div>
+
+    <nav class="shell-nav">
+      <div class="shell-nav-label">MENU</div>
+      <a class="shell-nav-item" data-view="dashboard" type="button">
+        <span class="shell-nav-icon">🏠</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="shell-nav-item" data-view="history" type="button">
+        <span class="shell-nav-icon">📜</span>
+        <span>Histori</span>
+      </a>
+
+      <div class="shell-nav-label">KATEGORI</div>
+      <a class="shell-nav-item shell-nav-highlight" data-goto="kraepelin" type="button">
+        <span class="shell-nav-icon">🔥</span>
+        <span>Kraepelin</span>
+        <span class="shell-nav-tag">Populer</span>
+      </a>
+    </nav>
+
+    <div class="shell-footer">
+      <div class="shell-user-card">
+        <div class="shell-user-avatar" id="shellUserAvatar">T</div>
+        <div class="shell-user-info">
+          <strong id="shellUserName">testbg</strong>
+          <small id="shellUserRole">Akun peserta</small>
+        </div>
+      </div>
+      <button class="shell-logout" type="button" id="shellLogoutBtn">
+        <span>🚪</span>
+        <span>Keluar</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="shell-overlay" id="shellOverlay"></div>
+
+  <!-- MAIN AREA -->
+  <div class="shell-main">
+
+    <header class="shell-topbar">
+      <button class="shell-hamburger" id="shellHamburger" type="button" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <h1 class="shell-page-title" id="shellPageTitle">Dashboard</h1>
+      <div class="shell-topbar-user">
+        <div class="shell-topbar-avatar" id="shellTopbarAvatar">T</div>
+      </div>
+    </header>
+
+    <!-- ============================================================
+         APP SHELL — semua section lama tetap di sini
+         ============================================================ -->
+    <main class="app-shell">
+
 <section id="landingView" class="screen active"><div class="lp-shell">
 
   <!-- NAVBAR -->
@@ -619,6 +688,11 @@
     </div>
   </div>
 </section>
+    </main>
+  </div>
+
+</div>
+
 <div id="guestModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">i</div><h3>Lanjut sebagai Tamu?</h3><p>Kamu tetap bisa mengerjakan semua latihan dan <strong>mengunduh hasil PDF</strong>. Namun hasil tidak disimpan ke akun atau histori.</p><div class="guest-note">✓ <span><b>Tes tetap berjalan normal</b><small>Semua fitur latihan dan hasil tetap tersedia.</small></span></div><div class="guest-note">↓ <span><b>PDF tetap bisa diunduh</b><small>Simpan PDF setelah selesai jika ingin menyimpan hasil.</small></span></div><div class="modal-actions"><button id="cancelGuestBtn" class="secondary-btn">Batal</button><button id="confirmGuestBtn" class="primary-btn">Ya, lanjut sebagai tamu</button></div></div></div>
 <div id="confirmModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">!</div><h3>Akhiri tes?</h3><p>Progress tes yang sedang berjalan akan dihapus. Hasil tidak akan dibuat.</p><div class="modal-actions"><button id="cancelEndTestBtn" class="secondary-btn">Batal</button><button id="confirmEndTestBtn" class="danger-btn">Ya, akhiri</button></div></div></div>
 <div id="interestModal" class="modal-backdrop" hidden>
