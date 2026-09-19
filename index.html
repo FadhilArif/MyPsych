@@ -915,7 +915,36 @@
   <div id="adminPanel"></div>
 </div></section>
 
-<section id="instructionView" class="screen"><div class="instruction-card card"><button id="backFromInstructionBtn" class="back-link">← Kembali</button><div class="section-heading"><div><div class="eyebrow" id="instructionEyebrow">INSTRUKSI</div><h2 id="instructionTitle">—</h2></div><div class="step-count" id="instructionPackage">Paket 1</div></div><p id="instructionLead" class="instruction-lead"></p><div id="instructionBody"></div><div class="warning-box"><strong>Catatan latihan:</strong> skor website ini adalah indikator latihan internal, bukan norma resmi seleksi kerja atau diagnosis psikologis.</div><button id="startTestBtn" class="primary-btn large-btn">Mulai Tes →</button></div></section>
+<section id="instructionView" class="screen">
+  <div class="instr-shell">
+    <button id="backFromInstructionBtn" class="back-link" type="button">← Kembali</button>
+
+    <div class="instr-card">
+      <div class="instr-header">
+        <div>
+          <div class="eyebrow" id="instructionEyebrow">INSTRUKSI</div>
+          <h2 id="instructionTitle">—</h2>
+        </div>
+        <div class="instr-pkg" id="instructionPackage">Paket 1</div>
+      </div>
+
+      <p class="instr-lead" id="instructionLead"></p>
+
+      <div class="instr-body" id="instructionBody"></div>
+
+      <div class="instr-selector" id="instructionSelector">
+        <span class="instr-selector-label" id="instructionSelectorLabel">Pilih Paket</span>
+        <div class="instr-selector-btns" id="instructionSelectorBtns"></div>
+      </div>
+
+      <div class="instr-warn">
+        <strong>Catatan latihan:</strong> skor website ini adalah indikator latihan internal, bukan norma resmi seleksi kerja atau diagnosis psikologis.
+      </div>
+
+      <button id="startTestBtn" class="instr-start" type="button">Mulai Tes →</button>
+    </div>
+  </div>
+</section>
 
 <section id="testView" class="screen test-screen"><div class="test-shell"><header class="test-header"><button id="testHomeBtn" class="home-btn">⌂</button><div class="progress-meta"><div class="meta-item"><span>Tes</span><strong id="testTypeLabel">—</strong></div><div class="meta-item"><span>Soal</span><strong id="questionCounter">1/20</strong></div><div class="meta-item"><span>Waktu</span><strong id="timeCounter">—</strong></div></div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></header>
 <div id="testContent" class="question-card"></div><div id="keypad" class="keypad"></div><div class="test-hint" id="testHint"></div></div></section>
