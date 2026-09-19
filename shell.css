@@ -351,3 +351,102 @@ body[data-view="auth"] .shell,
 body[data-view="about"] .shell {
   grid-template-columns: 1fr;
 }
+/* ============================================================
+   FIX: Admin Panel di dalam Shell
+   Panel admin lama dibungkus shell baru dengan area konten
+   lebih sempit (sidebar 260px). Override layout 2 kolom jadi
+   1 kolom supaya tidak overflow.
+   ============================================================ */
+
+/* Sembunyikan topbar & hero card lama admin — pakai shell topbar */
+.shell-main .admin-topbar {
+  display: none !important;
+}
+
+/* Admin hero: sederhanakan padding */
+.shell-main .admin-hero {
+  margin-top: 0;
+  padding: 20px 22px;
+}
+
+/* Admin shell — biar tidak ada max-width ganda */
+.shell-main .admin-shell {
+  width: 100%;
+}
+
+/* Grid 2 kolom → 1 kolom (karena sidebar makan 260px) */
+.shell-main .admin-grid-two {
+  grid-template-columns: 1fr;
+}
+
+/* Stats grid — dari 4 kolom jadi 2 kolom di tablet, 2 di mobile */
+@media (max-width: 1200px) {
+  .shell-main .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Admin panel head — biar tidak overflow */
+.shell-main .admin-panel-head,
+.shell-main .admin-table-title {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Admin filter grid — 4 kolom jadi 2 kolom */
+@media (max-width: 1200px) {
+  .shell-main .admin-form-grid,
+  .shell-main .admin-filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .shell-main .admin-stats-grid,
+  .shell-main .admin-form-grid,
+  .shell-main .admin-filter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tabel admin — kasih scroll kalau kepanjangan */
+.shell-main .admin-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.shell-main .admin-table-wrap table {
+  min-width: 720px;
+}
+
+/* Akses cepat — dari 2 kolom jadi 1 kolom di area sempit */
+@media (max-width: 1200px) {
+  .shell-main .admin-quick-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Label list admin — di mobile jadi stack */
+@media (max-width: 900px) {
+  .shell-main .admin-label-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 14px;
+  }
+  .shell-main .admin-label-row span {
+    text-align: left;
+  }
+}
+
+/* Question tools filter */
+@media (max-width: 1200px) {
+  .shell-main .admin-question-tools {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell-main .admin-question-tools {
+    grid-template-columns: 1fr;
+  }
+}
