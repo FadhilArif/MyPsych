@@ -3579,8 +3579,7 @@ $('aboutRegisterBtn')?.addEventListener('click', () => showAuth('register'));
 $('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = false; });
        $('landingLoginBtn').addEventListener('click', () => showAuth('login'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
-      function bind() {
-    bindPasswordToggles();
+    
 
     // === Fase 2: Shell navigation ===
     document.querySelectorAll('.shell-nav-item[data-view]').forEach((el) => {
