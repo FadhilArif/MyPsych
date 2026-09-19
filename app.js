@@ -3686,7 +3686,7 @@ $('interestModal')?.addEventListener('click', (e) => {
       await goDashboard();
     });
 
-    $('viewHistoryBtn').addEventListener('click', async () => {
+      $('viewHistoryBtn')?.addEventListener('click', async () => {
       if (!state.isGuest) {
         try { await refreshHistory(); } catch (error) { toast(error.message, 'warning'); }
       }
@@ -3695,7 +3695,7 @@ $('interestModal')?.addEventListener('click', (e) => {
     });
 
     $('backDashboardBtn').addEventListener('click', () => goDashboard());
-    $('logoutBtn').addEventListener('click', logout);
+     $('logoutBtn')?.addEventListener('click', logout);
     $('adminLogoutBtn')?.addEventListener('click', logout);
 
     $('loginForm').addEventListener('submit', (event) => {
