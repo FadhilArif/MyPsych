@@ -1238,7 +1238,7 @@ async function submitInterest(event) {
       row.innerHTML = `
         <td>${index + 1}</td>
         <td>${escapeHtml(formatDate(item.tanggal))}</td>
-        <td>${escapeHtml(TESTS[item.test_type]?.name || item.test_type || '—')}</td>
+          <td>${escapeHtml(getTestLabel(item.test_type))}</td>
         <td>${escapeHtml(item.package ?? '—')}</td>
         <td>${Number(item.score) || 0}%</td>
         <td>${Number(item.speed) || 0}%</td>
@@ -1726,12 +1726,18 @@ trackEvent('register_attempt');
 
   // Bank soal MCQ disimpan sebagai file JSON di root GitHub Pages.
   const QUESTION_FILES = Object.freeze({
+    // Psikotes Umum (existing)
     kuantitatif: './soal_kuantitatif.json',
     numerical: './soal_numerical.json',
     sinonim: './soal_sinonim.json',
     silogisme: './soal_silogisme.json',
     analogi: './soal_analogi.json',
     kognitif: './soal_kognitif.json',
+
+    // SKD (baru — file JSON menyusul)
+    twk: './soal_twk.json',
+    tkp: './soal_tkp.json',
+    // tiu_verbal, tiu_numerik, tiu_figural pakai file existing di atas
   });
 
   async function loadQuestionPackage(testId, packageNumber) {
@@ -1756,11 +1762,11 @@ trackEvent('register_attempt');
       }
     }
 
-    const filePath = QUESTION_FILES[testId];
+     const filePath = QUESTION_FILES[testId];
 
     if (!filePath) {
       throw new Error(
-        `Bank soal untuk tes "${testId}" belum tersedia.`
+        `Bank soal untuk tes "${testId}" belum tersedia. Silakan cek lagi nanti.`
       );
     }
 
