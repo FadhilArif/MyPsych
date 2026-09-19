@@ -1268,204 +1268,241 @@ async function submitInterest(event) {
   }
 
   function renderHistory() {
-    const body = $('historyTableBody');
-    if (!body) return;
+    const groupsEl = document.getElementById('historyGroups');
+    const emptyEl = document.getElementById('emptyHistory');
+    if (!groupsEl || !emptyEl) return;
 
     const history = state.isGuest ? [] : state.history;
-    $('historyPageCount').textContent = String(history.length);
-    body.innerHTML = '';
-    $('emptyHistory').hidden = history.length > 0;
-    $('historyTable').hidden = history.length === 0;
 
-    // Tambahkan kolom aksi secara dinamis supaya tidak perlu mengubah HTML.
-    const headerRow = $('historyTable')?.querySelector('thead tr');
-    if (headerRow) {
-      headerRow.innerHTML = `
-        <th>#</th>
-        <th>Tanggal</th>
-        <th>Tes</th>
-        <th>Paket</th>
-        <th>Skor</th>
-        <th>Kecepatan</th>
-        <th>Ketelitian</th>
-        <th>Konsistensi</th>
-        <th>Ketahanan</th>
-        <th>Aksi</th>
-      `;
+    // Update count di dashboard summary (tetap)
+    if ($('historyPageCount')) $('historyPageCount').textContent = String(history.length);
+
+    if (!history.length) {
+      emptyEl.hidden = false;
+      groupsEl.innerHTML = '';
+      return;
     }
 
-    history.forEach((item, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${escapeHtml(formatDate(item.tanggal))}</td>
-          <td>${escapeHtml(getTestLabel(item.test_type))}</td>
-        <td>${escapeHtml(item.package ?? '—')}</td>
-        <td>${Number(item.score) || 0}%</td>
-        <td>${Number(item.speed) || 0}%</td>
-        <td>${Number(item.accuracy) || 0}%</td>
-        <td>${Number(item.consistency) || 0}%</td>
-        <td>${Number(item.endurance) || 0}%</td>
-        <td class="history-action-cell"></td>
-      `;
+    emptyEl.hidden = true;
 
-      const actionCell = row.querySelector('.history-action-cell');
-      const pdfButton = document.createElement('button');
-      pdfButton.type = 'button';
-      pdfButton.className = 'secondary-btn history-pdf-btn';
-      pdfButton.textContent = 'Cetak PDF';
-      pdfButton.title = 'Cetak hasil PDF';
-      pdfButton.addEventListener('click', () => {
-        downloadHistoryPdf(item, pdfButton);
-      });
-
-      actionCell.appendChild(pdfButton);
-      body.appendChild(row);
-    });
-  }
-
-  function historyItemToResult(item) {
-    const normalizedType = item?.test_type || 'kuantitatif';
-
-    return {
-      testId: item?.test_id || '',
-      type: normalizedType,
-      package: Number(item?.package) || 1,
-      answered: Number(item?.answered) || (Number(item?.correct) || 0) + (Number(item?.wrong) || 0),
-      correct: Number(item?.correct) || 0,
-      wrong: Number(item?.wrong) || 0,
-      total: Number(item?.total) || CONFIG.MCQ_QUESTIONS,
-      score: Number(item?.score) || 0,
-      speed: Number(item?.speed) || 0,
-      accuracy: Number(item?.accuracy) || 0,
-      consistency: Number(item?.consistency) || 0,
-      endurance: Number(item?.endurance) || 0,
-      chart: Array.isArray(item?.chart) ? item.chart : [],
-      tanggal: item?.tanggal || new Date().toISOString(),
+    // ---- Group config ----
+    const GROUP_ORDER = ['andalan', 'skd', 'umum'];
+    const GROUP_META = {
+      andalan: { name: 'Tes Andalan',    icon: '🔥' },
+      skd:     { name: 'SKD (CPNS)',     icon: '📘' },
+      umum:    { name: 'Psikotes Umum',  icon: '🧩' },
     };
-  }
 
-  async function downloadHistoryPdf(item, button) {
-    if (!item) return;
+    const TIU_SUB_ORDER = ['verbal', 'numerik', 'figural'];
+    const TIU_SUB_META = {
+      verbal:  { name: 'Kemampuan Verbal',  icon: '📝' },
+      numerik: { name: 'Kemampuan Numerik', icon: '🔢' },
+      figural: { name: 'Kemampuan Figural', icon: '🎨' },
+    };
 
-    busy(button, 'PDF…', true);
+    // ---- Bucket items ----
+    const buckets = {
+      andalan: [],
+      skd: { twk: [], tiu: { verbal: [], numerik: [], figural: [] }, tkp: [], other: [] },
+      umum: [],
+    };
 
-    try {
-      // Kalau hasil ini baru saja selesai, gunakan result lengkapnya
-      // sehingga grafik waktu per soal tetap ikut tercetak.
-      let result = null;
-      if (
-        state.lastResult &&
-        item.test_id &&
-        state.lastResult.testId === item.test_id
-      ) {
-        result = state.lastResult;
-          } else {
-        result = historyItemToResult(item);
+    history.forEach((item) => {
+      const t = TESTS[item.test_type];
+      const group = t?.group || 'umum';
 
-        // Ambil detail jawaban per soal dari TestDetail
-        try {
-          const details = await loadTestDetail(item.test_id);
-          enrichHistoryResultWithDetail(result, details);
-        } catch (detailError) {
-          console.warn('Detail histori tidak tersedia:', detailError);
+      if (group === 'andalan') {
+        buckets.andalan.push(item);
+        return;
+      }
+
+      if (group === 'skd') {
+        if (t.subGroup === 'tiu') {
+          const sub = t.subSubGroup || 'verbal';
+          if (buckets.skd.tiu[sub]) buckets.skd.tiu[sub].push(item);
+          else buckets.skd.tiu.verbal.push(item);
+        } else if (item.test_type === 'twk') {
+          buckets.skd.twk.push(item);
+        } else if (item.test_type === 'tkp') {
+          buckets.skd.tkp.push(item);
+        } else {
+          buckets.skd.other.push(item);
         }
+        return;
+      }
 
-
-          function enrichWrongDetailsWithQuestions(result, questions) {
-    if (!Array.isArray(questions) || !questions.length) return result;
-    if (!Array.isArray(result.wrongNumbers) || !result.wrongNumbers.length) return result;
-
-    // Map nomor soal -> objek soal
-    const byNo = new Map();
-    questions.forEach((q) => {
-      const no = Number(q.id ?? q.no_soal);
-      if (Number.isInteger(no)) byNo.set(no, q);
+      // group 'umum' atau fallback
+      buckets.umum.push(item);
     });
 
-    result.wrongDetails = result.wrongNumbers.map((no) => {
-      const q = byNo.get(no);
-      return {
-        no,
-        text: String(q?.question || ''),
-        userAnswer: null,
-        correctAnswer: null,
-        options: q?.options ? Object.values(q.options).map(String) : [],
-      };
+    // ---- Helpers ----
+    const sortByDateDesc = (arr) => [...arr].sort((a, b) => {
+      const ta = new Date(a.tanggal || 0).getTime();
+      const tb = new Date(b.tanggal || 0).getTime();
+      return tb - ta;
     });
 
-    return result;
-  }
-        // Ambil teks soal dari bank soal untuk memperkaya wrongDetails
-        try {
-          const qp = await api('getQuestionPackage', {
-            test_type: item.test_type,
-            package: item.package,
-          });
-          if (qp?.success && Array.isArray(qp.questions)) {
-            enrichWrongDetailsWithQuestions(result, qp.questions);
-          }
-        } catch (questionError) {
-          console.warn('Teks soal histori tidak tersedia:', questionError);
-        }
+    const renderItem = (item) => {
+      const label = getTestLabel(item.test_type);
+      const pkg = Number(item.package) || 1;
+      const score = Number(item.score) || 0;
+      const dateStr = formatDate(item.tanggal);
+
+      return `
+        <div class="hist-item">
+          <div class="hist-main">
+            <strong>${escapeHtml(label)} — Paket ${pkg}</strong>
+            <small>${escapeHtml(dateStr)}</small>
+          </div>
+          <div class="hist-score">${score}%</div>
+          <button type="button" class="hist-pdf" data-hist-pdf>Cetak PDF</button>
+        </div>
+      `;
+    };
+
+    // ---- Build HTML ----
+    const parts = [];
+
+    // 1) Andalan
+    {
+      const items = sortByDateDesc(buckets.andalan);
+      if (items.length) {
+        parts.push(`
+          <details class="hist-group" open>
+            <summary class="hist-summary">
+              <span class="hist-icon">${GROUP_META.andalan.icon}</span>
+              <span class="hist-title">${GROUP_META.andalan.name}</span>
+              <span class="hist-count">${items.length} tes</span>
+              <span class="hist-chev">▾</span>
+            </summary>
+            <div class="hist-list">
+              ${items.map(renderItem).join('')}
+            </div>
+          </details>
+        `);
       }
-      const participant =
-        state.session?.username || 'Peserta';
-
-      const bytes = await buildPdf(
-        result,
-        participant
-      );
-
-      const blob = new Blob(
-        [bytes],
-        { type: 'application/pdf' }
-      );
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-
-      link.href = url;
-      link.download =
-        `hasil-${result.type}-paket-${result.package}-${new Date(
-          result.tanggal
-        ).toISOString().slice(0, 10)}.pdf`;
-
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      setTimeout(
-        () => URL.revokeObjectURL(url),
-        1000
-      );
-
-      toast(
-        'PDF histori berhasil dibuat.',
-        'success'
-      );
-        try {
-        await api('trackPdfDownload', {
-          token: state.session?.token || '',
-          test_id: item.test_id || ''
-        });
-      } catch (_) {
-        // Silent
-      }
-    } catch (error) {
-      console.error(
-        'History PDF error:',
-        error
-      );
-
-      toast(
-        `PDF histori gagal dibuat: ${error.message}`,
-        'warning',
-        5000
-      );
-    } finally {
-      busy(button, '', false);
     }
+
+    // 2) SKD
+    {
+      const skd = buckets.skd;
+      const totalSkd =
+        skd.twk.length +
+        skd.other.length +
+        Object.values(skd.tiu).reduce((s, a) => s + a.length, 0);
+
+      if (totalSkd) {
+        const subParts = [];
+
+        // TWK
+        if (skd.twk.length) {
+          subParts.push(`
+            <div class="hist-subgroup">
+              <div class="hist-subhead">🇮🇩 TWK — Tes Wawasan Kebangsaan</div>
+              ${sortByDateDesc(skd.twk).map(renderItem).join('')}
+            </div>
+          `);
+        }
+
+        // TIU (dengan sub-sub)
+        const hasTiu = TIU_SUB_ORDER.some((sub) => skd.tiu[sub].length);
+        if (hasTiu) {
+          const tiuParts = [];
+          TIU_SUB_ORDER.forEach((sub) => {
+            const items = sortByDateDesc(skd.tiu[sub]);
+            if (!items.length) return;
+            tiuParts.push(`
+              <div class="hist-subgroup">
+                <div class="hist-subhead">${TIU_SUB_META[sub].icon} TIU — ${TIU_SUB_META[sub].name}</div>
+                ${items.map(renderItem).join('')}
+              </div>
+            `);
+          });
+          subParts.push(`
+            <div class="hist-subgroup">
+              <div class="hist-subhead">🧠 TIU — Tes Intelegensi Umum</div>
+              ${tiuParts.join('')}
+            </div>
+          `);
+        }
+
+        // TKP
+        if (skd.tkp.length) {
+          subParts.push(`
+            <div class="hist-subgroup">
+              <div class="hist-subhead">🤝 TKP — Tes Karakteristik Pribadi</div>
+              ${sortByDateDesc(skd.tkp).map(renderItem).join('')}
+            </div>
+          `);
+        }
+
+        // Other SKD items
+        if (skd.other.length) {
+          subParts.push(`
+            <div class="hist-subgroup">
+              <div class="hist-subhead">📘 SKD — Lainnya</div>
+              ${sortByDateDesc(skd.other).map(renderItem).join('')}
+            </div>
+          `);
+        }
+
+        parts.push(`
+          <details class="hist-group" open>
+            <summary class="hist-summary">
+              <span class="hist-icon">${GROUP_META.skd.icon}</span>
+              <span class="hist-title">${GROUP_META.skd.name}</span>
+              <span class="hist-count">${totalSkd} tes</span>
+              <span class="hist-chev">▾</span>
+            </summary>
+            <div class="hist-list">
+              ${subParts.join('')}
+            </div>
+          </details>
+        `);
+      }
+    }
+
+    // 3) Psikotes Umum
+    {
+      const items = sortByDateDesc(buckets.umum);
+      if (items.length) {
+        parts.push(`
+          <details class="hist-group" open>
+            <summary class="hist-summary">
+              <span class="hist-icon">${GROUP_META.umum.icon}</span>
+              <span class="hist-title">${GROUP_META.umum.name}</span>
+              <span class="hist-count">${items.length} tes</span>
+              <span class="hist-chev">▾</span>
+            </summary>
+            <div class="hist-list">
+              ${items.map(renderItem).join('')}
+            </div>
+          </details>
+        `);
+      }
+    }
+
+    groupsEl.innerHTML = parts.join('');
+
+    // ---- Bind PDF buttons ----
+    // Ambil semua item, cocokkan tombol dengan history item by index
+    const flatSorted = [
+      ...sortByDateDesc(buckets.andalan),
+      ...sortByDateDesc(buckets.skd.twk),
+      ...TIU_SUB_ORDER.flatMap((s) => sortByDateDesc(buckets.skd.tiu[s])),
+      ...sortByDateDesc(buckets.skd.tkp),
+      ...sortByDateDesc(buckets.skd.other),
+      ...sortByDateDesc(buckets.umum),
+    ];
+
+    const pdfButtons = groupsEl.querySelectorAll('[data-hist-pdf]');
+    pdfButtons.forEach((btn, idx) => {
+      const item = flatSorted[idx];
+      if (!item) return;
+      btn.addEventListener('click', () => {
+        downloadHistoryPdf(item, btn);
+      });
+    });
   }
 
   async function goDashboard(message = '') {
