@@ -1738,44 +1738,93 @@ trackEvent('register_attempt');
   // INSTRUCTIONS
   // ============================================================
 
-  function openInstruction(testId, packageNumber) {
+   function openInstruction(testId, packageNumber) {
     state.test = testId;
-    state.package = packageNumber;
+    state.package = Number(packageNumber) || 1;
 
     const test = TESTS[testId];
-    $('instructionEyebrow').textContent = `${test.name.toUpperCase()} • PAKET ${packageNumber}`;
-    $('instructionTitle').textContent = test.name;
-    $('instructionPackage').textContent = `Paket ${packageNumber}`;
+    const isKraepelin = test.kind === 'kraepelin';
 
-    if (test.kind === 'kraepelin') {
-      $('instructionLead').innerHTML =
-        'Jumlahkan dua angka yang berdekatan dari <strong>bawah ke atas</strong>. Masukkan <strong>angka satuannya</strong>.';
-      $('instructionBody').innerHTML = `
-        <div class="example-layout">
-          <div class="example-column">8<br>5<br>7<br>3</div>
-          <div>→</div>
-          <div class="example-results">
+    // Header
+    document.getElementById('instructionEyebrow').textContent = isKraepelin
+      ? 'TES ANDALAN'
+      : 'TES PENALARAN';
+    document.getElementById('instructionTitle').textContent = test.name;
+    document.getElementById('instructionPackage').textContent = isKraepelin
+      ? `${state.kraepelinSecondsChoice} detik/soal`
+      : `Paket ${state.package}`;
+
+    // Lead + body
+    if (isKraepelin) {
+      document.getElementById('instructionLead').innerHTML =
+        'Jumlahkan dua angka yang berdekatan dari <strong>bawah ke atas</strong>. Masukkan <strong>angka satuannya</strong> saja (0–9).';
+      document.getElementById('instructionBody').innerHTML = `
+        <div class="instr-example">
+          <div class="instr-example-col">8<br>5<br>7<br>3</div>
+          <div class="instr-example-arrow">→</div>
+          <div class="instr-example-results">
             <div>3 + 7 = 10 <strong>→ 0</strong></div>
             <div>7 + 5 = 12 <strong>→ 2</strong></div>
             <div>5 + 8 = 13 <strong>→ 3</strong></div>
           </div>
         </div>
-        <div class="instruction-grid">
-          <div class="tip"><b>50 kolom</b><small>Setiap kolom memiliki 26 jawaban.</small></div>
-          <div class="tip"><b>15 detik</b><small>Waktu otomatis berpindah ke kolom berikutnya.</small></div>
+        <div class="instr-tips">
+          <div class="instr-tip"><b>50 kolom</b><small>Setiap kolom memiliki 26 soal.</small></div>
+          <div class="instr-tip"><b>Timer per kolom</b><small>Otomatis pindah bila waktu habis.</small></div>
+          <div class="instr-tip"><b>Angka satuan</b><small>Contoh: 10 → tulis <b>0</b>, bukan 10.</small></div>
+          <div class="instr-tip"><b>Keyboard</b><small>Angka 0–9 juga bisa dipakai.</small></div>
         </div>
       `;
     } else {
-      $('instructionLead').textContent =
-        'Pilih jawaban yang paling tepat. Soal berpindah setelah jawaban dipilih atau waktu habis.';
-      $('instructionBody').innerHTML = `
-        <div class="instruction-grid">
-          <div class="tip"><b>20 soal</b><small>Setiap paket menggunakan 20 soal dari bank soal JSON.</small></div>
-          <div class="tip"><b>30 detik/soal</b><small>Timer otomatis berpindah bila waktu habis.</small></div>
-          <div class="tip"><b>3 paket</b><small>Paket 1–3 tersedia untuk setiap jenis latihan.</small></div>
-          <div class="tip"><b>Hasil PDF</b><small>Hasil tetap dapat diunduh meskipun mode tamu.</small></div>
+      document.getElementById('instructionLead').textContent =
+        'Pilih jawaban yang paling tepat. Soal berpindah otomatis setelah kamu memilih atau waktu habis.';
+      document.getElementById('instructionBody').innerHTML = `
+        <div class="instr-tips">
+          <div class="instr-tip"><b>20 soal</b><small>Setiap paket berisi 20 soal pilihan ganda.</small></div>
+          <div class="instr-tip"><b>30 detik / soal</b><small>Timer berjalan per soal.</small></div>
+          <div class="instr-tip"><b>Jawaban A–E</b><small>Pilih satu jawaban paling tepat.</small></div>
+          <div class="instr-tip"><b>Hasil PDF</b><small>Bisa diunduh setelah selesai.</small></div>
         </div>
       `;
+    }
+
+    // Selector (dinamis)
+    const selectorLabel = document.getElementById('instructionSelectorLabel');
+    const selectorBtns = document.getElementById('instructionSelectorBtns');
+    selectorBtns.innerHTML = '';
+
+    if (isKraepelin) {
+      selectorLabel.textContent = 'Pilih Kecepatan';
+      [15, 20].forEach((sec) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'instr-opt-btn' + (sec === state.kraepelinSecondsChoice ? ' active' : '');
+        btn.textContent = `${sec} detik/soal`;
+        btn.dataset.value = String(sec);
+        btn.addEventListener('click', () => {
+          state.kraepelinSecondsChoice = sec;
+          document.querySelectorAll('.instr-opt-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('instructionPackage').textContent = `${sec} detik/soal`;
+        });
+        selectorBtns.appendChild(btn);
+      });
+    } else {
+      selectorLabel.textContent = 'Pilih Paket';
+      [1, 2, 3].forEach((pkg) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'instr-opt-btn' + (pkg === state.package ? ' active' : '');
+        btn.textContent = `Paket ${pkg}`;
+        btn.dataset.value = String(pkg);
+        btn.addEventListener('click', () => {
+          state.package = pkg;
+          document.querySelectorAll('.instr-opt-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('instructionPackage').textContent = `Paket ${pkg}`;
+        });
+        selectorBtns.appendChild(btn);
+      });
     }
 
     showView('instruction');
