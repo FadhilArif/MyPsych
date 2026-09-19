@@ -376,16 +376,34 @@ async function submitInterest(event) {
   // VIEW / TOAST
   // ============================================================
 
-   function showView(name) {
-    Object.values(views).forEach((view) => view?.classList.remove('active'));
-    views[name]?.classList.add('active');
-    document.body.dataset.view = name;
-    document.body.dataset.mode = state.isGuest ? 'guest' : 'account';
-    if (name !== 'test') stopTimer();
-    window.scrollTo(0, 0);
-    updateShell(name);
+// View yang butuh login (session atau guest mode) untuk diakses.
+// Kalau belum login sama sekali, user dipaksa balik ke landing.
+const AUTH_REQUIRED_VIEWS = ['dashboard', 'history', 'skd', 'tiu', 'psikotes', 'admin'];
+
+function showView(name) {
+  // Guard: cegah user belum login masuk ke halaman yang butuh sesi.
+  if (
+    AUTH_REQUIRED_VIEWS.includes(name) &&
+    !state.session?.token &&
+    !state.isGuest
+  ) {
+    // Admin view cuma boleh admin
+    name = 'landing';
   }
 
+  // Guard tambahan: admin view khusus role admin.
+  if (name === 'admin' && state.session?.role !== 'admin') {
+    name = 'dashboard';
+  }
+
+  Object.values(views).forEach((view) => view?.classList.remove('active'));
+  views[name]?.classList.add('active');
+  document.body.dataset.view = name;
+  document.body.dataset.mode = state.isGuest ? 'guest' : 'account';
+  if (name !== 'test') stopTimer();
+  window.scrollTo(0, 0);
+  updateShell(name);
+}
   // ============================================================
   // SHELL — Fase 2
   // ============================================================
@@ -3670,23 +3688,91 @@ $('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = f
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
     
 
-    // === Fase 2: Shell navigation ===
-      // === Fase 2: Shell navigation ===
-    document.querySelectorAll('.shell-nav-item[data-view]').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        showView(el.dataset.view);
-      });
-    });
+// === Fase 2: Shell navigation ===
+document.querySelectorAll('.shell-nav-item[data-view]').forEach((el) => {
+  el.addEventListener('click', async (e) => {
+    e.preventDefault();
 
-    // === Fase 3: View navigation (dashboard buttons, back links, skd cards) ===
-    document.querySelectorAll('[data-view]:not(body):not(.shell-nav-item)').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        const viewName = el.dataset.view;
-        if (viewName) showView(viewName);
-      });
-    });
+    const viewName = el.dataset.view;
+    if (!viewName) return;
+
+    // Guard: butuh login (session atau guest eksplisit)
+    if (
+      AUTH_REQUIRED_VIEWS.includes(viewName) &&
+      !state.session?.token &&
+      !state.isGuest
+    ) {
+      toast('Silakan masuk dulu untuk membuka halaman ini.', 'info', 3600);
+      showAuth('login');
+      return;
+    }
+
+    // Admin view: cek role
+    if (viewName === 'admin' && state.session?.role !== 'admin') {
+      toast('Halaman ini khusus admin.', 'warning', 3600);
+      return;
+    }
+
+    // View histori: wajib refresh + render sebelum tampil.
+    // Ini yang sebelumnya hilang → halaman jadi blank putih.
+    if (viewName === 'history') {
+      if (!state.isGuest && state.session?.token) {
+        try {
+          await refreshHistory();
+        } catch (err) {
+          toast(`Histori gagal dimuat: ${err.message}`, 'warning', 4500);
+        }
+      }
+      renderHistory();
+    }
+
+    // Dashboard: refresh summary kalau login (bukan guest).
+    if (viewName === 'dashboard' && !state.isGuest && state.session?.token) {
+      try {
+        await refreshHistory();
+      } catch (_) {
+        // Silent — dashboard tetap tampil walau histori gagal dimuat.
+      }
+    }
+
+    showView(viewName);
+  });
+});
+
+ // === Fase 3: View navigation (dashboard buttons, back links, skd cards) ===
+document.querySelectorAll('[data-view]:not(body):not(.shell-nav-item)').forEach((el) => {
+  el.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const viewName = el.dataset.view;
+    if (!viewName) return;
+
+    // Guard login sama seperti sidebar
+    if (
+      AUTH_REQUIRED_VIEWS.includes(viewName) &&
+      !state.session?.token &&
+      !state.isGuest
+    ) {
+      toast('Silakan masuk dulu untuk membuka halaman ini.', 'info', 3600);
+      showAuth('login');
+      return;
+    }
+
+    // Refresh + render histori kalau navigasi ke histori
+    if (viewName === 'history') {
+      if (!state.isGuest && state.session?.token) {
+        try {
+          await refreshHistory();
+        } catch (err) {
+          toast(`Histori gagal dimuat: ${err.message}`, 'warning', 4500);
+        }
+      }
+      renderHistory();
+    }
+
+    showView(viewName);
+  });
+});
 
     // === Fase 3: Test item clicks → open instruction ===
     document.querySelectorAll('[data-test]').forEach((el) => {
@@ -3859,38 +3945,39 @@ function formatNumber(n) {
     renderCatalog();
     loadStats();
 
-    if (state.session) {
-      $('welcomeName').textContent = state.session.username;
+  if (state.session) {
+  $('welcomeName').textContent = state.session.username;
 
-      if (isAdmin()) {
-        try {
-          await openAdminDashboard('overview');
-        } catch (error) {
-          toast(`Dashboard admin belum dapat dibuka: ${error.message}`, 'warning', 4500);
-        }
-        return;
-      }
-
-      showView('dashboard');
-
-      try {
-        await refreshHistory();
-      } catch (error) {
-        toast(`Belum dapat mengambil histori: ${error.message}`, 'warning', 4500);
-      }
-
-      if (loadPersistedTest()) {
-        toast(
-          'Ada progress tes yang tersimpan. Klik untuk melanjutkan →',
-          'info',
-          6000,
-          resumePersistedTest
-        );
-      }
-    } else {
-      showView('landing');
+  if (isAdmin()) {
+    try {
+      await openAdminDashboard('overview');
+    } catch (error) {
+      toast(`Dashboard admin belum dapat dibuka: ${error.message}`, 'warning', 4500);
     }
+    return;
   }
+
+  showView('dashboard');
+
+  try {
+    await refreshHistory();
+  } catch (error) {
+    toast(`Belum dapat mengambil histori: ${error.message}`, 'warning', 4500);
+  }
+
+  // Pastikan histori sudah dirender begitu masuk dashboard,
+  // jadi kalau user klik "Histori" di sidebar, isinya langsung siap.
+  renderHistory();
+
+  if (loadPersistedTest()) {
+    toast(
+      'Ada progress tes yang tersimpan. Klik untuk melanjutkan →',
+      'info',
+      6000,
+      resumePersistedTest
+    );
+  }
+}
 
   init();
 })();
