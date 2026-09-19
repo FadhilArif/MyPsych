@@ -450,3 +450,66 @@ body[data-view="about"] .shell {
     grid-template-columns: 1fr;
   }
 }
+/* ============================================================
+   FIX: Screen View di dalam Shell — pakai block layout
+   Screen lama pakai flexbox centering (align-items: center)
+   yang bikin konten kepotong ke atas saat tinggi melebihi
+   viewport. Override supaya pakai block biasa.
+   ============================================================ */
+
+.shell-main .screen {
+  min-height: auto;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* Semua screen jadi block, KECUALI test screen */
+.shell-main .screen.active:not(.test-screen) {
+  display: block;
+}
+
+/* Test screen tetap pakai flex fullscreen (diperlukan untuk layout test) */
+.shell-main .screen.test-screen {
+  min-height: 100dvh;
+  height: 100dvh;
+}
+
+.shell-main .screen.test-screen.active {
+  display: flex !important;
+}
+
+/* ============================================================
+   FIX: Padding di mobile lebih kecil
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .shell-main .app-shell {
+    padding: 8px;
+  }
+
+  /* Card admin — padding lebih compact di mobile */
+  .shell-main .admin-card {
+    padding: 16px;
+  }
+
+  .shell-main .admin-hero {
+    padding: 16px 18px;
+  }
+
+  /* Admin shell — full width tanpa max-width ganda */
+  .shell-main .admin-shell {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* ============================================================
+   FIX: Tabel admin di mobile — biar bisa di-scroll horizontal
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .shell-main .admin-table-wrap {
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+}
