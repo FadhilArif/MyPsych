@@ -604,3 +604,107 @@ body[data-view="test"] .question-card {
   justify-content: center;
   overflow-y: auto;
 }
+/* ============================================================
+   TEST VIEW — Mobile compact layout
+   Kecilkan tombol jawaban, font soal, dan rapatkan spacing
+   ============================================================ */
+
+@media (max-width: 640px) {
+
+  /* Perkecil padding keseluruhan test screen */
+  body[data-view="test"] .test-screen.active {
+    padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+  }
+
+  body[data-view="test"] .test-shell {
+    gap: 4px;
+  }
+
+  /* Header test — compact */
+  body[data-view="test"] .test-header {
+    padding: 6px 38px;
+    border-radius: 12px;
+  }
+
+  body[data-view="test"] .progress-track {
+    margin-top: 5px;
+  }
+
+  /* Question card — batasi max height, kalau teks panjang bisa scroll di dalamnya */
+  body[data-view="test"] .question-card {
+    padding: 14px 16px;
+    max-height: 38vh;
+    overflow-y: auto;
+    margin: 0;
+    border-radius: 14px;
+  }
+
+  /* Font soal di dalam question card — batasi */
+  body[data-view="test"] .question-card h2 {
+    font-size: 1rem;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  body[data-view="test"] .question-card .question-label {
+    font-size: 0.55rem;
+    margin-bottom: 6px;
+  }
+
+  body[data-view="test"] .question-card .big-number {
+    font-size: 2.6rem;
+  }
+
+  body[data-view="test"] .question-card .question-mark {
+    font-size: 1.6rem;
+    margin: 6px 0;
+  }
+
+  /* Keypad — rapatkan */
+  body[data-view="test"] .keypad {
+    gap: 5px;
+  }
+
+  /* Tombol jawaban — lebih compact */
+  body[data-view="test"] .answer-btn {
+    min-height: 42px;
+    padding: 9px 12px;
+    font-size: 0.82rem;
+    line-height: 1.3;
+    border-radius: 9px;
+    font-weight: 700;
+  }
+
+  /* Tombol digit Kraepelin */
+  body[data-view="test"] .digit-btn {
+    min-height: 42px;
+    font-size: 0.95rem;
+    border-radius: 9px;
+  }
+
+  /* Hint text */
+  body[data-view="test"] .test-hint {
+    font-size: 0.62rem;
+    padding: 2px 0 4px;
+  }
+}
+
+/* Untuk layar sangat kecil (< 400px) — lebih rapat lagi */
+@media (max-width: 400px) {
+  body[data-view="test"] .question-card {
+    max-height: 32vh;
+    padding: 12px 14px;
+  }
+
+  body[data-view="test"] .question-card h2 {
+    font-size: 0.94rem;
+  }
+
+  body[data-view="test"] .answer-btn {
+    min-height: 40px;
+    padding: 7px 11px;
+    font-size: 0.78rem;
+  }
+}
