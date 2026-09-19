@@ -373,13 +373,71 @@ async function submitInterest(event) {
   // VIEW / TOAST
   // ============================================================
 
-  function showView(name) {
+   function showView(name) {
     Object.values(views).forEach((view) => view?.classList.remove('active'));
     views[name]?.classList.add('active');
     document.body.dataset.view = name;
     document.body.dataset.mode = state.isGuest ? 'guest' : 'account';
     if (name !== 'test') stopTimer();
     window.scrollTo(0, 0);
+    updateShell(name);
+  }
+
+  // ============================================================
+  // SHELL — Fase 2
+  // ============================================================
+
+  const SHELLED_VIEWS = ['dashboard', 'admin', 'history'];
+
+  const SHELL_TITLES = {
+    landing: 'Beranda',
+    auth: 'Akun',
+    dashboard: 'Dashboard',
+    admin: 'Admin Panel',
+    instruction: 'Persiapan Tes',
+    test: 'Sedang Mengerjakan',
+    result: 'Hasil Tes',
+    history: 'Histori Latihan',
+    about: 'Tentang Kami',
+  };
+
+  function updateShell(viewName) {
+    const shell = document.getElementById('shell');
+    if (!shell) return;
+
+    const isShelled = SHELLED_VIEWS.includes(viewName);
+    shell.classList.toggle('shell--minimal', !isShelled);
+
+    const titleEl = document.getElementById('shellPageTitle');
+    if (titleEl) titleEl.textContent = SHELL_TITLES[viewName] || 'MyPsych';
+
+    document.querySelectorAll('.shell-nav-item').forEach((el) => {
+      el.classList.toggle('active', el.dataset.view === viewName);
+    });
+
+    const userName = state.session?.username || (state.isGuest ? 'Tamu' : 'Guest');
+    const userInitial = String(userName).charAt(0).toUpperCase() || 'G';
+    if ($('shellUserName')) $('shellUserName').textContent = userName;
+    if ($('shellUserAvatar')) $('shellUserAvatar').textContent = userInitial;
+    if ($('shellTopbarAvatar')) $('shellTopbarAvatar').textContent = userInitial;
+
+    closeShellSidebar();
+  }
+
+  function openShellSidebar() {
+    const sidebar = document.getElementById('shellSidebar');
+    const overlay = document.getElementById('shellOverlay');
+    if (sidebar) sidebar.classList.add('open');
+    if (overlay) overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeShellSidebar() {
+    const sidebar = document.getElementById('shellSidebar');
+    const overlay = document.getElementById('shellOverlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   function toast(message, type = 'info', duration = 2800, onClick = null) {
@@ -3521,6 +3579,29 @@ $('aboutRegisterBtn')?.addEventListener('click', () => showAuth('register'));
 $('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = false; });
        $('landingLoginBtn').addEventListener('click', () => showAuth('login'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
+      function bind() {
+    bindPasswordToggles();
+
+    // === Fase 2: Shell navigation ===
+    document.querySelectorAll('.shell-nav-item[data-view]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        showView(el.dataset.view);
+      });
+    });
+
+    document.querySelectorAll('.shell-nav-item[data-goto="kraepelin"]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openInstruction('kraepelin', 1);
+      });
+    });
+
+    document.getElementById('shellHamburger')?.addEventListener('click', openShellSidebar);
+    document.getElementById('shellOverlay')?.addEventListener('click', closeShellSidebar);
+    document.getElementById('shellLogoutBtn')?.addEventListener('click', logout);
+
+// About page
     $('landingGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = false; });
     $('landingGuestBtnHero')?.addEventListener('click', () => { $('guestModal').hidden = false; });
     $('landingRegisterBtnHero')?.addEventListener('click', () => showAuth('register'));
@@ -3652,8 +3733,9 @@ function formatNumber(n) {
   if (n >= 1000) return (n / 1000).toFixed(1).replace('.0','') + ' rb';
   return String(n);
 }
-  async function init() {
+    async function init() {
     bind();
+    updateShell('landing');
 
     const params = new URLSearchParams(location.search);
     const resetToken = params.get('reset');
