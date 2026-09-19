@@ -18,50 +18,195 @@
     MCQ_SECONDS: 30,
   });
 
-  const TESTS = {
+   const TESTS = {
+    // ============================================================
+    // 🔥 TES ANDALAN
+    // ============================================================
     kraepelin: {
       name: 'Kraepelin',
+      label: 'Kraepelin',
       icon: '🧮',
       description: 'Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan.',
       kind: 'kraepelin',
+      group: 'andalan',
+      subGroup: null,
+      subSubGroup: null,
+      comingSoon: false,
     },
+
+    // ============================================================
+    // 📘 SKD — SELEKSI KOMPETENSI DASAR
+    // ============================================================
+    twk: {
+      name: 'TWK — Tes Wawasan Kebangsaan',
+      label: 'TWK',
+      icon: '🇮🇩',
+      description: 'Nasionalisme, integritas, bela negara, pilar negara, bahasa negara.',
+      kind: 'mcq',
+      group: 'skd',
+      subGroup: null,
+      subSubGroup: null,
+      comingSoon: true,
+      topics: ['nasionalisme', 'integritas', 'bela_negara', 'pilar_negara', 'bahasa_negara'],
+    },
+    tiu_verbal: {
+      name: 'Verbal — TIU',
+      label: 'TIU — Verbal',
+      icon: '📝',
+      description: 'Sinonim, analogi, silogisme.',
+      kind: 'mcq',
+      group: 'skd',
+      subGroup: 'tiu',
+      subSubGroup: 'verbal',
+      comingSoon: false,
+      linkedTests: ['sinonim', 'analogi', 'silogisme'],
+    },
+    tiu_numerik: {
+      name: 'Numerik — TIU',
+      label: 'TIU — Numerik',
+      icon: '🔢',
+      description: 'Kuantitatif, numerical, berhitung cepat.',
+      kind: 'mcq',
+      group: 'skd',
+      subGroup: 'tiu',
+      subSubGroup: 'numerik',
+      comingSoon: false,
+      linkedTests: ['kuantitatif', 'numerical'],
+    },
+    tiu_figural: {
+      name: 'Figural — TIU',
+      label: 'TIU — Figural',
+      icon: '🎨',
+      description: 'Analogi figural, ketidaksamaan, serial, dan tes kognitif.',
+      kind: 'mcq',
+      group: 'skd',
+      subGroup: 'tiu',
+      subSubGroup: 'figural',
+      comingSoon: false,
+      linkedTests: ['kognitif'],
+    },
+    tkp: {
+      name: 'TKP — Tes Karakteristik Pribadi',
+      label: 'TKP',
+      icon: '🤝',
+      description: 'Pelayanan publik, jejaring kerja, sosial budaya, TIK, profesionalisme, anti radikal.',
+      kind: 'mcq',
+      group: 'skd',
+      subGroup: null,
+      subSubGroup: null,
+      comingSoon: true,
+      topics: ['pelayanan_publik', 'jejaring_kerja', 'sosial_budaya', 'tik', 'profesionalisme', 'anti_radikal'],
+    },
+
+    // ============================================================
+    // 🧩 PSIKOTES UMUM
+    // ============================================================
     kuantitatif: {
       name: 'Kuantitatif',
+      label: 'Kuantitatif',
       icon: '➗',
       description: 'Latihan hitungan dasar, persentase, rasio, dan operasi numerik.',
       kind: 'mcq',
+      group: 'umum',
+      subGroup: null,
+      subSubGroup: null,
+      comingSoon: false,
     },
     numerical: {
       name: 'Numerical',
+      label: 'Numerical',
       icon: '🔢',
       description: 'Latihan pola angka, deret, perbandingan, dan penalaran numerik.',
       kind: 'mcq',
+      group: 'umum',
+      subGroup: null,
+      subSubGroup: null,
+      comingSoon: false,
     },
     sinonim: {
       name: 'Sinonim Verbal',
+      label: 'Sinonim Verbal',
       icon: '🔤',
       description: 'Latihan memahami persamaan makna kata dalam konteks psikotes.',
       kind: 'mcq',
+      group: 'umum',
+      subGroup: null,
+      subSubGroup: null,
+      comingSoon: false,
     },
     silogisme: {
       name: 'Silogisme',
+      label: 'Silogisme',
       icon: '🧠',
       description: 'Latihan menarik kesimpulan logis dari beberapa premis.',
       kind: 'mcq',
+      group: 'umum',
+      subGroup: null,
+      subSubGroup: null,
+      comingSoon: false,
     },
     analogi: {
       name: 'Analogi',
+      label: 'Analogi',
       icon: '🔗',
       description: 'Latihan hubungan kata dan konsep secara analogis.',
       kind: 'mcq',
+      group: 'umum',
+      subGroup: null,
+      subSubGroup: null,
+      comingSoon: false,
     },
     kognitif: {
       name: 'Tes Kognitif',
+      label: 'Tes Kognitif',
       icon: '🧩',
       description: 'Latihan gabungan perhatian, logika, memori, dan pemecahan masalah.',
       kind: 'mcq',
+      group: 'umum',
+      subGroup: 'tiu',           // ← juga bisa diakses dari TIU Figural
+      subSubGroup: 'figural',
+      comingSoon: false,
     },
   };
+
+  // ============================================================
+  // HELPER: Grouping & Label
+  // ============================================================
+
+  const GROUP_META = {
+    andalan: { name: 'Tes Andalan',      icon: '🔥', order: 1 },
+    skd:     { name: 'SKD (CPNS)',       icon: '📘', order: 2 },
+    umum:    { name: 'Psikotes Umum',    icon: '🧩', order: 3 },
+  };
+
+  const SUBGROUP_META = {
+    tiu: { name: 'TIU — Tes Intelegensi Umum', icon: '🧠', order: 1 },
+  };
+
+  const SUBSUBGROUP_META = {
+    verbal:  { name: 'Kemampuan Verbal',  icon: '📝', order: 1 },
+    numerik: { name: 'Kemampuan Numerik', icon: '🔢', order: 2 },
+    figural: { name: 'Kemampuan Figural', icon: '🎨', order: 3 },
+  };
+
+  function getTestGroup(testId) {
+    return TESTS[testId]?.group || 'umum';
+  }
+
+  function getTestLabel(testId) {
+    return TESTS[testId]?.label || TESTS[testId]?.name || testId;
+  }
+
+  function getTestsByGroup(groupName, subGroup = null, subSubGroup = null) {
+    return Object.entries(TESTS)
+      .filter(([id, test]) => {
+        if (test.group !== groupName) return false;
+        if (subGroup !== null && test.subGroup !== subGroup) return false;
+        if (subSubGroup !== null && test.subSubGroup !== subSubGroup) return false;
+        return true;
+      })
+      .map(([id, test]) => ({ id, ...test }));
+  }
 
   // Dummy bank sementara. Nanti dipindah ke JSON/GitHub pada fase bank soal.
   const SAMPLE = {
