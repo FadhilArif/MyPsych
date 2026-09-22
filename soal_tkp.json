@@ -1,0 +1,1169 @@
+{
+  "kategori": "TKP — Tes Karakteristik Pribadi",
+  "total_paket": 3,
+  "soal_per_paket": 20,
+  "catatan": "Setiap opsi memiliki skor 1–5. option_scores mempertahankan bobot skor asli dari sumber.",
+  "paket": [
+    {
+      "id_paket": 1,
+      "nama_paket": "Paket 1",
+      "deskripsi": "Bank soal Tes Karakteristik Pribadi paket 1.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Seorang pasien datang mengeluh proses pendaftaran terlalu lama dan bersikap marah-marah kepada Anda. Sikap yang paling tepat adalah...",
+          "options": {
+            "A": "Membalas dengan nada tinggi karena Anda juga lelah",
+            "B": "Mengabaikan keluhannya dan melanjutkan pekerjaan lain",
+            "C": "Meminta pasien menunggu tanpa penjelasan",
+            "D": "Meminta maaf, tetap tenang, dan menjelaskan penyebab keterlambatan",
+            "E": "Meminta maaf, tetap tenang, menjelaskan penyebabnya, dan mempercepat proses semampu mungkin sesuai prosedur"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 2,
+          "question": "Rekan kerja Anda meminta bantuan menyelesaikan tugasnya karena sedang sakit, padahal pekerjaan Anda sendiri juga menumpuk. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena pekerjaan sendiri sudah banyak",
+            "B": "Membantu tanpa mempertimbangkan pekerjaan sendiri sama sekali",
+            "C": "Membantu seadanya tanpa berkomunikasi lebih lanjut",
+            "D": "Mendiskusikan prioritas dengan atasan lalu membantu semampunya",
+            "E": "Mengatur ulang prioritas pekerjaan, membantu semampu mungkin, dan berkoordinasi dengan atasan bila diperlukan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 3,
+          "question": "Anda menemukan sistem informasi kantor mengalami gangguan sehingga data pasien tidak bisa diakses. Tindakan Anda adalah...",
+          "options": {
+            "A": "Membiarkan dan menunggu sistem normal dengan sendirinya",
+            "B": "Mengeluh kepada rekan kerja tanpa melapor",
+            "C": "Melapor ke bagian IT tapi tidak menyiapkan solusi sementara",
+            "D": "Melapor ke bagian IT dan mencatat data secara manual sementara",
+            "E": "Segera melapor ke bagian IT, menyiapkan pencatatan manual sementara, dan mengomunikasikan situasi ke rekan serta atasan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 4,
+          "question": "Anda diminta mempelajari aplikasi baru untuk sistem administrasi kantor dalam waktu singkat. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena merasa tidak mampu",
+            "B": "Mempelajari seadanya saat dibutuhkan saja",
+            "C": "Menunggu pelatihan resmi tanpa berinisiatif belajar sendiri",
+            "D": "Belajar secara mandiri dari manual yang tersedia",
+            "E": "Segera mempelajari secara mandiri, mencoba fitur-fiturnya, dan bertanya kepada yang lebih paham bila menemui kendala"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 5,
+          "question": "Dalam rapat tim, pendapat Anda tidak disetujui oleh mayoritas anggota. Sikap Anda adalah...",
+          "options": {
+            "A": "Marah dan meninggalkan rapat",
+            "B": "Diam saja dan tidak peduli hasil rapat",
+            "C": "Menerima dengan terpaksa tanpa berkontribusi lagi",
+            "D": "Menerima keputusan bersama meski berbeda pendapat",
+            "E": "Menerima keputusan bersama dengan lapang dada dan tetap berkontribusi aktif menjalankan keputusan tersebut"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 6,
+          "question": "Anda melihat rekan kerja melakukan kesalahan input data pasien yang bisa berdampak pada pelayanan. Tindakan Anda adalah...",
+          "options": {
+            "A": "Membiarkan saja karena bukan urusan Anda",
+            "B": "Menegurnya dengan nada tinggi di depan orang lain",
+            "C": "Melaporkan langsung ke atasan tanpa memberi tahu yang bersangkutan",
+            "D": "Memberitahu secara langsung dan sopan agar segera diperbaiki",
+            "E": "Memberitahu secara langsung dan sopan, membantu memperbaikinya, serta memastikan kesalahan serupa tidak terulang"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 7,
+          "question": "Anda ditugaskan di unit baru yang budaya kerjanya berbeda dengan unit sebelumnya. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak beradaptasi dan tetap memakai cara lama",
+            "B": "Beradaptasi sangat lambat dan sering mengeluh",
+            "C": "Beradaptasi seadanya saat diperlukan saja",
+            "D": "Berusaha memahami dan menyesuaikan diri dengan budaya kerja baru",
+            "E": "Aktif mempelajari budaya kerja baru, menyesuaikan diri, dan memberikan kontribusi positif sejak awal"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 8,
+          "question": "Ada isu yang beredar di media sosial yang menyudutkan instansi tempat Anda bekerja, namun informasinya belum jelas kebenarannya. Sikap Anda adalah...",
+          "options": {
+            "A": "Ikut menyebarkan agar viral",
+            "B": "Ikut berkomentar negatif tanpa verifikasi",
+            "C": "Mendiamkan tanpa melakukan apa pun",
+            "D": "Mencari klarifikasi resmi sebelum menanggapi",
+            "E": "Mencari klarifikasi resmi, tidak ikut menyebarkan sebelum jelas, dan menyampaikan informasi yang benar melalui jalur yang tepat"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 9,
+          "question": "Atasan meminta Anda menyelesaikan laporan bulanan dengan tenggat waktu yang sangat mepet. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena waktu tidak cukup",
+            "B": "Mengerjakan asal selesai tanpa memperhatikan kualitas",
+            "C": "Mengerjakan sebisanya sambil mengeluh ke rekan kerja",
+            "D": "Mengatur waktu dan fokus agar laporan selesai tepat waktu",
+            "E": "Mengatur prioritas kerja, fokus menyelesaikan laporan tepat waktu, dan berkoordinasi bila membutuhkan data tambahan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 10,
+          "question": "Seorang keluarga pasien meminta Anda memberikan informasi rekam medis pasien tanpa surat kuasa yang sah. Sikap Anda adalah...",
+          "options": {
+            "A": "Memberikan informasi karena kasihan",
+            "B": "Memberikan sebagian informasi saja",
+            "C": "Menolak tanpa penjelasan apapun",
+            "D": "Menolak dan menjelaskan prosedur yang berlaku",
+            "E": "Menolak dengan sopan, menjelaskan prosedur dan pentingnya kerahasiaan, serta mengarahkan cara mengurus izin yang sah"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 11,
+          "question": "Anda memiliki ide untuk mempercepat proses pendaftaran pasien, namun idenya di luar SOP yang berlaku saat ini. Sikap Anda adalah...",
+          "options": {
+            "A": "Langsung menerapkan tanpa izin",
+            "B": "Membiarkan ide tersebut tanpa menyampaikannya",
+            "C": "Menyampaikan ide hanya ke rekan sejawat",
+            "D": "Mengusulkan ide tersebut kepada atasan untuk dipertimbangkan",
+            "E": "Mengusulkan ide secara tertulis kepada atasan disertai analisis manfaat dan risikonya agar dapat dikaji secara resmi"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 12,
+          "question": "Anda diminta bekerja lembur mendadak karena ada audit besok pagi. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena sudah ada rencana pribadi",
+            "B": "Bersedia tapi mengerjakan dengan setengah hati",
+            "C": "Bersedia dengan terpaksa",
+            "D": "Bersedia lembur dan menyelesaikan tugas dengan baik",
+            "E": "Bersedia lembur, menyelesaikan tugas dengan baik, dan menawarkan bantuan tambahan bila rekan lain membutuhkan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 13,
+          "question": "Anda melihat fasilitas kantor digunakan tidak semestinya oleh rekan kerja untuk kepentingan pribadi. Sikap Anda adalah...",
+          "options": {
+            "A": "Ikut menggunakan fasilitas tersebut untuk kepentingan pribadi juga",
+            "B": "Membiarkan saja karena tidak berdampak langsung ke Anda",
+            "C": "Menggosipkannya ke rekan lain",
+            "D": "Menegur secara langsung dengan sopan",
+            "E": "Menegur secara langsung dengan sopan dan bila perlu mengingatkan aturan penggunaan fasilitas kantor yang berlaku"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 14,
+          "question": "Anda baru pindah tugas ke daerah dengan budaya dan bahasa daerah yang berbeda. Sikap Anda adalah...",
+          "options": {
+            "A": "Menutup diri dan tidak mau berinteraksi",
+            "B": "Berinteraksi seperlunya saja",
+            "C": "Berinteraksi sewajarnya tanpa berusaha memahami budaya setempat",
+            "D": "Berusaha mempelajari dan menghormati budaya setempat",
+            "E": "Aktif mempelajari budaya dan kebiasaan setempat, menghormatinya, dan membangun hubungan baik dengan masyarakat sekitar"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 15,
+          "question": "Anda menerima keluhan pasien BPJS yang klaimnya ditolak karena berkas kurang lengkap. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengatakan itu bukan tanggung jawab Anda",
+            "B": "Meminta pasien mengurus sendiri tanpa arahan",
+            "C": "Menjelaskan alasan penolakan saja",
+            "D": "Menjelaskan alasan penolakan dan membantu melengkapi berkas yang kurang",
+            "E": "Menjelaskan dengan empati, membantu melengkapi berkas yang kurang, dan memastikan pasien memahami langkah selanjutnya"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 16,
+          "question": "Anda mendapati diri Anda sering membuat kesalahan kecil dalam kodefikasi diagnosis akhir-akhir ini. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengabaikan karena dianggap wajar",
+            "B": "Menyalahkan beban kerja yang tinggi",
+            "C": "Memperbaiki hanya jika ditegur atasan",
+            "D": "Introspeksi dan lebih berhati-hati ke depannya",
+            "E": "Introspeksi, mencari penyebab kesalahan, memperbaiki cara kerja, dan meminta masukan senior bila perlu"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 17,
+          "question": "Anda diminta menggantikan rekan kerja di unit lain yang belum pernah Anda tangani sebelumnya. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena tidak menguasai unit tersebut",
+            "B": "Menerima tapi bekerja asal-asalan",
+            "C": "Menerima dengan ragu-ragu tanpa persiapan",
+            "D": "Menerima dan mempelajari tugas tersebut secepatnya",
+            "E": "Menerima dengan sigap, mempelajari tugasnya, dan aktif bertanya kepada rekan yang lebih paham agar pekerjaan tetap optimal"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 18,
+          "question": "Anda mengetahui bahwa proses digitalisasi arsip rekam medis akan mengurangi kebutuhan tenaga filing manual. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak perubahan karena takut kehilangan pekerjaan",
+            "B": "Bersikap pasif dan tidak mau belajar hal baru",
+            "C": "Menerima tapi tidak berusaha meningkatkan kemampuan",
+            "D": "Menerima perubahan dan mulai mempelajari sistem digital",
+            "E": "Menerima perubahan sebagai peluang, aktif mempelajari sistem digital, dan meningkatkan kompetensi diri mengikuti perkembangan teknologi"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 19,
+          "question": "Rekan satu tim Anda sering terlambat sehingga menghambat pekerjaan tim. Sikap Anda adalah...",
+          "options": {
+            "A": "Membiarkan dan mengerjakan sendiri tanpa bicara apapun",
+            "B": "Melaporkan langsung ke atasan tanpa bicara ke yang bersangkutan",
+            "C": "Menggosipkan ke rekan lain",
+            "D": "Membicarakan langsung secara baik-baik dengan rekan tersebut",
+            "E": "Membicarakan langsung secara baik-baik, mencari solusi bersama, dan melibatkan atasan bila tidak ada perubahan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 20,
+          "question": "Anda diminta menyampaikan sosialisasi prosedur baru kepada seluruh pegawai di unit Anda. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena bukan tugas utama",
+            "B": "Menyampaikan seadanya tanpa persiapan",
+            "C": "Menyampaikan dengan persiapan minim",
+            "D": "Mempersiapkan materi dengan baik sebelum menyampaikan",
+            "E": "Mempersiapkan materi dengan matang, menyampaikan secara jelas dan interaktif, serta memastikan seluruh pegawai memahami prosedur baru"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        }
+      ]
+    },
+    {
+      "id_paket": 2,
+      "nama_paket": "Paket 2",
+      "deskripsi": "Bank soal Tes Karakteristik Pribadi paket 2.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Anda ditugaskan menangani antrean pasien yang sangat panjang sendirian karena rekan kerja izin sakit mendadak. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengeluh kepada pasien tentang kekurangan staf",
+            "B": "Melayani dengan tergesa-gesa tanpa memperhatikan kualitas",
+            "C": "Melayani seadanya sesuai kemampuan",
+            "D": "Tetap melayani dengan sabar sesuai prosedur",
+            "E": "Tetap tenang, melayani sesuai prosedur, mengatur antrean seefisien mungkin, dan meminta bantuan tambahan bila memungkinkan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 2,
+          "question": "Anda menemukan kesalahan pada laporan yang sudah diserahkan ke atasan kemarin. Sikap Anda adalah...",
+          "options": {
+            "A": "Membiarkan saja berharap tidak ada yang menyadari",
+            "B": "Menunggu ditegur baru memperbaiki",
+            "C": "Memperbaiki diam-diam tanpa memberi tahu atasan",
+            "D": "Segera melapor ke atasan dan memperbaiki kesalahan",
+            "E": "Segera melapor ke atasan, menjelaskan penyebabnya, memperbaiki secepatnya, dan memastikan kesalahan tidak terulang"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 3,
+          "question": "Anda diminta menerima kritik dari atasan mengenai cara kerja Anda di depan rekan-rekan lain. Sikap Anda adalah...",
+          "options": {
+            "A": "Membantah di tempat dengan emosi",
+            "B": "Diam tapi menyimpan rasa kesal berkepanjangan",
+            "C": "Menerima tapi tidak melakukan perubahan apapun",
+            "D": "Menerima kritik dengan lapang dada dan berusaha memperbaiki diri",
+            "E": "Menerima kritik dengan lapang dada, meminta klarifikasi bila diperlukan, dan segera memperbaiki kinerja"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 4,
+          "question": "Seorang rekan kerja baru terlihat kesulitan beradaptasi dengan sistem kerja di unit Anda. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengabaikan karena bukan tanggung jawab Anda",
+            "B": "Membiarkan dia belajar sendiri sepenuhnya",
+            "C": "Membantu hanya jika diminta",
+            "D": "Menawarkan bantuan dan penjelasan seperlunya",
+            "E": "Proaktif menawarkan bimbingan, membantu memahami sistem kerja, dan memastikan ia nyaman beradaptasi di lingkungan baru"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 5,
+          "question": "Anda ditugaskan menggunakan aplikasi berbasis komputer yang baru pertama kali Anda gunakan. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak menggunakan dan meminta tugas lain",
+            "B": "Menggunakan asal-asalan tanpa mau belajar",
+            "C": "Menunggu diajari orang lain tanpa mencoba sendiri",
+            "D": "Mencoba mempelajari sendiri sedikit demi sedikit",
+            "E": "Segera mempelajari secara mandiri melalui manual/tutorial, mencoba mempraktikkannya, dan bertanya bila menemui kendala"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 6,
+          "question": "Anda mengetahui rekan kerja menyebarkan informasi pasien kepada pihak yang tidak berkepentingan. Sikap Anda adalah...",
+          "options": {
+            "A": "Ikut menyebarkan juga",
+            "B": "Membiarkan karena tidak ingin ikut campur",
+            "C": "Menggosipkannya ke rekan lain",
+            "D": "Menegurnya secara langsung agar tidak mengulangi",
+            "E": "Menegur secara langsung, mengingatkan aturan kerahasiaan rekam medis, dan melaporkan ke atasan bila pelanggaran berlanjut"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 7,
+          "question": "Anda diberi tanggung jawab memimpin tim kecil untuk menyelesaikan proyek pengarsipan dalam waktu terbatas. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengerjakan sendiri semuanya tanpa melibatkan tim",
+            "B": "Membagi tugas tanpa memantau progresnya",
+            "C": "Membagi tugas dan sesekali memantau",
+            "D": "Membagi tugas sesuai kemampuan anggota dan memantau progres",
+            "E": "Membagi tugas sesuai kemampuan anggota, memantau progres secara berkala, dan membantu mengatasi kendala yang muncul"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 8,
+          "question": "Anda ditempatkan bekerja bersama tim yang terdiri dari berbagai latar belakang suku dan agama. Sikap Anda adalah...",
+          "options": {
+            "A": "Lebih memilih bergaul hanya dengan yang sesuku",
+            "B": "Bersikap acuh terhadap perbedaan yang ada",
+            "C": "Bergaul sewajarnya tanpa usaha memahami perbedaan",
+            "D": "Menghargai perbedaan dan bekerja sama dengan baik",
+            "E": "Aktif menghargai perbedaan, membangun komunikasi yang inklusif, dan menjadikan keberagaman sebagai kekuatan tim"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 9,
+          "question": "Anda diminta lembur mendadak untuk menyelesaikan rekapitulasi data akhir bulan. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak dengan alasan sudah lelah",
+            "B": "Menerima sambil terus mengeluh",
+            "C": "Menerima dengan terpaksa",
+            "D": "Menerima dan menyelesaikan tugas dengan baik",
+            "E": "Menerima dengan sikap positif, menyelesaikan tugas tepat waktu dan akurat, serta menawarkan bantuan bila rekan lain kesulitan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 10,
+          "question": "Anda melihat ada potensi risiko keselamatan kerja (misal kabel berserakan) di area kerja Anda. Sikap Anda adalah...",
+          "options": {
+            "A": "Membiarkan karena bukan tugas Anda",
+            "B": "Menghindarinya saja saat lewat",
+            "C": "Memberi tahu rekan terdekat saja",
+            "D": "Merapikan sendiri dan melaporkan ke bagian terkait",
+            "E": "Segera mengamankan area tersebut, melaporkan ke bagian terkait, dan mengingatkan rekan kerja lain agar berhati-hati"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 11,
+          "question": "Anda ditugaskan mendata ulang seluruh arsip rekam medis lama yang jumlahnya sangat banyak dan membosankan. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengerjakan sangat lambat karena bosan",
+            "B": "Mengeluh terus-menerus kepada rekan kerja",
+            "C": "Mengerjakan seadanya asal selesai",
+            "D": "Mengerjakan dengan tekun meski membosankan",
+            "E": "Mengerjakan dengan tekun dan teliti, mengatur strategi kerja agar lebih efisien, tanpa mengurangi keakuratan data"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 12,
+          "question": "Sebuah kebijakan baru dari pimpinan dirasa memberatkan sebagian pegawai, termasuk Anda. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak secara terang-terangan dan mengajak pegawai lain memboikot",
+            "B": "Menggerutu terus-menerus tanpa menyampaikan masukan",
+            "C": "Mengikuti kebijakan dengan terpaksa",
+            "D": "Mengikuti kebijakan dan menyampaikan masukan melalui jalur yang tepat",
+            "E": "Tetap menjalankan kebijakan dengan baik sambil menyampaikan masukan konstruktif melalui forum atau jalur resmi yang tersedia"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 13,
+          "question": "Anda melihat ada warga lanjut usia kebingungan mencari loket pendaftaran di rumah sakit. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengabaikan karena bukan tugas Anda saat itu",
+            "B": "Menunjukkan arah sekilas sambil terus berjalan",
+            "C": "Menunjukkan arah dengan jelas",
+            "D": "Menunjukkan arah dan memastikan beliau memahami",
+            "E": "Mengantar atau membantu langsung menuju loket yang dituju sambil memastikan kebutuhannya terlayani dengan baik"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 14,
+          "question": "Anda mendapati diri Anda kurang menguasai salah satu materi teknis yang dibutuhkan untuk pekerjaan baru Anda. Sikap Anda adalah...",
+          "options": {
+            "A": "Berpura-pura sudah menguasai agar tidak terlihat lemah",
+            "B": "Membiarkan kekurangan tersebut tanpa upaya perbaikan",
+            "C": "Belajar hanya jika ditegur atasan",
+            "D": "Berusaha belajar secara mandiri untuk menutup kekurangan",
+            "E": "Mengakui kekurangan secara jujur, aktif belajar mandiri maupun dari rekan/atasan, dan terus mengevaluasi perkembangan diri"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 15,
+          "question": "Ada perbedaan pendapat yang cukup tajam antara dua rekan kerja Anda yang mengganggu suasana kerja tim. Sikap Anda adalah...",
+          "options": {
+            "A": "Memihak salah satu pihak yang lebih dekat dengan Anda",
+            "B": "Membiarkan konflik berlarut-larut",
+            "C": "Menghindar dari situasi tersebut",
+            "D": "Menjadi penengah agar suasana tidak semakin memburuk",
+            "E": "Menjadi penengah yang netral, mendengarkan kedua pihak, dan membantu mencari solusi yang adil bagi keduanya"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 16,
+          "question": "Anda diminta atasan mengoperasikan sistem klaim BPJS yang baru diperbarui tanpa pelatihan formal. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak mengerjakan sebelum ada pelatihan",
+            "B": "Mengerjakan asal-asalan karena belum paham",
+            "C": "Menunggu rekan lain mengerjakan lebih dulu",
+            "D": "Mencoba mempelajari sendiri sambil bekerja",
+            "E": "Segera mempelajari sistem baru secara mandiri, berkonsultasi dengan pihak terkait bila menemui kendala, dan tetap teliti dalam bekerja"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 17,
+          "question": "Anda mengetahui ada rekan kerja yang menerima imbalan dari pihak luar untuk mempercepat proses administrasi tertentu. Sikap Anda adalah...",
+          "options": {
+            "A": "Ikut meminta bagian dari imbalan tersebut",
+            "B": "Membiarkan karena tidak ingin dianggap ikut campur",
+            "C": "Menggosipkannya ke rekan lain tanpa tindakan lanjut",
+            "D": "Mengingatkan rekan tersebut secara langsung",
+            "E": "Mengingatkan secara langsung bahwa itu melanggar aturan, dan melaporkannya kepada atasan atau unit terkait bila tidak diindahkan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 18,
+          "question": "Anda ditugaskan berkolaborasi dengan tim dari instansi lain yang memiliki cara kerja berbeda. Sikap Anda adalah...",
+          "options": {
+            "A": "Memaksakan cara kerja tim Anda sendiri",
+            "B": "Menolak berkolaborasi karena berbeda cara kerja",
+            "C": "Mengikuti seadanya tanpa usaha menyesuaikan",
+            "D": "Berusaha menyesuaikan diri dengan cara kerja tim lain",
+            "E": "Aktif membangun komunikasi, menyesuaikan diri dengan cara kerja tim lain, dan mencari titik temu agar kolaborasi berjalan lancar"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 19,
+          "question": "Anda diminta menyampaikan hasil evaluasi kinerja tim kepada pimpinan, termasuk kekurangan yang ada. Sikap Anda adalah...",
+          "options": {
+            "A": "Menyembunyikan kekurangan agar tim terlihat baik",
+            "B": "Menyampaikan sebagian saja yang menguntungkan tim",
+            "C": "Menyampaikan apa adanya tanpa solusi",
+            "D": "Menyampaikan secara jujur disertai penjelasan penyebabnya",
+            "E": "Menyampaikan secara jujur dan objektif, disertai analisis penyebab serta usulan langkah perbaikan ke depan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 20,
+          "question": "Anda melihat ada peluang menggunakan aplikasi digital untuk mempermudah pencatatan sensus harian di unit Anda. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengabaikan karena cara manual sudah biasa dipakai",
+            "B": "Menunggu instruksi atasan tanpa berinisiatif",
+            "C": "Mencoba sendiri tanpa melibatkan tim",
+            "D": "Mengusulkan penggunaan aplikasi tersebut kepada atasan",
+            "E": "Mengusulkan penggunaan aplikasi tersebut kepada atasan disertai manfaat dan simulasi penerapannya, serta siap membantu penerapannya"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        }
+      ]
+    },
+    {
+      "id_paket": 3,
+      "nama_paket": "Paket 3",
+      "deskripsi": "Bank soal Tes Karakteristik Pribadi paket 3.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Anda mendapati diri berbeda pandangan politik dengan rekan kerja menjelang pemilu. Sikap Anda sebagai calon ASN adalah...",
+          "options": {
+            "A": "Berdebat sengit untuk membuktikan pandangan Anda benar",
+            "B": "Menjauhi rekan yang berbeda pandangan",
+            "C": "Menghindari topik tersebut sepenuhnya",
+            "D": "Tetap menghormati perbedaan pandangan dan bersikap profesional",
+            "E": "Tetap menghormati perbedaan pandangan, bersikap netral dan profesional, serta tidak membawa isu politik ke dalam lingkungan kerja"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 2,
+          "question": "Anda menemukan sebuah dokumen penting milik kantor tercecer di tempat umum. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengabaikannya karena bukan tanggung jawab Anda",
+            "B": "Membiarkannya di tempat itu saja",
+            "C": "Mengambil dan menyimpannya sendiri tanpa melapor",
+            "D": "Mengambil dan mengembalikannya ke pihak terkait",
+            "E": "Segera mengamankan dokumen tersebut dan mengembalikannya ke pihak yang berwenang serta melaporkan kejadiannya"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 3,
+          "question": "Anda diminta bekerja sama dengan tim lintas profesi (dokter, perawat, admin) untuk menyusun laporan akreditasi. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengerjakan bagian sendiri tanpa koordinasi dengan tim lain",
+            "B": "Menunggu arahan penuh dari tim lain",
+            "C": "Berkoordinasi seperlunya saja",
+            "D": "Aktif berkoordinasi dan berbagi informasi dengan tim lintas profesi",
+            "E": "Aktif berkoordinasi, berbagi informasi secara terbuka, dan memastikan setiap bagian laporan tersinkron dengan baik antarprofesi"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 4,
+          "question": "Anda mendengar ada rekan kerja yang menyebarkan ujaran kebencian berbau SARA di grup percakapan kantor. Sikap Anda adalah...",
+          "options": {
+            "A": "Ikut menanggapi dengan komentar serupa",
+            "B": "Membiarkan saja karena hanya di grup pribadi",
+            "C": "Keluar dari grup tanpa menegur",
+            "D": "Mengingatkan secara pribadi agar tidak mengulanginya",
+            "E": "Mengingatkan secara langsung bahwa hal tersebut tidak pantas, menjelaskan pentingnya toleransi, dan melaporkan ke pihak berwenang bila berlanjut"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 5,
+          "question": "Anda diberi kesempatan mengikuti pelatihan pengembangan diri, namun jadwalnya bertabrakan dengan pekerjaan rutin. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak pelatihan demi menyelesaikan pekerjaan rutin",
+            "B": "Mengikuti pelatihan dan mengabaikan pekerjaan rutin sepenuhnya",
+            "C": "Mengikuti sebagian pelatihan saja",
+            "D": "Mengatur waktu agar keduanya dapat berjalan",
+            "E": "Berkoordinasi dengan atasan dan rekan kerja untuk mengatur ulang jadwal, sehingga pelatihan dan pekerjaan rutin tetap berjalan optimal"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 6,
+          "question": "Anda melihat rekan kerja kesulitan menggunakan komputer untuk menginput data, sementara Anda sudah mahir. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengabaikan karena bukan urusan Anda",
+            "B": "Mengambil alih pekerjaan tanpa mengajarinya",
+            "C": "Membantu hanya jika diminta secara eksplisit",
+            "D": "Menawarkan bantuan dan mengajarkan cara penggunaannya",
+            "E": "Proaktif menawarkan bantuan, mengajarkan dengan sabar, dan memastikan rekan tersebut dapat mengerjakannya secara mandiri ke depannya"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 7,
+          "question": "Anda ditugaskan menyelesaikan pekerjaan yang menuntut ketelitian tinggi dalam waktu yang terbatas. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengerjakan cepat tanpa memperhatikan ketelitian",
+            "B": "Mengerjakan lambat sehingga melewati tenggat waktu",
+            "C": "Mengerjakan seadanya dengan hasil yang kurang optimal",
+            "D": "Mengerjakan dengan teliti sambil menjaga kecepatan",
+            "E": "Mengatur strategi kerja agar tetap teliti dan tepat waktu, serta memeriksa ulang hasil pekerjaan sebelum diserahkan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 8,
+          "question": "Anda mendapati sebagian masyarakat di wilayah kerja Anda kurang memahami prosedur pengurusan BPJS. Sikap Anda adalah...",
+          "options": {
+            "A": "Menganggap itu bukan tanggung jawab Anda",
+            "B": "Menjelaskan sekilas saja jika ditanya",
+            "C": "Menjelaskan seperlunya sesuai pertanyaan",
+            "D": "Menjelaskan prosedur secara jelas dan sabar",
+            "E": "Menjelaskan prosedur secara jelas dan sabar, serta berinisiatif membuat panduan sederhana agar masyarakat lebih mudah memahami"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 9,
+          "question": "Anda diberi tugas tambahan di luar deskripsi kerja karena kekurangan tenaga di unit lain. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena bukan tanggung jawab utama Anda",
+            "B": "Menerima dengan menggerutu",
+            "C": "Menerima dengan terpaksa",
+            "D": "Menerima dan menjalankan tugas tambahan tersebut dengan baik",
+            "E": "Menerima dengan sikap positif, menjalankan tugas tambahan dengan baik, sambil tetap memastikan tugas utama tidak terbengkalai"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 10,
+          "question": "Anda menyaksikan seorang warga negara asing kebingungan mencari informasi layanan kesehatan dan tidak fasih berbahasa Indonesia. Sikap Anda adalah...",
+          "options": {
+            "A": "Mengabaikan karena kesulitan berkomunikasi",
+            "B": "Menyuruhnya bertanya ke orang lain",
+            "C": "Membantu seadanya dengan bahasa tubuh saja",
+            "D": "Berusaha membantu semampu mungkin dengan bahasa sederhana atau alat bantu",
+            "E": "Berusaha membantu semaksimal mungkin, menggunakan bahasa sederhana/alat penerjemah, dan memastikan kebutuhannya terlayani dengan baik"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 11,
+          "question": "Anda diberi kepercayaan memegang data sensitif perusahaan/instansi. Sikap Anda dalam menjaga data tersebut adalah...",
+          "options": {
+            "A": "Membagikan data ke rekan yang memintanya tanpa izin resmi",
+            "B": "Menyimpan data sembarangan tanpa pengamanan",
+            "C": "Menyimpan dengan cukup aman namun kadang lalai",
+            "D": "Menyimpan dan mengamankan data sesuai prosedur yang berlaku",
+            "E": "Menyimpan dan mengamankan data secara ketat sesuai prosedur, serta senantiasa waspada terhadap potensi kebocoran data"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 12,
+          "question": "Rekan kerja Anda mengalami musibah dan membutuhkan bantuan finansial dari lingkungan kantor. Sikap Anda adalah...",
+          "options": {
+            "A": "Tidak peduli karena bukan urusan pribadi",
+            "B": "Membantu hanya jika diminta langsung",
+            "C": "Membantu seadanya tanpa mengajak yang lain",
+            "D": "Ikut berkontribusi dalam penggalangan bantuan",
+            "E": "Berinisiatif mengoordinasikan penggalangan bantuan bersama rekan-rekan lain untuk meringankan beban yang bersangkutan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 13,
+          "question": "Anda ditugaskan mengimplementasikan kebijakan baru yang belum sepenuhnya Anda pahami dampaknya. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak menjalankan sebelum memahami sepenuhnya",
+            "B": "Menjalankan asal-asalan tanpa memahami tujuannya",
+            "C": "Menjalankan seadanya sambil menunggu penjelasan lebih lanjut",
+            "D": "Mencari informasi lebih lanjut sambil menjalankan tugas",
+            "E": "Aktif mencari informasi dan klarifikasi mengenai kebijakan tersebut, lalu menjalankannya dengan penuh tanggung jawab"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 14,
+          "question": "Anda melihat ada pegawai baru yang sering menjadi bahan gunjingan rekan-rekan lain karena caranya bekerja masih lambat. Sikap Anda adalah...",
+          "options": {
+            "A": "Ikut bergunjing karena merasa senasib dengan rekan lain",
+            "B": "Diam saja tanpa melakukan apapun",
+            "C": "Menegur rekan yang bergunjing seadanya",
+            "D": "Tidak ikut bergunjing dan membantu pegawai baru tersebut",
+            "E": "Tidak ikut bergunjing, membantu membimbing pegawai baru tersebut, dan mengingatkan rekan lain agar lebih suportif"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 15,
+          "question": "Anda mendapati sistem antrean digital di tempat kerja sering error dan membuat pasien mengeluh. Sikap Anda adalah...",
+          "options": {
+            "A": "Membiarkan pasien mengurus sendiri masalahnya",
+            "B": "Mengeluh tentang sistem yang buruk kepada pasien",
+            "C": "Melapor ke IT tanpa memberi solusi sementara ke pasien",
+            "D": "Melapor ke IT dan menjelaskan situasi kepada pasien",
+            "E": "Melapor ke IT, menjelaskan situasi dengan sopan kepada pasien, dan menyediakan solusi manual sementara agar pelayanan tetap berjalan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 16,
+          "question": "Anda ditawari untuk pindah unit kerja yang lebih menantang namun berisiko lebih tinggi terhadap kesalahan administratif. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena takut membuat kesalahan",
+            "B": "Menerima tanpa mempersiapkan diri sama sekali",
+            "C": "Menerima dengan ragu-ragu",
+            "D": "Menerima tantangan tersebut dan mempersiapkan diri sebaik mungkin",
+            "E": "Menerima tantangan sebagai kesempatan berkembang, mempersiapkan diri secara matang, dan menerapkan kehati-hatian ekstra dalam bekerja"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 17,
+          "question": "Anda menyaksikan rekan kerja mendapat pujian atas hasil kerja yang sebenarnya juga merupakan hasil kontribusi Anda. Sikap Anda adalah...",
+          "options": {
+            "A": "Marah dan menuntut pengakuan di depan umum",
+            "B": "Memendam kekesalan tanpa menyampaikan apapun",
+            "C": "Membicarakannya ke rekan lain agar mereka tahu",
+            "D": "Membicarakan secara baik-baik dengan rekan yang bersangkutan",
+            "E": "Membicarakan secara baik-baik dan profesional dengan yang bersangkutan, serta tetap fokus pada kontribusi ke depan tanpa berlarut dalam kekecewaan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 18,
+          "question": "Anda diminta memberikan pelatihan singkat kepada pegawai baru tentang alur pelayanan rekam medis. Sikap Anda adalah...",
+          "options": {
+            "A": "Menolak karena bukan bagian dari tugas pokok",
+            "B": "Memberikan penjelasan seadanya tanpa persiapan",
+            "C": "Memberikan penjelasan dengan persiapan minim",
+            "D": "Mempersiapkan materi dan menjelaskan dengan baik",
+            "E": "Mempersiapkan materi secara sistematis, menjelaskan dengan sabar dan interaktif, serta memastikan pegawai baru benar-benar memahami alur kerja"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 19,
+          "question": "Sebuah kebijakan efisiensi anggaran membuat sebagian fasilitas kerja Anda dikurangi. Sikap Anda adalah...",
+          "options": {
+            "A": "Protes secara terbuka dan menolak bekerja optimal",
+            "B": "Mengeluh terus-menerus kepada rekan kerja",
+            "C": "Menerima dengan pasrah tanpa usaha apapun",
+            "D": "Menerima kebijakan dan tetap berusaha bekerja optimal",
+            "E": "Menerima kebijakan dengan pengertian, mencari cara kerja yang lebih efisien, dan tetap menjaga kualitas pelayanan meski fasilitas terbatas"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        },
+        {
+          "id": 20,
+          "question": "Anda mendapati diri harus memilih antara mengikuti prosedur yang berbelit atau mempercepat pelayanan pasien gawat darurat dengan sedikit menyimpang dari SOP administratif (namun tetap sesuai etika medis). Sikap Anda adalah...",
+          "options": {
+            "A": "Tetap kaku mengikuti prosedur meski pasien dalam kondisi darurat",
+            "B": "Mengabaikan seluruh prosedur tanpa pertimbangan",
+            "C": "Mengambil keputusan sendiri tanpa berkoordinasi dengan siapapun",
+            "D": "Mendahulukan penanganan darurat lalu melengkapi administrasi setelahnya",
+            "E": "Mendahulukan keselamatan pasien sesuai prinsip gawat darurat, berkoordinasi dengan pihak berwenang, dan segera melengkapi administrasi begitu kondisi memungkinkan"
+          },
+          "option_scores": {
+            "A": 1,
+            "B": 2,
+            "C": 3,
+            "D": 4,
+            "E": 5
+          },
+          "answer": "E"
+        }
+      ]
+    }
+  ]
+}

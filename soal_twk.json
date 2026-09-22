@@ -1,0 +1,808 @@
+{
+  "kategori": "TWK — Tes Wawasan Kebangsaan",
+  "total_paket": 3,
+  "soal_per_paket": 20,
+  "paket": [
+    {
+      "id_paket": 1,
+      "nama_paket": "Paket 1",
+      "deskripsi": "Bank soal TWK — Tes Wawasan Kebangsaan paket 1.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Pancasila disahkan secara resmi sebagai dasar negara oleh PPKI pada tanggal...",
+          "options": {
+            "A": "1 Juni 1945",
+            "B": "22 Juni 1945",
+            "C": "17 Agustus 1945",
+            "D": "18 Agustus 1945",
+            "E": "29 Mei 1945"
+          },
+          "answer": "D",
+          "discussion": "PPKI mengesahkan Pancasila dan UUD 1945 pada 18 Agustus 1945, sehari setelah proklamasi."
+        },
+        {
+          "id": 2,
+          "question": "Sila Pancasila yang menjadi landasan bagi terciptanya kesejahteraan dan pemerataan bagi seluruh rakyat Indonesia adalah sila ke...",
+          "options": {
+            "A": "Kesatu",
+            "B": "Kedua",
+            "C": "Ketiga",
+            "D": "Keempat",
+            "E": "Kelima"
+          },
+          "answer": "E",
+          "discussion": "Sila kelima, 'Keadilan sosial bagi seluruh rakyat Indonesia', mendasari cita-cita kesejahteraan dan pemerataan."
+        },
+        {
+          "id": 3,
+          "question": "Semboyan 'Bhinneka Tunggal Ika' pertama kali dikutip dari kitab...",
+          "options": {
+            "A": "Negarakertagama",
+            "B": "Sutasoma",
+            "C": "Pararaton",
+            "D": "Arjunawiwaha",
+            "E": "Baratayuda"
+          },
+          "answer": "B",
+          "discussion": "Semboyan tersebut dikutip dari Kitab Sutasoma karya Mpu Tantular pada masa Majapahit."
+        },
+        {
+          "id": 4,
+          "question": "Berikut ini yang BUKAN merupakan fungsi Pancasila dalam kehidupan berbangsa dan bernegara adalah...",
+          "options": {
+            "A": "Dasar negara",
+            "B": "Pandangan hidup bangsa",
+            "C": "Sumber dari segala sumber hukum",
+            "D": "Alat pemersatu bangsa",
+            "E": "Dasar tawar-menawar politik golongan"
+          },
+          "answer": "E",
+          "discussion": "Pancasila bukan alat tawar-menawar politik golongan, melainkan pemersatu bangsa dan sumber hukum tertinggi."
+        },
+        {
+          "id": 5,
+          "question": "Makna penting NKRI sebagai bentuk final negara Indonesia ditegaskan dalam konsensus dasar berbangsa, yaitu...",
+          "options": {
+            "A": "Pancasila, UUD 1945, Bhinneka Tunggal Ika, dan NKRI",
+            "B": "Pancasila dan GBHN",
+            "C": "UUD 1945 dan Sumpah Pemuda",
+            "D": "Pancasila dan Trias Politica",
+            "E": "UUD 1945 dan Piagam Jakarta"
+          },
+          "answer": "A",
+          "discussion": "Empat pilar kebangsaan yaitu Pancasila, UUD 1945, NKRI, dan Bhinneka Tunggal Ika adalah konsensus dasar bernegara."
+        },
+        {
+          "id": 6,
+          "question": "Lembaga negara yang berwenang mengubah dan menetapkan UUD adalah...",
+          "options": {
+            "A": "DPR",
+            "B": "MPR",
+            "C": "DPD",
+            "D": "MA",
+            "E": "MK"
+          },
+          "answer": "B",
+          "discussion": "Sesuai Pasal 3 UUD 1945 hasil amandemen, MPR berwenang mengubah dan menetapkan UUD."
+        },
+        {
+          "id": 7,
+          "question": "Kekuasaan kehakiman di Indonesia dilaksanakan oleh Mahkamah Agung dan sebuah Mahkamah Konstitusi, sebagaimana diatur dalam...",
+          "options": {
+            "A": "Pasal 24 UUD 1945",
+            "B": "Pasal 1 UUD 1945",
+            "C": "Pasal 33 UUD 1945",
+            "D": "Pasal 28 UUD 1945",
+            "E": "Pasal 29 UUD 1945"
+          },
+          "answer": "A",
+          "discussion": "Pasal 24 UUD 1945 mengatur kekuasaan kehakiman yang dilaksanakan MA dan MK."
+        },
+        {
+          "id": 8,
+          "question": "Sidang pertama BPUPKI yang membahas dasar negara dilaksanakan pada tanggal...",
+          "options": {
+            "A": "29 Mei - 1 Juni 1945",
+            "B": "10-17 Juli 1945",
+            "C": "1-7 Agustus 1945",
+            "D": "18 Agustus 1945",
+            "E": "22 Juni 1945"
+          },
+          "answer": "A",
+          "discussion": "Sidang BPUPKI I berlangsung 29 Mei - 1 Juni 1945, membahas rumusan dasar negara."
+        },
+        {
+          "id": 9,
+          "question": "Peristiwa Rengasdengklok berkaitan erat dengan...",
+          "options": {
+            "A": "Perumusan teks proklamasi",
+            "B": "Desakan golongan muda agar Soekarno-Hatta segera memproklamasikan kemerdekaan",
+            "C": "Perundingan dengan Jepang",
+            "D": "Pembentukan PPKI",
+            "E": "Penyusunan UUD 1945"
+          },
+          "answer": "B",
+          "discussion": "Golongan muda membawa Soekarno-Hatta ke Rengasdengklok untuk mendesak proklamasi segera dilakukan."
+        },
+        {
+          "id": 10,
+          "question": "Wawasan Nusantara pada hakikatnya adalah cara pandang bangsa Indonesia mengenai diri dan lingkungannya berdasarkan...",
+          "options": {
+            "A": "Kepentingan golongan",
+            "B": "Ideologi asing",
+            "C": "Pancasila dan UUD 1945",
+            "D": "Kepentingan ekonomi semata",
+            "E": "Kepentingan militer"
+          },
+          "answer": "C",
+          "discussion": "Wawasan Nusantara bersumber dari Pancasila dan UUD 1945 sebagai falsafah dan konstitusi bangsa."
+        },
+        {
+          "id": 11,
+          "question": "Sikap yang mencerminkan bela negara dalam kehidupan sehari-hari sebagai seorang ASN adalah...",
+          "options": {
+            "A": "Mengutamakan kepentingan pribadi di atas tugas",
+            "B": "Bekerja penuh tanggung jawab dan menaati aturan demi kepentingan bangsa",
+            "C": "Menolak tugas yang tidak menguntungkan diri sendiri",
+            "D": "Bersikap acuh terhadap kebijakan pemerintah",
+            "E": "Ikut serta hanya jika ada imbalan"
+          },
+          "answer": "B",
+          "discussion": "Bela negara bagi ASN diwujudkan lewat kedisiplinan dan tanggung jawab dalam bekerja untuk kepentingan bangsa."
+        },
+        {
+          "id": 12,
+          "question": "Prinsip 'checks and balances' dalam sistem ketatanegaraan Indonesia dimaksudkan untuk...",
+          "options": {
+            "A": "Memberi kekuasaan mutlak pada eksekutif",
+            "B": "Mencegah penumpukan kekuasaan pada satu lembaga negara",
+            "C": "Menghapus fungsi legislatif",
+            "D": "Memperkuat kekuasaan yudikatif semata",
+            "E": "Menyatukan seluruh kekuasaan pada presiden"
+          },
+          "answer": "B",
+          "discussion": "Checks and balances menjaga agar kekuasaan antar lembaga negara saling mengawasi dan tidak terpusat."
+        },
+        {
+          "id": 13,
+          "question": "Otonomi daerah di Indonesia diselenggarakan berdasarkan asas...",
+          "options": {
+            "A": "Sentralisasi penuh",
+            "B": "Desentralisasi, dekonsentrasi, dan tugas pembantuan",
+            "C": "Federalisme",
+            "D": "Monarki konstitusional",
+            "E": "Kekuasaan tunggal pusat"
+          },
+          "answer": "B",
+          "discussion": "Otonomi daerah menganut asas desentralisasi, dekonsentrasi, dan tugas pembantuan sesuai UU Pemerintahan Daerah."
+        },
+        {
+          "id": 14,
+          "question": "Lambang negara Garuda Pancasila memiliki jumlah bulu pada sayap yang melambangkan tanggal kemerdekaan, yaitu masing-masing...",
+          "options": {
+            "A": "16 helai",
+            "B": "17 helai",
+            "C": "19 helai",
+            "D": "45 helai",
+            "E": "8 helai"
+          },
+          "answer": "B",
+          "discussion": "Setiap sayap Garuda berjumlah 17 helai bulu, melambangkan tanggal 17 (Agustus)."
+        },
+        {
+          "id": 15,
+          "question": "Organisasi pergerakan nasional pertama yang bersifat modern dan didirikan tahun 1908 adalah...",
+          "options": {
+            "A": "Sarekat Islam",
+            "B": "Budi Utomo",
+            "C": "Indische Partij",
+            "D": "Muhammadiyah",
+            "E": "Perhimpunan Indonesia"
+          },
+          "answer": "B",
+          "discussion": "Budi Utomo didirikan 20 Mei 1908 dan dianggap sebagai tonggak kebangkitan nasional."
+        },
+        {
+          "id": 16,
+          "question": "Nilai Pancasila yang tercermin dari sikap gotong royong dalam masyarakat Indonesia terkandung dalam sila...",
+          "options": {
+            "A": "Kesatu",
+            "B": "Kedua",
+            "C": "Ketiga",
+            "D": "Keempat",
+            "E": "Kelima"
+          },
+          "answer": "C",
+          "discussion": "Gotong royong mencerminkan semangat persatuan yang terkandung dalam sila ketiga."
+        },
+        {
+          "id": 17,
+          "question": "Piagam Jakarta yang kemudian menjadi cikal bakal Pembukaan UUD 1945 dirumuskan oleh...",
+          "options": {
+            "A": "BPUPKI",
+            "B": "Panitia Sembilan",
+            "C": "PPKI",
+            "D": "KNIP",
+            "E": "Volksraad"
+          },
+          "answer": "B",
+          "discussion": "Piagam Jakarta dirumuskan oleh Panitia Sembilan pada 22 Juni 1945."
+        },
+        {
+          "id": 18,
+          "question": "Hak warga negara untuk mendapatkan pendidikan dijamin dalam UUD 1945 pasal...",
+          "options": {
+            "A": "Pasal 27",
+            "B": "Pasal 28",
+            "C": "Pasal 31",
+            "D": "Pasal 33",
+            "E": "Pasal 34"
+          },
+          "answer": "C",
+          "discussion": "Pasal 31 UUD 1945 menjamin hak setiap warga negara memperoleh pendidikan."
+        },
+        {
+          "id": 19,
+          "question": "Sikap toleransi antarumat beragama sesuai nilai Pancasila penting diterapkan karena...",
+          "options": {
+            "A": "Diwajibkan oleh hukum internasional",
+            "B": "Menjaga persatuan dalam keberagaman bangsa Indonesia",
+            "C": "Mengikuti tren global",
+            "D": "Diharuskan oleh negara asing",
+            "E": "Untuk kepentingan ekonomi semata"
+          },
+          "answer": "B",
+          "discussion": "Toleransi menjaga persatuan bangsa yang majemuk sesuai nilai sila pertama dan ketiga Pancasila."
+        },
+        {
+          "id": 20,
+          "question": "Ideologi Pancasila bersifat terbuka, artinya...",
+          "options": {
+            "A": "Dapat diganti sewaktu-waktu",
+            "B": "Nilai dasarnya tetap namun penerapannya dapat menyesuaikan perkembangan zaman",
+            "C": "Boleh dicampur dengan ideologi lain secara bebas",
+            "D": "Tidak memiliki nilai dasar yang tetap",
+            "E": "Hanya berlaku pada masa tertentu"
+          },
+          "answer": "B",
+          "discussion": "Ideologi terbuka berarti nilai dasarnya tetap, tetapi penjabarannya dapat berkembang mengikuti zaman."
+        }
+      ]
+    },
+    {
+      "id_paket": 2,
+      "nama_paket": "Paket 2",
+      "deskripsi": "Bank soal TWK — Tes Wawasan Kebangsaan paket 2.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Semangat nasionalisme Indonesia pertama kali dinyatakan secara tegas melalui ikrar...",
+          "options": {
+            "A": "Proklamasi Kemerdekaan",
+            "B": "Sumpah Pemuda",
+            "C": "Piagam Jakarta",
+            "D": "Dekrit Presiden",
+            "E": "Deklarasi Djuanda"
+          },
+          "answer": "B",
+          "discussion": "Sumpah Pemuda 28 Oktober 1928 menegaskan tekad satu tanah air, bangsa, dan bahasa."
+        },
+        {
+          "id": 2,
+          "question": "Konsep bela negara bagi warga sipil dapat diwujudkan melalui...",
+          "options": {
+            "A": "Wajib militer semata",
+            "B": "Pendidikan kewarganegaraan, pengabdian sesuai profesi, dan ketaatan hukum",
+            "C": "Hanya kesiapsiagaan fisik",
+            "D": "Menghindari keterlibatan dalam kehidupan bermasyarakat",
+            "E": "Mengutamakan kepentingan pribadi"
+          },
+          "answer": "B",
+          "discussion": "Bela negara mencakup pendidikan kewarganegaraan, pengabdian sesuai profesi, dan ketaatan pada hukum."
+        },
+        {
+          "id": 3,
+          "question": "Salah satu ciri negara kesatuan yang dianut Indonesia adalah...",
+          "options": {
+            "A": "Kedaulatan terbagi ke negara-negara bagian",
+            "B": "Hanya ada satu pemerintahan pusat yang berdaulat",
+            "C": "Setiap daerah punya konstitusi sendiri",
+            "D": "Presiden dipilih oleh masing-masing provinsi",
+            "E": "Daerah berhak memisahkan diri"
+          },
+          "answer": "B",
+          "discussion": "Dalam negara kesatuan, kedaulatan berada di tangan pemerintah pusat, berbeda dengan negara federal."
+        },
+        {
+          "id": 4,
+          "question": "UUD 1945 telah mengalami amandemen sebanyak...",
+          "options": {
+            "A": "1 kali",
+            "B": "2 kali",
+            "C": "3 kali",
+            "D": "4 kali",
+            "E": "5 kali"
+          },
+          "answer": "D",
+          "discussion": "UUD 1945 diamandemen sebanyak 4 kali, yaitu pada tahun 1999, 2000, 2001, dan 2002."
+        },
+        {
+          "id": 5,
+          "question": "Pilar kebangsaan yang berfungsi sebagai perekat keberagaman suku, agama, ras, dan golongan di Indonesia adalah...",
+          "options": {
+            "A": "Pancasila",
+            "B": "UUD 1945",
+            "C": "NKRI",
+            "D": "Bhinneka Tunggal Ika",
+            "E": "GBHN"
+          },
+          "answer": "D",
+          "discussion": "Bhinneka Tunggal Ika berfungsi sebagai semboyan pemersatu keberagaman bangsa."
+        },
+        {
+          "id": 6,
+          "question": "Presiden Republik Indonesia memegang kekuasaan pemerintahan menurut UUD, hal ini menegaskan Indonesia menganut sistem...",
+          "options": {
+            "A": "Parlementer",
+            "B": "Presidensial",
+            "C": "Monarki",
+            "D": "Oligarki",
+            "E": "Federal"
+          },
+          "answer": "B",
+          "discussion": "Pasal 4 UUD 1945 menegaskan Indonesia menganut sistem pemerintahan presidensial."
+        },
+        {
+          "id": 7,
+          "question": "Lagu kebangsaan Indonesia Raya diciptakan oleh...",
+          "options": {
+            "A": "Ismail Marzuki",
+            "B": "W.R. Supratman",
+            "C": "Kusbini",
+            "D": "C. Simanjuntak",
+            "E": "Muhammad Yamin"
+          },
+          "answer": "B",
+          "discussion": "Lagu Indonesia Raya diciptakan oleh W.R. Supratman dan pertama kali dikumandangkan pada Kongres Pemuda II 1928."
+        },
+        {
+          "id": 8,
+          "question": "Salah satu contoh sikap yang bertentangan dengan nilai Pancasila adalah...",
+          "options": {
+            "A": "Menghormati perbedaan pendapat",
+            "B": "Bermusyawarah untuk mufakat",
+            "C": "Bertindak diskriminatif terhadap kelompok minoritas",
+            "D": "Mengutamakan kepentingan bersama",
+            "E": "Menjunjung tinggi hukum"
+          },
+          "answer": "C",
+          "discussion": "Tindakan diskriminatif bertentangan dengan nilai kemanusiaan dan persatuan dalam Pancasila."
+        },
+        {
+          "id": 9,
+          "question": "Sistem pemerintahan desentralisasi bertujuan untuk...",
+          "options": {
+            "A": "Memusatkan seluruh kewenangan pada pemerintah pusat",
+            "B": "Memberi kewenangan kepada daerah agar dapat mengatur rumah tangganya sendiri",
+            "C": "Menghapus peran pemerintah daerah",
+            "D": "Membentuk negara federal",
+            "E": "Menyeragamkan seluruh kebijakan tanpa memperhatikan kondisi daerah"
+          },
+          "answer": "B",
+          "discussion": "Desentralisasi memberi kewenangan otonom kepada daerah untuk mengatur pemerintahannya sendiri."
+        },
+        {
+          "id": 10,
+          "question": "Sikap seorang ASN yang mencerminkan wawasan kebangsaan yang baik ketika menghadapi rekan kerja berbeda agama adalah...",
+          "options": {
+            "A": "Membatasi interaksi dengan rekan tersebut",
+            "B": "Tetap menjalin kerja sama dan saling menghormati",
+            "C": "Memaksakan pandangan pribadi",
+            "D": "Mengabaikan tugas bersama",
+            "E": "Melaporkan perbedaan tersebut ke atasan sebagai masalah"
+          },
+          "answer": "B",
+          "discussion": "ASN dituntut menjunjung toleransi dan tetap profesional bekerja sama lintas latar belakang."
+        },
+        {
+          "id": 11,
+          "question": "Proklamasi Kemerdekaan Indonesia dibacakan di...",
+          "options": {
+            "A": "Gedung Volksraad",
+            "B": "Jalan Pegangsaan Timur No. 56 Jakarta",
+            "C": "Istana Bogor",
+            "D": "Rengasdengklok",
+            "E": "Gedung Sate Bandung"
+          },
+          "answer": "B",
+          "discussion": "Proklamasi dibacakan Soekarno-Hatta di kediaman Soekarno, Jalan Pegangsaan Timur No. 56."
+        },
+        {
+          "id": 12,
+          "question": "Fungsi DPR sebagai lembaga legislatif meliputi tiga fungsi utama, yaitu...",
+          "options": {
+            "A": "Legislasi, anggaran, dan pengawasan",
+            "B": "Yudikatif, eksekutif, dan legislatif",
+            "C": "Militer, ekonomi, dan sosial",
+            "D": "Diplomasi, pertahanan, dan keamanan",
+            "E": "Administrasi, keuangan, dan hukum"
+          },
+          "answer": "A",
+          "discussion": "DPR memiliki fungsi legislasi, anggaran, dan pengawasan sesuai UUD 1945."
+        },
+        {
+          "id": 13,
+          "question": "Nilai integritas bagi seorang ASN tercermin dari sikap...",
+          "options": {
+            "A": "Menerima gratifikasi demi mempercepat pelayanan",
+            "B": "Jujur, konsisten, dan bertanggung jawab dalam menjalankan tugas",
+            "C": "Mengutamakan kepentingan kelompok tertentu",
+            "D": "Menutupi kesalahan demi menjaga nama baik instansi",
+            "E": "Bersikap fleksibel terhadap aturan demi kenyamanan pribadi"
+          },
+          "answer": "B",
+          "discussion": "Integritas berarti jujur, konsisten, dan bertanggung jawab sesuai kode etik ASN."
+        },
+        {
+          "id": 14,
+          "question": "Konsep negara hukum (rechtsstaat) yang dianut Indonesia menegaskan bahwa...",
+          "options": {
+            "A": "Kekuasaan tertinggi ada pada penguasa",
+            "B": "Semua tindakan penyelenggara negara harus berdasarkan hukum yang berlaku",
+            "C": "Hukum dapat diabaikan demi kepentingan politik",
+            "D": "Hanya rakyat yang tunduk pada hukum",
+            "E": "Presiden berada di atas hukum"
+          },
+          "answer": "B",
+          "discussion": "Sebagai negara hukum, seluruh tindakan penyelenggara negara harus berlandaskan hukum yang berlaku (Pasal 1 ayat 3 UUD 1945)."
+        },
+        {
+          "id": 15,
+          "question": "Peristiwa yang menandai berakhirnya kekuasaan kolonial Belanda secara formal atas Indonesia adalah...",
+          "options": {
+            "A": "Kongres Pemuda",
+            "B": "Konferensi Meja Bundar",
+            "C": "Perjanjian Renville",
+            "D": "Perjanjian Linggarjati",
+            "E": "Sidang PPKI"
+          },
+          "answer": "B",
+          "discussion": "Konferensi Meja Bundar (1949) menghasilkan pengakuan kedaulatan Indonesia oleh Belanda."
+        },
+        {
+          "id": 16,
+          "question": "Ketahanan nasional Indonesia mencakup aspek-aspek berikut, KECUALI...",
+          "options": {
+            "A": "Ideologi",
+            "B": "Politik",
+            "C": "Ekonomi",
+            "D": "Sosial budaya",
+            "E": "Kepentingan pribadi golongan tertentu"
+          },
+          "answer": "E",
+          "discussion": "Ketahanan nasional mencakup aspek ideologi, politik, ekonomi, sosial budaya, dan pertahanan keamanan, bukan kepentingan golongan."
+        },
+        {
+          "id": 17,
+          "question": "Pancasila digali dari nilai-nilai luhur bangsa Indonesia sendiri, sehingga disebut sebagai...",
+          "options": {
+            "A": "Ideologi impor",
+            "B": "Ideologi terbuka yang bersumber dari kepribadian bangsa",
+            "C": "Ideologi tertutup dari luar negeri",
+            "D": "Ideologi sementara",
+            "E": "Ideologi golongan tertentu"
+          },
+          "answer": "B",
+          "discussion": "Pancasila digali dari nilai luhur bangsa sendiri sehingga bersifat terbuka dan mencerminkan kepribadian bangsa."
+        },
+        {
+          "id": 18,
+          "question": "Sikap yang tepat bagi ASN dalam menjaga netralitas pada masa pemilihan umum adalah...",
+          "options": {
+            "A": "Mendukung salah satu calon secara terang-terangan di kantor",
+            "B": "Tetap netral dan tidak menggunakan fasilitas negara untuk kepentingan politik praktis",
+            "C": "Mengajak rekan kerja memilih calon tertentu",
+            "D": "Menggunakan media sosial dinas untuk kampanye",
+            "E": "Ikut serta dalam tim sukses salah satu pasangan calon"
+          },
+          "answer": "B",
+          "discussion": "ASN wajib bersikap netral dan tidak menyalahgunakan fasilitas negara untuk kepentingan politik praktis."
+        },
+        {
+          "id": 19,
+          "question": "Dasar hukum yang mengatur bahwa Indonesia adalah negara kesatuan berbentuk republik terdapat pada UUD 1945...",
+          "options": {
+            "A": "Pasal 1 ayat 1",
+            "B": "Pasal 2 ayat 1",
+            "C": "Pasal 3 ayat 1",
+            "D": "Pasal 4 ayat 1",
+            "E": "Pasal 5 ayat 1"
+          },
+          "answer": "A",
+          "discussion": "Pasal 1 ayat (1) UUD 1945 menyatakan Indonesia adalah negara kesatuan berbentuk republik."
+        },
+        {
+          "id": 20,
+          "question": "Sikap cinta tanah air dapat ditunjukkan seorang ASN dengan cara...",
+          "options": {
+            "A": "Menggunakan produk luar negeri sebagai simbol status",
+            "B": "Bangga dan aktif mendukung produk serta budaya dalam negeri saat bertugas",
+            "C": "Mengabaikan budaya lokal di tempat kerja",
+            "D": "Bersikap acuh terhadap isu kebangsaan",
+            "E": "Menganggap budaya daerah lain tidak penting"
+          },
+          "answer": "B",
+          "discussion": "Cinta tanah air ditunjukkan lewat kebanggaan dan dukungan terhadap produk dan budaya dalam negeri."
+        }
+      ]
+    },
+    {
+      "id_paket": 3,
+      "nama_paket": "Paket 3",
+      "deskripsi": "Bank soal TWK — Tes Wawasan Kebangsaan paket 3.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Salah satu upaya pencegahan korupsi yang dapat dilakukan ASN dalam pekerjaan sehari-hari adalah...",
+          "options": {
+            "A": "Menerima hadiah dari rekanan sebagai ucapan terima kasih",
+            "B": "Melaporkan transparan setiap penggunaan anggaran sesuai aturan",
+            "C": "Menutupi kesalahan administrasi demi efisiensi",
+            "D": "Mempercepat proses dengan imbalan tertentu",
+            "E": "Menyalahgunakan wewenang untuk kepentingan keluarga"
+          },
+          "answer": "B",
+          "discussion": "Transparansi penggunaan anggaran sesuai aturan adalah bentuk pencegahan korupsi oleh ASN."
+        },
+        {
+          "id": 2,
+          "question": "UUD 1945 hasil amandemen menegaskan kedaulatan berada di tangan rakyat dan dilaksanakan menurut...",
+          "options": {
+            "A": "Kehendak partai politik",
+            "B": "Undang-Undang Dasar",
+            "C": "Keputusan presiden semata",
+            "D": "Kebijakan pemerintah daerah",
+            "E": "Musyawarah adat"
+          },
+          "answer": "B",
+          "discussion": "Pasal 1 ayat (2) UUD 1945: kedaulatan di tangan rakyat dan dilaksanakan menurut UUD."
+        },
+        {
+          "id": 3,
+          "question": "Tokoh yang dikenal sebagai perumus utama teks proklamasi bersama Soekarno dan Hatta adalah...",
+          "options": {
+            "A": "Ahmad Soebardjo",
+            "B": "Sutan Sjahrir",
+            "C": "Muhammad Yamin",
+            "D": "Wahid Hasyim",
+            "E": "Kasman Singodimedjo"
+          },
+          "answer": "A",
+          "discussion": "Ahmad Soebardjo turut merumuskan naskah proklamasi bersama Soekarno dan Hatta di rumah Laksamana Maeda."
+        },
+        {
+          "id": 4,
+          "question": "Organisasi 'Indische Partij' yang didirikan oleh Tiga Serangkai bersifat...",
+          "options": {
+            "A": "Kedaerahan",
+            "B": "Kooperatif dengan penjajah",
+            "C": "Radikal dan nonkooperatif, menuntut kemerdekaan",
+            "D": "Bersifat keagamaan semata",
+            "E": "Bersifat ekonomi semata"
+          },
+          "answer": "C",
+          "discussion": "Indische Partij (1912) bersikap radikal dan secara terbuka menuntut kemerdekaan Indonesia."
+        },
+        {
+          "id": 5,
+          "question": "Penulisan kata baku yang benar sesuai PUEBI di antara pilihan berikut adalah...",
+          "options": {
+            "A": "Aktifitas",
+            "B": "Aktivitas",
+            "C": "Aktipitas",
+            "D": "Actifitas",
+            "E": "Aktivitas'"
+          },
+          "answer": "B",
+          "discussion": "Bentuk baku sesuai PUEBI adalah 'aktivitas', bukan 'aktifitas'."
+        },
+        {
+          "id": 6,
+          "question": "Kalimat yang efektif dan sesuai kaidah bahasa Indonesia yang baku adalah...",
+          "options": {
+            "A": "Bagi seluruh pegawai wajib mengisi absensi",
+            "B": "Seluruh pegawai wajib mengisi daftar hadir",
+            "C": "Daripada seluruh pegawai harus mengisi absensi",
+            "D": "Untuk seluruh pegawai supaya mengisi absensi",
+            "E": "Absensi wajib diisi oleh bagi pegawai"
+          },
+          "answer": "B",
+          "discussion": "Kalimat efektif tidak menggunakan kata depan berlebihan seperti 'bagi' atau 'untuk' di awal subjek."
+        },
+        {
+          "id": 7,
+          "question": "Pasal 27 ayat (1) UUD 1945 menegaskan prinsip bahwa...",
+          "options": {
+            "A": "Setiap warga negara bersamaan kedudukannya di dalam hukum dan pemerintahan",
+            "B": "Warga negara bebas dari kewajiban hukum",
+            "C": "Hanya golongan tertentu yang setara di mata hukum",
+            "D": "Pemerintah kebal hukum",
+            "E": "Hukum hanya berlaku bagi rakyat biasa"
+          },
+          "answer": "A",
+          "discussion": "Pasal 27 ayat (1) menegaskan asas persamaan kedudukan warga negara di depan hukum dan pemerintahan."
+        },
+        {
+          "id": 8,
+          "question": "Semangat anti-radikalisme yang perlu dimiliki ASN tercermin dari sikap...",
+          "options": {
+            "A": "Menerima paham yang bertentangan dengan Pancasila demi toleransi",
+            "B": "Menolak segala bentuk paham dan tindakan yang mengancam ideologi Pancasila serta NKRI",
+            "C": "Bersikap apatis terhadap ancaman ideologi lain",
+            "D": "Ikut menyebarkan paham intoleran demi solidaritas kelompok",
+            "E": "Membiarkan penyebaran ujaran kebencian di lingkungan kerja"
+          },
+          "answer": "B",
+          "discussion": "ASN wajib menolak paham dan tindakan yang mengancam Pancasila dan keutuhan NKRI."
+        },
+        {
+          "id": 9,
+          "question": "Perjuangan bangsa Indonesia sebelum tahun 1908 umumnya bersifat kedaerahan karena...",
+          "options": {
+            "A": "Belum adanya rasa kebangsaan yang menyatukan seluruh wilayah Nusantara",
+            "B": "Tidak adanya penjajah",
+            "C": "Sudah adanya organisasi modern",
+            "D": "Kuatnya persatuan nasional",
+            "E": "Adanya dukungan penuh dari luar negeri"
+          },
+          "answer": "A",
+          "discussion": "Sebelum 1908, perjuangan masih bersifat lokal karena belum tumbuh kesadaran kebangsaan yang menyatukan seluruh Nusantara."
+        },
+        {
+          "id": 10,
+          "question": "Amandemen UUD 1945 antara lain menghasilkan pembatasan masa jabatan presiden, yaitu...",
+          "options": {
+            "A": "Maksimal 1 kali masa jabatan",
+            "B": "Maksimal 2 kali masa jabatan, masing-masing 5 tahun",
+            "C": "Tidak dibatasi",
+            "D": "Maksimal 3 kali masa jabatan",
+            "E": "Seumur hidup"
+          },
+          "answer": "B",
+          "discussion": "Pasal 7 UUD 1945 hasil amandemen membatasi presiden maksimal dua periode, masing-masing lima tahun."
+        },
+        {
+          "id": 11,
+          "question": "Nilai luhur budaya bangsa yang tercermin dalam musyawarah mufakat sesuai dengan sila...",
+          "options": {
+            "A": "Kesatu",
+            "B": "Kedua",
+            "C": "Ketiga",
+            "D": "Keempat",
+            "E": "Kelima"
+          },
+          "answer": "D",
+          "discussion": "Musyawarah mufakat sesuai sila keempat, 'Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan'."
+        },
+        {
+          "id": 12,
+          "question": "Bela negara secara nonfisik bagi seorang tenaga kesehatan/ASN dapat diwujudkan melalui...",
+          "options": {
+            "A": "Mengangkat senjata di medan perang",
+            "B": "Memberikan pelayanan terbaik dan berintegritas kepada masyarakat",
+            "C": "Mengikuti wajib militer",
+            "D": "Membentuk milisi sipil",
+            "E": "Mengabaikan tugas pelayanan publik"
+          },
+          "answer": "B",
+          "discussion": "Bela negara nonfisik diwujudkan lewat pengabdian profesi terbaik untuk kepentingan bangsa, misalnya pelayanan publik."
+        },
+        {
+          "id": 13,
+          "question": "Konsep negara kesejahteraan (welfare state) yang dianut Indonesia tercermin dalam UUD 1945 pasal...",
+          "options": {
+            "A": "Pasal 33 dan 34",
+            "B": "Pasal 27 dan 28",
+            "C": "Pasal 1 dan 2",
+            "D": "Pasal 6 dan 7",
+            "E": "Pasal 24 dan 25"
+          },
+          "answer": "A",
+          "discussion": "Pasal 33 dan 34 UUD 1945 mengatur perekonomian nasional dan kesejahteraan sosial sebagai wujud negara kesejahteraan."
+        },
+        {
+          "id": 14,
+          "question": "Perilaku yang mencerminkan sikap anti-KKN bagi seorang pegawai negeri adalah...",
+          "options": {
+            "A": "Mengangkat kerabat menjadi rekanan proyek",
+            "B": "Menolak segala bentuk suap dan bertindak objektif dalam tugas",
+            "C": "Memberikan proyek kepada teman dekat tanpa proses lelang",
+            "D": "Menutup mata terhadap penyimpangan rekan kerja",
+            "E": "Menerima komisi dari vendor"
+          },
+          "answer": "B",
+          "discussion": "Sikap anti-KKN ditunjukkan dengan menolak suap dan bertindak objektif serta transparan."
+        },
+        {
+          "id": 15,
+          "question": "Konferensi Asia-Afrika yang diselenggarakan di Bandung tahun 1955 menunjukkan peran Indonesia dalam...",
+          "options": {
+            "A": "Politik luar negeri bebas aktif dan solidaritas negara berkembang",
+            "B": "Aliansi militer blok barat",
+            "C": "Aliansi militer blok timur",
+            "D": "Pembentukan negara federal",
+            "E": "Penjajahan kembali oleh Belanda"
+          },
+          "answer": "A",
+          "discussion": "KAA 1955 mencerminkan politik luar negeri bebas aktif Indonesia dan solidaritas negara-negara Asia-Afrika."
+        },
+        {
+          "id": 16,
+          "question": "Sikap disiplin ASN dalam bekerja sesuai jam kerja dan tata tertib kantor mencerminkan pengamalan nilai...",
+          "options": {
+            "A": "Sila pertama saja",
+            "B": "Tanggung jawab dan profesionalisme sebagai wujud nasionalisme",
+            "C": "Kepentingan pribadi",
+            "D": "Kebebasan tanpa aturan",
+            "E": "Formalitas semata tanpa makna"
+          },
+          "answer": "B",
+          "discussion": "Disiplin kerja mencerminkan tanggung jawab dan profesionalisme sebagai bentuk nyata nasionalisme ASN."
+        },
+        {
+          "id": 17,
+          "question": "Pilar 'Bhinneka Tunggal Ika' menuntut sikap warga negara untuk...",
+          "options": {
+            "A": "Menyeragamkan seluruh budaya daerah",
+            "B": "Menghargai perbedaan suku, agama, ras, dan golongan sebagai kekayaan bangsa",
+            "C": "Memandang rendah budaya daerah lain",
+            "D": "Menutup diri dari budaya lain",
+            "E": "Membeda-bedakan hak warga negara berdasarkan suku"
+          },
+          "answer": "B",
+          "discussion": "Bhinneka Tunggal Ika menuntut sikap menghargai keberagaman sebagai kekayaan, bukan sumber perpecahan."
+        },
+        {
+          "id": 18,
+          "question": "Salah satu contoh implementasi sila kemanusiaan yang adil dan beradab dalam pelayanan publik adalah...",
+          "options": {
+            "A": "Memberikan pelayanan berbeda berdasarkan status sosial",
+            "B": "Melayani semua warga tanpa membeda-bedakan dan dengan penuh empati",
+            "C": "Mengutamakan pihak yang memberi imbalan",
+            "D": "Bersikap kasar kepada masyarakat yang menyampaikan keluhan",
+            "E": "Menunda pelayanan tanpa alasan jelas"
+          },
+          "answer": "B",
+          "discussion": "Sila kedua menuntut pelayanan yang adil, manusiawi, dan tanpa diskriminasi terhadap siapapun."
+        },
+        {
+          "id": 19,
+          "question": "Dasar hukum tertinggi dalam hierarki peraturan perundang-undangan di Indonesia adalah...",
+          "options": {
+            "A": "Peraturan Presiden",
+            "B": "Peraturan Menteri",
+            "C": "Undang-Undang Dasar 1945",
+            "D": "Peraturan Daerah",
+            "E": "Keputusan Menteri"
+          },
+          "answer": "C",
+          "discussion": "UUD 1945 menempati posisi tertinggi dalam hierarki peraturan perundang-undangan Indonesia."
+        },
+        {
+          "id": 20,
+          "question": "Sikap yang tepat ketika menemukan informasi hoaks yang berpotensi memecah belah bangsa di media sosial adalah...",
+          "options": {
+            "A": "Menyebarluaskannya agar viral",
+            "B": "Mengklarifikasi kebenarannya dan tidak ikut menyebarkan sebelum terverifikasi",
+            "C": "Mendiamkan saja tanpa tindakan",
+            "D": "Menambahkan bumbu cerita agar lebih menarik",
+            "E": "Membagikannya ke grup keluarga tanpa verifikasi"
+          },
+          "answer": "B",
+          "discussion": "Sikap bijak bermedia sosial adalah memverifikasi informasi terlebih dahulu sebelum menyebarkannya, demi menjaga persatuan."
+        }
+      ]
+    }
+  ]
+}
