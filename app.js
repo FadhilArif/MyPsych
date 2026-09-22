@@ -4,7 +4,7 @@
   // ============================================================
   // PSYCHOTEST PRACTICE — PHASE 4
   // 
-  // ========================================================
+  // ============================================================
 
   const CONFIG = Object.freeze({
     API_URL: '/api/gateway',
@@ -18,195 +18,43 @@
     MCQ_SECONDS: 30,
   });
 
-   const TESTS = {
-    // ============================================================
-    // 🔥 TES ANDALAN
-    // ============================================================
+  const TESTS = {
     kraepelin: {
       name: 'Kraepelin',
-      label: 'Kraepelin',
-      icon: '🧮',
       description: 'Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan.',
       kind: 'kraepelin',
-      group: 'andalan',
-      subGroup: null,
-      subSubGroup: null,
-      comingSoon: false,
     },
-
-    // ============================================================
-    // 📘 SKD — SELEKSI KOMPETENSI DASAR
-    // ============================================================
-    twk: {
-      name: 'TWK — Tes Wawasan Kebangsaan',
-      label: 'TWK',
-      icon: '🇮🇩',
-      description: 'Nasionalisme, integritas, bela negara, pilar negara, bahasa negara.',
-      kind: 'mcq',
-      group: 'skd',
-      subGroup: null,
-      subSubGroup: null,
-      comingSoon: true,
-      topics: ['nasionalisme', 'integritas', 'bela_negara', 'pilar_negara', 'bahasa_negara'],
-    },
-    tiu_verbal: {
-      name: 'Verbal — TIU',
-      label: 'TIU — Verbal',
-      icon: '📝',
-      description: 'Sinonim, analogi, silogisme.',
-      kind: 'mcq',
-      group: 'skd',
-      subGroup: 'tiu',
-      subSubGroup: 'verbal',
-      comingSoon: false,
-      linkedTests: ['sinonim', 'analogi', 'silogisme'],
-    },
-    tiu_numerik: {
-      name: 'Numerik — TIU',
-      label: 'TIU — Numerik',
-      icon: '🔢',
-      description: 'Kuantitatif, numerical, berhitung cepat.',
-      kind: 'mcq',
-      group: 'skd',
-      subGroup: 'tiu',
-      subSubGroup: 'numerik',
-      comingSoon: false,
-      linkedTests: ['kuantitatif', 'numerical'],
-    },
-    tiu_figural: {
-      name: 'Figural — TIU',
-      label: 'TIU — Figural',
-      icon: '🎨',
-      description: 'Analogi figural, ketidaksamaan, serial, dan tes kognitif.',
-      kind: 'mcq',
-      group: 'skd',
-      subGroup: 'tiu',
-      subSubGroup: 'figural',
-      comingSoon: false,
-      linkedTests: ['kognitif'],
-    },
-    tkp: {
-      name: 'TKP — Tes Karakteristik Pribadi',
-      label: 'TKP',
-      icon: '🤝',
-      description: 'Pelayanan publik, jejaring kerja, sosial budaya, TIK, profesionalisme, anti radikal.',
-      kind: 'mcq',
-      group: 'skd',
-      subGroup: null,
-      subSubGroup: null,
-      comingSoon: true,
-      topics: ['pelayanan_publik', 'jejaring_kerja', 'sosial_budaya', 'tik', 'profesionalisme', 'anti_radikal'],
-    },
-
-    // ============================================================
-    // 🧩 PSIKOTES UMUM
-    // ============================================================
     kuantitatif: {
       name: 'Kuantitatif',
-      label: 'Kuantitatif',
-      icon: '➗',
       description: 'Latihan hitungan dasar, persentase, rasio, dan operasi numerik.',
       kind: 'mcq',
-      group: 'umum',
-      subGroup: null,
-      subSubGroup: null,
-      comingSoon: false,
     },
     numerical: {
       name: 'Numerical',
-      label: 'Numerical',
-      icon: '🔢',
       description: 'Latihan pola angka, deret, perbandingan, dan penalaran numerik.',
       kind: 'mcq',
-      group: 'umum',
-      subGroup: null,
-      subSubGroup: null,
-      comingSoon: false,
     },
     sinonim: {
       name: 'Sinonim Verbal',
-      label: 'Sinonim Verbal',
-      icon: '🔤',
       description: 'Latihan memahami persamaan makna kata dalam konteks psikotes.',
       kind: 'mcq',
-      group: 'umum',
-      subGroup: null,
-      subSubGroup: null,
-      comingSoon: false,
     },
     silogisme: {
       name: 'Silogisme',
-      label: 'Silogisme',
-      icon: '🧠',
       description: 'Latihan menarik kesimpulan logis dari beberapa premis.',
       kind: 'mcq',
-      group: 'umum',
-      subGroup: null,
-      subSubGroup: null,
-      comingSoon: false,
     },
     analogi: {
       name: 'Analogi',
-      label: 'Analogi',
-      icon: '🔗',
       description: 'Latihan hubungan kata dan konsep secara analogis.',
       kind: 'mcq',
-      group: 'umum',
-      subGroup: null,
-      subSubGroup: null,
-      comingSoon: false,
     },
     kognitif: {
       name: 'Tes Kognitif',
-      label: 'Tes Kognitif',
-      icon: '🧩',
       description: 'Latihan gabungan perhatian, logika, memori, dan pemecahan masalah.',
       kind: 'mcq',
-      group: 'umum',
-      subGroup: 'tiu',           // ← juga bisa diakses dari TIU Figural
-      subSubGroup: 'figural',
-      comingSoon: false,
     },
   };
-
-  // ============================================================
-  // HELPER: Grouping & Label
-  // ============================================================
-
-  const GROUP_META = {
-    andalan: { name: 'Tes Andalan',      icon: '🔥', order: 1 },
-    skd:     { name: 'SKD (CPNS)',       icon: '📘', order: 2 },
-    umum:    { name: 'Psikotes Umum',    icon: '🧩', order: 3 },
-  };
-
-  const SUBGROUP_META = {
-    tiu: { name: 'TIU — Tes Intelegensi Umum', icon: '🧠', order: 1 },
-  };
-
-  const SUBSUBGROUP_META = {
-    verbal:  { name: 'Kemampuan Verbal',  icon: '📝', order: 1 },
-    numerik: { name: 'Kemampuan Numerik', icon: '🔢', order: 2 },
-    figural: { name: 'Kemampuan Figural', icon: '🎨', order: 3 },
-  };
-
-  function getTestGroup(testId) {
-    return TESTS[testId]?.group || 'umum';
-  }
-
-  function getTestLabel(testId) {
-    return TESTS[testId]?.label || TESTS[testId]?.name || testId;
-  }
-
-  function getTestsByGroup(groupName, subGroup = null, subSubGroup = null) {
-    return Object.entries(TESTS)
-      .filter(([id, test]) => {
-        if (test.group !== groupName) return false;
-        if (subGroup !== null && test.subGroup !== subGroup) return false;
-        if (subSubGroup !== null && test.subSubGroup !== subSubGroup) return false;
-        return true;
-      })
-      .map(([id, test]) => ({ id, ...test }));
-  }
 
   // Dummy bank sementara. Nanti dipindah ke JSON/GitHub pada fase bank soal.
   const SAMPLE = {
@@ -272,9 +120,6 @@ const views = {
   history: $('historyView'),
   admin: $('adminView'),
   about: $('aboutView'),
-  skd: $('skdView'),
-  tiu: $('tiuView'),
-  psikotes: $('psikotesView'),
 };
   
   const state = {
@@ -376,89 +221,28 @@ async function submitInterest(event) {
   // VIEW / TOAST
   // ============================================================
 
-// View yang butuh login (session atau guest mode) untuk diakses.
-// Kalau belum login sama sekali, user dipaksa balik ke landing.
-const AUTH_REQUIRED_VIEWS = ['dashboard', 'history', 'skd', 'tiu', 'psikotes', 'admin'];
+  function showView(name) {
+    Object.values(views).forEach((view) => view?.classList.remove('active'));
+    views[name]?.classList.add('active');
+    document.body.dataset.view = name;
+    document.body.dataset.mode = state.isGuest ? 'guest' : 'account';
 
-function showView(name) {
-  // Guard: cegah user belum login masuk ke halaman yang butuh sesi.
-  if (
-    AUTH_REQUIRED_VIEWS.includes(name) &&
-    !state.session?.token &&
-    !state.isGuest
-  ) {
-    // Admin view cuma boleh admin
-    name = 'landing';
-  }
+    const pageTitles = {
+      dashboard: 'Dashboard',
+      history: 'Histori',
+      instruction: 'Persiapan Tes',
+      result: 'Hasil Latihan',
+      admin: 'Admin Panel',
+    };
+    const pageTitle = $('pageTitle');
+    if (pageTitle) pageTitle.textContent = pageTitles[name] || 'MyPsych';
 
-  // Guard tambahan: admin view khusus role admin.
-  if (name === 'admin' && state.session?.role !== 'admin') {
-    name = 'dashboard';
-  }
-
-  Object.values(views).forEach((view) => view?.classList.remove('active'));
-  views[name]?.classList.add('active');
-  document.body.dataset.view = name;
-  document.body.dataset.mode = state.isGuest ? 'guest' : 'account';
-  if (name !== 'test') stopTimer();
-  window.scrollTo(0, 0);
-  updateShell(name);
-}
-  // ============================================================
-  // SHELL — Fase 2
-  // ============================================================
-
-  const SHELLED_VIEWS = ['dashboard', 'admin', 'history', 'skd', 'tiu', 'psikotes'];
-
-  const SHELL_TITLES = {
-    landing: 'Beranda',
-    auth: 'Akun',
-    dashboard: 'Dashboard',
-    admin: 'Admin Panel',
-    instruction: 'Persiapan Tes',
-    test: 'Sedang Mengerjakan',
-    result: 'Hasil Tes',
-    history: 'Histori Latihan',
-    about: 'Tentang Kami',
-  };
-
-  function updateShell(viewName) {
-    const shell = document.getElementById('shell');
-    if (!shell) return;
-
-    const isShelled = SHELLED_VIEWS.includes(viewName);
-    shell.classList.toggle('shell--minimal', !isShelled);
-
-    const titleEl = document.getElementById('shellPageTitle');
-    if (titleEl) titleEl.textContent = SHELL_TITLES[viewName] || 'MyPsych';
-
-    document.querySelectorAll('.shell-nav-item').forEach((el) => {
-      el.classList.toggle('active', el.dataset.view === viewName);
+    document.querySelectorAll('[data-app-nav]').forEach((item) => {
+      item.classList.toggle('active', item.dataset.appNav === name);
     });
 
-    const userName = state.session?.username || (state.isGuest ? 'Tamu' : 'Guest');
-    const userInitial = String(userName).charAt(0).toUpperCase() || 'G';
-    if ($('shellUserName')) $('shellUserName').textContent = userName;
-    if ($('shellUserAvatar')) $('shellUserAvatar').textContent = userInitial;
-    if ($('shellTopbarAvatar')) $('shellTopbarAvatar').textContent = userInitial;
-
-    closeShellSidebar();
-  }
-
-  function openShellSidebar() {
-    const sidebar = document.getElementById('shellSidebar');
-    const overlay = document.getElementById('shellOverlay');
-    if (sidebar) sidebar.classList.add('open');
-    if (overlay) overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeShellSidebar() {
-    const sidebar = document.getElementById('shellSidebar');
-    const overlay = document.getElementById('shellOverlay');
-    if (sidebar) sidebar.classList.remove('open');
-    if (overlay) overlay.classList.remove('open');
-    document.body.style.overflow = '';
+    if (name !== 'test') stopTimer();
+    window.scrollTo(0, 0);
   }
 
   function toast(message, type = 'info', duration = 2800, onClick = null) {
@@ -1172,6 +956,7 @@ function showView(name) {
     state.history = [];
     saveSession();
     $('welcomeName').textContent = 'Tamu';
+    updateUserChrome_('Tamu', 'Mode tamu');
     renderCatalog();
     trackEvent('guest_enter');
     showView('dashboard');
@@ -1191,29 +976,26 @@ function showView(name) {
 
     Object.entries(TESTS).forEach(([id, test]) => {
       const card = document.createElement('article');
-      card.className = 'test-card card';
+      card.className = 'test-item app-test-item';
       const isKraepelin = id === 'kraepelin';
 
       card.innerHTML = `
-        <div class="test-card-top">
-          <div class="test-icon">${test.icon}</div>
-          <div>
-            <h3>${test.name}</h3>
-            <p>${test.description}</p>
-          </div>
+        <div class="test-info">
+          <strong>${escapeHtml(test.name)}</strong>
+          <small>${escapeHtml(test.description)}</small>
         </div>
-        <div class="package-row">
+        <div class="app-test-controls">
           ${isKraepelin ? `
-          <select class="speed-select" aria-label="Waktu per soal Kraepelin">
-            <option value="15">15 detik/soal</option>
-            <option value="20">20 detik/soal</option>
-          </select>` : `
-          <select class="package-select" aria-label="Paket ${escapeHtml(test.name)}">
-            <option value="1">Paket 1</option>
-            <option value="2">Paket 2</option>
-            <option value="3">Paket 3</option>
-          </select>`}
-          <button class="primary-btn" type="button">Mulai →</button>
+            <select class="speed-select" aria-label="Waktu per soal Kraepelin">
+              <option value="15">15 detik</option>
+              <option value="20">20 detik</option>
+            </select>` : `
+            <select class="package-select" aria-label="Paket ${escapeHtml(test.name)}">
+              <option value="1">Paket 1</option>
+              <option value="2">Paket 2</option>
+              <option value="3">Paket 3</option>
+            </select>`}
+          <button class="btn btn-primary" type="button">Mulai</button>
         </div>
       `;
 
@@ -1222,11 +1004,11 @@ function showView(name) {
 
       card.querySelector('button').addEventListener('click', () => {
         if (isKraepelin) {
-          state.kraepelinSecondsChoice = Number(speedSelect.value) || 15;
+          state.kraepelinSecondsChoice = Number(speedSelect?.value) || 15;
           openInstruction(id, 1);
           return;
         }
-        openInstruction(id, Number(select.value));
+        openInstruction(id, Number(select?.value) || 1);
       });
 
       root.appendChild(card);
@@ -1264,6 +1046,7 @@ function showView(name) {
 
     if (!count) {
       if ($('latestDate')) $('latestDate').textContent = 'Belum ada tes';
+      if ($('dashScore')) $('dashScore').textContent = '—';
       if ($('dashSpeed')) $('dashSpeed').textContent = '—';
       if ($('dashAccuracy')) $('dashAccuracy').textContent = '—';
       if ($('dashConsistency')) $('dashConsistency').textContent = '—';
@@ -1273,6 +1056,7 @@ function showView(name) {
 
     const latest = state.history[0];
     if ($('latestDate')) $('latestDate').textContent = formatDate(latest.tanggal);
+    if ($('dashScore')) $('dashScore').textContent = `${Number(latest.score) || 0}%`;
     if ($('dashSpeed')) $('dashSpeed').textContent = `${Number(latest.speed) || 0}%`;
     if ($('dashAccuracy')) $('dashAccuracy').textContent = `${Number(latest.accuracy) || 0}%`;
     if ($('dashConsistency')) $('dashConsistency').textContent = `${Number(latest.consistency) || 0}%`;
@@ -1286,241 +1070,212 @@ function showView(name) {
   }
 
   function renderHistory() {
-    const groupsEl = document.getElementById('historyGroups');
-    const emptyEl = document.getElementById('emptyHistory');
-    if (!groupsEl || !emptyEl) return;
+    const body = $('historyTableBody');
+    if (!body) return;
 
     const history = state.isGuest ? [] : state.history;
+    $('historyPageCount').textContent = String(history.length);
+    body.innerHTML = '';
+    $('emptyHistory').hidden = history.length > 0;
+    $('historyTable').hidden = history.length === 0;
 
-    // Update count di dashboard summary (tetap)
-    if ($('historyPageCount')) $('historyPageCount').textContent = String(history.length);
-
-    if (!history.length) {
-      emptyEl.hidden = false;
-      groupsEl.innerHTML = '';
-      return;
-    }
-
-    emptyEl.hidden = true;
-
-    // ---- Group config ----
-    const GROUP_ORDER = ['andalan', 'skd', 'umum'];
-    const GROUP_META = {
-      andalan: { name: 'Tes Andalan',    icon: '🔥' },
-      skd:     { name: 'SKD (CPNS)',     icon: '📘' },
-      umum:    { name: 'Psikotes Umum',  icon: '🧩' },
-    };
-
-    const TIU_SUB_ORDER = ['verbal', 'numerik', 'figural'];
-    const TIU_SUB_META = {
-      verbal:  { name: 'Kemampuan Verbal',  icon: '📝' },
-      numerik: { name: 'Kemampuan Numerik', icon: '🔢' },
-      figural: { name: 'Kemampuan Figural', icon: '🎨' },
-    };
-
-    // ---- Bucket items ----
-    const buckets = {
-      andalan: [],
-      skd: { twk: [], tiu: { verbal: [], numerik: [], figural: [] }, tkp: [], other: [] },
-      umum: [],
-    };
-
-    history.forEach((item) => {
-      const t = TESTS[item.test_type];
-      const group = t?.group || 'umum';
-
-      if (group === 'andalan') {
-        buckets.andalan.push(item);
-        return;
-      }
-
-      if (group === 'skd') {
-        if (t.subGroup === 'tiu') {
-          const sub = t.subSubGroup || 'verbal';
-          if (buckets.skd.tiu[sub]) buckets.skd.tiu[sub].push(item);
-          else buckets.skd.tiu.verbal.push(item);
-        } else if (item.test_type === 'twk') {
-          buckets.skd.twk.push(item);
-        } else if (item.test_type === 'tkp') {
-          buckets.skd.tkp.push(item);
-        } else {
-          buckets.skd.other.push(item);
-        }
-        return;
-      }
-
-      // group 'umum' atau fallback
-      buckets.umum.push(item);
-    });
-
-    // ---- Helpers ----
-    const sortByDateDesc = (arr) => [...arr].sort((a, b) => {
-      const ta = new Date(a.tanggal || 0).getTime();
-      const tb = new Date(b.tanggal || 0).getTime();
-      return tb - ta;
-    });
-
-    const renderItem = (item) => {
-      const label = getTestLabel(item.test_type);
-      const pkg = Number(item.package) || 1;
-      const score = Number(item.score) || 0;
-      const dateStr = formatDate(item.tanggal);
-
-      return `
-        <div class="hist-item">
-          <div class="hist-main">
-            <strong>${escapeHtml(label)} — Paket ${pkg}</strong>
-            <small>${escapeHtml(dateStr)}</small>
-          </div>
-          <div class="hist-score">${score}%</div>
-          <button type="button" class="hist-pdf" data-hist-pdf>Cetak PDF</button>
-        </div>
+    // Tambahkan kolom aksi secara dinamis supaya tidak perlu mengubah HTML.
+    const headerRow = $('historyTable')?.querySelector('thead tr');
+    if (headerRow) {
+      headerRow.innerHTML = `
+        <th>#</th>
+        <th>Tanggal</th>
+        <th>Tes</th>
+        <th>Paket</th>
+        <th>Skor</th>
+        <th>Kecepatan</th>
+        <th>Ketelitian</th>
+        <th>Konsistensi</th>
+        <th>Ketahanan</th>
+        <th>Aksi</th>
       `;
-    };
-
-    // ---- Build HTML ----
-    const parts = [];
-
-    // 1) Andalan
-    {
-      const items = sortByDateDesc(buckets.andalan);
-      if (items.length) {
-        parts.push(`
-          <details class="hist-group" open>
-            <summary class="hist-summary">
-              <span class="hist-icon">${GROUP_META.andalan.icon}</span>
-              <span class="hist-title">${GROUP_META.andalan.name}</span>
-              <span class="hist-count">${items.length} tes</span>
-              <span class="hist-chev">▾</span>
-            </summary>
-            <div class="hist-list">
-              ${items.map(renderItem).join('')}
-            </div>
-          </details>
-        `);
-      }
     }
 
-    // 2) SKD
-    {
-      const skd = buckets.skd;
-      const totalSkd =
-        skd.twk.length +
-        skd.other.length +
-        Object.values(skd.tiu).reduce((s, a) => s + a.length, 0);
+    history.forEach((item, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${escapeHtml(formatDate(item.tanggal))}</td>
+        <td>${escapeHtml(TESTS[item.test_type]?.name || item.test_type || '—')}</td>
+        <td>${escapeHtml(item.package ?? '—')}</td>
+        <td>${Number(item.score) || 0}%</td>
+        <td>${Number(item.speed) || 0}%</td>
+        <td>${Number(item.accuracy) || 0}%</td>
+        <td>${Number(item.consistency) || 0}%</td>
+        <td>${Number(item.endurance) || 0}%</td>
+        <td class="history-action-cell"></td>
+      `;
 
-      if (totalSkd) {
-        const subParts = [];
-
-        // TWK
-        if (skd.twk.length) {
-          subParts.push(`
-            <div class="hist-subgroup">
-              <div class="hist-subhead">🇮🇩 TWK — Tes Wawasan Kebangsaan</div>
-              ${sortByDateDesc(skd.twk).map(renderItem).join('')}
-            </div>
-          `);
-        }
-
-        // TIU (dengan sub-sub)
-        const hasTiu = TIU_SUB_ORDER.some((sub) => skd.tiu[sub].length);
-        if (hasTiu) {
-          const tiuParts = [];
-          TIU_SUB_ORDER.forEach((sub) => {
-            const items = sortByDateDesc(skd.tiu[sub]);
-            if (!items.length) return;
-            tiuParts.push(`
-              <div class="hist-subgroup">
-                <div class="hist-subhead">${TIU_SUB_META[sub].icon} TIU — ${TIU_SUB_META[sub].name}</div>
-                ${items.map(renderItem).join('')}
-              </div>
-            `);
-          });
-          subParts.push(`
-            <div class="hist-subgroup">
-              <div class="hist-subhead">🧠 TIU — Tes Intelegensi Umum</div>
-              ${tiuParts.join('')}
-            </div>
-          `);
-        }
-
-        // TKP
-        if (skd.tkp.length) {
-          subParts.push(`
-            <div class="hist-subgroup">
-              <div class="hist-subhead">🤝 TKP — Tes Karakteristik Pribadi</div>
-              ${sortByDateDesc(skd.tkp).map(renderItem).join('')}
-            </div>
-          `);
-        }
-
-        // Other SKD items
-        if (skd.other.length) {
-          subParts.push(`
-            <div class="hist-subgroup">
-              <div class="hist-subhead">📘 SKD — Lainnya</div>
-              ${sortByDateDesc(skd.other).map(renderItem).join('')}
-            </div>
-          `);
-        }
-
-        parts.push(`
-          <details class="hist-group" open>
-            <summary class="hist-summary">
-              <span class="hist-icon">${GROUP_META.skd.icon}</span>
-              <span class="hist-title">${GROUP_META.skd.name}</span>
-              <span class="hist-count">${totalSkd} tes</span>
-              <span class="hist-chev">▾</span>
-            </summary>
-            <div class="hist-list">
-              ${subParts.join('')}
-            </div>
-          </details>
-        `);
-      }
-    }
-
-    // 3) Psikotes Umum
-    {
-      const items = sortByDateDesc(buckets.umum);
-      if (items.length) {
-        parts.push(`
-          <details class="hist-group" open>
-            <summary class="hist-summary">
-              <span class="hist-icon">${GROUP_META.umum.icon}</span>
-              <span class="hist-title">${GROUP_META.umum.name}</span>
-              <span class="hist-count">${items.length} tes</span>
-              <span class="hist-chev">▾</span>
-            </summary>
-            <div class="hist-list">
-              ${items.map(renderItem).join('')}
-            </div>
-          </details>
-        `);
-      }
-    }
-
-    groupsEl.innerHTML = parts.join('');
-
-    // ---- Bind PDF buttons ----
-    // Ambil semua item, cocokkan tombol dengan history item by index
-    const flatSorted = [
-      ...sortByDateDesc(buckets.andalan),
-      ...sortByDateDesc(buckets.skd.twk),
-      ...TIU_SUB_ORDER.flatMap((s) => sortByDateDesc(buckets.skd.tiu[s])),
-      ...sortByDateDesc(buckets.skd.tkp),
-      ...sortByDateDesc(buckets.skd.other),
-      ...sortByDateDesc(buckets.umum),
-    ];
-
-    const pdfButtons = groupsEl.querySelectorAll('[data-hist-pdf]');
-    pdfButtons.forEach((btn, idx) => {
-      const item = flatSorted[idx];
-      if (!item) return;
-      btn.addEventListener('click', () => {
-        downloadHistoryPdf(item, btn);
+      const actionCell = row.querySelector('.history-action-cell');
+      const pdfButton = document.createElement('button');
+      pdfButton.type = 'button';
+      pdfButton.className = 'secondary-btn history-pdf-btn';
+      pdfButton.textContent = 'Cetak PDF';
+      pdfButton.title = 'Cetak hasil PDF';
+      pdfButton.addEventListener('click', () => {
+        downloadHistoryPdf(item, pdfButton);
       });
+
+      actionCell.appendChild(pdfButton);
+      body.appendChild(row);
     });
+  }
+
+  function historyItemToResult(item) {
+    const normalizedType = item?.test_type || 'kuantitatif';
+
+    return {
+      testId: item?.test_id || '',
+      type: normalizedType,
+      package: Number(item?.package) || 1,
+      answered: Number(item?.answered) || (Number(item?.correct) || 0) + (Number(item?.wrong) || 0),
+      correct: Number(item?.correct) || 0,
+      wrong: Number(item?.wrong) || 0,
+      total: Number(item?.total) || CONFIG.MCQ_QUESTIONS,
+      score: Number(item?.score) || 0,
+      speed: Number(item?.speed) || 0,
+      accuracy: Number(item?.accuracy) || 0,
+      consistency: Number(item?.consistency) || 0,
+      endurance: Number(item?.endurance) || 0,
+      chart: Array.isArray(item?.chart) ? item.chart : [],
+      tanggal: item?.tanggal || new Date().toISOString(),
+    };
+  }
+
+  async function downloadHistoryPdf(item, button) {
+    if (!item) return;
+
+    busy(button, 'PDF…', true);
+
+    try {
+      // Kalau hasil ini baru saja selesai, gunakan result lengkapnya
+      // sehingga grafik waktu per soal tetap ikut tercetak.
+      let result = null;
+      if (
+        state.lastResult &&
+        item.test_id &&
+        state.lastResult.testId === item.test_id
+      ) {
+        result = state.lastResult;
+          } else {
+        result = historyItemToResult(item);
+
+        // Ambil detail jawaban per soal dari TestDetail
+        try {
+          const details = await loadTestDetail(item.test_id);
+          enrichHistoryResultWithDetail(result, details);
+        } catch (detailError) {
+          console.warn('Detail histori tidak tersedia:', detailError);
+        }
+
+
+          function enrichWrongDetailsWithQuestions(result, questions) {
+    if (!Array.isArray(questions) || !questions.length) return result;
+    if (!Array.isArray(result.wrongNumbers) || !result.wrongNumbers.length) return result;
+
+    // Map nomor soal -> objek soal
+    const byNo = new Map();
+    questions.forEach((q) => {
+      const no = Number(q.id ?? q.no_soal);
+      if (Number.isInteger(no)) byNo.set(no, q);
+    });
+
+    result.wrongDetails = result.wrongNumbers.map((no) => {
+      const q = byNo.get(no);
+      return {
+        no,
+        text: String(q?.question || ''),
+        userAnswer: null,
+        correctAnswer: null,
+        options: q?.options ? Object.values(q.options).map(String) : [],
+      };
+    });
+
+    return result;
+  }
+        // Ambil teks soal dari bank soal untuk memperkaya wrongDetails
+        try {
+          const qp = await api('getQuestionPackage', {
+            test_type: item.test_type,
+            package: item.package,
+          });
+          if (qp?.success && Array.isArray(qp.questions)) {
+            enrichWrongDetailsWithQuestions(result, qp.questions);
+          }
+        } catch (questionError) {
+          console.warn('Teks soal histori tidak tersedia:', questionError);
+        }
+      }
+      const participant =
+        state.session?.username || 'Peserta';
+
+      const bytes = await buildPdf(
+        result,
+        participant
+      );
+
+      const blob = new Blob(
+        [bytes],
+        { type: 'application/pdf' }
+      );
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+
+      link.href = url;
+      link.download =
+        `hasil-${result.type}-paket-${result.package}-${new Date(
+          result.tanggal
+        ).toISOString().slice(0, 10)}.pdf`;
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      setTimeout(
+        () => URL.revokeObjectURL(url),
+        1000
+      );
+
+      toast(
+        'PDF histori berhasil dibuat.',
+        'success'
+      );
+        try {
+        await api('trackPdfDownload', {
+          token: state.session?.token || '',
+          test_id: item.test_id || ''
+        });
+      } catch (_) {
+        // Silent
+      }
+    } catch (error) {
+      console.error(
+        'History PDF error:',
+        error
+      );
+
+      toast(
+        `PDF histori gagal dibuat: ${error.message}`,
+        'warning',
+        5000
+      );
+    } finally {
+      busy(button, '', false);
+    }
+  }
+
+  function updateUserChrome_(name, role = 'Akun peserta') {
+    const safeName = String(name || 'Peserta');
+    if ($('sidebarUserName')) $('sidebarUserName').textContent = safeName;
+    if ($('topbarUserName')) $('topbarUserName').textContent = safeName;
+    if ($('sidebarUserRole')) $('sidebarUserRole').textContent = role;
+    if ($('sidebarAvatar')) $('sidebarAvatar').textContent = safeName.charAt(0).toUpperCase();
   }
 
   async function goDashboard(message = '') {
@@ -1530,6 +1285,7 @@ function showView(name) {
     }
 
     if (state.isGuest) {
+      updateUserChrome_('Tamu', 'Mode tamu');
       renderCatalog();
       showView('dashboard');
       return;
@@ -1541,6 +1297,7 @@ function showView(name) {
     }
 
     $('welcomeName').textContent = state.session.username;
+    updateUserChrome_(state.session.username, 'Akun peserta');
     renderCatalog();
     showView('dashboard');
 
@@ -1793,93 +1550,44 @@ trackEvent('register_attempt');
   // INSTRUCTIONS
   // ============================================================
 
-   function openInstruction(testId, packageNumber) {
+  function openInstruction(testId, packageNumber) {
     state.test = testId;
-    state.package = Number(packageNumber) || 1;
+    state.package = packageNumber;
 
     const test = TESTS[testId];
-    const isKraepelin = test.kind === 'kraepelin';
+    $('instructionEyebrow').textContent = `${test.name.toUpperCase()} • PAKET ${packageNumber}`;
+    $('instructionTitle').textContent = test.name;
+    $('instructionPackage').textContent = `Paket ${packageNumber}`;
 
-    // Header
-    document.getElementById('instructionEyebrow').textContent = isKraepelin
-      ? 'TES ANDALAN'
-      : 'TES PENALARAN';
-    document.getElementById('instructionTitle').textContent = test.name;
-    document.getElementById('instructionPackage').textContent = isKraepelin
-      ? `${state.kraepelinSecondsChoice} detik/soal`
-      : `Paket ${state.package}`;
-
-    // Lead + body
-    if (isKraepelin) {
-      document.getElementById('instructionLead').innerHTML =
-        'Jumlahkan dua angka yang berdekatan dari <strong>bawah ke atas</strong>. Masukkan <strong>angka satuannya</strong> saja (0–9).';
-      document.getElementById('instructionBody').innerHTML = `
-        <div class="instr-example">
-          <div class="instr-example-col">8<br>5<br>7<br>3</div>
-          <div class="instr-example-arrow">→</div>
-          <div class="instr-example-results">
+    if (test.kind === 'kraepelin') {
+      $('instructionLead').innerHTML =
+        'Jumlahkan dua angka yang berdekatan dari <strong>bawah ke atas</strong>. Masukkan <strong>angka satuannya</strong>.';
+      $('instructionBody').innerHTML = `
+        <div class="example-layout">
+          <div class="example-column">8<br>5<br>7<br>3</div>
+          <div>→</div>
+          <div class="example-results">
             <div>3 + 7 = 10 <strong>→ 0</strong></div>
             <div>7 + 5 = 12 <strong>→ 2</strong></div>
             <div>5 + 8 = 13 <strong>→ 3</strong></div>
           </div>
         </div>
-        <div class="instr-tips">
-          <div class="instr-tip"><b>50 kolom</b><small>Setiap kolom memiliki 26 soal.</small></div>
-          <div class="instr-tip"><b>Timer per kolom</b><small>Otomatis pindah bila waktu habis.</small></div>
-          <div class="instr-tip"><b>Angka satuan</b><small>Contoh: 10 → tulis <b>0</b>, bukan 10.</small></div>
-          <div class="instr-tip"><b>Keyboard</b><small>Angka 0–9 juga bisa dipakai.</small></div>
+        <div class="instruction-grid">
+          <div class="tip"><b>50 kolom</b><small>Setiap kolom memiliki 26 jawaban.</small></div>
+          <div class="tip"><b>15 detik</b><small>Waktu otomatis berpindah ke kolom berikutnya.</small></div>
         </div>
       `;
     } else {
-      document.getElementById('instructionLead').textContent =
-        'Pilih jawaban yang paling tepat. Soal berpindah otomatis setelah kamu memilih atau waktu habis.';
-      document.getElementById('instructionBody').innerHTML = `
-        <div class="instr-tips">
-          <div class="instr-tip"><b>20 soal</b><small>Setiap paket berisi 20 soal pilihan ganda.</small></div>
-          <div class="instr-tip"><b>30 detik / soal</b><small>Timer berjalan per soal.</small></div>
-          <div class="instr-tip"><b>Jawaban A–E</b><small>Pilih satu jawaban paling tepat.</small></div>
-          <div class="instr-tip"><b>Hasil PDF</b><small>Bisa diunduh setelah selesai.</small></div>
+      $('instructionLead').textContent =
+        'Pilih jawaban yang paling tepat. Soal berpindah setelah jawaban dipilih atau waktu habis.';
+      $('instructionBody').innerHTML = `
+        <div class="instruction-grid">
+          <div class="tip"><b>20 soal</b><small>Setiap paket menggunakan 20 soal dari bank soal JSON.</small></div>
+          <div class="tip"><b>30 detik/soal</b><small>Timer otomatis berpindah bila waktu habis.</small></div>
+          <div class="tip"><b>3 paket</b><small>Paket 1–3 tersedia untuk setiap jenis latihan.</small></div>
+          <div class="tip"><b>Hasil PDF</b><small>Hasil tetap dapat diunduh meskipun mode tamu.</small></div>
         </div>
       `;
-    }
-
-    // Selector (dinamis)
-    const selectorLabel = document.getElementById('instructionSelectorLabel');
-    const selectorBtns = document.getElementById('instructionSelectorBtns');
-    selectorBtns.innerHTML = '';
-
-    if (isKraepelin) {
-      selectorLabel.textContent = 'Pilih Kecepatan';
-      [15, 20].forEach((sec) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'instr-opt-btn' + (sec === state.kraepelinSecondsChoice ? ' active' : '');
-        btn.textContent = `${sec} detik/soal`;
-        btn.dataset.value = String(sec);
-        btn.addEventListener('click', () => {
-          state.kraepelinSecondsChoice = sec;
-          document.querySelectorAll('.instr-opt-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          document.getElementById('instructionPackage').textContent = `${sec} detik/soal`;
-        });
-        selectorBtns.appendChild(btn);
-      });
-    } else {
-      selectorLabel.textContent = 'Pilih Paket';
-      [1, 2, 3].forEach((pkg) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'instr-opt-btn' + (pkg === state.package ? ' active' : '');
-        btn.textContent = `Paket ${pkg}`;
-        btn.dataset.value = String(pkg);
-        btn.addEventListener('click', () => {
-          state.package = pkg;
-          document.querySelectorAll('.instr-opt-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          document.getElementById('instructionPackage').textContent = `Paket ${pkg}`;
-        });
-        selectorBtns.appendChild(btn);
-      });
     }
 
     showView('instruction');
@@ -1891,18 +1599,12 @@ trackEvent('register_attempt');
 
   // Bank soal MCQ disimpan sebagai file JSON di root GitHub Pages.
   const QUESTION_FILES = Object.freeze({
-    // Psikotes Umum (existing)
     kuantitatif: './soal_kuantitatif.json',
     numerical: './soal_numerical.json',
     sinonim: './soal_sinonim.json',
     silogisme: './soal_silogisme.json',
     analogi: './soal_analogi.json',
     kognitif: './soal_kognitif.json',
-
-    // SKD (baru — file JSON menyusul)
-    twk: './soal_twk.json',
-    tkp: './soal_tkp.json',
-    // tiu_verbal, tiu_numerik, tiu_figural pakai file existing di atas
   });
 
   async function loadQuestionPackage(testId, packageNumber) {
@@ -1927,11 +1629,11 @@ trackEvent('register_attempt');
       }
     }
 
-     const filePath = QUESTION_FILES[testId];
+    const filePath = QUESTION_FILES[testId];
 
     if (!filePath) {
       throw new Error(
-        `Bank soal untuk tes "${testId}" belum tersedia. Silakan cek lagi nanti.`
+        `Bank soal untuk tes "${testId}" belum tersedia.`
       );
     }
 
@@ -2144,17 +1846,17 @@ trackEvent('test_start', { type: state.test, package: state.package });
     $('progressBar').style.width = `${((state.colIndex * 26 + answerIndex) / 1300) * 100}%`;
 
     $('testContent').innerHTML = `
-      <div class="question-label">JUMLAHKAN</div>
-      <div class="big-number">${top}</div>
-      <div class="question-mark">?</div>
-      <div class="big-number">${bottom}</div>
+      <div class="test-question-label">JUMLAHKAN</div>
+      <div class="test-number">${top}</div>
+      <div class="test-mark">?</div>
+      <div class="test-number">${bottom}</div>
     `;
     $('keypad').innerHTML = '';
-    $('keypad').className = 'keypad keypad-numeric';
+    $('keypad').className = 'test-keypad test-keypad-numeric';
     [7, 8, 9, 4, 5, 6, 1, 2, 3, 0].forEach((digit) => {
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = `digit-btn ${digit === 0 ? 'zero-btn' : ''}`;
+      button.className = `test-digit ${digit === 0 ? 'zero' : ''}`;
       button.textContent = digit;
       button.addEventListener('click', () => answerKraepelin(digit));
       $('keypad').appendChild(button);
@@ -2252,17 +1954,17 @@ trackEvent('test_start', { type: state.test, package: state.package });
     $('progressBar').style.width = `${(state.index / CONFIG.MCQ_QUESTIONS) * 100}%`;
 
     $('testContent').innerHTML = `
-      <div class="question-label">PERTANYAAN ${state.index + 1}</div>
+      <div class="test-question-label">PERTANYAAN ${state.index + 1}</div>
       <h2>${escapeHtml(question.text)}</h2>
     `;
 
-        $('keypad').innerHTML = '';
-    $('keypad').className = 'keypad keypad-answer';
+    $('keypad').innerHTML = '';
+    $('keypad').className = 'test-keypad test-keypad-answer';
 
     question.options.forEach((option, optionIndex) => {
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = 'answer-btn';
+      button.className = 'test-answer';
       button.textContent = `${String.fromCharCode(65 + optionIndex)}. ${option}`;
       button.addEventListener('click', () => answerMCQ(optionIndex));
       $('keypad').appendChild(button);
@@ -2840,7 +2542,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
   function renderResult(result) {
     const name = state.isGuest ? 'Tamu' : state.session?.username || 'Peserta';
-    $('resultTitle').textContent = `${TESTS[result.type].name} selesai 🎉`;
+    $('resultTitle').textContent = `${TESTS[result.type].name} selesai`;
 
 
     $('resultIntro').innerHTML = state.isGuest
@@ -3252,10 +2954,10 @@ trackEvent('test_start', { type: state.test, package: state.package });
           <h3>Akses cepat</h3>
           <p class="muted">Kelola data tanpa membuka database secara manual.</p>
           <div class="admin-quick-grid">
-            <button type="button" class="secondary-btn" data-admin-tab="users">👥 Kelola Peserta</button>
-            <button type="button" class="secondary-btn" data-admin-tab="results">📊 Lihat Nilai</button>
-            <button type="button" class="secondary-btn" data-admin-tab="questions">🧩 Bank Soal</button>
-            <button type="button" class="secondary-btn" data-admin-tab="labels">🏷️ Label Nilai</button>
+            <button type="button" class="secondary-btn" data-admin-tab="users">Kelola Peserta</button>
+            <button type="button" class="secondary-btn" data-admin-tab="results">Lihat Nilai</button>
+            <button type="button" class="secondary-btn" data-admin-tab="questions">Bank Soal</button>
+            <button type="button" class="secondary-btn" data-admin-tab="labels">Label Nilai</button>
           </div>
           <div class="warning-box"><strong>Catatan:</strong> perubahan bank soal dan label langsung tersimpan ke database.</div>
         </div>
@@ -3411,7 +3113,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
           <label>Paket (filter)<select id="adminQuestionPackage"><option value="">Semua Paket</option><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select></label>
           <label>Upload JSON<input id="adminQuestionFile" type="file" accept="application/json,.json"></label>
           <button type="button" class="primary-btn" id="adminUploadQuestionBtn">Upload JSON</button>
-          <button type="button" class="secondary-btn" id="adminMigrateAllQuestionsBtn">⚡ Migrasikan Semua JSON</button>
+          <button type="button" class="secondary-btn" id="adminMigrateAllQuestionsBtn">Migrasikan Semua JSON</button>
           <button type="button" class="secondary-btn" id="adminLoadQuestionsBtn">Muat Soal</button>
         </div>
         <div class="warning-box"><strong>Format:</strong> file JSON mengikuti struktur <code>kategori → paket[] → soal[]</code>. Upload tidak perlu memilih paket karena semua paket di dalam file akan diproses otomatis. Sistem mengirim maksimal 25 soal per request agar migrasi aman.</div>
@@ -3503,7 +3205,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
     }
 
     const progress = $('adminQuestionProgress');
-    if (progress) progress.textContent = `✅ ${label} selesai: ${added} ditambahkan, ${updated} diperbarui (${questions.length} total).`;
+    if (progress) progress.textContent = `${label} selesai: ${added} ditambahkan, ${updated} diperbarui (${questions.length} total).`;
 
     return { added, updated, total: questions.length };
   }
@@ -3521,13 +3223,13 @@ trackEvent('test_start', { type: state.test, package: state.package });
       const questions = normalizeQuestionPayloads_(data, testType);
       const result = await adminSaveQuestionBatches(questions, file.name);
 
-      toast(`✅ ${file.name}: ${result.total} soal diproses.`, 'success', 5000);
+      toast(`${file.name}: ${result.total} soal diproses.`, 'success', 5000);
       input.value = '';
       await adminLoadQuestions();
       await refreshAdminData();
     } catch (error) {
       const progress = $('adminQuestionProgress');
-      if (progress) progress.textContent = `❌ Upload gagal: ${error.message}`;
+      if (progress) progress.textContent = `Upload gagal: ${error.message}`;
       toast(`Upload JSON gagal: ${error.message}`, 'warning', 6000);
     } finally {
       busy(button, '', false);
@@ -3565,13 +3267,13 @@ trackEvent('test_start', { type: state.test, package: state.package });
       }
 
       const progress = $('adminQuestionProgress');
-      if (progress) progress.textContent = `✅ Migrasi semua selesai: ${total} soal diproses, ${added} ditambahkan, ${updated} diperbarui.`;
-      toast(`✅ Semua bank soal berhasil dimigrasikan (${total} soal).`, 'success', 6000);
+      if (progress) progress.textContent = `Migrasi semua selesai: ${total} soal diproses, ${added} ditambahkan, ${updated} diperbarui.`;
+      toast(`Semua bank soal berhasil dimigrasikan (${total} soal).`, 'success', 6000);
       await adminLoadQuestions();
       await refreshAdminData();
     } catch (error) {
       const progress = $('adminQuestionProgress');
-      if (progress) progress.textContent = `❌ Migrasi berhenti: ${error.message}`;
+      if (progress) progress.textContent = `Migrasi berhenti: ${error.message}`;
       toast(`Migrasi semua JSON gagal: ${error.message}`, 'warning', 7000);
     } finally {
       busy(button, '', false);
@@ -3666,9 +3368,29 @@ trackEvent('test_start', { type: state.test, package: state.package });
         button.classList.toggle('is-visible', !visible);
 
         const icon = button.querySelector('span');
-        if (icon) icon.textContent = visible ? '👁' : '🙈';
+        if (icon) icon.textContent = visible ? 'Show' : 'Hide';
       });
     });
+  }
+
+  // ============================================================
+  // SIDEBAR / APP SHELL
+  // ============================================================
+
+  function setSidebar_(open) {
+    const sidebar = $('sidebar');
+    const overlay = $('sidebarOverlay');
+    if (!sidebar) return;
+    sidebar.classList.toggle('open', Boolean(open));
+    overlay?.classList.toggle('open', Boolean(open));
+  }
+
+  function toggleSidebar_() {
+    setSidebar_(!$('sidebar')?.classList.contains('open'));
+  }
+
+  function closeSidebar_() {
+    setSidebar_(false);
   }
 
   // ============================================================
@@ -3677,6 +3399,49 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
   function bind() {
     bindPasswordToggles();
+
+    // Navigation for the new sidebar shell.
+    document.querySelectorAll('[data-app-nav]').forEach((item) => {
+      item.addEventListener('click', async () => {
+        const target = item.dataset.appNav;
+        closeSidebar_();
+
+        if (target === 'dashboard') {
+          await goDashboard();
+          return;
+        }
+
+        if (target === 'history') {
+          if (!state.isGuest) {
+            try { await refreshHistory(); } catch (error) { toast(error.message, 'warning'); }
+          }
+          renderHistory();
+          showView('history');
+          return;
+        }
+
+        if (target === 'psikotes') {
+          await goDashboard();
+          setTimeout(() => {
+            $('psikotesCatalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 0);
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-test]').forEach((item) => {
+      item.addEventListener('click', () => {
+        const testId = item.dataset.test;
+        if (!TESTS[testId]) return;
+        closeSidebar_();
+        if (testId === 'kraepelin') state.kraepelinSecondsChoice = 15;
+        openInstruction(testId, 1);
+      });
+    });
+
+    const hamburger = $('hamburger');
+    hamburger?.addEventListener('click', () => toggleSidebar_());
+    $('sidebarOverlay')?.addEventListener('click', closeSidebar_);
 // About page
 document.querySelectorAll('[data-goto="about"]').forEach((el) => {
   el.addEventListener('click', () => { showView('about'); loadStats(); });
@@ -3686,110 +3451,6 @@ $('aboutRegisterBtn')?.addEventListener('click', () => showAuth('register'));
 $('aboutGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = false; });
        $('landingLoginBtn').addEventListener('click', () => showAuth('login'));
     $('landingRegisterBtn').addEventListener('click', () => showAuth('register'));
-    
-
-// === Fase 2: Shell navigation ===
-document.querySelectorAll('.shell-nav-item[data-view]').forEach((el) => {
-  el.addEventListener('click', async (e) => {
-    e.preventDefault();
-
-    const viewName = el.dataset.view;
-    if (!viewName) return;
-
-    // Guard: butuh login (session atau guest eksplisit)
-    if (
-      AUTH_REQUIRED_VIEWS.includes(viewName) &&
-      !state.session?.token &&
-      !state.isGuest
-    ) {
-      toast('Silakan masuk dulu untuk membuka halaman ini.', 'info', 3600);
-      showAuth('login');
-      return;
-    }
-
-    // Admin view: cek role
-    if (viewName === 'admin' && state.session?.role !== 'admin') {
-      toast('Halaman ini khusus admin.', 'warning', 3600);
-      return;
-    }
-
-    // View histori: wajib refresh + render sebelum tampil.
-    // Ini yang sebelumnya hilang → halaman jadi blank putih.
-    if (viewName === 'history') {
-      if (!state.isGuest && state.session?.token) {
-        try {
-          await refreshHistory();
-        } catch (err) {
-          toast(`Histori gagal dimuat: ${err.message}`, 'warning', 4500);
-        }
-      }
-      renderHistory();
-    }
-
-    // Dashboard: refresh summary kalau login (bukan guest).
-    if (viewName === 'dashboard' && !state.isGuest && state.session?.token) {
-      try {
-        await refreshHistory();
-      } catch (_) {
-        // Silent — dashboard tetap tampil walau histori gagal dimuat.
-      }
-    }
-
-    showView(viewName);
-  });
-});
-
- // === Fase 3: View navigation (dashboard buttons, back links, skd cards) ===
-document.querySelectorAll('[data-view]:not(body):not(.shell-nav-item)').forEach((el) => {
-  el.addEventListener('click', async (e) => {
-    e.preventDefault();
-
-    const viewName = el.dataset.view;
-    if (!viewName) return;
-
-    // Guard login sama seperti sidebar
-    if (
-      AUTH_REQUIRED_VIEWS.includes(viewName) &&
-      !state.session?.token &&
-      !state.isGuest
-    ) {
-      toast('Silakan masuk dulu untuk membuka halaman ini.', 'info', 3600);
-      showAuth('login');
-      return;
-    }
-
-    // Refresh + render histori kalau navigasi ke histori
-    if (viewName === 'history') {
-      if (!state.isGuest && state.session?.token) {
-        try {
-          await refreshHistory();
-        } catch (err) {
-          toast(`Histori gagal dimuat: ${err.message}`, 'warning', 4500);
-        }
-      }
-      renderHistory();
-    }
-
-    showView(viewName);
-  });
-});
-
-    // === Fase 3: Test item clicks → open instruction ===
-    document.querySelectorAll('[data-test]').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        const testId = el.dataset.test;
-        if (!testId) return;
-        const pkg = Number(el.dataset.pkg) || 1;
-        openInstruction(testId, pkg);
-      });
-    });
-
-    document.getElementById('shellHamburger')?.addEventListener('click', openShellSidebar);
-    document.getElementById('shellOverlay')?.addEventListener('click', closeShellSidebar);
-    document.getElementById('shellLogoutBtn')?.addEventListener('click', logout);
-
-// About page
     $('landingGuestBtn')?.addEventListener('click', () => { $('guestModal').hidden = false; });
     $('landingGuestBtnHero')?.addEventListener('click', () => { $('guestModal').hidden = false; });
     $('landingRegisterBtnHero')?.addEventListener('click', () => showAuth('register'));
@@ -3858,7 +3519,7 @@ $('interestModal')?.addEventListener('click', (e) => {
       await goDashboard();
     });
 
-      $('viewHistoryBtn')?.addEventListener('click', async () => {
+    $('viewHistoryBtn').addEventListener('click', async () => {
       if (!state.isGuest) {
         try { await refreshHistory(); } catch (error) { toast(error.message, 'warning'); }
       }
@@ -3867,7 +3528,7 @@ $('interestModal')?.addEventListener('click', (e) => {
     });
 
     $('backDashboardBtn').addEventListener('click', () => goDashboard());
-     $('logoutBtn')?.addEventListener('click', logout);
+    $('logoutBtn').addEventListener('click', logout);
     $('adminLogoutBtn')?.addEventListener('click', logout);
 
     $('loginForm').addEventListener('submit', (event) => {
@@ -3921,9 +3582,8 @@ function formatNumber(n) {
   if (n >= 1000) return (n / 1000).toFixed(1).replace('.0','') + ' rb';
   return String(n);
 }
-    async function init() {
+  async function init() {
     bind();
-    updateShell('landing');
 
     const params = new URLSearchParams(location.search);
     const resetToken = params.get('reset');
@@ -3945,39 +3605,39 @@ function formatNumber(n) {
     renderCatalog();
     loadStats();
 
-  if (state.session) {
-  $('welcomeName').textContent = state.session.username;
+    if (state.session) {
+      $('welcomeName').textContent = state.session.username;
+      updateUserChrome_(state.session.username, isAdmin() ? 'Administrator' : 'Akun peserta');
 
-  if (isAdmin()) {
-    try {
-      await openAdminDashboard('overview');
-    } catch (error) {
-      toast(`Dashboard admin belum dapat dibuka: ${error.message}`, 'warning', 4500);
+      if (isAdmin()) {
+        try {
+          await openAdminDashboard('overview');
+        } catch (error) {
+          toast(`Dashboard admin belum dapat dibuka: ${error.message}`, 'warning', 4500);
+        }
+        return;
+      }
+
+      showView('dashboard');
+
+      try {
+        await refreshHistory();
+      } catch (error) {
+        toast(`Belum dapat mengambil histori: ${error.message}`, 'warning', 4500);
+      }
+
+      if (loadPersistedTest()) {
+        toast(
+          'Ada progress tes yang tersimpan. Klik untuk melanjutkan →',
+          'info',
+          6000,
+          resumePersistedTest
+        );
+      }
+    } else {
+      showView('landing');
     }
-    return;
   }
-
-  showView('dashboard');
-
-  try {
-    await refreshHistory();
-  } catch (error) {
-    toast(`Belum dapat mengambil histori: ${error.message}`, 'warning', 4500);
-  }
-
-  // Pastikan histori sudah dirender begitu masuk dashboard,
-  // jadi kalau user klik "Histori" di sidebar, isinya langsung siap.
-  renderHistory();
-
-  if (loadPersistedTest()) {
-    toast(
-      'Ada progress tes yang tersimpan. Klik untuk melanjutkan →',
-      'info',
-      6000,
-      resumePersistedTest
-    );
-  }
-}
 
   init();
 })();
