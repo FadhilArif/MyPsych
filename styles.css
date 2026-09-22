@@ -3681,8 +3681,20 @@ body[data-view="admin"] .app-layout .content {
    SKD COMPLETE — FINAL RESPONSIVE LAYOUT
    One coherent vertical flow for desktop and mobile.
    ============================================================ */
+/* SKD navigator/control surfaces are opt-in. They must never appear on
+   regular psychotests or Kraepelin. */
+.test-view .skd-question-navigator,
+.test-view .skd-controls {
+  display: none;
+}
+
 .test-view.skd-complete-mode {
   overflow: hidden;
+}
+
+.test-view.skd-complete-mode .skd-question-navigator,
+.test-view.skd-complete-mode .skd-controls {
+  display: block;
 }
 
 .test-view.skd-complete-mode .test-body {
