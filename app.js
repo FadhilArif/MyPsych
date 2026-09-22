@@ -38,37 +38,44 @@
       name: 'Kraepelin',
       description: 'Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan.',
       kind: 'kraepelin',
+      logo: './assets/logos/logo_kreaplin.png',
     },
     kuantitatif: {
       name: 'Kuantitatif',
       description: 'Latihan hitungan dasar, persentase, rasio, dan operasi numerik.',
       kind: 'mcq',
+      logo: './assets/logos/logo_kuantitatif.png',
     },
     numerical: {
       name: 'Numerical',
       description: 'Latihan pola angka, deret, perbandingan, dan penalaran numerik.',
       kind: 'mcq',
+      logo: './assets/logos/logo_numerical.png',
     },
     sinonim: {
       name: 'Sinonim Verbal',
       description: 'Latihan memahami persamaan makna kata dalam konteks psikotes.',
       kind: 'mcq',
+      logo: './assets/logos/logo_mypsych.png',
     },
     silogisme: {
       name: 'Silogisme',
       description: 'Latihan menarik kesimpulan logis dari beberapa premis.',
       kind: 'mcq',
+      logo: './assets/logos/logo_silogisme.png',
     },
     analogi: {
       name: 'Analogi',
       description: 'Latihan hubungan kata dan konsep secara analogis.',
       kind: 'mcq',
+      logo: './assets/logos/logo_analogi.png',
     },
     kognitif: {
       name: 'Tes Kognitif',
       description: 'Latihan gabungan perhatian, logika, memori, dan pemecahan masalah.',
       kind: 'mcq',
       group: 'psikotes',
+      logo: './assets/logos/logo_kognitif.png',
     },
     twk: {
       name: 'TWK',
@@ -76,6 +83,7 @@
       description: 'Latihan wawasan kebangsaan untuk materi TWK SKD.',
       kind: 'mcq',
       group: 'skd',
+      logo: './assets/logos/logo_twk.png',
     },
     tiu: {
       name: 'TIU',
@@ -83,6 +91,7 @@
       description: 'Latihan verbal, numerik, dan figural untuk TIU SKD.',
       kind: 'mcq',
       group: 'skd',
+      logo: './assets/logos/logo_tiu.png',
     },
     tkp: {
       name: 'TKP',
@@ -90,6 +99,7 @@
       description: 'Latihan situasi kerja dan pengambilan keputusan untuk TKP SKD.',
       kind: 'mcq',
       group: 'skd',
+      logo: './assets/logos/logo_tkp.png',
     },
     skd_lengkap: {
       name: 'SKD Paket Lengkap',
@@ -97,6 +107,7 @@
       description: 'Simulasi lengkap SKD dengan timer terpisah per bagian dan navigasi bebas.',
       kind: 'skd_complete',
       group: 'skd',
+      logo: './assets/logos/logo_mypsych.png',
     },
   };
 
@@ -1046,7 +1057,11 @@ async function submitInterest(event) {
       card.className = 'test-item app-test-item';
       const isKraepelin = id === 'kraepelin';
 
+      const logoSrc = test.logo || './assets/logos/logo_mypsych.png';
       card.innerHTML = `
+        <div class="test-icon app-test-logo">
+          <img src="${escapeHtml(logoSrc)}" alt="${escapeHtml(test.name)}" loading="lazy">
+        </div>
         <div class="test-info">
           <strong>${escapeHtml(test.name)}</strong>
           <small>${escapeHtml(test.description)}</small>
