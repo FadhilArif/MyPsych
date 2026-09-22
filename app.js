@@ -5,7 +5,7 @@
   // PSYCHOTEST PRACTICE — PHASE 4
   // 
   // ============================================================
-
+ 
   const CONFIG = Object.freeze({
     API_URL: '/api/gateway',
     SESSION_KEY: 'psychotest_session_v2',
