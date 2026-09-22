@@ -1955,6 +1955,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
     const questions = await loadSKDCompleteQuestions_(packageNumber);
 
     state.skdComplete.active = true;
+    $('testView')?.classList.add('skd-complete-mode');
     state.skdComplete.package = Number(packageNumber) || 1;
     state.skdComplete.sectionIndex = 0;
     state.skdComplete.waiting = false;
@@ -2534,6 +2535,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
       answered: result.answered,
     });
 
+    $('testView')?.classList.remove('skd-complete-mode');
     renderResult(result);
     renderSKDCompleteResult_(result);
     drawChart(result);
@@ -3633,6 +3635,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
     stopSKDCompleteTimer_();
     state.skdComplete.active = false;
     state.skdComplete.waiting = false;
+    $('testView')?.classList.remove('skd-complete-mode');
     state.finished = true;
     state.lastResult = null;
     clearPersistedTest();
