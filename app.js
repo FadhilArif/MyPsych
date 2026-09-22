@@ -284,6 +284,9 @@ async function submitInterest(event) {
 
   function showView(name) {
     Object.values(views).forEach((view) => view?.classList.remove('active'));
+    if (name !== 'test') {
+      $('testView')?.classList.remove('skd-complete-mode');
+    }
     views[name]?.classList.add('active');
     document.body.dataset.view = name;
     document.body.dataset.mode = state.isGuest ? 'guest' : 'account';
@@ -2603,6 +2606,11 @@ trackEvent('test_start', { type: state.test, package: state.package });
   }
 
   function startKraepelin() {
+    // Kraepelin uses its own keypad only; SKD navigator must stay hidden.
+    $('testView')?.classList.remove('skd-complete-mode');
+    if ($('skdQuestionNavigator')) $('skdQuestionNavigator').innerHTML = '';
+    if ($('skdControls')) $('skdControls').innerHTML = '';
+
     state.columns = Array.from(
       { length: CONFIG.KRAEPELIN_COLUMNS },
       () => Array.from({ length: 27 }, () => randomInt(10)),
@@ -2712,6 +2720,11 @@ trackEvent('test_start', { type: state.test, package: state.package });
   }
 
   async function startMCQ() {
+    // Regular psychotests must never inherit SKD Complete UI state.
+    $('testView')?.classList.remove('skd-complete-mode');
+    if ($('skdQuestionNavigator')) $('skdQuestionNavigator').innerHTML = '';
+    if ($('skdControls')) $('skdControls').innerHTML = '';
+
     state.questions = await loadQuestionPackage(
       state.test,
       state.package
