@@ -1,0 +1,808 @@
+{
+  "kategori": "TIU — Tes Intelegensi Umum",
+  "total_paket": 3,
+  "soal_per_paket": 20,
+  "paket": [
+    {
+      "id_paket": 1,
+      "nama_paket": "Paket 1",
+      "deskripsi": "Bank soal TIU — Tes Intelegensi Umum paket 1.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Sinonim kata 'KONTRIBUSI' adalah...",
+          "options": {
+            "A": "Hambatan",
+            "B": "Sumbangan",
+            "C": "Pengurangan",
+            "D": "Larangan",
+            "E": "Penolakan"
+          },
+          "answer": "B",
+          "discussion": "Kontribusi berarti sumbangan atau andil terhadap sesuatu."
+        },
+        {
+          "id": 2,
+          "question": "Sinonim kata 'ELABORASI' adalah...",
+          "options": {
+            "A": "Penyederhanaan",
+            "B": "Penjabaran secara rinci",
+            "C": "Penghapusan",
+            "D": "Pengurangan",
+            "E": "Penyembunyian"
+          },
+          "answer": "B",
+          "discussion": "Elaborasi berarti penggarapan atau penjabaran sesuatu secara tekun dan rinci."
+        },
+        {
+          "id": 3,
+          "question": "Antonim kata 'EKSPANSI' adalah...",
+          "options": {
+            "A": "Perluasan",
+            "B": "Penyempitan",
+            "C": "Pertumbuhan",
+            "D": "Pengembangan",
+            "E": "Perpanjangan"
+          },
+          "answer": "B",
+          "discussion": "Ekspansi berarti perluasan, sehingga antonimnya adalah penyempitan/kontraksi."
+        },
+        {
+          "id": 4,
+          "question": "Antonim kata 'MANDIRI' adalah...",
+          "options": {
+            "A": "Otonom",
+            "B": "Berdikari",
+            "C": "Bergantung",
+            "D": "Independen",
+            "E": "Bebas"
+          },
+          "answer": "C",
+          "discussion": "Mandiri berarti berdiri sendiri, lawan katanya adalah bergantung pada pihak lain."
+        },
+        {
+          "id": 5,
+          "question": "DOKTER : PASIEN = ... : ...",
+          "options": {
+            "A": "Guru : Sekolah",
+            "B": "Pengacara : Klien",
+            "C": "Petani : Sawah",
+            "D": "Sopir : Mobil",
+            "E": "Nelayan : Laut"
+          },
+          "answer": "B",
+          "discussion": "Dokter melayani pasien, sebagaimana pengacara melayani/mewakili kliennya."
+        },
+        {
+          "id": 6,
+          "question": "BUKU : PERPUSTAKAAN = ... : ...",
+          "options": {
+            "A": "Obat : Apotek",
+            "B": "Guru : Murid",
+            "C": "Air : Sungai",
+            "D": "Kain : Jahit",
+            "E": "Meja : Kursi"
+          },
+          "answer": "A",
+          "discussion": "Buku disimpan/tersedia di perpustakaan, sebagaimana obat tersedia di apotek."
+        },
+        {
+          "id": 7,
+          "question": "Jika semua pegawai rumah sakit wajib memakai tanda pengenal, dan Andi adalah pegawai rumah sakit, maka...",
+          "options": {
+            "A": "Andi tidak wajib memakai tanda pengenal",
+            "B": "Andi wajib memakai tanda pengenal",
+            "C": "Andi boleh memilih memakai atau tidak",
+            "D": "Tidak dapat disimpulkan",
+            "E": "Andi bukan pegawai rumah sakit"
+          },
+          "answer": "B",
+          "discussion": "Silogisme sederhana: semua pegawai wajib memakai tanda pengenal, Andi pegawai, maka Andi wajib memakainya."
+        },
+        {
+          "id": 8,
+          "question": "Semua rekam medis harus dijaga kerahasiaannya. Sebagian dokumen di ruangan ini adalah rekam medis. Kesimpulan yang tepat adalah...",
+          "options": {
+            "A": "Semua dokumen di ruangan ini harus dijaga kerahasiaannya",
+            "B": "Sebagian dokumen di ruangan ini harus dijaga kerahasiaannya",
+            "C": "Tidak ada dokumen yang harus dijaga kerahasiaannya",
+            "D": "Semua dokumen bukan rekam medis",
+            "E": "Tidak dapat disimpulkan sama sekali"
+          },
+          "answer": "B",
+          "discussion": "Karena hanya sebagian dokumen adalah rekam medis, maka hanya sebagian yang wajib dijaga kerahasiaannya."
+        },
+        {
+          "id": 9,
+          "question": "Deret angka: 3, 6, 11, 18, 27, ...",
+          "options": {
+            "A": "36",
+            "B": "38",
+            "C": "40",
+            "D": "34",
+            "E": "32"
+          },
+          "answer": "B",
+          "discussion": "Selisih berturut-turut 3,5,7,9,11 (bertambah 2), sehingga 27+11=38."
+        },
+        {
+          "id": 10,
+          "question": "Deret angka: 2, 5, 10, 17, 26, ...",
+          "options": {
+            "A": "35",
+            "B": "36",
+            "C": "37",
+            "D": "38",
+            "E": "39"
+          },
+          "answer": "C",
+          "discussion": "Selisih 3,5,7,9,11 (pola bilangan ganjil naik), sehingga 26+11=37."
+        },
+        {
+          "id": 11,
+          "question": "Deret huruf: A, C, F, J, O, ...",
+          "options": {
+            "A": "S",
+            "B": "T",
+            "C": "U",
+            "D": "R",
+            "E": "Q"
+          },
+          "answer": "C",
+          "discussion": "Loncatan huruf bertambah 2,3,4,5,6: A(+2)C(+3)F(+4)J(+5)O(+6)U."
+        },
+        {
+          "id": 12,
+          "question": "Sebuah proyek dapat diselesaikan 8 pekerja dalam 15 hari. Jika hanya tersedia 5 pekerja, waktu yang dibutuhkan adalah...",
+          "options": {
+            "A": "20 hari",
+            "B": "22 hari",
+            "C": "24 hari",
+            "D": "25 hari",
+            "E": "18 hari"
+          },
+          "answer": "C",
+          "discussion": "8x15=120 hari-orang. 120/5=24 hari."
+        },
+        {
+          "id": 13,
+          "question": "Harga sebuah barang setelah diskon 20% menjadi Rp160.000. Harga sebelum diskon adalah...",
+          "options": {
+            "A": "Rp180.000",
+            "B": "Rp192.000",
+            "C": "Rp200.000",
+            "D": "Rp210.000",
+            "E": "Rp220.000"
+          },
+          "answer": "C",
+          "discussion": "160.000 = 80% harga awal, maka harga awal = 160.000/0,8 = Rp200.000."
+        },
+        {
+          "id": 14,
+          "question": "Seorang pegawai bergaji Rp4.500.000 mendapat kenaikan 8%. Gaji baru pegawai tersebut adalah...",
+          "options": {
+            "A": "Rp4.800.000",
+            "B": "Rp4.840.000",
+            "C": "Rp4.860.000",
+            "D": "Rp4.900.000",
+            "E": "Rp5.000.000"
+          },
+          "answer": "C",
+          "discussion": "Kenaikan = 8% x 4.500.000 = 360.000, sehingga gaji baru = 4.500.000+360.000 = Rp4.860.000."
+        },
+        {
+          "id": 15,
+          "question": "Jika 3x - 7 = 20, maka nilai x adalah...",
+          "options": {
+            "A": "7",
+            "B": "8",
+            "C": "9",
+            "D": "10",
+            "E": "11"
+          },
+          "answer": "C",
+          "discussion": "3x = 27, x = 9."
+        },
+        {
+          "id": 16,
+          "question": "Perbandingan jumlah pasien rawat jalan dan rawat inap di sebuah rumah sakit adalah 5:2. Jika jumlah pasien rawat inap 40 orang, jumlah pasien rawat jalan adalah...",
+          "options": {
+            "A": "80",
+            "B": "90",
+            "C": "100",
+            "D": "110",
+            "E": "120"
+          },
+          "answer": "C",
+          "discussion": "40/2=20 (satuan perbandingan), maka rawat jalan = 5x20=100."
+        },
+        {
+          "id": 17,
+          "question": "Rata-rata nilai 5 orang peserta tes adalah 78. Jika ditambah satu peserta baru dengan nilai 90, rata-rata baru menjadi...",
+          "options": {
+            "A": "78",
+            "B": "79",
+            "C": "80",
+            "D": "81",
+            "E": "82"
+          },
+          "answer": "C",
+          "discussion": "Total awal=5x78=390, ditambah 90=480, rata-rata baru=480/6=80."
+        },
+        {
+          "id": 18,
+          "question": "Sinonim kata 'VERIFIKASI' adalah...",
+          "options": {
+            "A": "Pemeriksaan kebenaran",
+            "B": "Penghapusan data",
+            "C": "Pembuatan laporan",
+            "D": "Penyimpanan arsip",
+            "E": "Pengarsipan dokumen"
+          },
+          "answer": "A",
+          "discussion": "Verifikasi berarti proses pemeriksaan kebenaran suatu data atau pernyataan."
+        },
+        {
+          "id": 19,
+          "question": "Antonim kata 'EFEKTIF' adalah...",
+          "options": {
+            "A": "Efisien",
+            "B": "Tepat guna",
+            "C": "Sia-sia",
+            "D": "Optimal",
+            "E": "Produktif"
+          },
+          "answer": "C",
+          "discussion": "Efektif berarti berhasil guna, lawan katanya adalah sia-sia atau tidak berhasil guna."
+        },
+        {
+          "id": 20,
+          "question": "PERAWAT : RUMAH SAKIT = ... : ...",
+          "options": {
+            "A": "Guru : Sekolah",
+            "B": "Petani : Cangkul",
+            "C": "Nelayan : Jaring",
+            "D": "Sopir : SIM",
+            "E": "Polisi : Seragam"
+          },
+          "answer": "A",
+          "discussion": "Perawat bekerja di rumah sakit, sebagaimana guru bekerja di sekolah (hubungan tempat kerja)."
+        }
+      ]
+    },
+    {
+      "id_paket": 2,
+      "nama_paket": "Paket 2",
+      "deskripsi": "Bank soal TIU — Tes Intelegensi Umum paket 2.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Sinonim kata 'AKURAT' adalah...",
+          "options": {
+            "A": "Kasar",
+            "B": "Tepat",
+            "C": "Ragu",
+            "D": "Samar",
+            "E": "Longgar"
+          },
+          "answer": "B",
+          "discussion": "Akurat berarti tepat atau saksama, tidak ada kesalahan."
+        },
+        {
+          "id": 2,
+          "question": "Sinonim kata 'RELEVAN' adalah...",
+          "options": {
+            "A": "Bersangkut paut",
+            "B": "Berlawanan",
+            "C": "Terpisah",
+            "D": "Acak",
+            "E": "Kabur"
+          },
+          "answer": "A",
+          "discussion": "Relevan berarti ada kaitan atau bersangkut paut dengan hal yang sedang dibicarakan."
+        },
+        {
+          "id": 3,
+          "question": "Antonim kata 'SENTRALISASI' adalah...",
+          "options": {
+            "A": "Konsentrasi",
+            "B": "Desentralisasi",
+            "C": "Dominasi",
+            "D": "Kolaborasi",
+            "E": "Integrasi"
+          },
+          "answer": "B",
+          "discussion": "Sentralisasi (pemusatan) berlawanan dengan desentralisasi (pelimpahan wewenang ke daerah)."
+        },
+        {
+          "id": 4,
+          "question": "Antonim kata 'OTONOM' adalah...",
+          "options": {
+            "A": "Mandiri",
+            "B": "Bebas",
+            "C": "Bergantung/terikat",
+            "D": "Independen",
+            "E": "Berdaulat"
+          },
+          "answer": "C",
+          "discussion": "Otonom berarti mengatur diri sendiri, lawan katanya adalah bergantung atau terikat pihak lain."
+        },
+        {
+          "id": 5,
+          "question": "PASIEN : REKAM MEDIS = ... : ...",
+          "options": {
+            "A": "Siswa : Rapor",
+            "B": "Guru : Kelas",
+            "C": "Petani : Sawah",
+            "D": "Sopir : Bus",
+            "E": "Pembeli : Toko"
+          },
+          "answer": "A",
+          "discussion": "Rekam medis mencatat riwayat pasien, sebagaimana rapor mencatat hasil belajar siswa."
+        },
+        {
+          "id": 6,
+          "question": "KUNCI : PINTU = ... : ...",
+          "options": {
+            "A": "Password : Akun",
+            "B": "Meja : Kursi",
+            "C": "Buku : Rak",
+            "D": "Baju : Lemari",
+            "E": "Piring : Dapur"
+          },
+          "answer": "A",
+          "discussion": "Kunci digunakan untuk membuka pintu, sebagaimana password digunakan untuk mengakses akun."
+        },
+        {
+          "id": 7,
+          "question": "Semua petugas administrasi harus menguasai komputer. Rina adalah petugas administrasi. Maka...",
+          "options": {
+            "A": "Rina tidak perlu menguasai komputer",
+            "B": "Rina harus menguasai komputer",
+            "C": "Rina mungkin menguasai komputer",
+            "D": "Tidak dapat disimpulkan",
+            "E": "Rina bukan petugas administrasi"
+          },
+          "answer": "B",
+          "discussion": "Silogisme: semua petugas administrasi wajib menguasai komputer, Rina termasuk di dalamnya."
+        },
+        {
+          "id": 8,
+          "question": "Jika tidak ada berkas yang hilang maka proses klaim lancar. Proses klaim tidak lancar. Maka dapat disimpulkan...",
+          "options": {
+            "A": "Tidak ada berkas yang hilang",
+            "B": "Ada berkas yang hilang",
+            "C": "Semua berkas lengkap",
+            "D": "Proses klaim tetap berjalan normal",
+            "E": "Tidak dapat disimpulkan"
+          },
+          "answer": "B",
+          "discussion": "Modus tollens: jika P maka Q, dan Q salah, maka P juga salah (ada berkas yang hilang)."
+        },
+        {
+          "id": 9,
+          "question": "Deret angka: 4, 9, 16, 25, 36, ...",
+          "options": {
+            "A": "42",
+            "B": "45",
+            "C": "49",
+            "D": "48",
+            "E": "54"
+          },
+          "answer": "C",
+          "discussion": "Pola bilangan kuadrat: 2²,3²,4²,5²,6²,7²=49."
+        },
+        {
+          "id": 10,
+          "question": "Deret angka: 100, 90, 81, 73, 66, ...",
+          "options": {
+            "A": "58",
+            "B": "59",
+            "C": "60",
+            "D": "61",
+            "E": "62"
+          },
+          "answer": "C",
+          "discussion": "Selisih berkurang 10,9,8,7,6, sehingga 66-6=60."
+        },
+        {
+          "id": 11,
+          "question": "Deret huruf: B, D, G, K, P, ...",
+          "options": {
+            "A": "U",
+            "B": "T",
+            "C": "V",
+            "D": "W",
+            "E": "S"
+          },
+          "answer": "C",
+          "discussion": "Loncatan bertambah 2,3,4,5,6: B(+2)D(+3)G(+4)K(+5)P(+6)V."
+        },
+        {
+          "id": 12,
+          "question": "6 orang petugas dapat menyelesaikan input data dalam 10 hari. Jika ditambah menjadi 15 petugas, waktu yang dibutuhkan adalah...",
+          "options": {
+            "A": "3 hari",
+            "B": "4 hari",
+            "C": "5 hari",
+            "D": "6 hari",
+            "E": "7 hari"
+          },
+          "answer": "B",
+          "discussion": "6x10=60 hari-orang, 60/15=4 hari."
+        },
+        {
+          "id": 13,
+          "question": "Sebuah barang dijual dengan harga Rp250.000 setelah mendapat untung 25% dari harga beli. Harga beli barang tersebut adalah...",
+          "options": {
+            "A": "Rp187.500",
+            "B": "Rp190.000",
+            "C": "Rp195.000",
+            "D": "Rp200.000",
+            "E": "Rp210.000"
+          },
+          "answer": "D",
+          "discussion": "Harga jual = 125% harga beli, maka harga beli = 250.000/1,25 = Rp200.000."
+        },
+        {
+          "id": 14,
+          "question": "Jika 2(x+3) = 5x - 6, maka nilai x adalah...",
+          "options": {
+            "A": "3",
+            "B": "4",
+            "C": "5",
+            "D": "6",
+            "E": "7"
+          },
+          "answer": "B",
+          "discussion": "2x+6=5x-6 → 12=3x → x=4."
+        },
+        {
+          "id": 15,
+          "question": "Perbandingan jumlah tenaga administrasi dan tenaga medis di sebuah puskesmas adalah 3:7. Jika total pegawai 50 orang, jumlah tenaga medis adalah...",
+          "options": {
+            "A": "30",
+            "B": "32",
+            "C": "35",
+            "D": "38",
+            "E": "40"
+          },
+          "answer": "C",
+          "discussion": "50/10=5 (satuan), tenaga medis=7x5=35 orang."
+        },
+        {
+          "id": 16,
+          "question": "Nilai rata-rata ujian 4 mata pelajaran adalah 82. Jika nilai satu mata pelajaran adalah 70, rata-rata 3 mata pelajaran lainnya adalah...",
+          "options": {
+            "A": "84",
+            "B": "86",
+            "C": "88",
+            "D": "90",
+            "E": "92"
+          },
+          "answer": "B",
+          "discussion": "Total 4 mapel=4x82=328, dikurangi 70=258, rata-rata 3 mapel=258/3=86."
+        },
+        {
+          "id": 17,
+          "question": "Sinonim kata 'TRANSPARAN' adalah...",
+          "options": {
+            "A": "Tertutup",
+            "B": "Terbuka/jelas",
+            "C": "Samar",
+            "D": "Rahasia",
+            "E": "Rumit"
+          },
+          "answer": "B",
+          "discussion": "Transparan berarti tembus pandang/terbuka, tidak disembunyikan."
+        },
+        {
+          "id": 18,
+          "question": "Antonim kata 'KONSISTEN' adalah...",
+          "options": {
+            "A": "Stabil",
+            "B": "Tetap",
+            "C": "Berubah-ubah",
+            "D": "Teratur",
+            "E": "Disiplin"
+          },
+          "answer": "C",
+          "discussion": "Konsisten berarti tetap/ajek, lawan katanya adalah berubah-ubah."
+        },
+        {
+          "id": 19,
+          "question": "Semua dokumen rahasia disimpan dalam lemari terkunci. Map biru ini disimpan dalam lemari terkunci. Kesimpulan yang PALING TEPAT adalah...",
+          "options": {
+            "A": "Map biru pasti dokumen rahasia",
+            "B": "Map biru mungkin dokumen rahasia, tidak pasti",
+            "C": "Map biru bukan dokumen rahasia",
+            "D": "Semua map biru rahasia",
+            "E": "Tidak ada map biru di lemari"
+          },
+          "answer": "B",
+          "discussion": "Premis tidak menjamin bahwa hanya dokumen rahasia yang disimpan di lemari terkunci, jadi tidak bisa dipastikan."
+        },
+        {
+          "id": 20,
+          "question": "APOTEKER : OBAT = ... : ...",
+          "options": {
+            "A": "Pustakawan : Buku",
+            "B": "Petani : Traktor",
+            "C": "Sopir : Jalan",
+            "D": "Nelayan : Perahu",
+            "E": "Tukang kayu : Palu"
+          },
+          "answer": "A",
+          "discussion": "Apoteker mengelola obat, sebagaimana pustakawan mengelola buku."
+        }
+      ]
+    },
+    {
+      "id_paket": 3,
+      "nama_paket": "Paket 3",
+      "deskripsi": "Bank soal TIU — Tes Intelegensi Umum paket 3.",
+      "soal": [
+        {
+          "id": 1,
+          "question": "Sinonim kata 'SIGNIFIKAN' adalah...",
+          "options": {
+            "A": "Kecil",
+            "B": "Penting/berarti",
+            "C": "Samar",
+            "D": "Sederhana",
+            "E": "Meragukan"
+          },
+          "answer": "B",
+          "discussion": "Signifikan berarti penting atau berarti secara nyata."
+        },
+        {
+          "id": 2,
+          "question": "Sinonim kata 'INISIATIF' adalah...",
+          "options": {
+            "A": "Perintah",
+            "B": "Kepatuhan",
+            "C": "Prakarsa",
+            "D": "Penundaan",
+            "E": "Larangan"
+          },
+          "answer": "C",
+          "discussion": "Inisiatif berarti prakarsa atau langkah pertama untuk melakukan sesuatu."
+        },
+        {
+          "id": 3,
+          "question": "Antonim kata 'KOOPERATIF' adalah...",
+          "options": {
+            "A": "Kolaboratif",
+            "B": "Suportif",
+            "C": "Tidak mau bekerja sama",
+            "D": "Ramah",
+            "E": "Terbuka"
+          },
+          "answer": "C",
+          "discussion": "Kooperatif berarti mau bekerja sama, lawan katanya adalah tidak mau bekerja sama/bersikap non-kooperatif."
+        },
+        {
+          "id": 4,
+          "question": "Antonim kata 'EKSPLISIT' adalah...",
+          "options": {
+            "A": "Jelas",
+            "B": "Gamblang",
+            "C": "Implisit/tersirat",
+            "D": "Terang-terangan",
+            "E": "Rinci"
+          },
+          "answer": "C",
+          "discussion": "Eksplisit berarti dinyatakan secara jelas/tegas, lawan katanya implisit (tersirat)."
+        },
+        {
+          "id": 5,
+          "question": "BENIH : POHON = ... : ...",
+          "options": {
+            "A": "Telur : Ayam",
+            "B": "Air : Sungai",
+            "C": "Batu : Gunung",
+            "D": "Kayu : Meja",
+            "E": "Kertas : Buku"
+          },
+          "answer": "A",
+          "discussion": "Benih tumbuh menjadi pohon, sebagaimana telur menetas menjadi ayam (hubungan asal-hasil)."
+        },
+        {
+          "id": 6,
+          "question": "RESEP : OBAT = ... : ...",
+          "options": {
+            "A": "Cetak biru : Bangunan",
+            "B": "Meja : Kursi",
+            "C": "Buku : Rak",
+            "D": "Guru : Murid",
+            "E": "Piring : Sendok"
+          },
+          "answer": "A",
+          "discussion": "Resep menjadi dasar pembuatan/pemberian obat, sebagaimana cetak biru menjadi dasar pembangunan gedung."
+        },
+        {
+          "id": 7,
+          "question": "Semua berkas klaim yang lengkap akan diproses dalam 3 hari. Berkas si A diproses lebih dari 3 hari. Maka dapat disimpulkan...",
+          "options": {
+            "A": "Berkas si A lengkap",
+            "B": "Berkas si A kemungkinan tidak lengkap",
+            "C": "Semua berkas pasti lengkap",
+            "D": "Berkas si A diproses tercepat",
+            "E": "Tidak ada hubungan sama sekali"
+          },
+          "answer": "B",
+          "discussion": "Karena diproses lebih dari 3 hari, kemungkinan berkas si A tidak memenuhi syarat lengkap."
+        },
+        {
+          "id": 8,
+          "question": "Jika hujan turun maka jalan menjadi licin. Jalan tidak licin. Maka dapat disimpulkan...",
+          "options": {
+            "A": "Hujan turun",
+            "B": "Hujan tidak turun",
+            "C": "Jalan basah",
+            "D": "Tidak dapat disimpulkan",
+            "E": "Semua jalan licin"
+          },
+          "answer": "B",
+          "discussion": "Modus tollens: jika P maka Q, Q salah (tidak licin), maka P salah (hujan tidak turun)."
+        },
+        {
+          "id": 9,
+          "question": "Deret angka: 5, 10, 8, 16, 14, 28, ...",
+          "options": {
+            "A": "24",
+            "B": "26",
+            "C": "56",
+            "D": "30",
+            "E": "22"
+          },
+          "answer": "B",
+          "discussion": "Pola berselang: x2 lalu -2: 5x2=10, 10-2=8, 8x2=16, 16-2=14, 14x2=28, 28-2=26."
+        },
+        {
+          "id": 10,
+          "question": "Deret angka: 1, 4, 9, 16, 25, ...",
+          "options": {
+            "A": "30",
+            "B": "32",
+            "C": "36",
+            "D": "40",
+            "E": "49"
+          },
+          "answer": "C",
+          "discussion": "Pola bilangan kuadrat 1²,2²,3²,4²,5²,6²=36."
+        },
+        {
+          "id": 11,
+          "question": "Deret huruf: Z, X, U, Q, L, ...",
+          "options": {
+            "A": "H",
+            "B": "G",
+            "C": "F",
+            "D": "E",
+            "E": "D"
+          },
+          "answer": "C",
+          "discussion": "Mundur dengan loncatan bertambah 2,3,4,5,6: Z(-2)X(-3)U(-4)Q(-5)L(-6)F."
+        },
+        {
+          "id": 12,
+          "question": "Perbandingan gaji A dan B adalah 4:5. Jika gaji A adalah Rp3.200.000, maka gaji B adalah...",
+          "options": {
+            "A": "Rp3.400.000",
+            "B": "Rp3.600.000",
+            "C": "Rp3.800.000",
+            "D": "Rp4.000.000",
+            "E": "Rp4.200.000"
+          },
+          "answer": "D",
+          "discussion": "3.200.000/4=800.000 (satuan), gaji B=5x800.000=Rp4.000.000."
+        },
+        {
+          "id": 13,
+          "question": "Suatu pekerjaan selesai dalam 12 hari oleh 4 orang. Agar selesai dalam 6 hari, jumlah pekerja yang dibutuhkan adalah...",
+          "options": {
+            "A": "6 orang",
+            "B": "7 orang",
+            "C": "8 orang",
+            "D": "9 orang",
+            "E": "10 orang"
+          },
+          "answer": "C",
+          "discussion": "4x12=48 hari-orang, 48/6=8 orang."
+        },
+        {
+          "id": 14,
+          "question": "Sebuah barang dibeli Rp150.000 lalu dijual dengan kerugian 10%. Harga jual barang tersebut adalah...",
+          "options": {
+            "A": "Rp120.000",
+            "B": "Rp125.000",
+            "C": "Rp130.000",
+            "D": "Rp135.000",
+            "E": "Rp140.000"
+          },
+          "answer": "D",
+          "discussion": "Harga jual = 90% x 150.000 = Rp135.000."
+        },
+        {
+          "id": 15,
+          "question": "Jika 5x + 4 = 3x + 14, maka nilai x adalah...",
+          "options": {
+            "A": "3",
+            "B": "4",
+            "C": "5",
+            "D": "6",
+            "E": "7"
+          },
+          "answer": "C",
+          "discussion": "5x-3x=14-4 → 2x=10 → x=5."
+        },
+        {
+          "id": 16,
+          "question": "Rata-rata usia 6 orang pegawai adalah 30 tahun. Jika satu pegawai berusia 40 tahun keluar, rata-rata usia 5 pegawai sisanya adalah...",
+          "options": {
+            "A": "26",
+            "B": "27",
+            "C": "28",
+            "D": "29",
+            "E": "30"
+          },
+          "answer": "C",
+          "discussion": "Total awal=6x30=180, dikurangi 40=140, rata-rata baru=140/5=28."
+        },
+        {
+          "id": 17,
+          "question": "Sinonim kata 'FLUKTUATIF' adalah...",
+          "options": {
+            "A": "Stabil",
+            "B": "Naik turun/tidak tetap",
+            "C": "Konstan",
+            "D": "Tetap",
+            "E": "Seimbang"
+          },
+          "answer": "B",
+          "discussion": "Fluktuatif berarti kondisinya naik turun atau tidak tetap."
+        },
+        {
+          "id": 18,
+          "question": "Antonim kata 'SENTRAL' adalah...",
+          "options": {
+            "A": "Pusat",
+            "B": "Utama",
+            "C": "Pinggiran/perifer",
+            "D": "Inti",
+            "E": "Fokus"
+          },
+          "answer": "C",
+          "discussion": "Sentral berarti pusat/inti, lawan katanya adalah pinggiran atau perifer."
+        },
+        {
+          "id": 19,
+          "question": "Semua tenaga rekam medis wajib menjaga kerahasiaan pasien. Sebagian tenaga rekam medis bertugas di bagian filing. Kesimpulan yang tepat adalah...",
+          "options": {
+            "A": "Semua tenaga di bagian filing wajib menjaga kerahasiaan",
+            "B": "Sebagian tenaga di bagian filing wajib menjaga kerahasiaan",
+            "C": "Tidak ada tenaga filing yang menjaga kerahasiaan",
+            "D": "Semua tenaga rekam medis bertugas di filing",
+            "E": "Tidak dapat disimpulkan sama sekali"
+          },
+          "answer": "A",
+          "discussion": "Karena tenaga filing adalah bagian dari tenaga rekam medis, dan semua tenaga rekam medis wajib menjaga kerahasiaan, maka semua tenaga filing juga wajib menjaganya."
+        },
+        {
+          "id": 20,
+          "question": "PASIEN : POLIKLINIK = ... : ...",
+          "options": {
+            "A": "Nasabah : Bank",
+            "B": "Guru : Buku",
+            "C": "Petani : Cangkul",
+            "D": "Sopir : Bus",
+            "E": "Koki : Dapur"
+          },
+          "answer": "A",
+          "discussion": "Pasien datang berkunjung ke poliklinik untuk dilayani, sebagaimana nasabah datang ke bank untuk dilayani."
+        }
+      ]
+    }
+  ]
+}

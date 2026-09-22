@@ -2923,7 +2923,6 @@ body {
 /* The new application shell replaces the old centered dashboard shell. */
 .app-layout { display: none; min-height: 100dvh; }
 body[data-view="dashboard"] .app-layout,
-body[data-view="skd"] .app-layout,
 body[data-view="history"] .app-layout,
 body[data-view="instruction"] .app-layout,
 body[data-view="result"] .app-layout,
@@ -3194,29 +3193,4 @@ body[data-view="admin"] .app-layout {
 }
 body[data-view="admin"] .app-layout .content {
   max-width: 1220px;
-}
-
-/* ---------- SKD start controls ---------- */
-.skd-start-row {
-  display: grid;
-  grid-template-columns: minmax(110px, 150px) 1fr;
-  gap: 8px;
-  margin-top: auto;
-}
-
-.skd-start-row .package-select {
-  width: 100%;
-  min-width: 0;
-  padding: 9px 10px;
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
-  background: var(--surface);
-  color: var(--text);
-  font: inherit;
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
-@media (max-width: 520px) {
-  .skd-start-row { grid-template-columns: 1fr; }
 }

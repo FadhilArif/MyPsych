@@ -1,646 +1,922 @@
 <!doctype html>
 <html lang="id">
 <head>
-  
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f8fc"><meta name="description" content="Latihan psikotes multi-tes">
-<title>Psychotest Practice — Latihan Psikotes</title><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="landing.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5f8fc">
+  <meta name="description" content="MyPsych — latihan psikotes gratis">
+  <title>MyPsych — Latihan Psikotes</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='34' fill='%232f7df2'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/landing.css">
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
-<main class="app-shell">
-<section id="landingView" class="screen active"><div class="lp-shell">
-
-  <!-- NAVBAR -->
-  <nav class="lp-navbar">
-    <div class="lp-container lp-navbar-inner">
-      <a href="#" class="lp-brand">
-        <span class="lp-brand-dot"></span>
-        <span>MyPsych</span>
-      </a>
-      <div class="lp-nav-links">
-        <a href="#lp-kraepelin">Kraepelin</a>
-        <a href="#lp-kategori">Kategori</a>
-        <a href="#lp-fitur">Fitur</a>
-       <a data-goto="about" style="cursor:pointer;">Tentang</a>
-        <a href="#lp-faq">FAQ</a>
-      </div>
-      <div class="lp-nav-actions">
-        <button id="landingLoginBtn" class="lp-btn-ghost">Masuk</button>
-        <button id="landingRegisterBtn" class="lp-btn-primary">Daftar</button>
-      </div>
-    </div>
-  </nav>
-
-    <!-- HERO -->
-  <section class="lp-hero">
-    <div class="lp-container lp-hero-grid">
-      <div class="lp-hero-copy">
-        <span class="lp-badge-pill">
-          <span class="lp-badge-dot"></span>
+<section class="screen active" id="landingView"><div class="lp-shell">
+<!-- NAVBAR -->
+<nav class="lp-navbar">
+<div class="lp-container lp-navbar-inner">
+<a class="lp-brand" href="#">
+<span class="lp-brand-dot"></span>
+<span>MyPsych</span>
+</a>
+<div class="lp-nav-links">
+<a href="#lp-kraepelin">Kraepelin</a>
+<a href="#lp-kategori">Kategori</a>
+<a href="#lp-fitur">Fitur</a>
+<a data-goto="about" style="cursor:pointer;">Tentang</a>
+<a href="#lp-faq">FAQ</a>
+</div>
+<div class="lp-nav-actions">
+<button class="lp-btn-ghost" id="landingLoginBtn">Masuk</button>
+<button class="lp-btn-primary" id="landingRegisterBtn">Daftar</button>
+</div>
+</div>
+</nav>
+<!-- HERO -->
+<section class="lp-hero">
+<div class="lp-container lp-hero-grid">
+<div class="lp-hero-copy">
+<span class="lp-badge-pill">
+<span class="lp-badge-dot"></span>
           100% Gratis · Tanpa Paywall
         </span>
-        <h1>Latihan setiap hari, <br><span class="lp-text-blue">pantau perkembanganmu</span> sampai lulus.</h1>
-        <p class="lp-hero-sub">
+<h1>Latihan setiap hari, <br/><span class="lp-text-blue">pantau perkembanganmu</span> sampai lulus.</h1>
+<p class="lp-hero-sub">
           Gratis, tanpa paywall. Tanpa kartu kredit. Tanpa batas.
           Laporan PDF dan grafik performa untuk setiap latihan — termasuk Kraepelin.
         </p>
-        <div class="lp-hero-cta">
-          <button id="landingRegisterBtnHero" class="lp-btn-primary lp-btn-lg">Mulai Latihan Gratis →</button>
-          <button id="landingGuestBtnHero" class="lp-btn-secondary lp-btn-lg">Coba sebagai Tamu</button>
-        </div>
-        <p class="lp-hero-note">
+<div class="lp-hero-cta">
+<button class="lp-btn-primary lp-btn-lg" id="landingRegisterBtnHero">Mulai Latihan Gratis →</button>
+<button class="lp-btn-secondary lp-btn-lg" id="landingGuestBtnHero">Coba sebagai Tamu</button>
+</div>
+<p class="lp-hero-note">
           Sudah dipercaya <strong data-stat="users">[X]</strong> peserta · <strong data-stat="tests">[Y]</strong> tes dikerjakan
         </p>
-      </div>
-
-      <div class="lp-hero-visual">
-        <div class="lp-mockup-browser">
-          <div class="lp-mockup-toolbar">
-            <span class="lp-toolbar-dot red"></span>
-            <span class="lp-toolbar-dot yellow"></span>
-            <span class="lp-toolbar-dot green"></span>
-            <span class="lp-mockup-url">my-psych-five.vercel.app</span>
-          </div>
-          <div class="lp-mockup-content">
-            <div class="lp-mockup-header">
-              <span class="lp-mockup-brand">🧠 MyPsych</span>
-              <span class="lp-mockup-user">Nama Kamu</span>
-            </div>
-            <div class="lp-mockup-greeting">
-              <span class="lp-mockup-eyebrow">HOME</span>
-              <h4>Pilih latihan yang mau kamu kerjakan.</h4>
-            </div>
-            <div class="lp-mockup-stats">
-              <div class="lp-mockup-stat">
-                <span class="lp-mockup-stat-label">Total tes</span>
-                <strong>24</strong>
-              </div>
-              <div class="lp-mockup-stat">
-                <span class="lp-mockup-stat-label">Skor terakhir</span>
-                <strong>85%</strong>
-              </div>
-              <div class="lp-mockup-stat">
-                <span class="lp-mockup-stat-label">Kecepatan</span>
-                <strong>92%</strong>
-              </div>
-            </div>
-            <div class="lp-mockup-chart">
-              <div class="lp-mockup-chart-head">
-                <span class="lp-mockup-chart-title">Perkembangan Skor</span>
-                <span class="lp-mockup-chart-badge">30 hari</span>
-              </div>
-              <div class="lp-mockup-chart-bars">
-                <div class="lp-mockup-bar" style="--h:42%"></div>
-                <div class="lp-mockup-bar" style="--h:58%"></div>
-                <div class="lp-mockup-bar" style="--h:52%"></div>
-                <div class="lp-mockup-bar" style="--h:72%"></div>
-                <div class="lp-mockup-bar" style="--h:78%"></div>
-                <div class="lp-mockup-bar" style="--h:84%"></div>
-                <div class="lp-mockup-bar lp-mockup-bar-current" style="--h:92%"></div>
-              </div>
-              <div class="lp-mockup-chart-labels">
-                <span>Mgg 1</span><span>Mgg 2</span><span>Mgg 3</span><span>Mgg 4</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="lp-mockup-glow"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TRUST BAR -->
-  <section class="lp-trust-bar">
-   <div class="lp-container lp-trust-grid">
-  <div class="lp-trust-item"><strong data-stat="users">…</strong><span>Peserta aktif</span></div>
-  <div class="lp-trust-item"><strong data-stat="tests">…</strong><span>Tes dikerjakan</span></div>
-  <div class="lp-trust-item"><strong data-stat="questions">…</strong><span>Soal tersedia</span></div>
-  <div class="lp-trust-item"><strong>∞</strong><span>Gratis selamanya</span></div>
 </div>
-  </section>
-
-  <!-- KRAEPELIN HIGHLIGHT -->
-  <section class="lp-kraepelin" id="lp-kraepelin">
-    <div class="lp-container lp-kraepelin-grid">
-      <div>
-        <span class="lp-badge-hot">🔥 TES ANDALAN</span>
-        <h2>Kraepelin. <br>50 kolom. 13 menit. <span class="lp-text-blue">Siap?</span></h2>
-        <p>
+<div class="lp-hero-visual">
+<div class="lp-mockup-browser">
+<div class="lp-mockup-toolbar">
+<span class="lp-toolbar-dot red"></span>
+<span class="lp-toolbar-dot yellow"></span>
+<span class="lp-toolbar-dot green"></span>
+<span class="lp-mockup-url">my-psych-five.vercel.app</span>
+</div>
+<div class="lp-mockup-content">
+<div class="lp-mockup-header">
+<span class="lp-mockup-brand"> MyPsych</span>
+<span class="lp-mockup-user">Nama Kamu</span>
+</div>
+<div class="lp-mockup-greeting">
+<span class="lp-mockup-eyebrow">HOME</span>
+<h4>Pilih latihan yang mau kamu kerjakan.</h4>
+</div>
+<div class="lp-mockup-stats">
+<div class="lp-mockup-stat">
+<span class="lp-mockup-stat-label">Total tes</span>
+<strong>24</strong>
+</div>
+<div class="lp-mockup-stat">
+<span class="lp-mockup-stat-label">Skor terakhir</span>
+<strong>85%</strong>
+</div>
+<div class="lp-mockup-stat">
+<span class="lp-mockup-stat-label">Kecepatan</span>
+<strong>92%</strong>
+</div>
+</div>
+<div class="lp-mockup-chart">
+<div class="lp-mockup-chart-head">
+<span class="lp-mockup-chart-title">Perkembangan Skor</span>
+<span class="lp-mockup-chart-badge">30 hari</span>
+</div>
+<div class="lp-mockup-chart-bars">
+<div class="lp-mockup-bar" style="--h:42%"></div>
+<div class="lp-mockup-bar" style="--h:58%"></div>
+<div class="lp-mockup-bar" style="--h:52%"></div>
+<div class="lp-mockup-bar" style="--h:72%"></div>
+<div class="lp-mockup-bar" style="--h:78%"></div>
+<div class="lp-mockup-bar" style="--h:84%"></div>
+<div class="lp-mockup-bar lp-mockup-bar-current" style="--h:92%"></div>
+</div>
+<div class="lp-mockup-chart-labels">
+<span>Mgg 1</span><span>Mgg 2</span><span>Mgg 3</span><span>Mgg 4</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lp-mockup-glow"></div>
+</div>
+</div>
+</section>
+<!-- TRUST BAR -->
+<section class="lp-trust-bar">
+<div class="lp-container lp-trust-grid">
+<div class="lp-trust-item"><strong data-stat="users">…</strong><span>Peserta aktif</span></div>
+<div class="lp-trust-item"><strong data-stat="tests">…</strong><span>Tes dikerjakan</span></div>
+<div class="lp-trust-item"><strong data-stat="questions">…</strong><span>Soal tersedia</span></div>
+<div class="lp-trust-item"><strong>∞</strong><span>Gratis selamanya</span></div>
+</div>
+</section>
+<!-- KRAEPELIN HIGHLIGHT -->
+<section class="lp-kraepelin" id="lp-kraepelin">
+<div class="lp-container lp-kraepelin-grid">
+<div>
+<span class="lp-badge-hot"> TES ANDALAN</span>
+<h2>Kraepelin. <br/>50 kolom. 13 menit. <span class="lp-text-blue">Siap?</span></h2>
+<p>
           Tes paling ditakuti di seleksi kerja Indonesia. Lima puluh kolom angka
           yang harus kamu jumlahkan dengan ritme cepat. Latih kecepatan,
           ketelitian, konsistensi, dan ketahanan mentalmu di sini —
           gratis, tanpa batas.
         </p>
-        <ul class="lp-kraepelin-stats">
-          <li><span class="lp-stat-num">50</span> kolom × 26 soal</li>
-          <li><span class="lp-stat-num">15</span> detik per soal</li>
-          <li><span class="lp-stat-num">4</span> dimensi analisis</li>
-        </ul>
-        <button id="landingRegisterBtnKraepelin" class="lp-btn-primary lp-btn-lg">Coba Kraepelin Sekarang →</button>
-      </div>
-
-      <div class="lp-kraepelin-visual">
-        <div class="lp-kraepelin-card">
-          <div class="lp-kraepelin-card-top">
-            <span class="lp-kraepelin-label">JUMLAHKAN</span>
-            <span class="lp-kraepelin-timer">
-              <span class="lp-timer-value">15</span><span class="lp-timer-unit">s</span>
-            </span>
-          </div>
-          <div class="lp-kraepelin-numbers">
-            <div class="lp-kraepelin-num">7</div>
-            <div class="lp-kraepelin-op">+</div>
-            <div class="lp-kraepelin-num">8</div>
-            <div class="lp-kraepelin-op">=</div>
-            <div class="lp-kraepelin-input"><span class="lp-cursor"></span></div>
-          </div>
-          <div class="lp-kraepelin-progress"><div class="lp-kraepelin-progress-fill"></div></div>
-          <div class="lp-kraepelin-footer">
-            <span>Soal 12 / 26</span>
-            <span>Kolom 3 / 50</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- KATEGORI -->
-  <section class="lp-categories" id="lp-kategori">
-    <div class="lp-container">
-      <div class="lp-section-head">
-        <span class="lp-section-eyebrow">KATEGORI TES</span>
-        <h2>Pilih sesuai kebutuhanmu.</h2>
-        <p class="lp-section-sub">
+<ul class="lp-kraepelin-stats">
+<li><span class="lp-stat-num">50</span> kolom × 26 soal</li>
+<li><span class="lp-stat-num">15</span> detik per soal</li>
+<li><span class="lp-stat-num">4</span> dimensi analisis</li>
+</ul>
+<button class="lp-btn-primary lp-btn-lg" id="landingRegisterBtnKraepelin">Coba Kraepelin Sekarang →</button>
+</div>
+<div class="lp-kraepelin-visual">
+<div class="lp-kraepelin-card">
+<div class="lp-kraepelin-card-top">
+<span class="lp-kraepelin-label">JUMLAHKAN</span>
+<span class="lp-kraepelin-timer">
+<span class="lp-timer-value">15</span><span class="lp-timer-unit">s</span>
+</span>
+</div>
+<div class="lp-kraepelin-numbers">
+<div class="lp-kraepelin-num">7</div>
+<div class="lp-kraepelin-op">+</div>
+<div class="lp-kraepelin-num">8</div>
+<div class="lp-kraepelin-op">=</div>
+<div class="lp-kraepelin-input"><span class="lp-cursor"></span></div>
+</div>
+<div class="lp-kraepelin-progress"><div class="lp-kraepelin-progress-fill"></div></div>
+<div class="lp-kraepelin-footer">
+<span>Soal 12 / 26</span>
+<span>Kolom 3 / 50</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- KATEGORI -->
+<section class="lp-categories" id="lp-kategori">
+<div class="lp-container">
+<div class="lp-section-head">
+<span class="lp-section-eyebrow">KATEGORI TES</span>
+<h2>Pilih sesuai kebutuhanmu.</h2>
+<p class="lp-section-sub">
           Empat kategori tes untuk membantu kamu siap menghadapi berbagai jenis
           seleksi kerja. Semua gratis, semua bisa diulang tanpa batas.
         </p>
-      </div>
-      <div class="lp-category-grid">
-        <article class="lp-category-card lp-category-active">
-          <div class="lp-category-icon">🧮</div>
-          <h3>Tes Andalan</h3>
-          <p>Kraepelin — tes ritme kerja paling ikonik di seleksi Indonesia.</p>
-          <div class="lp-category-meta">
-            <span class="lp-category-count">1 tes</span>
-            <span>13 menit</span>
-          </div>
-          <span class="lp-category-link">Jelajahi →</span>
-        </article>
+</div>
+<div class="lp-category-grid">
+<article class="lp-category-card lp-category-active">
 
-        <article class="lp-category-card lp-category-active">
-          <div class="lp-category-icon">🧠</div>
-          <h3>Tes Penalaran</h3>
-          <p>Kuantitatif, Numerical, Verbal, Silogisme, Analogi, Kognitif.</p>
-          <div class="lp-category-meta">
-            <span class="lp-category-count">6 tes</span>
-            <span>10–15 menit</span>
-          </div>
-          <span class="lp-category-link">Jelajahi →</span>
-        </article>
+<h3>Tes Andalan</h3>
+<p>Kraepelin — tes ritme kerja paling ikonik di seleksi Indonesia.</p>
+<div class="lp-category-meta">
+<span class="lp-category-count">1 tes</span>
+<span>13 menit</span>
+</div>
+<span class="lp-category-link">Jelajahi →</span>
+</article>
+<article class="lp-category-card lp-category-active">
 
-        <article class="lp-category-card lp-category-coming">
-          <span class="lp-badge-coming">SEGERA</span>
-          <div class="lp-category-icon">🧩</div>
-          <h3>Tes Kepribadian</h3>
-          <p>Kenali gayamu lewat DISC mini dan RIASEC mini.</p>
-          <div class="lp-category-meta">
-            <span class="lp-category-count">—</span>
-            <span>Coming Soon</span>
-          </div>
-         <button type="button" class="lp-category-link" data-interest="kepribadian" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;">Beri tahu saya →</button>
-        </article>
+<h3>Tes Penalaran</h3>
+<p>Kuantitatif, Numerical, Verbal, Silogisme, Analogi, Kognitif.</p>
+<div class="lp-category-meta">
+<span class="lp-category-count">6 tes</span>
+<span>10–15 menit</span>
+</div>
+<span class="lp-category-link">Jelajahi →</span>
+</article>
+<article class="lp-category-card lp-category-coming">
+<span class="lp-badge-coming">SEGERA</span>
 
-        <article class="lp-category-card lp-category-coming">
-          <span class="lp-badge-coming">SEGERA</span>
-          <div class="lp-category-icon">⚖️</div>
-          <h3>Tes Situasional</h3>
-          <p>Situational Judgement dan Etika Kerja untuk posisi manajerial.</p>
-          <div class="lp-category-meta">
-            <span class="lp-category-count">—</span>
-            <span>Coming Soon</span>
-          </div>
-         <button type="button" class="lp-category-link" data-interest="situasional" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;">Beri tahu saya →</button>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- FITUR UNGGULAN -->
-  <section class="lp-features" id="lp-fitur">
-    <div class="lp-container">
-      <div class="lp-section-head">
-        <span class="lp-section-eyebrow">YANG MEMBEDAKAN</span>
-        <h2>Bukan cuma tes — tapi alat latihan.</h2>
-        <p class="lp-section-sub">
+<h3>Tes Kepribadian</h3>
+<p>Kenali gayamu lewat DISC mini dan RIASEC mini.</p>
+<div class="lp-category-meta">
+<span class="lp-category-count">—</span>
+<span>Coming Soon</span>
+</div>
+<button class="lp-category-link" data-interest="kepribadian" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;" type="button">Beri tahu saya →</button>
+</article>
+<article class="lp-category-card lp-category-coming">
+<span class="lp-badge-coming">SEGERA</span>
+<div class="lp-category-icon">️</div>
+<h3>Tes Situasional</h3>
+<p>Situational Judgement dan Etika Kerja untuk posisi manajerial.</p>
+<div class="lp-category-meta">
+<span class="lp-category-count">—</span>
+<span>Coming Soon</span>
+</div>
+<button class="lp-category-link" data-interest="situasional" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;" type="button">Beri tahu saya →</button>
+</article>
+</div>
+</div>
+</section>
+<!-- FITUR UNGGULAN -->
+<section class="lp-features" id="lp-fitur">
+<div class="lp-container">
+<div class="lp-section-head">
+<span class="lp-section-eyebrow">YANG MEMBEDAKAN</span>
+<h2>Bukan cuma tes — tapi alat latihan.</h2>
+<p class="lp-section-sub">
           Setiap latihan tercatat, setiap perkembangan terlihat. Semua tanpa biaya.
         </p>
-      </div>
-      <div class="lp-feature-grid">
-        <div class="lp-feature-card">
-          <div class="lp-feature-icon">📈</div>
-          <h3>Tracking Progres</h3>
-          <p>Lihat skormu naik dari minggu ke minggu. Setiap latihan tercatat otomatis di akunmu.</p>
-        </div>
-        <div class="lp-feature-card">
-          <div class="lp-feature-icon">📄</div>
-          <h3>Laporan PDF</h3>
-          <p>Gratis, tanpa watermark. Bisa langsung dilampirkan ke CV atau portofolio lamaranmu.</p>
-        </div>
-        <div class="lp-feature-card">
-          <div class="lp-feature-icon">📊</div>
-          <h3>Grafik 4 Dimensi</h3>
-          <p>Kecepatan, ketelitian, konsistensi, dan ketahanan — empat dimensi dalam satu grafik.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+</div>
+<div class="lp-feature-grid">
+<div class="lp-feature-card">
 
-  <!-- PREVIEW HASIL -->
-  <section class="lp-preview-result">
-    <div class="lp-container lp-preview-grid">
-      <div class="lp-preview-copy">
-        <span class="lp-section-eyebrow">SETELAH 4× LATIHAN</span>
-        <h2>Perkembanganmu, dalam satu grafik.</h2>
-        <p>
+<h3>Tracking Progres</h3>
+<p>Lihat skormu naik dari minggu ke minggu. Setiap latihan tercatat otomatis di akunmu.</p>
+</div>
+<div class="lp-feature-card">
+
+<h3>Laporan PDF</h3>
+<p>Gratis, tanpa watermark. Bisa langsung dilampirkan ke CV atau portofolio lamaranmu.</p>
+</div>
+<div class="lp-feature-card">
+
+<h3>Grafik 4 Dimensi</h3>
+<p>Kecepatan, ketelitian, konsistensi, dan ketahanan — empat dimensi dalam satu grafik.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- PREVIEW HASIL -->
+<section class="lp-preview-result">
+<div class="lp-container lp-preview-grid">
+<div class="lp-preview-copy">
+<span class="lp-section-eyebrow">SETELAH 4× LATIHAN</span>
+<h2>Perkembanganmu, dalam satu grafik.</h2>
+<p>
           Skor Kraepelin naik dari <strong>35%</strong> → <strong>60%</strong> →
           <strong>72%</strong> → <strong>85%</strong> dalam sebulan.
           Kamu bisa lihat sendiri perkembangannya — bukan cuma angka hari ini.
         </p>
-        <ul class="lp-preview-points">
-          <li>Histori lengkap setiap sesi</li>
-          <li>Grafik per kolom untuk Kraepelin</li>
-          <li>Perbandingan dengan skor rata-rata</li>
-        </ul>
-      </div>
-
-      <div class="lp-preview-visual">
-        <div class="lp-preview-card">
-          <div class="lp-preview-card-head">
-            <div>
-              <span class="lp-preview-card-label">Perkembangan Skor Kraepelin</span>
-              <span class="lp-preview-card-period">4 minggu terakhir</span>
-            </div>
-            <span class="lp-preview-card-badge">+50%</span>
-          </div>
-          <div class="lp-preview-bars">
-            <div class="lp-preview-bar-group">
-              <div class="lp-preview-bar" style="--h:35%"></div>
-              <span>Mgg 1</span>
-            </div>
-            <div class="lp-preview-bar-group">
-              <div class="lp-preview-bar" style="--h:60%"></div>
-              <span>Mgg 2</span>
-            </div>
-            <div class="lp-preview-bar-group">
-              <div class="lp-preview-bar" style="--h:72%"></div>
-              <span>Mgg 3</span>
-            </div>
-            <div class="lp-preview-bar-group">
-              <div class="lp-preview-bar lp-preview-bar-current" style="--h:85%"></div>
-              <span>Mgg 4</span>
-            </div>
-          </div>
-          <div class="lp-preview-card-foot">
-            <div class="lp-preview-stat"><span>Kecepatan</span><strong>92%</strong></div>
-            <div class="lp-preview-stat"><span>Ketelitian</span><strong>88%</strong></div>
-            <div class="lp-preview-stat"><span>Konsistensi</span><strong>84%</strong></div>
-            <div class="lp-preview-stat"><span>Ketahanan</span><strong>90%</strong></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CV ATS -->
-  <section class="lp-cv-ats">
-    <div class="lp-container lp-cv-grid">
-      <div class="lp-cv-copy">
-        <span class="lp-badge-coming-lg">🎁 ALAT BANTU KARIER · SEGERA</span>
-        <h2>Bikin CV ATS-friendly dalam 5 menit.</h2>
-        <p>
+<ul class="lp-preview-points">
+<li>Histori lengkap setiap sesi</li>
+<li>Grafik per kolom untuk Kraepelin</li>
+<li>Perbandingan dengan skor rata-rata</li>
+</ul>
+</div>
+<div class="lp-preview-visual">
+<div class="lp-preview-card">
+<div class="lp-preview-card-head">
+<div>
+<span class="lp-preview-card-label">Perkembangan Skor Kraepelin</span>
+<span class="lp-preview-card-period">4 minggu terakhir</span>
+</div>
+<span class="lp-preview-card-badge">+50%</span>
+</div>
+<div class="lp-preview-bars">
+<div class="lp-preview-bar-group">
+<div class="lp-preview-bar" style="--h:35%"></div>
+<span>Mgg 1</span>
+</div>
+<div class="lp-preview-bar-group">
+<div class="lp-preview-bar" style="--h:60%"></div>
+<span>Mgg 2</span>
+</div>
+<div class="lp-preview-bar-group">
+<div class="lp-preview-bar" style="--h:72%"></div>
+<span>Mgg 3</span>
+</div>
+<div class="lp-preview-bar-group">
+<div class="lp-preview-bar lp-preview-bar-current" style="--h:85%"></div>
+<span>Mgg 4</span>
+</div>
+</div>
+<div class="lp-preview-card-foot">
+<div class="lp-preview-stat"><span>Kecepatan</span><strong>92%</strong></div>
+<div class="lp-preview-stat"><span>Ketelitian</span><strong>88%</strong></div>
+<div class="lp-preview-stat"><span>Konsistensi</span><strong>84%</strong></div>
+<div class="lp-preview-stat"><span>Ketahanan</span><strong>90%</strong></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CV ATS -->
+<section class="lp-cv-ats">
+<div class="lp-container lp-cv-grid">
+<div class="lp-cv-copy">
+<span class="lp-badge-coming-lg"> ALAT BANTU KARIER · SEGERA</span>
+<h2>Bikin CV ATS-friendly dalam 5 menit.</h2>
+<p>
           Isi kolom pertanyaan sederhana, sistem akan menyusun CV yang lolos
           <strong>ATS (Applicant Tracking System)</strong> — standar yang
           dipakai HRD modern.
         </p>
-        <div class="lp-ppf-timeline">
-          <div class="lp-ppf-step">
-            <span class="lp-ppf-label">PAST</span>
-            <span class="lp-ppf-text">Pengalaman &amp; latar belakang</span>
-          </div>
-          <div class="lp-ppf-step">
-            <span class="lp-ppf-label">PRESENT</span>
-            <span class="lp-ppf-text">Keahlian &amp; posisi sekarang</span>
-          </div>
-          <div class="lp-ppf-step">
-            <span class="lp-ppf-label">FUTURE</span>
-            <span class="lp-ppf-text">Arah karier 5 tahun ke depan</span>
-          </div>
-        </div>
-       <button type="button" id="interestCvBtn" class="lp-btn-secondary lp-btn-lg" data-interest="cv-ats">Beri tahu saya saat siap →</button>
-      </div>
-      <div class="lp-cv-visual">
-        <div class="lp-cv-preview">
-          <div class="lp-cv-preview-line long"></div>
-          <div class="lp-cv-preview-line medium"></div>
-          <div class="lp-cv-preview-line short"></div>
-          <div class="lp-cv-preview-gap"></div>
-          <div class="lp-cv-preview-line long"></div>
-          <div class="lp-cv-preview-line medium"></div>
-          <div class="lp-cv-preview-line short"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- KENAPA GRATIS -->
-  <section class="lp-why-free">
-    <div class="lp-container">
-      <div class="lp-why-card">
-        <h2>Kenapa gratis?</h2>
-        <p>
+<div class="lp-ppf-timeline">
+<div class="lp-ppf-step">
+<span class="lp-ppf-label">PAST</span>
+<span class="lp-ppf-text">Pengalaman &amp; latar belakang</span>
+</div>
+<div class="lp-ppf-step">
+<span class="lp-ppf-label">PRESENT</span>
+<span class="lp-ppf-text">Keahlian &amp; posisi sekarang</span>
+</div>
+<div class="lp-ppf-step">
+<span class="lp-ppf-label">FUTURE</span>
+<span class="lp-ppf-text">Arah karier 5 tahun ke depan</span>
+</div>
+</div>
+<button class="lp-btn-secondary lp-btn-lg" data-interest="cv-ats" id="interestCvBtn" type="button">Beri tahu saya saat siap →</button>
+</div>
+<div class="lp-cv-visual">
+<div class="lp-cv-preview">
+<div class="lp-cv-preview-line long"></div>
+<div class="lp-cv-preview-line medium"></div>
+<div class="lp-cv-preview-line short"></div>
+<div class="lp-cv-preview-gap"></div>
+<div class="lp-cv-preview-line long"></div>
+<div class="lp-cv-preview-line medium"></div>
+<div class="lp-cv-preview-line short"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- KENAPA GRATIS -->
+<section class="lp-why-free">
+<div class="lp-container">
+<div class="lp-why-card">
+<h2>Kenapa gratis?</h2>
+<p>
           Kami percaya persiapan karier seharusnya tidak menjadi kemewahan.
           Banyak platform menjual hasil tes di belakang paywall — di sini,
           semua terbuka.
         </p>
-        <p>
+<p>
           Gratisnya bukan karena kualitas rendah, tapi karena kami ingin kamu
           <strong>fokus latihan, bukan fokus bayar</strong>.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- TENTANG KAMI -->
-  <section class="lp-about" id="lp-tentang">
-    <div class="lp-container">
-      <div class="lp-section-head">
-        <span class="lp-section-eyebrow">TENTANG KAMI</span>
-        <h2>Dari frustrasi, jadi sesuatu yang berguna.</h2>
-      </div>
-      <div class="lp-timeline">
-        <div class="lp-timeline-item">
-          <span class="lp-timeline-year">2024</span>
-          <div class="lp-timeline-body">
-            <h3>Awal mula</h3>
-            <p>Dimulai dari frustrasi saat cari tempat latihan psikotes gratis. Banyak yang bayar, banyak yang tidak jujur tentang kualitasnya.</p>
-          </div>
-        </div>
-        <div class="lp-timeline-item">
-          <span class="lp-timeline-year">2025</span>
-          <div class="lp-timeline-body">
-            <h3>Dibangun</h3>
-            <p>MyPsych dibangun sebagai project open development — setiap fitur dipikirkan dari sisi calon peserta psikotes, bukan dari sisi bisnis.</p>
-          </div>
-        </div>
-        <div class="lp-timeline-item lp-timeline-item-current">
-          <span class="lp-timeline-year">2026</span>
-          <div class="lp-timeline-body">
-            <h3>Sekarang</h3>
-            <p><strong>[X]</strong> peserta aktif, <strong>[Y]</strong> tes dikerjakan. Semua gratis, semua terbuka. Dan ini baru awal.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="lp-faq" id="lp-faq">
-    <div class="lp-container">
-      <div class="lp-section-head">
-        <span class="lp-section-eyebrow">PERTANYAAN UMUM</span>
-        <h2>Yang sering ditanyakan.</h2>
-      </div>
-      <div class="lp-faq-list">
-        <details class="lp-faq-item" open>
-          <summary>Gratisnya beneran?</summary>
-          <p>Ya. Semua tes, semua laporan PDF, semua grafik. Tanpa paywall, tanpa iklan, tanpa batas harian.</p>
-        </details>
-        <details class="lp-faq-item">
-          <summary>Butuh daftar akun?</summary>
-          <p>Tidak wajib. Bisa langsung coba sebagai Tamu. Daftar akun kalau mau histori dan progresmu tersimpan otomatis.</p>
-        </details>
-        <details class="lp-faq-item">
-          <summary>Data saya dijual ke pihak lain?</summary>
-          <p>Tidak. Data hanya dipakai untuk keperluan latihanmu. Tidak ada sharing ke third party, tidak ada iklan.</p>
-        </details>
-        <details class="lp-faq-item">
-          <summary>Cocok untuk tes BUMN / polri / bank?</summary>
-          <p>Ya. Soal kami dirancang menyerupai pola tes rekrutmen Indonesia — termasuk Kraepelin yang jadi andalan.</p>
-        </details>
-        <details class="lp-faq-item">
-          <summary>Bisa latihan berapa kali?</summary>
-          <p>Tanpa batas. Setiap paket bisa diulang berkali-kali dengan soal yang diacak.</p>
-        </details>
-        <details class="lp-faq-item">
-          <summary>Hasilnya resmi?</summary>
-          <p>Tidak. Skor MyPsych adalah indikator latihan internal, bukan norma resmi seleksi. Gunakan untuk memantau perkembangan pribadimu.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="lp-final-cta">
-    <div class="lp-container lp-final-cta-inner">
-      <h2>Mulai latihan pertamamu.</h2>
-      <p>Gratis, 2 menit, tanpa kartu kredit.</p>
-      <div class="lp-final-cta-actions">
-        <button id="landingRegisterBtnFinal" class="lp-btn-white lp-btn-lg">Daftar Sekarang →</button>
-        <button id="landingGuestBtn" class="lp-btn-outline-white lp-btn-lg">Coba sebagai Tamu</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="lp-footer">
-    <div class="lp-container lp-footer-grid">
-      <div class="lp-footer-brand">
-        <span class="lp-brand-dot"></span>
-        <span class="lp-brand-text">MyPsych</span>
-        <p>Latihan psikotes gratis dengan tracking progres dan laporan PDF.</p>
-      </div>
-      <div class="lp-footer-col">
-        <h4>Produk</h4>
-        <a href="#lp-kategori">Semua Tes</a>
-        <a href="#lp-kraepelin">Kraepelin</a>
-        <a href="#lp-kategori">Kategori</a>
-        <a href="#">Alat CV ATS</a>
-      </div>
-      <div class="lp-footer-col">
-  <h4>Sumber</h4>
-  <a href="#lp-faq">FAQ</a>
-  <a href="/privasi.html">Kebijakan Privasi</a>
-  <a href="/syarat.html">Syarat Layanan</a>
-  <a href="mailto:psikotesbyfadhil@gmail.com">Kontak</a>
 </div>
-      <div class="lp-footer-col">
-        <h4>Kontak</h4>
-        <a href="mailto:psikotesbyfadhil@gmail.com">Email</a>
-        <a href="#">Instagram</a>
-        <a href="#">GitHub</a>
+</div>
+</section>
+<!-- TENTANG KAMI -->
+<section class="lp-about" id="lp-tentang">
+<div class="lp-container">
+<div class="lp-section-head">
+<span class="lp-section-eyebrow">TENTANG KAMI</span>
+<h2>Dari frustrasi, jadi sesuatu yang berguna.</h2>
+</div>
+<div class="lp-timeline">
+<div class="lp-timeline-item">
+<span class="lp-timeline-year">2024</span>
+<div class="lp-timeline-body">
+<h3>Awal mula</h3>
+<p>Dimulai dari frustrasi saat cari tempat latihan psikotes gratis. Banyak yang bayar, banyak yang tidak jujur tentang kualitasnya.</p>
+</div>
+</div>
+<div class="lp-timeline-item">
+<span class="lp-timeline-year">2025</span>
+<div class="lp-timeline-body">
+<h3>Dibangun</h3>
+<p>MyPsych dibangun sebagai project open development — setiap fitur dipikirkan dari sisi calon peserta psikotes, bukan dari sisi bisnis.</p>
+</div>
+</div>
+<div class="lp-timeline-item lp-timeline-item-current">
+<span class="lp-timeline-year">2026</span>
+<div class="lp-timeline-body">
+<h3>Sekarang</h3>
+<p><strong>[X]</strong> peserta aktif, <strong>[Y]</strong> tes dikerjakan. Semua gratis, semua terbuka. Dan ini baru awal.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section class="lp-faq" id="lp-faq">
+<div class="lp-container">
+<div class="lp-section-head">
+<span class="lp-section-eyebrow">PERTANYAAN UMUM</span>
+<h2>Yang sering ditanyakan.</h2>
+</div>
+<div class="lp-faq-list">
+<details class="lp-faq-item" open="">
+<summary>Gratisnya beneran?</summary>
+<p>Ya. Semua tes, semua laporan PDF, semua grafik. Tanpa paywall, tanpa iklan, tanpa batas harian.</p>
+</details>
+<details class="lp-faq-item">
+<summary>Butuh daftar akun?</summary>
+<p>Tidak wajib. Bisa langsung coba sebagai Tamu. Daftar akun kalau mau histori dan progresmu tersimpan otomatis.</p>
+</details>
+<details class="lp-faq-item">
+<summary>Data saya dijual ke pihak lain?</summary>
+<p>Tidak. Data hanya dipakai untuk keperluan latihanmu. Tidak ada sharing ke third party, tidak ada iklan.</p>
+</details>
+<details class="lp-faq-item">
+<summary>Cocok untuk tes BUMN / polri / bank?</summary>
+<p>Ya. Soal kami dirancang menyerupai pola tes rekrutmen Indonesia — termasuk Kraepelin yang jadi andalan.</p>
+</details>
+<details class="lp-faq-item">
+<summary>Bisa latihan berapa kali?</summary>
+<p>Tanpa batas. Setiap paket bisa diulang berkali-kali dengan soal yang diacak.</p>
+</details>
+<details class="lp-faq-item">
+<summary>Hasilnya resmi?</summary>
+<p>Tidak. Skor MyPsych adalah indikator latihan internal, bukan norma resmi seleksi. Gunakan untuk memantau perkembangan pribadimu.</p>
+</details>
+</div>
+</div>
+</section>
+<!-- CTA FINAL -->
+<section class="lp-final-cta">
+<div class="lp-container lp-final-cta-inner">
+<h2>Mulai latihan pertamamu.</h2>
+<p>Gratis, 2 menit, tanpa kartu kredit.</p>
+<div class="lp-final-cta-actions">
+<button class="lp-btn-white lp-btn-lg" id="landingRegisterBtnFinal">Daftar Sekarang →</button>
+<button class="lp-btn-outline-white lp-btn-lg" id="landingGuestBtn">Coba sebagai Tamu</button>
+</div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="lp-footer">
+<div class="lp-container lp-footer-grid">
+<div class="lp-footer-brand">
+<span class="lp-brand-dot"></span>
+<span class="lp-brand-text">MyPsych</span>
+<p>Latihan psikotes gratis dengan tracking progres dan laporan PDF.</p>
+</div>
+<div class="lp-footer-col">
+<h4>Produk</h4>
+<a href="#lp-kategori">Semua Tes</a>
+<a href="#lp-kraepelin">Kraepelin</a>
+<a href="#lp-kategori">Kategori</a>
+<a href="#">Alat CV ATS</a>
+</div>
+<div class="lp-footer-col">
+<h4>Sumber</h4>
+<a href="#lp-faq">FAQ</a>
+<a href="/privasi.html">Kebijakan Privasi</a>
+<a href="/syarat.html">Syarat Layanan</a>
+<a href="mailto:psikotesbyfadhil@gmail.com">Kontak</a>
+</div>
+<div class="lp-footer-col">
+<h4>Kontak</h4>
+<a href="mailto:psikotesbyfadhil@gmail.com">Email</a>
+<a href="#">Instagram</a>
+<a href="#">GitHub</a>
+</div>
+</div>
+<div class="lp-container lp-footer-bottom">
+<span>© 2026 MyPsych · Dibuat di Indonesia</span>
+<span>Versi 1.0</span>
+</div>
+</footer>
+</div></section>
+<section id="authView" class="screen">
+  <div class="auth-card card clean-auth-card">
+    <button id="backToLandingBtn" class="back-link">← Kembali</button>
+    <div class="eyebrow">AKUN PESERTA</div>
+    <h2 id="authTitle">Selamat datang kembali</h2>
+    <p id="authSubtitle" class="muted">Masuk untuk menyimpan histori latihan.</p>
+
+    <div id="loginPane">
+      <form id="loginForm">
+        <label>Username
+          <input id="loginUsername" maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+        </label>
+        <label>Password
+          <div class="password-field">
+            <input id="loginPassword" type="password" autocomplete="current-password" required>
+            <button type="button" class="password-toggle" data-password-target="loginPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">Show</span></button>
+          </div>
+        </label>
+        <p id="loginError" class="form-error"></p>
+        <button class="primary-btn large-btn" type="submit">Masuk</button>
+      </form>
+      <p class="switch-auth"><button id="openForgotFromLogin" type="button">Lupa password?</button></p>
+      <p class="switch-auth">Belum punya akun? <button id="openRegisterFromLogin" type="button">Buat akun</button></p>
+    </div>
+
+    <div id="registerPane" hidden>
+      <form id="registerForm">
+        <label>Username
+          <div class="input-wrap"><input id="registerUsername" maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="contoh: fadhil_123" required></div>
+          <p class="field-help">Gunakan hanya <strong>huruf kecil (a–z), angka (0–9), dan underscore (_)</strong>. Panjang 3–24 karakter.</p>
+        </label>
+        <label>Email
+          <input id="registerEmail" type="email" autocomplete="email" placeholder="nama@email.com" required>
+        </label>
+        <label>Password
+          <div class="password-field">
+            <input id="registerPassword" type="password" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-password-target="registerPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">Show</span></button>
+          </div>
+          <p class="field-help">Minimal <strong>8 karakter</strong> dan harus mengandung <strong>huruf serta angka</strong>.</p>
+        </label>
+        <label>Konfirmasi password
+          <div class="password-field">
+            <input id="registerConfirm" type="password" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-password-target="registerConfirm" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">Show</span></button>
+          </div>
+        </label>
+        <p class="helper-text">Email dipakai untuk mengirim link reset kalau kamu lupa password. Tidak dibagikan ke pihak lain.</p>
+        <p id="registerError" class="form-error"></p>
+        <button class="primary-btn large-btn" type="submit">Buat Akun</button>
+      </form>
+      <p class="switch-auth">Sudah punya akun? <button id="openLoginFromRegister" type="button">Masuk</button></p>
+    </div>
+
+    <div id="forgotPane" hidden>
+      <form id="forgotForm">
+        <label>Username atau Email<input id="forgotIdentifier" autocomplete="username" required></label>
+        <p id="forgotError" class="form-error"></p>
+        <p id="forgotSuccess" class="form-success"></p>
+        <button class="primary-btn large-btn" type="submit">Kirim Link Reset</button>
+      </form>
+      <p class="switch-auth"><button id="backToLoginFromForgot" type="button">← Kembali ke Masuk</button></p>
+    </div>
+
+    <div id="resetPane" hidden>
+      <form id="resetForm">
+        <label>Password baru
+          <div class="password-field">
+            <input id="resetPassword" type="password" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-password-target="resetPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">Show</span></button>
+          </div>
+          <p class="field-help">Minimal <strong>8 karakter</strong> dan harus mengandung <strong>huruf serta angka</strong>.</p>
+        </label>
+        <label>Konfirmasi password baru
+          <div class="password-field">
+            <input id="resetConfirm" type="password" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-password-target="resetConfirm" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">Show</span></button>
+          </div>
+        </label>
+        <p id="resetError" class="form-error"></p>
+        <button class="primary-btn large-btn" type="submit">Ganti Password</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="app app-layout" id="appLayout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo" aria-hidden="true"><span class="brand-logo-dot"></span></div>
+      <div class="brand-text">
+        <strong>MyPsych</strong>
+        <small>Latihan Psikotes</small>
       </div>
     </div>
-    <div class="lp-container lp-footer-bottom">
-      <span>© 2026 MyPsych · Dibuat di Indonesia</span>
-      <span>Versi 1.0</span>
+
+    <nav class="sidebar-nav" aria-label="Navigasi utama">
+      <div class="sidebar-label">MENU</div>
+      <button class="nav-item" type="button" data-app-nav="dashboard"><span class="nav-icon" aria-hidden="true">D</span><span>Dashboard</span></button>
+      <button class="nav-item" type="button" data-app-nav="history"><span class="nav-icon" aria-hidden="true">H</span><span>Histori</span></button>
+
+      <div class="sidebar-label">KATEGORI</div>
+      <button class="nav-item nav-highlight" type="button" data-test="kraepelin"><span class="nav-icon" aria-hidden="true">K</span><span>Kraepelin</span><span class="nav-tag">POPULER</span></button>
+      <button class="nav-item" type="button" data-app-nav="psikotes"><span class="nav-icon" aria-hidden="true">P</span><span>Psikotes Umum</span></button>
+      <button class="nav-item" type="button" data-app-nav="skd"><span class="nav-icon" aria-hidden="true">S</span><span>SKD (CPNS)</span></button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebarAvatar">P</div>
+        <div class="user-info">
+          <strong id="sidebarUserName">Peserta</strong>
+          <small id="sidebarUserRole">Akun peserta</small>
+        </div>
+      </div>
+      <button id="logoutBtn" class="logout-btn" type="button"><span>Keluar</span></button>
     </div>
-  </footer>
+  </aside>
 
-</div></section>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<section id="authView" class="screen"><div class="auth-card card"><button id="backToLandingBtn" class="back-link">← Kembali</button><div class="eyebrow">AKUN PESERTA</div><h2 id="authTitle">Selamat datang kembali</h2><p id="authSubtitle" class="muted">Masuk untuk menyimpan histori latihan.</p>
-<div id="loginPane"><form id="loginForm"><label>Username<input id="loginUsername" maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false" required></label><label>Password<div class="password-field"><input id="loginPassword" type="password" autocomplete="current-password" required><button type="button" class="password-toggle" data-password-target="loginPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div></label><p id="loginError" class="form-error"></p><button class="primary-btn large-btn" type="submit">Masuk</button></form><p class="switch-auth"><button id="openForgotFromLogin" type="button">Lupa password?</button></p><p class="switch-auth">Belum punya akun? <button id="openRegisterFromLogin">Buat akun</button></p></div>
-<div id="registerPane" hidden><form id="registerForm"><label>Username<div class="input-wrap"><input id="registerUsername" maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="contoh: fadhil_123" required></div><p class="field-help">Gunakan hanya <strong>huruf kecil (a–z), angka (0–9), dan underscore (_)</strong>. Panjang 3–24 karakter.</p></label><label>Email<input id="registerEmail" type="email" autocomplete="email" placeholder="nama@email.com" required></label><label>Password<div class="password-field"><input id="registerPassword" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="registerPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div><p class="field-help">Minimal <strong>8 karakter</strong> dan harus mengandung <strong>huruf serta angka</strong>.</p></label><label>Konfirmasi password<div class="password-field"><input id="registerConfirm" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="registerConfirm" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div></label><p class="helper-text">Email dipakai untuk mengirim link reset kalau kamu lupa password. Tidak dibagikan ke pihak lain.</p><p id="registerError" class="form-error"></p><button class="primary-btn large-btn" type="submit">Buat Akun</button></form><p class="switch-auth">Sudah punya akun? <button id="openLoginFromRegister">Masuk</button></p></div>
-<div id="forgotPane" hidden><form id="forgotForm"><label>Username atau Email<input id="forgotIdentifier" autocomplete="username" required></label><p id="forgotError" class="form-error"></p><p id="forgotSuccess" class="form-success"></p><button class="primary-btn large-btn" type="submit">Kirim Link Reset</button></form><p class="switch-auth"><button id="backToLoginFromForgot" type="button">← Kembali ke Masuk</button></p></div>
-<div id="resetPane" hidden><form id="resetForm"><label>Password baru<div class="password-field"><input id="resetPassword" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="resetPassword" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div><p class="field-help">Minimal <strong>8 karakter</strong> dan harus mengandung <strong>huruf serta angka</strong>.</p></label><label>Konfirmasi password baru<div class="password-field"><input id="resetConfirm" type="password" autocomplete="new-password" required><button type="button" class="password-toggle" data-password-target="resetConfirm" aria-label="Tampilkan password" title="Tampilkan password"><span aria-hidden="true">👁</span></button></div></label><p id="resetError" class="form-error"></p><button class="primary-btn large-btn" type="submit">Ganti Password</button></form></div>
-</div></section>
+  <main class="main">
+    <header class="topbar">
+      <button class="hamburger" id="hamburger" type="button" aria-label="Buka menu"><span></span><span></span><span></span></button>
+      <h1 class="page-title" id="pageTitle">Dashboard</h1>
+      <div class="topbar-user"><div class="topbar-user-name" id="topbarUserName">Peserta</div></div>
+    </header>
 
-<section id="dashboardView" class="screen"><div class="dashboard-shell"><header class="topbar card"><div class="topbar-brand"><div class="brand-badge small"><span class="brand-dot"></span>PSYCHOTEST PRACTICE</div><div>Halo, <strong id="welcomeName">—</strong> 👋</div></div><button id="logoutBtn" class="ghost-btn">Keluar</button></header>
-<div class="dashboard-hero card"><div><div class="eyebrow">HOME</div><h2>Pilih latihan yang mau kamu kerjakan.</h2><p class="muted">Setiap tes memiliki 3 paket. Pilih paket, baca instruksi, lalu mulai latihan.</p></div><button id="viewHistoryBtn" class="secondary-btn">📜 Histori</button></div>
-<div class="dashboard-summary-grid">
-  <div class="dashboard-stat card"><span>Total tes</span><strong id="historyCount">0</strong><small>Riwayat akun</small></div>
-  <div class="dashboard-stat card"><span>Tes terakhir</span><strong id="latestDate">—</strong><small>Waktu pengerjaan terakhir</small></div>
-  <div class="dashboard-stat card"><span>Kecepatan</span><strong id="dashSpeed">—</strong><small>Hasil terakhir</small></div>
-  <div class="dashboard-stat card"><span>Ketelitian</span><strong id="dashAccuracy">—</strong><small>Hasil terakhir</small></div>
-  <div class="dashboard-stat card"><span>Konsistensi</span><strong id="dashConsistency">—</strong><small>Hasil terakhir</small></div>
-  <div class="dashboard-stat card"><span>Ketahanan</span><strong id="dashEndurance">—</strong><small>Hasil terakhir</small></div>
- </div>
-<div id="testCatalog" class="test-catalog"></div></div></section>
-<section id="adminView" class="screen"><div class="admin-shell">
-  <header class="topbar card admin-topbar"><div class="topbar-brand"><div class="brand-badge small"><span class="brand-dot"></span>PSYCHOTEST PRACTICE</div><div><strong>Admin Panel</strong> · <span id="adminWelcomeName">—</span></div></div><button id="adminLogoutBtn" class="ghost-btn">Keluar</button></header>
-  <div class="admin-hero card"><div><div class="eyebrow">ADMINISTRATOR</div><h2>Pusat pengelolaan Psychotest</h2><p class="muted">Kelola peserta, hasil tes, bank soal, dan label nilai dari satu halaman.</p></div></div>
-  <div class="admin-stats-grid">
-    <div class="admin-stat card"><span>Peserta</span><strong id="adminUsersStat">0</strong><small>akun terdaftar</small></div>
-    <div class="admin-stat card"><span>Total tes</span><strong id="adminTestsStat">0</strong><small>hasil tersimpan</small></div>
-    <div class="admin-stat card"><span>Rata-rata skor</span><strong id="adminAverageStat">0%</strong><small>seluruh hasil</small></div>
-    <div class="admin-stat card"><span>Admin</span><strong id="adminAdminsStat">0</strong><small>akun berwenang</small></div>
+    <div class="content">
+      <section id="dashboardView" class="screen app-screen active">
+        <div class="hero-card">
+          <div class="hero-text">
+            <div class="eyebrow">HOME</div>
+            <h2>Halo, <span class="text-blue" id="welcomeName">Peserta</span></h2>
+            <p class="hero-sub">Pilih latihan sesuai kebutuhanmu. Kerjakan kapan saja dan pantau perkembangan hasilnya.</p>
+            <div class="hero-date">Tes terakhir: <span id="latestDate">Belum ada tes</span></div>
+            <button id="viewHistoryBtn" class="btn btn-secondary hero-history-btn" type="button">Lihat Histori</button>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><strong id="historyCount">0</strong><span>Total tes</span></div>
+            <div class="hero-stat"><strong id="dashScore">—</strong><span>Skor terakhir</span></div>
+            <div class="hero-stat"><strong id="dashSpeed">—</strong><span>Kecepatan</span></div>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <h2>Kategori Latihan</h2>
+          <p class="muted">Pilih jalur latihan yang ingin kamu fokuskan.</p>
+        </div>
+        <div class="category-grid">
+          <article class="category-card category-highlight">
+            <div class="category-icon">K</div>
+            <h4>Kraepelin</h4>
+            <p>Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan.</p>
+            <div class="category-meta"><span>50 kolom · 26 soal</span><span>15–20 detik</span></div>
+            <button class="btn btn-primary" type="button" data-test="kraepelin">Mulai latihan</button>
+          </article>
+
+          <article class="category-card">
+            <div class="category-icon icon-green">P</div>
+            <h4>Psikotes Umum</h4>
+            <p>Kuantitatif, numerical, verbal, silogisme, analogi, dan tes kognitif untuk latihan seleksi kerja.</p>
+            <div class="category-meta"><span>6 tes tersedia</span><span>20 soal per paket</span></div>
+            <button class="btn btn-secondary" type="button" data-app-nav="psikotes">Lihat semua tes</button>
+          </article>
+
+          <article class="category-card category-highlight">
+            <div class="category-icon">S</div>
+            <h4>SKD (CPNS)</h4>
+            <p>Latihan TWK, TIU, dan TKP dengan bank soal yang dikelola dari panel admin.</p>
+            <div class="category-meta"><span>3 kategori</span><span>Paket 1–3</span></div>
+            <button class="btn btn-secondary" type="button" data-app-nav="skd">Buka SKD</button>
+          </article>
+        </div>
+
+        <div class="catalog-section" id="psikotesCatalog">
+          <div class="section-head catalog-head">
+            <div>
+              <h2>Tes yang tersedia</h2>
+              <p class="muted">Pilih paket atau pengaturan waktu, lalu baca instruksi sebelum memulai.</p>
+            </div>
+          </div>
+          <div id="testCatalog" class="test-grid large"></div>
+        </div>
+      </section>
+
+      <section id="skdView" class="screen app-screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">SELEKSI KOMPETENSI DASAR</div>
+            <h2>SKD (CPNS &amp; PPPK)</h2>
+            <p class="muted">Pilih kategori latihan. Soal diambil dari bank soal yang dikelola melalui panel admin.</p>
+          </div>
+        </div>
+        <button id="backFromSkdBtn" class="back-link" type="button">← Kembali ke Dashboard</button>
+
+        <div class="skd-grid">
+          <article class="skd-card skd-active">
+            <div class="skd-icon icon-blue">T</div>
+            <h4>TWK</h4>
+            <p class="skd-fullname">Tes Wawasan Kebangsaan</p>
+            <ul class="skd-topics">
+              <li>Nasionalisme</li>
+              <li>Integritas</li>
+              <li>Bela Negara</li>
+              <li>Pilar Negara</li>
+              <li>Bahasa Negara</li>
+            </ul>
+            <div class="skd-meta"><span>Paket 1–3</span><span>·</span><span>20 soal/paket</span></div>
+            <div class="skd-start-row"><select class="package-select" data-skd-package="twk" aria-label="Paket TWK"><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select><button class="btn btn-primary" type="button" data-skd-start="twk">Mulai TWK</button></div>
+          </article>
+
+          <article class="skd-card skd-active">
+            <div class="skd-icon icon-blue">I</div>
+            <h4>TIU</h4>
+            <p class="skd-fullname">Tes Intelegensi Umum</p>
+            <ul class="skd-topics">
+              <li>Kemampuan Verbal</li>
+              <li>Kemampuan Numerik</li>
+              <li>Kemampuan Figural</li>
+            </ul>
+            <div class="skd-meta"><span>Paket 1–3</span><span>·</span><span>20 soal/paket</span></div>
+            <div class="skd-start-row"><select class="package-select" data-skd-package="tiu" aria-label="Paket TIU"><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select><button class="btn btn-primary" type="button" data-skd-start="tiu">Mulai TIU</button></div>
+          </article>
+
+          <article class="skd-card skd-active">
+            <div class="skd-icon icon-green">K</div>
+            <h4>TKP</h4>
+            <p class="skd-fullname">Tes Karakteristik Pribadi</p>
+            <ul class="skd-topics">
+              <li>Pelayanan Publik</li>
+              <li>Jejaring Kerja</li>
+              <li>Sosial Budaya</li>
+              <li>TIK</li>
+              <li>Profesionalisme</li>
+            </ul>
+            <div class="skd-meta"><span>Paket 1–3</span><span>·</span><span>20 soal/paket</span></div>
+            <div class="skd-start-row"><select class="package-select" data-skd-package="tkp" aria-label="Paket TKP"><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select><button class="btn btn-primary" type="button" data-skd-start="tkp">Mulai TKP</button></div>
+          </article>
+        </div>
+
+        <div class="warning-box" style="margin-top:16px;">
+          <strong>Catatan:</strong> kategori sudah dibuka di antarmuka, tetapi tes baru bisa dikerjakan setelah soal aktif untuk kategori dan paket tersebut tersedia di bank soal.
+        </div>
+      </section>
+
+      <section id="historyView" class="screen app-screen">
+        <div class="section-head history-page-head">
+          <div>
+            <div class="eyebrow">RIWAYAT LATIHAN</div>
+            <h2>Histori tes</h2>
+            <p class="muted">Semua hasil latihan akun tersimpan di database dan dapat dicetak kembali.</p>
+          </div>
+          <div class="history-total"><strong id="historyPageCount">0</strong><span>tes</span></div>
+        </div>
+        <button id="backDashboardBtn" class="back-link" type="button">← Kembali ke Dashboard</button>
+        <div id="emptyHistory" class="empty-state">Belum ada hasil tes.</div>
+        <div id="historyTable" class="table-wrap history-table-wrap" hidden>
+          <table>
+            <thead><tr><th>#</th><th>Tanggal</th><th>Tes</th><th>Paket</th><th>Skor</th><th>Kecepatan</th><th>Ketelitian</th><th>Konsistensi</th><th>Ketahanan</th><th>Aksi</th></tr></thead>
+            <tbody id="historyTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="instructionView" class="screen app-screen">
+        <button id="backFromInstructionBtn" class="back-link" type="button">← Kembali</button>
+        <div class="instruction-card">
+          <div class="instruction-header">
+            <div><div class="eyebrow" id="instructionEyebrow">INSTRUKSI</div><h2 id="instructionTitle">—</h2></div>
+            <div class="instruction-pkg" id="instructionPackage">Paket 1</div>
+          </div>
+          <p id="instructionLead" class="instruction-lead"></p>
+          <div id="instructionBody" class="instruction-body"></div>
+          <div class="warning-box"><strong>Catatan latihan:</strong> skor website ini adalah indikator latihan internal, bukan norma resmi seleksi kerja atau diagnosis psikologis.</div>
+          <button id="startTestBtn" class="btn btn-primary btn-block" type="button">Mulai Tes →</button>
+        </div>
+      </section>
+
+      <section id="resultView" class="screen app-screen">
+        <div class="result-card card clean-result-card">
+          <div class="result-hero">
+            <div class="success-icon">✓</div>
+            <div><div class="eyebrow">HASIL LATIHAN</div><h2 id="resultTitle">Tes selesai</h2><p id="resultIntro" class="result-intro"></p></div>
+          </div>
+          <div id="resultScores" class="score-grid"></div>
+          <div id="resultSummary" class="summary-grid"></div>
+          <div class="chart-wrap">
+            <div class="chart-heading"><div><b>Grafik performa</b><span id="chartSubtitle">Performa pengerjaan.</span></div><span id="chartBadge" class="chart-badge">—</span></div>
+            <canvas id="performanceChart"></canvas>
+            <p class="chart-note"><strong>Detail kesalahan:</strong> cetak laporan PDF untuk melihat jawaban yang salah dan detail pengerjaan per soal.</p>
+          </div>
+          <div class="disclaimer">Catatan: skor di website ini adalah skor latihan internal. Gunakan untuk melihat perkembangan latihan pribadi, bukan sebagai penilaian psikologis resmi.</div>
+          <div class="result-actions"><button id="downloadPdfBtn" class="btn btn-primary btn-block" type="button">Simpan dalam PDF</button><button id="resultHistoryBtn" class="btn btn-secondary btn-block" type="button">Lihat Histori</button><button id="finishBtn" class="btn btn-ghost btn-block" type="button">Kembali ke Dashboard</button></div>
+        </div>
+      </section>
+
+      <section id="adminView" class="screen app-screen">
+  <div class="admin-shell">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">ADMINISTRATOR</div>
+        <h2>Pusat pengelolaan MyPsych</h2>
+        <p class="muted">Kelola peserta, hasil tes, bank soal, dan label nilai dari satu halaman.</p>
+      </div>
+      <div class="admin-admin-name">Admin · <strong id="adminWelcomeName">—</strong></div>
+    </div>
+    <div class="admin-stats-grid">
+      <div class="admin-stat card"><span>Peserta</span><strong id="adminUsersStat">0</strong><small>akun terdaftar</small></div>
+      <div class="admin-stat card"><span>Total tes</span><strong id="adminTestsStat">0</strong><small>hasil tersimpan</small></div>
+      <div class="admin-stat card"><span>Rata-rata skor</span><strong id="adminAverageStat">0%</strong><small>seluruh hasil</small></div>
+      <div class="admin-stat card"><span>Admin</span><strong id="adminAdminsStat">0</strong><small>akun berwenang</small></div>
+    </div>
+    <nav class="admin-nav card" aria-label="Menu admin">
+      <button type="button" data-admin-tab="overview">Overview</button>
+      <button type="button" data-admin-tab="users">Peserta</button>
+      <button type="button" data-admin-tab="results">Hasil Tes</button>
+      <button type="button" data-admin-tab="questions">Bank Soal</button>
+      <button type="button" data-admin-tab="labels">Label Nilai</button>
+      <button type="button" id="adminLogoutBtn" class="admin-logout-inline">Keluar</button>
+    </nav>
+    <div id="adminPanel"></div>
   </div>
-  <nav class="admin-nav card" aria-label="Menu admin">
-    <button type="button" data-admin-tab="overview">🏠 Overview</button>
-    <button type="button" data-admin-tab="users">👥 Peserta</button>
-    <button type="button" data-admin-tab="results">📊 Hasil Tes</button>
-    <button type="button" data-admin-tab="questions">🧩 Bank Soal</button>
-    <button type="button" data-admin-tab="labels">🏷️ Label Nilai</button>
-  </nav>
-  <div id="adminPanel"></div>
-</div></section>
+</section>
 
-<section id="instructionView" class="screen"><div class="instruction-card card"><button id="backFromInstructionBtn" class="back-link">← Kembali</button><div class="section-heading"><div><div class="eyebrow" id="instructionEyebrow">INSTRUKSI</div><h2 id="instructionTitle">—</h2></div><div class="step-count" id="instructionPackage">Paket 1</div></div><p id="instructionLead" class="instruction-lead"></p><div id="instructionBody"></div><div class="warning-box"><strong>Catatan latihan:</strong> skor website ini adalah indikator latihan internal, bukan norma resmi seleksi kerja atau diagnosis psikologis.</div><button id="startTestBtn" class="primary-btn large-btn">Mulai Tes →</button></div></section>
+    </div>
+  </main>
+</div>
 
-<section id="testView" class="screen test-screen"><div class="test-shell"><header class="test-header"><button id="testHomeBtn" class="home-btn">⌂</button><div class="progress-meta"><div class="meta-item"><span>Tes</span><strong id="testTypeLabel">—</strong></div><div class="meta-item"><span>Soal</span><strong id="questionCounter">1/20</strong></div><div class="meta-item"><span>Waktu</span><strong id="timeCounter">—</strong></div></div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></header>
-<div id="testContent" class="question-card"></div><div id="keypad" class="keypad"></div><div class="test-hint" id="testHint"></div></div></section>
-
-<section id="resultView" class="screen"><div class="result-card card"><div class="result-hero"><div class="success-icon">✓</div><div><div class="eyebrow">HASIL LATIHAN</div><h2 id="resultTitle">Tes selesai 🎉</h2><p id="resultIntro" class="result-intro"></p></div></div><div id="resultScores" class="score-grid"></div><div id="resultSummary" class="summary-grid"></div><div class="chart-wrap"><div class="chart-heading"><div><b>Grafik performa</b><span id="chartSubtitle">Performa pengerjaan.</span></div><span id="chartBadge" class="chart-badge">—</span></div><canvas id="performanceChart"></canvas>
-<p style="margin: 12px 0 0; padding: 10px 12px; background: #f0f7ff; border-left: 3px solid #2f7df2; border-radius: 6px; font-size: 0.72rem; color: #4a5a72; line-height: 1.5;">
-    💡 <strong>Ketahui di mana letak salahmu</strong> dengan mencetak laporan PDF. 
-    Setiap kesalahan akan tercantum di laporan.
-  </p></div><div class="disclaimer">Catatan: skor di website ini adalah skor latihan internal. Gunakan untuk melihat perkembangan latihan pribadi, bukan sebagai penilaian psikologis resmi.</div><div class="result-actions"><button id="downloadPdfBtn" class="primary-btn large-btn">Simpan dalam PDF</button><button id="resultHistoryBtn" class="secondary-btn large-btn">Lihat Histori</button><button id="finishBtn" class="ghost-btn large-btn">Kembali ke Home</button></div></div></section>
-
-<section id="historyView" class="screen"><div class="history-card card"><button id="backDashboardBtn" class="back-link">← Home</button><div class="section-heading"><div><div class="eyebrow">RIWAYAT LATIHAN</div><h2>Histori tesmu</h2></div><div class="history-total"><span id="historyPageCount">0</span> tes</div></div><p class="muted">Histori akun tersimpan aman di cloud database..</p><div id="emptyHistory" class="empty-state">Belum ada hasil tes.</div><div id="historyTable" class="table-wrap" hidden><table><thead><tr><th>#</th><th>Tanggal</th><th>Tes</th><th>Paket</th><th>Skor</th><th>Kecepatan</th><th>Ketelitian</th><th>Konsistensi</th><th>Ketahanan</th></tr></thead><tbody id="historyTableBody"></tbody></table></div></div></section>
-</main>
-<section id="aboutView" class="screen">
-  <div class="about-shell card">
-    <button id="backFromAboutBtn" class="back-link">← Kembali</button>
-
-    <div class="about-hero">
-      <span class="eyebrow">TENTANG KAMI</span>
-      <h1>Dari frustrasi, jadi sesuatu yang berguna.</h1>
-      <p class="muted about-lead">
+<section class="screen" id="aboutView">
+<div class="about-shell card">
+<button class="back-link" id="backFromAboutBtn">← Kembali</button>
+<div class="about-hero">
+<span class="eyebrow">TENTANG KAMI</span>
+<h1>Dari frustrasi, jadi sesuatu yang berguna.</h1>
+<p class="muted about-lead">
         MyPsych lahir dari pengalaman pribadi saat mempersiapkan seleksi kerja —
         mencari tempat latihan psikotes yang <em>benar-benar</em> gratis, jujur,
         dan serius. Setelah tidak menemukannya, kami memutuskan untuk membuatnya sendiri.
       </p>
-    </div>
-
-    <div class="about-timeline">
-      <div class="about-step">
-        <div class="about-step-year">2024</div>
-        <div class="about-step-body">
-          <h3>Awal mula</h3>
-          <p>Dimulai dari frustrasi saat cari tempat latihan psikotes gratis. Banyak platform yang menyembunyikan biaya di belakang paywall, banyak juga yang kualitasnya tidak sesuai ekspektasi. Waktu itu kami pikir: kenapa harus bayar untuk latihan yang bisa diulang?</p>
-        </div>
-      </div>
-      <div class="about-step">
-        <div class="about-step-year">2025</div>
-        <div class="about-step-body">
-          <h3>Dibangun dengan sengaja</h3>
-          <p>MyPsych dibangun sebagai project open development — setiap fitur dipikirkan dari sisi calon peserta psikotes, bukan dari sisi bisnis. Kami tanya: apa yang benar-benar dibutuhkan? Jawabannya: latihan yang bisa diulang, hasil yang bisa diukur, dan laporan yang bisa disimpan.</p>
-          <p>Kraepelin jadi fitur utama karena itu tes paling ikonik di seleksi Indonesia — dan paling jarang tersedia dalam versi latihan yang serius.</p>
-        </div>
-      </div>
-      <div class="about-step about-step-current">
-        <div class="about-step-year">2026</div>
-        <div class="about-step-body">
-          <h3>Sekarang</h3>
-          <p><strong data-stat="users">…</strong> peserta aktif sudah mengerjakan <strong data-stat="tests">…</strong> tes. Semua gratis, semua terbuka. Tidak ada iklan, tidak ada paywall, tidak ada data yang dijual.</p>
-          <p>Dan ini baru awal.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-principles">
-      <h2>Prinsip yang kami pegang</h2>
-      <div class="about-principles-grid">
-        <div class="about-principle">
-          <div class="about-principle-icon">🆓</div>
-          <h3>Gratis berarti gratis</h3>
-          <p>Tidak ada paywall tersembunyi. Semua tes, semua laporan, semua grafik.</p>
-        </div>
-        <div class="about-principle">
-          <div class="about-principle-icon">🔒</div>
-          <h3>Data kamu, bukan komoditas</h3>
-          <p>Tidak dijual, tidak dibagikan, tidak diiklankan. Titik.</p>
-        </div>
-        <div class="about-principle">
-          <div class="about-principle-icon">📊</div>
-          <h3>Bisa diukur</h3>
-          <p>Setiap latihan tercatat. Kamu bisa lihat perkembangannya sendiri.</p>
-        </div>
-        <div class="about-principle">
-          <div class="about-principle-icon">🚫</div>
-          <h3>Bukan pengganti psikolog</h3>
-          <p>MyPsych alat latihan, bukan diagnosis. Kami jujur soal ini.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-cta">
-      <h2>Siap mulai latihan?</h2>
-      <p class="muted">Gratis, tanpa kartu kredit, tanpa batas.</p>
-      <div class="about-cta-actions">
-        <button id="aboutRegisterBtn" class="primary-btn large-btn">Daftar Sekarang →</button>
-        <button id="aboutGuestBtn" class="secondary-btn large-btn">Coba sebagai Tamu</button>
-      </div>
-    </div>
-  </div>
+</div>
+<div class="about-timeline">
+<div class="about-step">
+<div class="about-step-year">2024</div>
+<div class="about-step-body">
+<h3>Awal mula</h3>
+<p>Dimulai dari frustrasi saat cari tempat latihan psikotes gratis. Banyak platform yang menyembunyikan biaya di belakang paywall, banyak juga yang kualitasnya tidak sesuai ekspektasi. Waktu itu kami pikir: kenapa harus bayar untuk latihan yang bisa diulang?</p>
+</div>
+</div>
+<div class="about-step">
+<div class="about-step-year">2025</div>
+<div class="about-step-body">
+<h3>Dibangun dengan sengaja</h3>
+<p>MyPsych dibangun sebagai project open development — setiap fitur dipikirkan dari sisi calon peserta psikotes, bukan dari sisi bisnis. Kami tanya: apa yang benar-benar dibutuhkan? Jawabannya: latihan yang bisa diulang, hasil yang bisa diukur, dan laporan yang bisa disimpan.</p>
+<p>Kraepelin jadi fitur utama karena itu tes paling ikonik di seleksi Indonesia — dan paling jarang tersedia dalam versi latihan yang serius.</p>
+</div>
+</div>
+<div class="about-step about-step-current">
+<div class="about-step-year">2026</div>
+<div class="about-step-body">
+<h3>Sekarang</h3>
+<p><strong data-stat="users">…</strong> peserta aktif sudah mengerjakan <strong data-stat="tests">…</strong> tes. Semua gratis, semua terbuka. Tidak ada iklan, tidak ada paywall, tidak ada data yang dijual.</p>
+<p>Dan ini baru awal.</p>
+</div>
+</div>
+</div>
+<div class="about-principles">
+<h2>Prinsip yang kami pegang</h2>
+<div class="about-principles-grid">
+<div class="about-principle">
+<div class="about-principle-icon"></div>
+<h3>Gratis berarti gratis</h3>
+<p>Tidak ada paywall tersembunyi. Semua tes, semua laporan, semua grafik.</p>
+</div>
+<div class="about-principle">
+<div class="about-principle-icon"></div>
+<h3>Data kamu, bukan komoditas</h3>
+<p>Tidak dijual, tidak dibagikan, tidak diiklankan. Titik.</p>
+</div>
+<div class="about-principle">
+<div class="about-principle-icon"></div>
+<h3>Bisa diukur</h3>
+<p>Setiap latihan tercatat. Kamu bisa lihat perkembangannya sendiri.</p>
+</div>
+<div class="about-principle">
+<div class="about-principle-icon"></div>
+<h3>Bukan pengganti psikolog</h3>
+<p>MyPsych alat latihan, bukan diagnosis. Kami jujur soal ini.</p>
+</div>
+</div>
+</div>
+<div class="about-cta">
+<h2>Siap mulai latihan?</h2>
+<p class="muted">Gratis, tanpa kartu kredit, tanpa batas.</p>
+<div class="about-cta-actions">
+<button class="primary-btn large-btn" id="aboutRegisterBtn">Daftar Sekarang →</button>
+<button class="secondary-btn large-btn" id="aboutGuestBtn">Coba sebagai Tamu</button>
+</div>
+</div>
+</div>
 </section>
-<div id="guestModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">i</div><h3>Lanjut sebagai Tamu?</h3><p>Kamu tetap bisa mengerjakan semua latihan dan <strong>mengunduh hasil PDF</strong>. Namun hasil tidak disimpan ke akun atau histori.</p><div class="guest-note">✓ <span><b>Tes tetap berjalan normal</b><small>Semua fitur latihan dan hasil tetap tersedia.</small></span></div><div class="guest-note">↓ <span><b>PDF tetap bisa diunduh</b><small>Simpan PDF setelah selesai jika ingin menyimpan hasil.</small></span></div><div class="modal-actions"><button id="cancelGuestBtn" class="secondary-btn">Batal</button><button id="confirmGuestBtn" class="primary-btn">Ya, lanjut sebagai tamu</button></div></div></div>
-<div id="confirmModal" class="modal-backdrop" hidden><div class="modal-card card"><div class="modal-icon">!</div><h3>Akhiri tes?</h3><p>Progress tes yang sedang berjalan akan dihapus. Hasil tidak akan dibuat.</p><div class="modal-actions"><button id="cancelEndTestBtn" class="secondary-btn">Batal</button><button id="confirmEndTestBtn" class="danger-btn">Ya, akhiri</button></div></div></div>
-<div id="interestModal" class="modal-backdrop" hidden>
-  <div class="modal-card card">
-    <div class="modal-icon">🔔</div>
-    <h3 id="interestTitle">Beri tahu saya saat siap</h3>
-    <p id="interestSubtitle" class="muted">Kami akan kirim email begitu fitur ini tersedia. Tidak ada spam, cuma kabar sekali.</p>
-    <form id="interestForm" style="margin-top:16px;text-align:left;">
-      <label>Email
-        <input id="interestEmail" type="email" placeholder="nama@email.com" required autocomplete="email">
-      </label>
-      <label style="margin-top:10px;">Catatan (opsional)
-        <input id="interestNote" maxlength="280" placeholder="Mis. fitur apa yang paling ditunggu">
-      </label>
-      <p id="interestError" class="form-error"></p>
-      <p id="interestSuccess" class="form-success"></p>
-      <div class="modal-actions" style="margin-top:14px;">
-        <button type="button" id="cancelInterestBtn" class="secondary-btn">Batal</button>
-        <button type="submit" class="primary-btn">Kirim</button>
-      </div>
-    </form>
+
+<div class="modal-backdrop" hidden="" id="guestModal"><div class="modal-card card"><div class="modal-icon">i</div><h3>Lanjut sebagai Tamu?</h3><p>Kamu tetap bisa mengerjakan semua latihan dan <strong>mengunduh hasil PDF</strong>. Namun hasil tidak disimpan ke akun atau histori.</p><div class="guest-note">✓ <span><b>Tes tetap berjalan normal</b><small>Semua fitur latihan dan hasil tetap tersedia.</small></span></div><div class="guest-note">↓ <span><b>PDF tetap bisa diunduh</b><small>Simpan PDF setelah selesai jika ingin menyimpan hasil.</small></span></div><div class="modal-actions"><button class="secondary-btn" id="cancelGuestBtn">Batal</button><button class="primary-btn" id="confirmGuestBtn">Ya, lanjut sebagai tamu</button></div></div></div>
+<div class="modal-backdrop" hidden="" id="confirmModal"><div class="modal-card card"><div class="modal-icon">!</div><h3>Akhiri tes?</h3><p>Progress tes yang sedang berjalan akan dihapus. Hasil tidak akan dibuat.</p><div class="modal-actions"><button class="secondary-btn" id="cancelEndTestBtn">Batal</button><button class="danger-btn" id="confirmEndTestBtn">Ya, akhiri</button></div></div></div>
+<div class="modal-backdrop" hidden="" id="interestModal">
+<div class="modal-card card">
+<div class="modal-icon" aria-hidden="true">i</div>
+<h3 id="interestTitle">Beri tahu saya saat siap</h3>
+<p class="muted" id="interestSubtitle">Kami akan kirim email begitu fitur ini tersedia. Tidak ada spam, cuma kabar sekali.</p>
+<form id="interestForm" style="margin-top:16px;text-align:left;">
+<label>Email
+        <input autocomplete="email" id="interestEmail" placeholder="nama@email.com" required="" type="email"/>
+</label>
+<label style="margin-top:10px;">Catatan (opsional)
+        <input id="interestNote" maxlength="280" placeholder="Mis. fitur apa yang paling ditunggu"/>
+</label>
+<p class="form-error" id="interestError"></p>
+<p class="form-success" id="interestSuccess"></p>
+<div class="modal-actions" style="margin-top:14px;">
+<button class="secondary-btn" id="cancelInterestBtn" type="button">Batal</button>
+<button class="primary-btn" type="submit">Kirim</button>
+</div>
+</form>
+</div>
+</div>
+<div id="testView" class="test-view">
+  <header class="test-topbar">
+    <button id="testHomeBtn" class="test-home" type="button" aria-label="Akhiri tes">×</button>
+    <div class="test-meta">
+      <div class="test-meta-item"><span>Tes</span><strong id="testTypeLabel">—</strong></div>
+      <div class="test-meta-item"><span>Soal</span><strong id="questionCounter">1/20</strong></div>
+      <div class="test-meta-item"><span>Waktu</span><strong id="timeCounter">—</strong></div>
+    </div>
+    <div class="test-progress"><div id="progressBar" class="test-progress-fill" style="width:0%"></div></div>
+  </header>
+  <div class="test-body">
+    <div id="testContent" class="test-question-card"></div>
+    <div id="keypad" class="test-keypad"></div>
+    <div id="testHint" class="test-hint"></div>
   </div>
 </div>
-  <div id="toastRoot"></div><script src="app.js"></script>
-</body></html>
+
+<div id="toastRoot" aria-live="polite" aria-atomic="true"></div>
+<script defer src="/app.js"></script>
+</body>
+</html>
