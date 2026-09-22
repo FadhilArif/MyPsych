@@ -625,7 +625,7 @@
         </div>
         <div class="category-grid">
           <article class="category-card category-highlight">
-            <div class="category-icon">K</div>
+            <div class="category-icon category-logo"><img src="./assets/logos/logo_kreaplin.png" alt="Kraepelin"></div>
             <h4>Kraepelin</h4>
             <p>Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan.</p>
             <div class="category-meta"><span>50 kolom · 26 soal</span><span>15–20 detik</span></div>
@@ -633,7 +633,7 @@
           </article>
 
           <article class="category-card">
-            <div class="category-icon icon-green">P</div>
+            <div class="category-icon category-logo icon-green"><img src="./assets/logos/logo_mypsych.png" alt="Psikotes Umum"></div>
             <h4>Psikotes Umum</h4>
             <p>Kuantitatif, numerical, verbal, silogisme, analogi, dan tes kognitif untuk latihan seleksi kerja.</p>
             <div class="category-meta"><span>6 tes tersedia</span><span>20 soal per paket</span></div>
@@ -641,7 +641,7 @@
           </article>
 
           <article class="category-card category-highlight">
-            <div class="category-icon">S</div>
+            <div class="category-icon category-logo"><img src="./assets/logos/logo_mypsych.png" alt="SKD (CPNS)"></div>
             <h4>SKD (CPNS)</h4>
             <p>Latihan TWK, TIU, dan TKP dengan bank soal yang dikelola dari panel admin.</p>
             <div class="category-meta"><span>3 kategori</span><span>Paket 1–3</span></div>
@@ -672,7 +672,7 @@
 
         <div class="skd-grid">
           <article class="skd-card skd-active">
-            <div class="skd-icon icon-blue">T</div>
+            <div class="skd-icon icon-blue"><img src="./assets/logos/logo_twk.png" alt="TWK"></div>
             <h4>TWK</h4>
             <p class="skd-fullname">Tes Wawasan Kebangsaan</p>
             <ul class="skd-topics">
@@ -687,7 +687,7 @@
           </article>
 
           <article class="skd-card skd-active">
-            <div class="skd-icon icon-blue">I</div>
+            <div class="skd-icon icon-blue"><img src="./assets/logos/logo_tiu.png" alt="TIU"></div>
             <h4>TIU</h4>
             <p class="skd-fullname">Tes Intelegensi Umum</p>
             <ul class="skd-topics">
@@ -700,7 +700,7 @@
           </article>
 
           <article class="skd-card skd-active">
-            <div class="skd-icon icon-green">K</div>
+            <div class="skd-icon icon-green"><img src="./assets/logos/logo_tkp.png" alt="TKP"></div>
             <h4>TKP</h4>
             <p class="skd-fullname">Tes Karakteristik Pribadi</p>
             <ul class="skd-topics">
@@ -714,6 +714,28 @@
             <div class="skd-start-row"><select class="package-select" data-skd-package="tkp" aria-label="Paket TKP"><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select><button class="btn btn-primary" type="button" data-skd-start="tkp">Mulai TKP</button></div>
           </article>
         </div>
+
+        <article class="skd-card skd-complete-card">
+          <div class="skd-badge skd-complete-badge">SIMULASI LENGKAP</div>
+          <div class="skd-icon icon-blue"><img src="./assets/logos/logo_mypsych.png" alt="SKD Paket Lengkap"></div>
+          <h4>SKD Paket Lengkap</h4>
+          <p class="skd-fullname">TWK + TIU + TKP</p>
+          <p class="skd-complete-description">Satu sesi penuh dengan navigasi bebas di setiap bagian. Waktu dipisahkan: TWK 20 menit, TIU 20 menit, TKP 20 menit.</p>
+          <div class="skd-complete-info">
+            <div><strong>TWK</strong><span>20 menit · 20 soal</span></div>
+            <div><strong>TIU</strong><span>20 menit · 20 soal</span></div>
+            <div><strong>TKP</strong><span>20 menit · 20 soal</span></div>
+          </div>
+          <div class="skd-meta"><span>60 soal</span><span>·</span><span>3 bagian</span><span>·</span><span>jeda 3 menit</span></div>
+          <div class="skd-start-row">
+            <select class="package-select" id="skdCompletePackage" aria-label="Paket SKD lengkap">
+              <option value="1">Paket 1</option>
+              <option value="2">Paket 2</option>
+              <option value="3">Paket 3</option>
+            </select>
+            <button class="btn btn-primary" type="button" id="startSkdCompleteBtn">Mulai Simulasi</button>
+          </div>
+        </article>
 
         <div class="warning-box" style="margin-top:16px;">
           <strong>Catatan:</strong> kategori sudah dibuka di antarmuka, tetapi tes baru bisa dikerjakan setelah soal aktif untuk kategori dan paket tersebut tersedia di bank soal.
@@ -761,6 +783,7 @@
           </div>
           <div id="resultScores" class="score-grid"></div>
           <div id="resultSummary" class="summary-grid"></div>
+          <div id="skdResultSections" class="skd-result-sections"></div>
           <div class="chart-wrap">
             <div class="chart-heading"><div><b>Grafik performa</b><span id="chartSubtitle">Performa pengerjaan.</span></div><span id="chartBadge" class="chart-badge">—</span></div>
             <canvas id="performanceChart"></canvas>
@@ -912,6 +935,8 @@
   <div class="test-body">
     <div id="testContent" class="test-question-card"></div>
     <div id="keypad" class="test-keypad"></div>
+    <div id="skdQuestionNavigator" class="skd-question-navigator"></div>
+    <div id="skdControls" class="skd-controls"></div>
     <div id="testHint" class="test-hint"></div>
   </div>
 </div>
