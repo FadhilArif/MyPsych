@@ -53,6 +53,28 @@
       name: 'Tes Kognitif',
       description: 'Latihan gabungan perhatian, logika, memori, dan pemecahan masalah.',
       kind: 'mcq',
+      group: 'psikotes',
+    },
+    twk: {
+      name: 'TWK',
+      fullName: 'Tes Wawasan Kebangsaan',
+      description: 'Latihan wawasan kebangsaan untuk materi TWK SKD.',
+      kind: 'mcq',
+      group: 'skd',
+    },
+    tiu: {
+      name: 'TIU',
+      fullName: 'Tes Intelegensi Umum',
+      description: 'Latihan verbal, numerik, dan figural untuk TIU SKD.',
+      kind: 'mcq',
+      group: 'skd',
+    },
+    tkp: {
+      name: 'TKP',
+      fullName: 'Tes Karakteristik Pribadi',
+      description: 'Latihan situasi kerja dan pengambilan keputusan untuk TKP SKD.',
+      kind: 'mcq',
+      group: 'skd',
     },
   };
 
@@ -114,6 +136,7 @@ const views = {
   landing: $('landingView'),
   auth: $('authView'),
   dashboard: $('dashboardView'),
+  skd: $('skdView'),
   instruction: $('instructionView'),
   test: $('testView'),
   result: $('resultView'),
@@ -229,6 +252,7 @@ async function submitInterest(event) {
 
     const pageTitles = {
       dashboard: 'Dashboard',
+      skd: 'SKD (CPNS)',
       history: 'Histori',
       instruction: 'Persiapan Tes',
       result: 'Hasil Latihan',
@@ -975,6 +999,8 @@ async function submitInterest(event) {
     root.innerHTML = '';
 
     Object.entries(TESTS).forEach(([id, test]) => {
+      if (test.group === 'skd') return;
+
       const card = document.createElement('article');
       card.className = 'test-item app-test-item';
       const isKraepelin = id === 'kraepelin';
@@ -1605,6 +1631,9 @@ trackEvent('register_attempt');
     silogisme: './soal_silogisme.json',
     analogi: './soal_analogi.json',
     kognitif: './soal_kognitif.json',
+    twk: './soal_twk.json',
+    tiu: './soal_tiu.json',
+    tkp: './soal_tkp.json',
   });
 
   async function loadQuestionPackage(testId, packageNumber) {
@@ -2852,7 +2881,22 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
   const ADMIN_TEST_OPTIONS = Object.entries(TESTS)
     .filter(([id, test]) => test.kind === 'mcq')
-    .map(([id, test]) => ({ id, name: test.name }));
+    .map(([id, test]) => ({ id, name: test.name, group: test.group === 'skd' ? 'skd' : 'psikotes' }));
+
+  function renderAdminTestOptions_(selected = '') {
+    const groups = [
+      ['psikotes', 'Psikotes Umum'],
+      ['skd', 'SKD (CPNS)'],
+    ];
+
+    return groups.map(([groupId, label]) => {
+      const options = ADMIN_TEST_OPTIONS
+        .filter((item) => item.group === groupId)
+        .map((item) => `<option value="${item.id}" ${item.id === selected ? 'selected' : ''}>${escapeHtml(item.name)}</option>`)
+        .join('');
+      return options ? `<optgroup label="${label}">${options}</optgroup>` : '';
+    }).join('');
+  }
 
   function isAdmin() {
     return state.session?.role === 'admin';
@@ -3103,13 +3147,13 @@ trackEvent('test_start', { type: state.test, package: state.package });
       <div class="admin-panel-head">
         <div>
           <div class="eyebrow">BANK SOAL</div>
-          <h2>Kelola soal MCQ</h2>
-          <p class="muted">Satu file JSON dapat berisi Paket 1, 2, dan 3 sekaligus. Paket di bawah ini hanya untuk memfilter soal yang ditampilkan.</p>
+          <h2>Kelola Bank Soal</h2>
+          <p class="muted">Kelola bank soal Psikotes Umum dan SKD. Satu file JSON dapat berisi Paket 1, 2, dan 3 sekaligus.</p>
         </div>
       </div>
       <div class="admin-card card">
         <div class="admin-filter-grid admin-question-tools">
-          <label>Tes<select id="adminQuestionTest">${ADMIN_TEST_OPTIONS.map((item) => `<option value="${item.id}">${escapeHtml(item.name)}</option>`).join('')}</select></label>
+          <label>Tes<select id="adminQuestionTest">${renderAdminTestOptions_('kuantitatif')}</select></label>
           <label>Paket (filter)<select id="adminQuestionPackage"><option value="">Semua Paket</option><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select></label>
           <label>Upload JSON<input id="adminQuestionFile" type="file" accept="application/json,.json"></label>
           <button type="button" class="primary-btn" id="adminUploadQuestionBtn">Upload JSON</button>
@@ -3239,12 +3283,13 @@ trackEvent('test_start', { type: state.test, package: state.package });
   async function adminMigrateAllQuestions() {
     const button = $('adminMigrateAllQuestionsBtn');
     if (!button) return;
-    if (!window.confirm('Migrasikan semua 6 bank soal JSON ke database? Data dengan question_id yang sama akan diperbarui, bukan diduplikasi.')) return;
+    if (!window.confirm('Migrasikan semua bank soal JSON yang tersedia ke database? Data dengan question_id yang sama akan diperbarui, bukan diduplikasi.')) return;
 
     const files = Object.entries(QUESTION_FILES);
     let total = 0;
     let added = 0;
     let updated = 0;
+    let skipped = 0;
 
     try {
       busy(button, 'Migrasi berjalan…', true);
@@ -3255,7 +3300,10 @@ trackEvent('test_start', { type: state.test, package: state.package });
         if (progress) progress.textContent = `Memuat ${index + 1}/${files.length}: ${filePath}`;
 
         const response = await fetch(filePath, { cache: 'no-cache' });
-        if (!response.ok) throw new Error(`Gagal memuat ${filePath}. HTTP ${response.status}.`);
+        if (!response.ok) {
+          skipped += 1;
+          continue;
+        }
 
         const data = await response.json();
         const questions = normalizeQuestionPayloads_(data, testType);
@@ -3267,8 +3315,8 @@ trackEvent('test_start', { type: state.test, package: state.package });
       }
 
       const progress = $('adminQuestionProgress');
-      if (progress) progress.textContent = `Migrasi semua selesai: ${total} soal diproses, ${added} ditambahkan, ${updated} diperbarui.`;
-      toast(`Semua bank soal berhasil dimigrasikan (${total} soal).`, 'success', 6000);
+      if (progress) progress.textContent = `Migrasi selesai: ${total} soal diproses, ${added} ditambahkan, ${updated} diperbarui${skipped ? `, ${skipped} file dilewati karena belum tersedia.` : '.'}`;
+      toast(`Migrasi selesai (${total} soal).${skipped ? ` ${skipped} bank belum punya file JSON.` : ''}`, 'success', 6000);
       await adminLoadQuestions();
       await refreshAdminData();
     } catch (error) {
@@ -3400,6 +3448,16 @@ trackEvent('test_start', { type: state.test, package: state.package });
   function bind() {
     bindPasswordToggles();
 
+    $('backFromSkdBtn')?.addEventListener('click', () => { goDashboard(); });
+
+    document.querySelectorAll('[data-skd-start]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const testId = button.dataset.skdStart;
+        const select = document.querySelector(`[data-skd-package="${testId}"]`);
+        openInstruction(testId, Number(select?.value) || 1);
+      });
+    });
+
     // Navigation for the new sidebar shell.
     document.querySelectorAll('[data-app-nav]').forEach((item) => {
       item.addEventListener('click', async () => {
@@ -3417,6 +3475,11 @@ trackEvent('test_start', { type: state.test, package: state.package });
           }
           renderHistory();
           showView('history');
+          return;
+        }
+
+        if (target === 'skd') {
+          showView('skd');
           return;
         }
 
