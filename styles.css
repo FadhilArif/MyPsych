@@ -1,5 +1,5 @@
 /* ============================================================
-   MyPsych Prototype â€” Sidebar Layout
+   MyPsych Prototype — Sidebar Layout
    ============================================================ */
 
 /* ---------- Reset & Variables ---------- */
@@ -950,7 +950,7 @@ details[open] .history-chev { transform: rotate(180deg); }
 }
 
 /* ============================================================
-   RESPONSIVE â€” Mobile
+   RESPONSIVE — Mobile
    ============================================================ */
 @media (max-width: 900px) {
   .app { grid-template-columns: 1fr; }
@@ -2346,10 +2346,10 @@ body[data-view=test] .app-shell {
 }
 /* ============================================================
    KEYPAD KRAEPELIN
-   Desktop: 2 kolom (default lama) Â· Mobile: 3Ã—3 + 0 di tengah
+   Desktop: 2 kolom (default lama) · Mobile: 3×3 + 0 di tengah
    ============================================================ */
 
-/* Mobile only â€” layout Nokia */
+/* Mobile only — layout Nokia */
 @media(max-width:620px) {
   .keypad.keypad-numeric {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2905,7 +2905,7 @@ body[data-view=test] .app-shell {
 
 
 /* ============================================================
-   MYPSYCH â€” LEGACY FUNCTION COMPATIBILITY + NEW APP OVERRIDES
+   MYPSYCH — LEGACY FUNCTION COMPATIBILITY + NEW APP OVERRIDES
    Keeps the existing JS/backend contract while using the new UI.
    ============================================================ */
 
@@ -2923,6 +2923,7 @@ body {
 /* The new application shell replaces the old centered dashboard shell. */
 .app-layout { display: none; min-height: 100dvh; }
 body[data-view="dashboard"] .app-layout,
+body[data-view="skd"] .app-layout,
 body[data-view="history"] .app-layout,
 body[data-view="instruction"] .app-layout,
 body[data-view="result"] .app-layout,
@@ -3016,7 +3017,7 @@ body[data-view="admin"] .app-layout {
   font-size: .7rem;
 }
 
-/* History â€” preserve existing table IDs/API while matching the prototype. */
+/* History — preserve existing table IDs/API while matching the prototype. */
 .history-page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; }
 .history-total {
   display:inline-flex; align-items:baseline; gap:6px;
@@ -3193,4 +3194,29 @@ body[data-view="admin"] .app-layout {
 }
 body[data-view="admin"] .app-layout .content {
   max-width: 1220px;
+}
+
+/* ---------- SKD start controls ---------- */
+.skd-start-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 150px) 1fr;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.skd-start-row .package-select {
+  width: 100%;
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  .skd-start-row { grid-template-columns: 1fr; }
 }
