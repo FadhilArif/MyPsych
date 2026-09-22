@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/app.css">
+  <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/landing.css">
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -578,7 +578,7 @@
       <div class="sidebar-label">KATEGORI</div>
       <button class="nav-item nav-highlight" type="button" data-test="kraepelin"><span class="nav-icon" aria-hidden="true">K</span><span>Kraepelin</span><span class="nav-tag">POPULER</span></button>
       <button class="nav-item" type="button" data-app-nav="psikotes"><span class="nav-icon" aria-hidden="true">P</span><span>Psikotes Umum</span></button>
-      <button class="nav-item nav-disabled" type="button" disabled><span class="nav-icon" aria-hidden="true">S</span><span>SKD (CPNS)</span><span class="nav-tag nav-tag-muted">SEGERA</span></button>
+      <button class="nav-item" type="button" data-app-nav="skd"><span class="nav-icon" aria-hidden="true">S</span><span>SKD (CPNS)</span></button>
     </nav>
 
     <div class="sidebar-footer">
@@ -640,13 +640,12 @@
             <button class="btn btn-secondary" type="button" data-app-nav="psikotes">Lihat semua tes</button>
           </article>
 
-          <article class="category-card category-coming">
-            <span class="category-badge">SEGERA</span>
+          <article class="category-card category-highlight">
             <div class="category-icon">S</div>
             <h4>SKD (CPNS)</h4>
-            <p>TWK, TIU, dan TKP akan ditambahkan dalam tahap berikutnya.</p>
-            <div class="category-meta"><span>3 kategori</span><span>Coming soon</span></div>
-            <button class="btn btn-secondary" type="button" disabled>Segera hadir</button>
+            <p>Latihan TWK, TIU, dan TKP dengan bank soal yang dikelola dari panel admin.</p>
+            <div class="category-meta"><span>3 kategori</span><span>Paket 1–3</span></div>
+            <button class="btn btn-secondary" type="button" data-app-nav="skd">Buka SKD</button>
           </article>
         </div>
 
@@ -658,6 +657,66 @@
             </div>
           </div>
           <div id="testCatalog" class="test-grid large"></div>
+        </div>
+      </section>
+
+      <section id="skdView" class="screen app-screen">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">SELEKSI KOMPETENSI DASAR</div>
+            <h2>SKD (CPNS &amp; PPPK)</h2>
+            <p class="muted">Pilih kategori latihan. Soal diambil dari bank soal yang dikelola melalui panel admin.</p>
+          </div>
+        </div>
+        <button id="backFromSkdBtn" class="back-link" type="button">← Kembali ke Dashboard</button>
+
+        <div class="skd-grid">
+          <article class="skd-card skd-active">
+            <div class="skd-icon icon-blue">T</div>
+            <h4>TWK</h4>
+            <p class="skd-fullname">Tes Wawasan Kebangsaan</p>
+            <ul class="skd-topics">
+              <li>Nasionalisme</li>
+              <li>Integritas</li>
+              <li>Bela Negara</li>
+              <li>Pilar Negara</li>
+              <li>Bahasa Negara</li>
+            </ul>
+            <div class="skd-meta"><span>Paket 1–3</span><span>·</span><span>20 soal/paket</span></div>
+            <div class="skd-start-row"><select class="package-select" data-skd-package="twk" aria-label="Paket TWK"><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select><button class="btn btn-primary" type="button" data-skd-start="twk">Mulai TWK</button></div>
+          </article>
+
+          <article class="skd-card skd-active">
+            <div class="skd-icon icon-blue">I</div>
+            <h4>TIU</h4>
+            <p class="skd-fullname">Tes Intelegensi Umum</p>
+            <ul class="skd-topics">
+              <li>Kemampuan Verbal</li>
+              <li>Kemampuan Numerik</li>
+              <li>Kemampuan Figural</li>
+            </ul>
+            <div class="skd-meta"><span>Paket 1–3</span><span>·</span><span>20 soal/paket</span></div>
+            <div class="skd-start-row"><select class="package-select" data-skd-package="tiu" aria-label="Paket TIU"><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select><button class="btn btn-primary" type="button" data-skd-start="tiu">Mulai TIU</button></div>
+          </article>
+
+          <article class="skd-card skd-active">
+            <div class="skd-icon icon-green">K</div>
+            <h4>TKP</h4>
+            <p class="skd-fullname">Tes Karakteristik Pribadi</p>
+            <ul class="skd-topics">
+              <li>Pelayanan Publik</li>
+              <li>Jejaring Kerja</li>
+              <li>Sosial Budaya</li>
+              <li>TIK</li>
+              <li>Profesionalisme</li>
+            </ul>
+            <div class="skd-meta"><span>Paket 1–3</span><span>·</span><span>20 soal/paket</span></div>
+            <div class="skd-start-row"><select class="package-select" data-skd-package="tkp" aria-label="Paket TKP"><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select><button class="btn btn-primary" type="button" data-skd-start="tkp">Mulai TKP</button></div>
+          </article>
+        </div>
+
+        <div class="warning-box" style="margin-top:16px;">
+          <strong>Catatan:</strong> kategori sudah dibuka di antarmuka, tetapi tes baru bisa dikerjakan setelah soal aktif untuk kategori dan paket tersebut tersedia di bank soal.
         </div>
       </section>
 
