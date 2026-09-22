@@ -546,6 +546,12 @@ button { font: inherit; cursor: pointer; border: 0; background: none; }
   font-size: 1.7rem;
   margin-bottom: 16px;
 }
+.skd-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 
 .skd-card h4 { font-size: 1.3rem; margin-bottom: 2px; }
 .skd-fullname {
@@ -668,6 +674,16 @@ button { font: inherit; cursor: pointer; border: 0; background: none; }
   place-items: center;
   font-size: 1.15rem;
   flex-shrink: 0;
+}
+
+.app-test-logo {
+  overflow: hidden;
+}
+.app-test-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .test-info {
@@ -983,6 +999,7 @@ details[open] .history-chev { transform: rotate(180deg); }
 }
 
 @media (max-width: 640px) {
+  .app-test-item .test-icon { width: 52px; height: 52px; flex-basis: 52px; }
   .hero-stats { flex-wrap: wrap; }
   .hero-stat { min-width: 0; flex: 1; padding: 10px; }
   .hero-stat strong { font-size: 1.15rem; }
@@ -2978,6 +2995,16 @@ body[data-view="admin"] .app-layout {
   font-weight: 900;
   color: var(--blue-dark);
 }
+.category-logo {
+  padding: 4px;
+  overflow: hidden;
+}
+.category-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 .category-card.category-coming { opacity: .78; }
 .catalog-section { margin-top: 34px; }
 .catalog-head { margin-bottom: 14px; }
@@ -2995,7 +3022,15 @@ body[data-view="admin"] .app-layout {
   border-color: var(--line);
   box-shadow: none;
 }
-.app-test-item .test-info { flex: 1 1 auto; }
+.app-test-item .test-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  flex: 0 0 56px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.app-test-item .test-info { flex: 1 1 auto; min-width: 0; }
 .app-test-item .test-info strong { font-size: .9rem; }
 .app-test-item .test-info small { display: block; max-width: 520px; line-height: 1.45; }
 .app-test-controls {
