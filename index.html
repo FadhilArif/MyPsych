@@ -605,90 +605,87 @@
 
     <div class="content">
       <section id="dashboardView" class="screen app-screen active">
-        <div class="hero-card">
+        <div class="hero-card dashboard-hero">
           <div class="hero-text">
-            <div class="eyebrow">HOME</div>
+            <div class="eyebrow">DASHBOARD</div>
             <h2>Halo, <span class="text-blue" id="welcomeName">Peserta</span></h2>
-            <p class="hero-sub">Pilih latihan sesuai kebutuhanmu. Kerjakan kapan saja dan pantau perkembangan hasilnya.</p>
+            <p class="hero-sub">Ringkasan perkembangan latihanmu dalam satu tempat.</p>
             <div class="hero-date">Tes terakhir: <span id="latestDate">Belum ada tes</span></div>
-            <button id="viewHistoryBtn" class="btn btn-secondary hero-history-btn" type="button">Lihat Histori</button>
+            <div class="dashboard-hero-actions">
+              <button id="dashboardOpenMenuBtn" class="btn btn-primary" type="button">Buka menu latihan →</button>
+              <button id="viewHistoryBtn" class="btn btn-secondary hero-history-btn" type="button">Lihat Histori</button>
+            </div>
           </div>
           <div class="hero-stats">
             <div class="hero-stat"><strong id="historyCount">0</strong><span>Total tes</span></div>
             <div class="hero-stat"><strong id="dashScore">—</strong><span>Skor terakhir</span></div>
-            <div class="hero-stat"><strong id="dashSpeed">—</strong><span>Kecepatan</span></div>
+            <div class="hero-stat"><strong id="dashAccuracy">—</strong><span>Ketelitian</span></div>
           </div>
         </div>
 
-        <div class="dashboard-focus-grid">
-          <article class="dashboard-focus-card dashboard-focus-primary">
-            <div class="dashboard-focus-copy">
-              <span class="dashboard-kicker">REKOMENDASI</span>
-              <h3>Lanjutkan persiapanmu</h3>
-              <p>Mulai dari latihan yang terakhir kamu kerjakan atau pilih kategori lain untuk membangun progres.</p>
-              <div class="dashboard-focus-actions">
-                <button class="btn btn-primary" type="button" data-test="kraepelin">Mulai latihan →</button>
-                <button class="btn btn-secondary" type="button" data-app-nav="history">Lihat progres</button>
-              </div>
-            </div>
-            <div class="dashboard-focus-metric">
-              <span>Fokus utama</span>
-              <strong>Konsistensi</strong>
-              <small>Latihan rutin membantu membaca perkembanganmu.</small>
-            </div>
+        <div class="dashboard-section-head">
+          <div>
+            <span class="dashboard-kicker">RINGKASAN PERFORMA</span>
+            <h2>Performa kamu saat ini</h2>
+            <p class="muted">Angka di bawah diringkas dari histori latihan yang sudah tersimpan.</p>
+          </div>
+        </div>
+
+        <div class="performance-grid">
+          <article class="performance-card performance-main">
+            <span class="performance-label">KEUNGGULAN SAAT INI</span>
+            <strong id="dashStrengthValue">—</strong>
+            <span id="dashStrengthLabel" class="performance-sub">Belum ada data latihan</span>
+            <div class="performance-bar"><span id="dashStrengthBar"></span></div>
           </article>
 
-          <article class="dashboard-focus-card dashboard-career-card">
+          <article class="performance-card">
+            <span class="performance-label">REKOR KECEPATAN</span>
+            <strong id="dashRecordValue">—</strong>
+            <span class="performance-sub">Skor kecepatan terbaik</span>
+          </article>
+
+          <article class="performance-card">
+            <span class="performance-label">KONSISTENSI</span>
+            <strong id="dashConsistency">—</strong>
+            <span class="performance-sub">Dari latihan terakhir</span>
+          </article>
+
+          <article class="performance-card">
+            <span class="performance-label">KETAHANAN</span>
+            <strong id="dashEndurance">—</strong>
+            <span class="performance-sub">Dari latihan terakhir</span>
+          </article>
+        </div>
+
+        <section class="kraepelin-highlight">
+          <div class="kraepelin-highlight-copy">
+            <div class="category-icon category-logo">
+              <img src="./assets/logos/logo_kreaplin.png" alt="Kraepelin">
+            </div>
             <div>
-              <span class="dashboard-kicker">PERSIAPAN KARIER</span>
-              <h3>Siapkan CV-mu</h3>
-              <p>Fitur pembuatan CV sedang disiapkan. Nanti kamu bisa menyusun CV dari data profilmu.</p>
-            </div>
-            <button class="btn btn-secondary" type="button" data-app-nav="cv">Buka Buat CV →</button>
-          </article>
-        </div>
-
-        <div class="section-head">
-          <h2>Kategori Latihan</h2>
-          <p class="muted">Pilih jalur latihan yang ingin kamu fokuskan.</p>
-        </div>
-        <div class="category-grid">
-          <article class="category-card category-highlight">
-            <div class="category-icon category-logo"><img src="./assets/logos/logo_kreaplin.png" alt="Kraepelin"></div>
-            <h4>Kraepelin</h4>
-            <p>Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan.</p>
-            <div class="category-meta"><span>50 kolom · 26 soal</span><span>15–20 detik</span></div>
-            <button class="btn btn-primary" type="button" data-test="kraepelin">Mulai latihan</button>
-          </article>
-
-          <article class="category-card">
-            <div class="category-icon category-logo icon-green"><img src="./assets/logos/logo_mypsych.png" alt="Psikotes Umum"></div>
-            <h4>Psikotes Umum</h4>
-            <p>Kuantitatif, numerical, verbal, silogisme, analogi, dan tes kognitif untuk latihan seleksi kerja.</p>
-            <div class="category-meta"><span>6 tes tersedia</span><span>20 soal per paket</span></div>
-            <button class="btn btn-secondary" type="button" data-app-nav="psikotes">Lihat semua tes</button>
-          </article>
-
-          <article class="category-card category-highlight">
-            <div class="category-icon category-logo"><img src="./assets/logos/logo_mypsych.png" alt="SKD (CPNS)"></div>
-            <h4>SKD (CPNS)</h4>
-            <p>Latihan TWK, TIU, dan TKP dengan bank soal yang dikelola dari panel admin.</p>
-            <div class="category-meta"><span>3 kategori</span><span>Paket 1–3</span></div>
-            <button class="btn btn-secondary" type="button" data-app-nav="skd">Buka SKD</button>
-          </article>
-        </div>
-
-        <div class="catalog-section" id="psikotesCatalog">
-          <div class="section-head catalog-head">
-            <div>
-              <h2>Tes yang tersedia</h2>
-              <p class="muted">Pilih paket atau pengaturan waktu, lalu baca instruksi sebelum memulai.</p>
+              <span class="dashboard-kicker">LATIHAN UNGGULAN</span>
+              <h2>Kraepelin</h2>
+              <p>Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan dalam satu sesi.</p>
+              <div class="category-meta"><span>50 kolom · 26 soal</span><span>15–20 detik</span></div>
             </div>
           </div>
-          <div id="testCatalog" class="test-grid large"></div>
+          <button class="btn btn-primary" type="button" data-test="kraepelin">Mulai Kraepelin →</button>
+        </section>
+
+        <div class="dashboard-cta-grid">
+          <button class="dashboard-cta" type="button" id="dashboardOpenMenuBtnSecondary">
+            <span class="dashboard-cta-icon">≡</span>
+            <span><strong>Pilih latihan lain</strong><small>Buka sidebar untuk melihat semua tes</small></span>
+            <b>→</b>
+          </button>
+          <button class="dashboard-cta" type="button" data-app-nav="history">
+            <span class="dashboard-cta-icon">H</span>
+            <span><strong>Lihat histori lengkap</strong><small>Bandingkan hasil latihanmu</small></span>
+            <b>→</b>
+          </button>
         </div>
       </section>
-
       <section id="cvView" class="screen app-screen">
         <div class="cv-placeholder-shell">
           <div class="eyebrow">PERSIAPAN KARIER</div>
