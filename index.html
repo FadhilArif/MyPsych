@@ -574,6 +574,7 @@
       <div class="sidebar-label">MENU</div>
       <button class="nav-item" type="button" data-app-nav="dashboard"><span class="nav-icon" aria-hidden="true">D</span><span>Dashboard</span></button>
       <button class="nav-item" type="button" data-app-nav="history"><span class="nav-icon" aria-hidden="true">H</span><span>Histori</span></button>
+      <button class="nav-item nav-cv" type="button" data-app-nav="cv"><span class="nav-icon" aria-hidden="true">CV</span><span>Buat CV</span><span class="nav-tag-muted">SEGERA</span></button>
 
       <div class="sidebar-label">KATEGORI</div>
       <button class="nav-item nav-highlight" type="button" data-test="kraepelin"><span class="nav-icon" aria-hidden="true">K</span><span>Kraepelin</span><span class="nav-tag">POPULER</span></button>
@@ -619,6 +620,34 @@
           </div>
         </div>
 
+        <div class="dashboard-focus-grid">
+          <article class="dashboard-focus-card dashboard-focus-primary">
+            <div class="dashboard-focus-copy">
+              <span class="dashboard-kicker">REKOMENDASI</span>
+              <h3>Lanjutkan persiapanmu</h3>
+              <p>Mulai dari latihan yang terakhir kamu kerjakan atau pilih kategori lain untuk membangun progres.</p>
+              <div class="dashboard-focus-actions">
+                <button class="btn btn-primary" type="button" data-test="kraepelin">Mulai latihan →</button>
+                <button class="btn btn-secondary" type="button" data-app-nav="history">Lihat progres</button>
+              </div>
+            </div>
+            <div class="dashboard-focus-metric">
+              <span>Fokus utama</span>
+              <strong>Konsistensi</strong>
+              <small>Latihan rutin membantu membaca perkembanganmu.</small>
+            </div>
+          </article>
+
+          <article class="dashboard-focus-card dashboard-career-card">
+            <div>
+              <span class="dashboard-kicker">PERSIAPAN KARIER</span>
+              <h3>Siapkan CV-mu</h3>
+              <p>Fitur pembuatan CV sedang disiapkan. Nanti kamu bisa menyusun CV dari data profilmu.</p>
+            </div>
+            <button class="btn btn-secondary" type="button" data-app-nav="cv">Buka Buat CV →</button>
+          </article>
+        </div>
+
         <div class="section-head">
           <h2>Kategori Latihan</h2>
           <p class="muted">Pilih jalur latihan yang ingin kamu fokuskan.</p>
@@ -657,6 +686,23 @@
             </div>
           </div>
           <div id="testCatalog" class="test-grid large"></div>
+        </div>
+      </section>
+
+      <section id="cvView" class="screen app-screen">
+        <div class="cv-placeholder-shell">
+          <div class="eyebrow">PERSIAPAN KARIER</div>
+          <h2>Buat CV</h2>
+          <p class="muted cv-placeholder-lead">Fitur ini sedang dipersiapkan untuk membantu kamu membuat CV yang rapi dan siap digunakan untuk melamar kerja.</p>
+          <div class="cv-placeholder-card">
+            <div class="cv-placeholder-icon">CV</div>
+            <div>
+              <span class="dashboard-kicker">COMING SOON</span>
+              <h3>CV Builder MyPsych</h3>
+              <p>Untuk sementara halaman ini adalah placeholder. Struktur fitur, form data, template, dan ekspor PDF akan kita bangun bertahap setelah konsepnya siap.</p>
+            </div>
+          </div>
+          <button class="btn btn-secondary" type="button" data-app-nav="dashboard">← Kembali ke Dashboard</button>
         </div>
       </section>
 
