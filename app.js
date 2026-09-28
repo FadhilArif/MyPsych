@@ -176,6 +176,7 @@ const views = {
   history: $('historyView'),
   admin: $('adminView'),
   about: $('aboutView'),
+  cv: $('cvView'),
 };
   
   const state = {
@@ -309,6 +310,7 @@ async function submitInterest(event) {
       instruction: 'Persiapan Tes',
       result: 'Hasil Latihan',
       admin: 'Admin Panel',
+      cv: 'Buat CV',
     };
     const pageTitle = $('pageTitle');
     if (pageTitle) pageTitle.textContent = pageTitles[name] || 'MyPsych';
@@ -4291,6 +4293,11 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
         if (target === 'skd') {
           showView('skd');
+          return;
+        }
+
+        if (target === 'cv') {
+          showView('cv');
           return;
         }
 
