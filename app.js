@@ -1135,6 +1135,10 @@ async function submitInterest(event) {
       if ($('dashAccuracy')) $('dashAccuracy').textContent = '—';
       if ($('dashConsistency')) $('dashConsistency').textContent = '—';
       if ($('dashEndurance')) $('dashEndurance').textContent = '—';
+      if ($('dashStrengthValue')) $('dashStrengthValue').textContent = '—';
+      if ($('dashStrengthLabel')) $('dashStrengthLabel').textContent = 'Belum ada data latihan';
+      if ($('dashStrengthBar')) $('dashStrengthBar').style.width = '0%';
+      if ($('dashRecordValue')) $('dashRecordValue').textContent = '—';
       return;
     }
 
@@ -1145,6 +1149,28 @@ async function submitInterest(event) {
     if ($('dashAccuracy')) $('dashAccuracy').textContent = `${Number(latest.accuracy) || 0}%`;
     if ($('dashConsistency')) $('dashConsistency').textContent = `${Number(latest.consistency) || 0}%`;
     if ($('dashEndurance')) $('dashEndurance').textContent = `${Number(latest.endurance) || 0}%`;
+
+    const metrics = [
+      { key: 'accuracy', label: 'Ketelitian' },
+      { key: 'consistency', label: 'Konsistensi' },
+      { key: 'endurance', label: 'Ketahanan' },
+      { key: 'speed', label: 'Kecepatan' },
+    ];
+    const strongest = metrics.reduce((best, item) => {
+      const value = Number(latest[item.key]) || 0;
+      return value > best.value ? { ...item, value } : best;
+    }, { key: '', label: '—', value: -1 });
+
+    const recordSpeed = state.history.reduce((max, item) => {
+      return Math.max(max, Number(item.speed) || 0);
+    }, 0);
+
+    if ($('dashStrengthValue')) $('dashStrengthValue').textContent = strongest.value >= 0 ? `${strongest.value}%` : '—';
+    if ($('dashStrengthLabel')) $('dashStrengthLabel').textContent = strongest.value >= 0
+      ? `${strongest.label} — kekuatan tertinggi pada tes terakhir`
+      : 'Belum ada data latihan';
+    if ($('dashStrengthBar')) $('dashStrengthBar').style.width = `${Math.min(100, Math.max(0, strongest.value))}%`;
+    if ($('dashRecordValue')) $('dashRecordValue').textContent = recordSpeed ? `${recordSpeed}%` : '—';
   }
 
   function formatDate(value) {
@@ -4322,6 +4348,9 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
     const hamburger = $('hamburger');
     hamburger?.addEventListener('click', () => toggleSidebar_());
+
+    $('dashboardOpenMenuBtn')?.addEventListener('click', () => toggleSidebar_());
+    $('dashboardOpenMenuBtnSecondary')?.addEventListener('click', () => toggleSidebar_());
     $('sidebarOverlay')?.addEventListener('click', closeSidebar_);
 // About page
 document.querySelectorAll('[data-goto="about"]').forEach((el) => {
