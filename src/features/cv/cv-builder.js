@@ -431,7 +431,7 @@ function bindCvOnce_() {
 
   window.addEventListener('beforeunload', () => {
     cvSyncSimpleFields_();
-    cvSave_(true);
+    cvSave_(false);
   });
 }
 
