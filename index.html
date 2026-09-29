@@ -562,7 +562,7 @@
 
 <div class="app app-layout" id="appLayout">
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
+    <div class="sidebar-brand" title="MyPsych">
       <div class="brand-logo" aria-hidden="true"><span class="brand-logo-dot"></span></div>
       <div class="brand-text">
         <strong>MyPsych</strong>
@@ -572,25 +572,66 @@
 
     <nav class="sidebar-nav" aria-label="Navigasi utama">
       <div class="sidebar-label">MENU</div>
-      <button class="nav-item" type="button" data-app-nav="dashboard"><span class="nav-icon" aria-hidden="true">D</span><span>Dashboard</span></button>
-      <button class="nav-item" type="button" data-app-nav="history"><span class="nav-icon" aria-hidden="true">H</span><span>Histori</span></button>
-      <button class="nav-item nav-cv" type="button" data-app-nav="cv"><span class="nav-icon" aria-hidden="true">CV</span><span>Buat CV</span><span class="nav-tag-muted">SEGERA</span></button>
+
+      <button class="nav-item" type="button" title="Dashboard" aria-label="Dashboard" data-app-nav="dashboard">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="6" height="6" rx="1.5"></rect><rect x="14" y="4" width="6" height="6" rx="1.5"></rect><rect x="4" y="14" width="6" height="6" rx="1.5"></rect><rect x="14" y="14" width="6" height="6" rx="1.5"></rect></svg>
+        </span>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav-item" type="button" title="Histori" aria-label="Histori" data-app-nav="history">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 0 2.34-5.66L4 8.67"></path><path d="M4 4v4.67h4.67"></path><path d="M12 8v4l2.6 1.6"></path></svg>
+        </span>
+        <span>Histori</span>
+      </button>
+
+      <button class="nav-item nav-cv" type="button" title="Buat CV" aria-label="Buat CV" data-app-nav="cv">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 4.5h7l3 3V19.5A1.5 1.5 0 0 1 15.5 21h-9A1.5 1.5 0 0 1 5 19.5v-13A1.5 1.5 0 0 1 6.5 5"></path><path d="M14 5v3h3"></path><path d="M8 13h8"></path><path d="M8 16h6"></path></svg>
+        </span>
+        <span>Buat CV</span>
+        <span class="nav-tag-muted">SEGERA</span>
+      </button>
 
       <div class="sidebar-label">KATEGORI</div>
-      <button class="nav-item nav-highlight" type="button" data-test="kraepelin"><span class="nav-icon" aria-hidden="true">K</span><span>Kraepelin</span><span class="nav-tag">POPULER</span></button>
-      <button class="nav-item" type="button" data-app-nav="psikotes"><span class="nav-icon" aria-hidden="true">P</span><span>Psikotes Umum</span></button>
-      <button class="nav-item" type="button" data-app-nav="skd"><span class="nav-icon" aria-hidden="true">S</span><span>SKD (CPNS)</span></button>
+
+      <button class="nav-item nav-highlight" type="button" title="Kraepelin" aria-label="Kraepelin" data-test="kraepelin">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 5.5 4.5 8 7 10.5"></path><path d="m17 5.5 2.5 2.5-2.5 2.5"></path><path d="M14.5 4 9.5 12"></path><path d="M6 15h12"></path><path d="M6 18h8"></path></svg>
+        </span>
+        <span>Kraepelin</span>
+        <span class="nav-tag">POPULER</span>
+      </button>
+
+      <button class="nav-item" type="button" title="Psikotes Umum" aria-label="Psikotes Umum" data-app-nav="psikotes">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8"></circle><path d="M9.5 9.5a2.6 2.6 0 1 1 4.33 1.94c-.95.82-1.83 1.24-1.83 2.56"></path><path d="M12 17h.01"></path></svg>
+        </span>
+        <span>Psikotes Umum</span>
+      </button>
+
+      <button class="nav-item" type="button" title="SKD (CPNS)" aria-label="SKD (CPNS)" data-app-nav="skd">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v12a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18V6A1.5 1.5 0 0 1 6 4.5Z"></path><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+        </span>
+        <span>SKD (CPNS)</span>
+      </button>
     </nav>
 
     <div class="sidebar-footer">
-      <div class="sidebar-user">
+      <div class="sidebar-user" title="Akun peserta">
         <div class="user-avatar" id="sidebarAvatar">P</div>
         <div class="user-info">
           <strong id="sidebarUserName">Peserta</strong>
           <small id="sidebarUserRole">Akun peserta</small>
         </div>
       </div>
-      <button id="logoutBtn" class="logout-btn" type="button"><span>Keluar</span></button>
+      <button id="logoutBtn" class="logout-btn" type="button" title="Keluar" aria-label="Keluar">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 4.5H6.5A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5H10"></path><path d="M13 8.5 16.5 12 13 15.5"></path><path d="M16 12H9"></path></svg>
+        <span>Keluar</span>
+      </button>
     </div>
   </aside>
 
