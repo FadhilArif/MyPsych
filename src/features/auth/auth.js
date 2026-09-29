@@ -74,7 +74,14 @@ trackEvent('register_attempt');
       state.isGuest = false;
       saveSession();
       $('registerForm').reset();
-      await goDashboard('Akun berhasil dibuat.');
+      const pendingView = state.pendingProtectedView;
+      state.pendingProtectedView = null;
+      if (pendingView === 'skd' || pendingView === 'cv') {
+        await showView(pendingView);
+        toast('Akun berhasil dibuat.', 'success');
+      } else {
+        await goDashboard('Akun berhasil dibuat.');
+      }
       trackEvent('register_success');
     } catch (errorObject) {
       error.textContent = errorObject.message || 'Gagal membuat akun.';
@@ -113,7 +120,14 @@ trackEvent('register_attempt');
           state.isGuest = false;
           saveSession();
           $('loginForm').reset();
-          await goDashboard('Login berhasil.');
+          const pendingView = state.pendingProtectedView;
+          state.pendingProtectedView = null;
+          if (pendingView === 'skd' || pendingView === 'cv') {
+            showView(pendingView);
+            toast('Login berhasil.', 'success');
+          } else {
+            await goDashboard('Login berhasil.');
+          }
           return;
         } catch (errorObject) {
           lastError = errorObject;
