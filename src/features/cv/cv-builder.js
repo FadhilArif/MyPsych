@@ -137,8 +137,7 @@ function cvEscape_(value = '') {
 }
 
 function cvLines_(value = '') {
-  return String(value).split(/
-+/).map(v => v.trim()).filter(Boolean);
+  return String(value).split(/\n+/).map(v => v.trim()).filter(Boolean);
 }
 
 function cvText_(value='') {
