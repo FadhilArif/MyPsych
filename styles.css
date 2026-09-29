@@ -4693,3 +4693,108 @@ body[data-view="admin"] .app-layout .content {
     color:#bd3e39;
   }
 }
+
+
+/* ============================================================
+   SIDEBAR REFINEMENT V2
+   Stable rail, aligned text, no horizontal overflow, and
+   consistent page margins.
+   ============================================================ */
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .sidebar {
+    overflow-x: hidden;
+    overflow-y: auto;
+    will-change: width;
+  }
+
+  .sidebar-nav {
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* Collapsed rail: remove labels from layout instead of merely hiding them.
+     This prevents clipped letters and the horizontal scrollbar seen before. */
+  .sidebar:not(:hover):not(:focus-within) .brand-text,
+  .sidebar:not(:hover):not(:focus-within) .sidebar-label,
+  .sidebar:not(:hover):not(:focus-within) .nav-item > span:not(.nav-icon),
+  .sidebar:not(:hover):not(:focus-within) .sidebar-user .user-info,
+  .sidebar:not(:hover):not(:focus-within) .logout-btn > span {
+    display: none;
+  }
+
+  .sidebar:not(:hover):not(:focus-within) .nav-item {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    padding: 10px;
+  }
+
+  .sidebar:not(:hover):not(:focus-within) .sidebar-user {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    padding: 7px;
+  }
+
+  .sidebar:not(:hover):not(:focus-within) .logout-btn {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    padding: 0;
+  }
+
+  /* All navigation text starts from exactly the same x-position. */
+  .sidebar:hover .nav-item,
+  .sidebar:focus-within .nav-item {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 12px;
+  }
+
+  .sidebar:hover .nav-item > span:nth-child(2),
+  .sidebar:focus-within .nav-item > span:nth-child(2) {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .sidebar:hover .sidebar-label,
+  .sidebar:focus-within .sidebar-label {
+    padding-left: 48px;
+    padding-right: 10px;
+  }
+
+  /* Do not let badges push the navigation text around. */
+  .sidebar:hover .nav-tag,
+  .sidebar:focus-within .nav-tag,
+  .sidebar:hover .nav-tag-muted,
+  .sidebar:focus-within .nav-tag-muted {
+    justify-self: end;
+  }
+
+  /* CV page uses the same content width and left margin as the rest of the app. */
+  .cv-placeholder-shell {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+
+  .cv-placeholder-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 900px), (hover: none) {
+  .sidebar,
+  .sidebar-nav {
+    overflow-x: hidden;
+  }
+
+  .cv-placeholder-shell {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+}
