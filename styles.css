@@ -4696,15 +4696,23 @@ body[data-view="admin"] .app-layout .content {
 
 
 /* ============================================================
-   SIDEBAR REFINEMENT V2
-   Stable rail, aligned text, no horizontal overflow, and
-   consistent page margins.
+   SIDEBAR REFINEMENT V3
+   Desktop: collapsed icon rail + JS-driven hover expansion.
+   Mobile: hamburger + slide-in sidebar.
    ============================================================ */
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) {
   .sidebar {
     overflow-x: hidden;
     overflow-y: auto;
+    width: var(--sidebar-rail-w);
+    min-width: var(--sidebar-rail-w);
+    box-sizing: border-box;
     will-change: width;
+  }
+
+  .sidebar.is-expanded {
+    width: var(--sidebar-expanded-w);
+    box-shadow: 14px 0 36px rgba(9,24,47,.18);
   }
 
   .sidebar-nav {
@@ -4713,67 +4721,238 @@ body[data-view="admin"] .app-layout .content {
     overflow-y: auto;
   }
 
-  /* Collapsed rail: remove labels from layout instead of merely hiding them.
-     This prevents clipped letters and the horizontal scrollbar seen before. */
-  .sidebar:not(:hover):not(:focus-within) .brand-text,
-  .sidebar:not(:hover):not(:focus-within) .sidebar-label,
-  .sidebar:not(:hover):not(:focus-within) .nav-item > span:not(.nav-icon),
-  .sidebar:not(:hover):not(:focus-within) .sidebar-user .user-info,
-  .sidebar:not(:hover):not(:focus-within) .logout-btn > span {
+  /* Collapsed rail: remove labels from layout entirely. */
+  .sidebar:not(.is-expanded) .brand-text,
+  .sidebar:not(.is-expanded) .sidebar-label,
+  .sidebar:not(.is-expanded) .nav-item > span:not(.nav-icon),
+  .sidebar:not(.is-expanded) .sidebar-user .user-info,
+  .sidebar:not(.is-expanded) .logout-btn > span {
     display: none;
   }
 
-  .sidebar:not(:hover):not(:focus-within) .nav-item {
+  .sidebar:not(.is-expanded) .nav-item {
     width: 48px;
     min-width: 48px;
     max-width: 48px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 10px;
   }
 
-  .sidebar:not(:hover):not(:focus-within) .sidebar-user {
+  .sidebar:not(.is-expanded) .sidebar-user {
     width: 48px;
     min-width: 48px;
     max-width: 48px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 7px;
   }
 
-  .sidebar:not(:hover):not(:focus-within) .logout-btn {
+  .sidebar:not(.is-expanded) .logout-btn {
     width: 48px;
     min-width: 48px;
     max-width: 48px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 0;
   }
 
-  /* All navigation text starts from exactly the same x-position. */
-  .sidebar:hover .nav-item,
-  .sidebar:focus-within .nav-item {
+  .sidebar-brand {
+    height: 72px;
+    box-sizing: border-box;
+    padding: 14px 0;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    overflow: hidden;
+  }
+
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    border-radius: 12px;
+    background: rgba(77,145,255,.14);
+    border: 1px solid rgba(77,145,255,.24);
+  }
+
+  .brand-logo-dot {
+    width: 13px;
+    height: 13px;
+    background: var(--sidebar-accent);
+    box-shadow: 0 0 0 5px rgba(77,145,255,.12);
+  }
+
+  .sidebar.is-expanded .brand-text {
+    min-width: 0;
+    width: 170px;
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .brand-text strong { color:#fff; }
+  .brand-text small { color:var(--sidebar-muted); }
+
+  .sidebar-nav {
+    padding: 14px 12px;
+  }
+
+  .sidebar.is-expanded .sidebar-label {
+    padding: 14px 10px 8px 48px;
+    color: var(--sidebar-muted);
+  }
+
+  /* One fixed icon column + one fixed text column = perfect text alignment. */
+  .nav-item {
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 12px;
+    margin: 2px 0;
     display: grid;
-    grid-template-columns: 24px minmax(0, 1fr) auto;
+    grid-template-columns: 24px minmax(0,1fr) auto;
     align-items: center;
     column-gap: 12px;
+    color: var(--sidebar-text);
+    background: transparent;
+    font-size: .82rem;
+    overflow: hidden;
+    transition: width .18s ease, background .15s ease, color .15s ease;
   }
 
-  .sidebar:hover .nav-item > span:nth-child(2),
-  .sidebar:focus-within .nav-item > span:nth-child(2) {
+  .nav-item:hover {
+    background: rgba(255,255,255,.06);
+    color: #fff;
+  }
+
+  .nav-item.active {
+    background: var(--sidebar-active);
+    color: #fff;
+  }
+
+  .nav-highlight { color: #b9d7ff; }
+
+  .nav-item .nav-icon {
+    width: 24px !important;
+    height: 24px;
+    flex: 0 0 24px;
+    display: grid;
+    place-items: center;
+    color: currentColor;
+    font-size: 0;
+    background: transparent;
+    border: 0;
+  }
+
+  .nav-icon svg {
+    width: 19px;
+    height: 19px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sidebar:not(.is-expanded) .nav-item {
+    display: grid;
+    grid-template-columns: 24px;
+    justify-items: center;
+  }
+
+  .sidebar.is-expanded .nav-item > span:nth-child(2) {
     min-width: 0;
     white-space: nowrap;
+    display: block;
   }
 
-  .sidebar:hover .sidebar-label,
-  .sidebar:focus-within .sidebar-label {
-    padding-left: 48px;
-    padding-right: 10px;
-  }
-
-  /* Do not let badges push the navigation text around. */
-  .sidebar:hover .nav-tag,
-  .sidebar:focus-within .nav-tag,
-  .sidebar:hover .nav-tag-muted,
-  .sidebar:focus-within .nav-tag-muted {
+  .nav-tag,
+  .nav-tag-muted {
     justify-self: end;
+    margin: 0;
+    padding: 3px 7px;
+    border-radius: 999px;
+    font-size: .5rem;
+    font-weight: 800;
   }
 
-  /* CV page uses the same content width and left margin as the rest of the app. */
+  .nav-tag {
+    background: rgba(77,145,255,.16);
+    color: #a9ccff;
+  }
+
+  .nav-tag-muted {
+    background: rgba(255,255,255,.08);
+    color: #a7b6c9;
+  }
+
+  .sidebar:not(.is-expanded) .nav-tag,
+  .sidebar:not(.is-expanded) .nav-tag-muted {
+    display: none;
+  }
+
+  .sidebar-footer {
+    padding: 12px;
+    gap: 8px;
+    border-top: 1px solid rgba(255,255,255,.07);
+  }
+
+  .sidebar-user {
+    min-height: 48px;
+    box-sizing: border-box;
+    padding: 7px;
+    justify-content: flex-start;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.06);
+    overflow: hidden;
+    transition: width .18s ease, background .15s ease;
+  }
+
+  .sidebar.is-expanded .sidebar-user {
+    width: 100%;
+  }
+
+  .user-avatar {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    background: linear-gradient(135deg,var(--sidebar-accent),#2f7df2);
+  }
+
+  .user-info strong { color:#fff; }
+  .user-info small { color:var(--sidebar-muted); }
+
+  .sidebar.is-expanded .sidebar-user .user-info {
+    display:flex;
+  }
+
+  .logout-btn {
+    height: 42px;
+    padding: 0;
+    color: #ffb7b4;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.06);
+  }
+
+  .sidebar.is-expanded .logout-btn {
+    width:100%;
+    justify-content:flex-start;
+    padding:10px 12px;
+  }
+
+  .logout-btn:hover { background:rgba(217,83,79,.14); }
+
+  .logout-btn svg {
+    width:18px;
+    height:18px;
+    flex:0 0 18px;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
   .cv-placeholder-shell {
     width: 100%;
     max-width: none;
