@@ -185,7 +185,7 @@
 <span class="lp-category-count">1 tes</span>
 <span>13 menit</span>
 </div>
-<span class="lp-category-link">Jelajahi →</span>
+<button class="lp-category-link" type="button" data-landing-route="kraepelin">Jelajahi →</button>
 </article>
 <article class="lp-category-card lp-category-active">
 
@@ -195,7 +195,7 @@
 <span class="lp-category-count">6 tes</span>
 <span>10–15 menit</span>
 </div>
-<span class="lp-category-link">Jelajahi →</span>
+<button class="lp-category-link" type="button" data-landing-route="psikotes">Jelajahi →</button>
 </article>
 <article class="lp-category-card lp-category-coming">
 <span class="lp-badge-coming">SEGERA</span>
@@ -215,7 +215,7 @@
 <span class="lp-category-count">3 tes</span>
 <span>20 menit/bagian</span>
 </div>
-<span class="lp-category-link">Jelajahi →</span>
+<button class="lp-category-link" type="button" data-account-gate="skd">Masuk untuk akses →</button>
 </article>
 </div>
 </div>
@@ -1003,6 +1003,24 @@
 </section>
 
 <div class="modal-backdrop" hidden="" id="guestModal"><div class="modal-card card"><div class="modal-icon">i</div><h3>Lanjut sebagai Tamu?</h3><p>Kamu tetap bisa mengerjakan semua latihan dan <strong>mengunduh hasil PDF</strong>. Namun hasil tidak disimpan ke akun atau histori.</p><div class="guest-note">✓ <span><b>Tes tetap berjalan normal</b><small>Semua fitur latihan dan hasil tetap tersedia.</small></span></div><div class="guest-note">↓ <span><b>PDF tetap bisa diunduh</b><small>Simpan PDF setelah selesai jika ingin menyimpan hasil.</small></span></div><div class="modal-actions"><button class="secondary-btn" id="cancelGuestBtn">Batal</button><button class="primary-btn" id="confirmGuestBtn">Ya, lanjut sebagai tamu</button></div></div></div>
+<div class="modal-backdrop" hidden id="accountGateModal">
+  <div class="modal-card card account-gate-modal">
+    <div class="modal-icon">!</div>
+    <span class="dashboard-kicker">AKSES AKUN</span>
+    <h3 id="accountGateTitle">Fitur ini memerlukan akun</h3>
+    <p id="accountGateMessage">Daftar atau masuk untuk mengakses fitur ini.</p>
+    <div class="account-gate-benefits">
+      <div><strong>✓</strong><span>Simpan progres dan histori latihan</span></div>
+      <div><strong>✓</strong><span>Akses fitur akun seperti SKD dan CV</span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="secondary-btn" id="accountGateCancelBtn" type="button">Nanti</button>
+      <button class="secondary-btn" id="accountGateLoginBtn" type="button">Masuk</button>
+      <button class="primary-btn" id="accountGateRegisterBtn" type="button">Daftar Gratis</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" hidden="" id="confirmModal"><div class="modal-card card"><div class="modal-icon">!</div><h3>Akhiri tes?</h3><p>Progress tes yang sedang berjalan akan dihapus. Hasil tidak akan dibuat.</p><div class="modal-actions"><button class="secondary-btn" id="cancelEndTestBtn">Batal</button><button class="danger-btn" id="confirmEndTestBtn">Ya, akhiri</button></div></div></div>
 <div class="modal-backdrop" hidden="" id="interestModal">
 <div class="modal-card card">
