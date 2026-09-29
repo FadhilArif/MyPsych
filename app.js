@@ -4282,6 +4282,10 @@ trackEvent('test_start', { type: state.test, package: state.package });
     sidebar.classList.remove('is-expanded');
   }
 
+  function openSidebar_() {
+    setSidebar_(true);
+  }
+
   function toggleSidebar_() {
     const sidebar = $('sidebar');
     if (!sidebar) return;
@@ -4375,8 +4379,8 @@ trackEvent('test_start', { type: state.test, package: state.package });
     const hamburger = $('hamburger');
     hamburger?.addEventListener('click', () => toggleSidebar_());
 
-    $('dashboardOpenMenuBtn')?.addEventListener('click', () => toggleSidebar_());
-    $('dashboardOpenMenuBtnSecondary')?.addEventListener('click', () => toggleSidebar_());
+    $('dashboardOpenMenuBtn')?.addEventListener('click', () => openSidebar_());
+    $('dashboardOpenMenuBtnSecondary')?.addEventListener('click', () => openSidebar_());
     $('sidebarOverlay')?.addEventListener('click', closeSidebar_);
 
     const sidebar = $('sidebar');
