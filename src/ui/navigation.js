@@ -9,6 +9,36 @@
     $('confirmModal').hidden = false;
   }
 
+  function openAccountGate_(viewName) {
+    if (state.session) {
+      showView(viewName);
+      return;
+    }
+
+    state.pendingProtectedView = viewName;
+    const labels = {
+      skd: 'SKD (CPNS)',
+      cv: 'Buat CV',
+    };
+    const label = labels[viewName] || 'fitur ini';
+
+    if ($('accountGateTitle')) {
+      $('accountGateTitle').textContent = `Akses ${label} dengan akun`;
+    }
+
+    if ($('accountGateMessage')) {
+      $('accountGateMessage').textContent =
+        `Daftar atau masuk terlebih dahulu untuk menggunakan ${label}. Latihan umum tetap bisa dikerjakan tanpa akun.`;
+    }
+
+    $('accountGateModal').hidden = false;
+  }
+
+  function closeAccountGate_() {
+    $('accountGateModal').hidden = true;
+    state.pendingProtectedView = null;
+  }
+
   async function returnToTestOrigin_() {
     const target = state.returnView || 'dashboard';
     closeSidebar_();
