@@ -37,8 +37,8 @@
 
     if (name !== 'test') stopTimer();
 
-    if (name === 'cv' && typeof initCvBuilder === 'function') {
-      initCvBuilder();
+    if (name === 'cv') {
+      window.MyPsychCv?.init?.();
     }
 
     window.scrollTo(0, 0);
