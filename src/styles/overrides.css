@@ -2523,3 +2523,149 @@
     background: #fff !important;
   }
 }
+
+
+/* ============================================================
+   CV V1 REFINEMENT
+   ============================================================ */
+.cv-summary-helper {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--text);
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+.cv-summary-helper input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 5px;
+  padding: 10px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: .72rem;
+  outline: none;
+}
+
+.cv-summary-helper input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(47,125,242,.10);
+}
+
+.cv-final-label {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text);
+  font-size: .7rem;
+}
+
+.cv-editor-footer > div:first-child {
+  min-width: 0;
+}
+
+.cv-final-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cv-build-btn {
+  min-width: 130px;
+}
+
+.cv-template-ats {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #262626;
+}
+
+.cv-template-ats .cv-paper-header {
+  border-bottom: 0;
+  padding-bottom: 5px;
+}
+
+.cv-template-ats .cv-paper-identity h1 {
+  color: #14589a;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21pt;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+}
+
+.cv-template-ats .cv-paper-role {
+  color: #202020;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11pt;
+}
+
+.cv-template-ats .cv-paper-contact {
+  color: #4e4e4e;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.cv-template-ats .cv-paper-section {
+  margin-top: 12px;
+}
+
+.cv-template-ats .cv-paper-section h2 {
+  padding-bottom: 4px;
+  border-bottom: 1px solid #3b7d71;
+  color: #14589a;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10pt;
+  letter-spacing: .02em;
+}
+
+.cv-template-ats .cv-entry-head strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 9.4pt;
+}
+
+.cv-template-ats .cv-entry-sub,
+.cv-template-ats .cv-paper-section li,
+.cv-template-ats .cv-paper-section p {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.cv-template-ats .cv-paper-contact {
+  font-size: 8.2pt;
+}
+
+.cv-template-ats .cv-entry-head span,
+.cv-template-ats .cv-entry-sub {
+  color: #585858;
+}
+
+.cv-preview-shell {
+  min-height: 0;
+}
+
+.cv-paper-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.cv-paper {
+  min-height: 297mm;
+}
+
+@media (max-width: 700px) {
+  .cv-final-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .cv-final-actions .btn {
+    width: 100%;
+  }
+
+  .cv-page-head {
+    gap: 10px;
+  }
+
+  .cv-expiry {
+    align-self: flex-start;
+  }
+}
