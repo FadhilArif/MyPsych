@@ -1183,15 +1183,18 @@ async function submitInterest(event) {
 
   function renderHistory() {
     const body = $('historyTableBody');
+    const mobileList = $('historyMobileList');
     if (!body) return;
 
     const history = state.isGuest ? [] : state.history;
     $('historyPageCount').textContent = String(history.length);
     body.innerHTML = '';
+    if (mobileList) mobileList.innerHTML = '';
+
     $('emptyHistory').hidden = history.length > 0;
     $('historyTable').hidden = history.length === 0;
+    if (mobileList) mobileList.hidden = history.length === 0;
 
-    // Tambahkan kolom aksi secara dinamis supaya tidak perlu mengubah HTML.
     const headerRow = $('historyTable')?.querySelector('thead tr');
     if (headerRow) {
       headerRow.innerHTML = `
@@ -1209,17 +1212,26 @@ async function submitInterest(event) {
     }
 
     history.forEach((item, index) => {
+      const testName = TESTS[item.test_type]?.name || item.test_type || '—';
+      const dateLabel = formatDate(item.tanggal);
+      const score = Number(item.score) || 0;
+      const speed = Number(item.speed) || 0;
+      const accuracy = Number(item.accuracy) || 0;
+      const consistency = Number(item.consistency) || 0;
+      const endurance = Number(item.endurance) || 0;
+      const packageLabel = item.package ?? '—';
+
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${index + 1}</td>
-        <td>${escapeHtml(formatDate(item.tanggal))}</td>
-        <td>${escapeHtml(TESTS[item.test_type]?.name || item.test_type || '—')}</td>
-        <td>${escapeHtml(item.package ?? '—')}</td>
-        <td>${Number(item.score) || 0}%</td>
-        <td>${Number(item.speed) || 0}%</td>
-        <td>${Number(item.accuracy) || 0}%</td>
-        <td>${Number(item.consistency) || 0}%</td>
-        <td>${Number(item.endurance) || 0}%</td>
+        <td>${escapeHtml(dateLabel)}</td>
+        <td>${escapeHtml(testName)}</td>
+        <td>${escapeHtml(packageLabel)}</td>
+        <td>${score}%</td>
+        <td>${speed}%</td>
+        <td>${accuracy}%</td>
+        <td>${consistency}%</td>
+        <td>${endurance}%</td>
         <td class="history-action-cell"></td>
       `;
 
@@ -1232,9 +1244,62 @@ async function submitInterest(event) {
       pdfButton.addEventListener('click', () => {
         downloadHistoryPdf(item, pdfButton);
       });
-
       actionCell.appendChild(pdfButton);
       body.appendChild(row);
+
+      if (mobileList) {
+        const card = document.createElement('article');
+        card.className = 'history-mobile-card';
+
+        const summary = document.createElement('button');
+        summary.type = 'button';
+        summary.className = 'history-mobile-summary';
+        summary.setAttribute('aria-expanded', 'false');
+        summary.innerHTML = `
+          <span class="history-mobile-main">
+            <strong>${escapeHtml(testName)}</strong>
+            <small>${escapeHtml(dateLabel)} · Paket ${escapeHtml(packageLabel)}</small>
+          </span>
+          <span class="history-mobile-score">
+            <strong>${score}%</strong>
+            <small>Skor</small>
+          </span>
+          <span class="history-mobile-chevron" aria-hidden="true">›</span>
+        `;
+
+        const details = document.createElement('div');
+        details.className = 'history-mobile-details';
+        details.hidden = true;
+        details.innerHTML = `
+          <div class="history-mobile-metrics">
+            <div><span>Kecepatan</span><strong>${speed}%</strong></div>
+            <div><span>Ketelitian</span><strong>${accuracy}%</strong></div>
+            <div><span>Konsistensi</span><strong>${consistency}%</strong></div>
+            <div><span>Ketahanan</span><strong>${endurance}%</strong></div>
+          </div>
+          <div class="history-mobile-actions"></div>
+        `;
+
+        const mobilePdfButton = document.createElement('button');
+        mobilePdfButton.type = 'button';
+        mobilePdfButton.className = 'secondary-btn history-mobile-pdf';
+        mobilePdfButton.textContent = 'Cetak PDF';
+        mobilePdfButton.addEventListener('click', () => {
+          downloadHistoryPdf(item, mobilePdfButton);
+        });
+        details.querySelector('.history-mobile-actions').appendChild(mobilePdfButton);
+
+        summary.addEventListener('click', () => {
+          const expanded = summary.getAttribute('aria-expanded') === 'true';
+          summary.setAttribute('aria-expanded', String(!expanded));
+          details.hidden = expanded;
+          card.classList.toggle('is-open', !expanded);
+        });
+
+        card.appendChild(summary);
+        card.appendChild(details);
+        mobileList.appendChild(card);
+      }
     });
   }
 
