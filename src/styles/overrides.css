@@ -2669,3 +2669,99 @@
     align-self: flex-start;
   }
 }
+
+
+/* ============================================================
+   CV OUTPUT REFINEMENT
+   ============================================================ */
+.cv-paper-section p,
+.cv-paper-section li {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.cv-repeat-field input[type="month"] {
+  min-height: 38px;
+}
+
+.cv-repeat-field input[type="number"] {
+  min-height: 38px;
+}
+
+/* Print only the A4 CV canvas. Do not rely on visibility:hidden:
+   hidden layout nodes were causing blank pages before the CV. */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    overflow: visible !important;
+  }
+
+  body[data-view="cv"] > * {
+    display: none !important;
+  }
+
+  body[data-view="cv"] > #cvView {
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  body[data-view="cv"] #cvView .cv-page-shell,
+  body[data-view="cv"] #cvView .cv-workspace,
+  body[data-view="cv"] #cvView .cv-preview-shell,
+  body[data-view="cv"] #cvView .cv-paper-wrap {
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  body[data-view="cv"] #cvView .cv-page-head,
+  body[data-view="cv"] #cvView .cv-toolbar,
+  body[data-view="cv"] #cvView .cv-editor,
+  body[data-view="cv"] #cvView .cv-preview-head {
+    display: none !important;
+  }
+
+  body[data-view="cv"] #cvView #cvPreview {
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 16mm 15mm !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    break-inside: auto;
+  }
+
+  body[data-view="cv"] #cvView .cv-paper-section,
+  body[data-view="cv"] #cvView .cv-entry {
+    break-inside: avoid;
+  }
+}
