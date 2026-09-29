@@ -54,7 +54,6 @@ function cvDefaultData_() {
     phone: '',
     email: '',
     linkedin: '',
-    currentActivity: '',
     summary: '',
     skills: '',
     photo: '',
@@ -77,7 +76,9 @@ function cvLoad_() {
       localStorage.removeItem(cvStorageKey_());
       return cvDefaultData_();
     }
-    return { ...cvDefaultData_(), ...data };
+    const cleaned = { ...data };
+    delete cleaned.currentActivity;
+    return { ...cvDefaultData_(), ...cleaned };
   } catch {
     return cvDefaultData_();
   }
@@ -149,7 +150,7 @@ function cvFormValue_(name) {
 }
 
 function cvSyncSimpleFields_() {
-  ['fullName','targetRole','address','phone','email','linkedin','currentActivity','summary','skills'].forEach((name) => {
+  ['fullName','targetRole','address','phone','email','linkedin','summary','skills'].forEach((name) => {
     cvData[name] = cvFormValue_(name);
   });
   cvData.template = $('cvTemplateSelect')?.value || cvData.template;
@@ -170,6 +171,26 @@ function cvRemoveItem_(type, index) {
   renderCvPreview_();
 }
 
+function cvInputType_(key) {
+  if (key === 'start' || key === 'end') return 'month';
+  if (key === 'link') return 'url';
+  if (key === 'year') return 'number';
+  return 'text';
+}
+
+function cvInputAttributes_(key) {
+  if (key === 'start' || key === 'end') {
+    return 'type="month"';
+  }
+  if (key === 'link') {
+    return 'type="url" inputmode="url"';
+  }
+  if (key === 'year') {
+    return 'type="number" min="1900" max="2100" inputmode="numeric"';
+  }
+  return 'type="text"';
+}
+
 function renderCvRepeater_(type) {
   const config = CV_REPEATERS[type];
   const root = $(config.container);
@@ -182,7 +203,7 @@ function renderCvRepeater_(type) {
       const value = cvEscape_(item[key] || '');
       return multiline
         ? `<label class="cv-repeat-field cv-field-full">${label}<textarea data-cv-type="${type}" data-cv-index="${index}" data-cv-key="${key}" rows="4" placeholder="${placeholder}">${value}</textarea></label>`
-        : `<label class="cv-repeat-field ${full ? 'cv-field-full' : ''}">${label}<input data-cv-type="${type}" data-cv-index="${index}" data-cv-key="${key}" value="${value}" placeholder="${placeholder}"></label>`;
+        : `<label class="cv-repeat-field ${full ? 'cv-field-full' : ''}">${label}<input ${cvInputAttributes_(key)} data-cv-type="${type}" data-cv-index="${index}" data-cv-key="${key}" value="${value}" placeholder="${placeholder}"></label>`;
     }).join('');
 
     return `<div class="cv-repeat-card">
@@ -211,9 +232,15 @@ function cvBuildSummaryOutline_() {
   const education = cvData.education.find(item => item.institution || item.field || item.degree) || {};
   const role = cvData.targetRole || '[bidang/posisi yang dituju]';
   const educationText = [education.degree, education.field, education.institution].filter(Boolean).join(' ');
-  const current = cvData.currentActivity || '[kesibukan saat ini]';
+  const experience = cvData.work.find(item => item.position || item.company);
+  const internship = cvData.internship.find(item => item.position || item.company);
   const skills = cvData.skills ? cvData.skills.split(',')[0].trim() : '[keahlian utama]';
-  return `Lulusan ${educationText || '[pendidikan terakhir]'} dengan pengalaman dan kegiatan yang mendukung bidang ${role}. Saat ini ${current}. Memiliki kekuatan pada ${skills} dan tertarik mengembangkan karier di bidang ${role}. Berkomitmen untuk terus belajar, berkontribusi, dan berkembang di lingkungan kerja profesional.`;
+  const experienceText = experience
+    ? ` memiliki pengalaman sebagai ${experience.position || 'profesional'} di ${experience.company || 'sebuah organisasi'}`
+    : internship
+      ? ` memiliki pengalaman magang sebagai ${internship.position || 'peserta magang'} di ${internship.company || 'sebuah organisasi'}`
+      : '';
+  return `Lulusan ${educationText || '[pendidikan terakhir]'}${experienceText} dengan keahlian pada ${skills}. Tertarik mengembangkan karier di bidang ${role} dan siap terus belajar, berkontribusi, serta berkembang di lingkungan kerja profesional.`;
 }
 
 function renderCvPreview_() {
@@ -408,6 +435,15 @@ function bindCvOnce_() {
       cvSyncSimpleFields_();
       cvSave_(true);
       renderCvPreview_();
+
+      const previousTitle = document.title;
+      const filename = `CV-${(cvData.fullName || 'MyPsych').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}`;
+      document.title = filename;
+      const restoreTitle = () => {
+        document.title = previousTitle;
+        window.removeEventListener('afterprint', restoreTitle);
+      };
+      window.addEventListener('afterprint', restoreTitle, { once: true });
       window.print();
       return;
     }
@@ -461,6 +497,7 @@ function bindCvOnce_() {
       const imported = JSON.parse(await file.text());
       if (imported?.version !== 1) throw new Error('Format CV tidak dikenali.');
 
+      delete imported.currentActivity;
       cvData = { ...cvDefaultData_(), ...imported, lastActivityAt: Date.now() };
       cvSave_(true);
       renderCvForm_();
