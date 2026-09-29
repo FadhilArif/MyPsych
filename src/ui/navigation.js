@@ -28,7 +28,7 @@
 
     if ($('accountGateMessage')) {
       $('accountGateMessage').textContent =
-        `Daftar atau masuk terlebih dahulu untuk menggunakan ${label}. Latihan umum tetap bisa dikerjakan tanpa akun.`;
+        `Daftar atau masuk terlebih dahulu untuk menggunakan ${label}. Isi CV tidak disimpan ke database MyPsych; draft CV hanya tersimpan sementara di perangkatmu.`;
     }
 
     $('accountGateModal').hidden = false;
