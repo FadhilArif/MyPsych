@@ -771,7 +771,8 @@
             <div class="cv-toolbar-actions">
               <button class="btn btn-secondary" id="cvImportBtn" type="button">Import JSON</button>
               <button class="btn btn-secondary" id="cvExportBtn" type="button">Export JSON</button>
-              <button class="btn btn-primary" id="cvPrintBtn" type="button">Simpan PDF</button>
+              <button class="btn btn-secondary" id="cvPrintBtn" type="button">Simpan PDF</button>
+              <button class="btn btn-primary" id="cvBuildBtn" type="button">Buat CV →</button>
               <input id="cvImportInput" type="file" accept="application/json,.json" hidden>
             </div>
           </div>
@@ -787,14 +788,16 @@
                   <label>Nomor WhatsApp <input name="phone" inputmode="tel" placeholder="08xxxxxxxxxx"></label>
                   <label>Email <input name="email" type="email" placeholder="nama@email.com"></label>
                   <label>LinkedIn <span class="field-help-inline">opsional</span><input name="linkedin" placeholder="linkedin.com/in/username"></label>
-                  <label class="cv-full">Kesibukan saat ini <span class="field-help-inline">membantu membuat ringkasan</span><input name="currentActivity" placeholder="Contoh: baru lulus D3 Rekam Medis dan sedang mencari pekerjaan"></label>
                 </div>
               </section>
 
               <section class="cv-form-section">
                 <div class="cv-section-title"><span>02</span><div><h3>Ringkasan Personal</h3><p>Singkat, faktual, dan diarahkan ke posisi yang dituju.</p></div></div>
-                <div class="cv-guidance">Mulai dari pendidikan/latar belakang → pengalaman atau kegiatan penting → kesibukan saat ini → arah yang dituju.</div>
-                <textarea id="cvSummary" name="summary" rows="6" placeholder="Contoh: Lulusan ... dengan pengalaman ... Saat ini ... dan tertarik pada ..."></textarea>
+                <div class="cv-guidance">Isi bahan singkatnya dulu. MyPsych akan membantu menyusun kerangka ringkasan. Bahan di bawah ini hanya membantu membuat ringkasan dan tidak tampil sebagai section terpisah di CV.</div>
+                <label class="cv-summary-helper">Kesibukan saat ini <span class="field-help-inline">bahan ringkasan · tidak tampil sebagai section</span>
+                  <input name="currentActivity" placeholder="Contoh: baru lulus D3 Rekam Medis dan sedang mencari pekerjaan">
+                </label>
+                <textarea id="cvSummary" name="summary" rows="6" placeholder="Ringkasan profesional akan muncul di sini. Kamu tetap bisa mengubahnya manual."></textarea>
                 <button type="button" class="cv-inline-btn" id="cvSummaryOutlineBtn">Buat kerangka ringkasan</button>
               </section>
 
@@ -864,8 +867,14 @@
               </section>
 
               <div class="cv-editor-footer">
-                <span id="cvSaveStatus">Draft belum disimpan.</span>
-                <button class="btn btn-primary" type="button" id="cvPrintBtnBottom">Simpan PDF</button>
+                <div>
+                  <strong class="cv-final-label">Sudah selesai mengisi?</strong>
+                  <span id="cvSaveStatus">Draft belum disimpan.</span>
+                </div>
+                <div class="cv-final-actions">
+                  <button class="btn btn-primary cv-build-btn" type="button" id="cvBuildBtnBottom">Buat CV →</button>
+                  <button class="btn btn-secondary" type="button" id="cvPrintBtnBottom">Simpan PDF</button>
+                </div>
               </div>
             </form>
 
