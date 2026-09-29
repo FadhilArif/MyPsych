@@ -4542,6 +4542,14 @@ function formatNumber(n) {
   async function init() {
     bind();
 
+    // Always start with the desktop rail collapsed / mobile drawer closed.
+    // This also clears a stale UI state when the browser restores a page.
+    closeSidebar_();
+
+    window.addEventListener('pageshow', () => {
+      closeSidebar_();
+    });
+
     const params = new URLSearchParams(location.search);
     const resetToken = params.get('reset');
 
