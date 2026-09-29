@@ -44,6 +44,7 @@ const views = {
     testStartedAt: 0,
     lastResult: null,
     returnView: 'dashboard',
+    pendingProtectedView: null,
     finished: true,
     savingHistory: false,
     kraepelinSecondsChoice: 15,
