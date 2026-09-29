@@ -44,11 +44,19 @@
         }
 
         if (target === 'skd') {
+          if (!state.session) {
+            openAccountGate_('skd');
+            return;
+          }
           showView('skd');
           return;
         }
 
         if (target === 'cv') {
+          if (!state.session) {
+            openAccountGate_('cv');
+            return;
+          }
           showView('cv');
           return;
         }
@@ -99,6 +107,45 @@
         $('sidebarOverlay')?.classList.remove('open');
       }
     });
+// Landing category actions
+document.querySelectorAll('[data-landing-route]').forEach((item) => {
+  item.addEventListener('click', () => {
+    const route = item.dataset.landingRoute;
+
+    if (!state.session && !state.isGuest) {
+      enterGuest();
+    }
+
+    if (route === 'kraepelin') {
+      state.kraepelinSecondsChoice = 15;
+      openInstruction('kraepelin', 1);
+      return;
+    }
+
+    if (route === 'psikotes') {
+      renderCatalog();
+      showView('psikotes');
+    }
+  });
+});
+
+document.querySelectorAll('[data-account-gate]').forEach((item) => {
+  item.addEventListener('click', () => openAccountGate_(item.dataset.accountGate));
+});
+
+$('accountGateCancelBtn')?.addEventListener('click', closeAccountGate_);
+$('accountGateLoginBtn')?.addEventListener('click', () => {
+  $('accountGateModal').hidden = true;
+  showAuth('login');
+});
+$('accountGateRegisterBtn')?.addEventListener('click', () => {
+  $('accountGateModal').hidden = true;
+  showAuth('register');
+});
+$('accountGateModal')?.addEventListener('click', (event) => {
+  if (event.target === $('accountGateModal')) closeAccountGate_();
+});
+
 // About page
 document.querySelectorAll('[data-goto="about"]').forEach((el) => {
   el.addEventListener('click', () => { showView('about'); loadStats(); });
