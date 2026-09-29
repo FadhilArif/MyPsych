@@ -199,6 +199,7 @@ const views = {
     questionStartedAt: 0,
     testStartedAt: 0,
     lastResult: null,
+    returnView: 'dashboard',
     finished: true,
     savingHistory: false,
     kraepelinSecondsChoice: 15,
@@ -1727,9 +1728,17 @@ trackEvent('register_attempt');
   // INSTRUCTIONS
   // ============================================================
 
+  function getTestReturnView_() {
+    const current = document.body.dataset.view;
+    return ['dashboard', 'psikotes', 'skd', 'history', 'cv'].includes(current)
+      ? current
+      : 'dashboard';
+  }
+
   function openInstruction(testId, packageNumber) {
     state.test = testId;
     state.package = packageNumber;
+    state.returnView = getTestReturnView_();
 
     const test = TESTS[testId];
     $('instructionEyebrow').textContent = `${test.name.toUpperCase()} • PAKET ${packageNumber}`;
@@ -2534,6 +2543,8 @@ trackEvent('test_start', { type: state.test, package: state.package });
         isGuest: state.isGuest,
         test: 'skd_lengkap',
         package: state.skdComplete.package,
+        returnView: state.returnView || 'skd',
+        package: state.skdComplete.package,
         currentTestId: state.currentTestId,
         sectionIndex: state.skdComplete.sectionIndex,
         waiting: state.skdComplete.waiting,
@@ -2576,6 +2587,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
     state.test = 'skd_lengkap';
     state.package = Number(saved.package) || 1;
+    state.returnView = saved.returnView || 'skd';
     state.currentTestId = saved.currentTestId || `SKD-${Date.now()}-${randomInt(100000)}`;
     state.finished = false;
 
@@ -3152,6 +3164,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
           userId: state.session.user_id,
           test: state.test,
           package: state.package,
+          returnView: state.returnView || 'dashboard',
           currentTestId: state.currentTestId,
           questions: state.questions,
           answers: state.answers,
@@ -3203,6 +3216,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
     state.test = saved.test;
     state.package = Number(saved.package) || 1;
+    state.returnView = saved.returnView || (saved.test === 'skd_lengkap' ? 'skd' : 'dashboard');
     state.currentTestId = saved.currentTestId || `T-${Date.now()}-${randomInt(100000)}`;
     state.questions = Array.isArray(saved.questions) ? saved.questions : [];
     state.answers = Array.isArray(saved.answers) ? saved.answers : [];
@@ -3753,6 +3767,38 @@ trackEvent('test_start', { type: state.test, package: state.package });
     $('confirmModal').hidden = false;
   }
 
+  async function returnToTestOrigin_() {
+    const target = state.returnView || 'dashboard';
+    closeSidebar_();
+
+    if (target === 'psikotes') {
+      renderCatalog();
+      showView('psikotes');
+      return;
+    }
+
+    if (target === 'skd') {
+      showView('skd');
+      return;
+    }
+
+    if (target === 'history') {
+      if (!state.isGuest) {
+        try { await refreshHistory(); } catch (error) { toast(error.message, 'warning'); }
+      }
+      renderHistory();
+      showView('history');
+      return;
+    }
+
+    if (target === 'cv') {
+      showView('cv');
+      return;
+    }
+
+    await goDashboard();
+  }
+
   function abandonTest() {
     stopTimer();
     stopSKDCompleteTimer_();
@@ -3763,7 +3809,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
     state.lastResult = null;
     clearPersistedTest();
     $('confirmModal').hidden = true;
-    showView('dashboard');
+    returnToTestOrigin_();
     toast('Tes dibatalkan. Progress tidak disimpan.', 'info');
   }
 
@@ -4521,7 +4567,7 @@ $('interestModal')?.addEventListener('click', (e) => {
       submitNewPassword(token);
     });
 
-    $('backFromInstructionBtn').addEventListener('click', () => showView('dashboard'));
+    $('backFromInstructionBtn').addEventListener('click', () => returnToTestOrigin_());
     $('startTestBtn').addEventListener('click', startTest);
 
     $('testHomeBtn').addEventListener('click', openEndTestModal);
@@ -4538,12 +4584,7 @@ $('interestModal')?.addEventListener('click', (e) => {
     });
 
     $('finishBtn').addEventListener('click', async () => {
-      if (state.isGuest) {
-        leaveGuest();
-        showView('landing');
-        return;
-      }
-      await goDashboard();
+      await returnToTestOrigin_();
     });
 
     $('viewHistoryBtn').addEventListener('click', async () => {
