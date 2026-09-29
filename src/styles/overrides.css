@@ -1826,3 +1826,81 @@
     display: contents;
   }
 }
+
+
+/* ============================================================
+   ACCOUNT ACCESS GATE + LANDING CATEGORY ACTIONS
+   ============================================================ */
+.account-gate-modal {
+  width: min(460px, calc(100vw - 32px));
+}
+
+.account-gate-modal .dashboard-kicker {
+  display: inline-block;
+  margin: 2px 0 6px;
+}
+
+.account-gate-modal h3 {
+  margin: 0 0 8px;
+}
+
+.account-gate-modal > p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: .78rem;
+}
+
+.account-gate-benefits {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0;
+}
+
+.account-gate-benefits > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--soft);
+}
+
+.account-gate-benefits strong {
+  color: var(--blue);
+}
+
+.account-gate-benefits span {
+  color: var(--text);
+  font-size: .72rem;
+  line-height: 1.45;
+}
+
+.account-gate-modal .modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 8px;
+}
+
+.lp-category-link {
+  appearance: none;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.lp-category-card .lp-category-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .account-gate-modal .modal-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .account-gate-modal .modal-actions button {
+    width: 100%;
+  }
+}
