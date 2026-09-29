@@ -5705,3 +5705,81 @@ body[data-view="admin"] .app-layout .content {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+
+/* ============================================================
+   SKD COMPLETE — DESKTOP WORKSPACE CORRECTION
+   Question + answers share one main workspace; navigation stays left.
+   ============================================================ */
+@media (min-width: 901px) {
+  .test-view.skd-complete-mode .test-workspace {
+    grid-area: workspace;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  .test-view.skd-complete-mode .test-workspace .test-question-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 24px 28px 16px;
+    overflow-y: auto;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .test-view.skd-complete-mode .test-workspace .test-question-card .test-question-label {
+    align-self: flex-start;
+    margin-top: 2px;
+    text-align: left;
+  }
+
+  .test-view.skd-complete-mode .test-workspace .test-question-card h2 {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 0 14px;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .test-view.skd-complete-mode .test-workspace > .test-keypad-answer {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 12px 12px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-self: stretch;
+  }
+
+  .test-view.skd-complete-mode .test-workspace > .test-keypad-answer .test-answer {
+    min-height: 46px;
+  }
+
+  .test-view.skd-complete-mode > .test-body > .test-hint {
+    display: none;
+  }
+
+  /* Previous temporary sibling-grid positioning no longer applies. */
+  .test-view.skd-complete-mode > .test-body > #testContent,
+  .test-view.skd-complete-mode > .test-body > #keypad {
+    grid-area: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .test-workspace {
+    display: contents;
+  }
+}
