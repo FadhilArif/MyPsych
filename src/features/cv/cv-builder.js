@@ -327,36 +327,122 @@ async function cvProcessPhoto_(file) {
   }
 }
 
-function cvBindDynamicInputs_() {
-  document.querySelectorAll('[data-cv-type]').forEach((input) => {
-    if (input.dataset.cvBound === '1') return;
-    input.dataset.cvBound = '1';
-    input.addEventListener('input', () => {
-      const type = input.dataset.cvType;
-      const index = Number(input.dataset.cvIndex);
-      const key = input.dataset.cvKey;
-      cvData[type][index][key] = input.value;
-      cvDebouncedSave_();
-      renderCvPreview_();
-    });
-  });
 
-  document.querySelectorAll('[data-cv-remove]').forEach((button) => {
-    if (button.dataset.cvBound === '1') return;
-    button.dataset.cvBound = '1';
-    button.addEventListener('click', () => cvRemoveItem_(button.dataset.cvRemove, Number(button.dataset.cvIndex)));
-  });
+function cvBuildAndPreview_() {
+  cvSyncSimpleFields_();
+
+  if (!cvData.summary.trim()) {
+    cvData.summary = cvBuildSummaryOutline_();
+    const summaryInput = $('cvSummary');
+    if (summaryInput) summaryInput.value = cvData.summary;
+  }
+
+  cvSave_(true);
+  renderCvPreview_();
+
+  const preview = $('cvPreview');
+  preview?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  toast('CV berhasil dibuat. Periksa preview lalu simpan sebagai PDF.', 'success', 4200);
 }
 
 function bindCvOnce_() {
   if (cvInitialized) return;
-  cvInitialized = true;
 
-  $('cvForm')?.addEventListener('input', (event) => {
-    if (event.target.matches('[name]')) {
+  const root = $('cvView');
+  const form = $('cvForm');
+  if (!root || !form) return;
+
+  form.addEventListener('input', (event) => {
+    const target = event.target;
+
+    if (target.matches('[data-cv-type]')) {
+      const type = target.dataset.cvType;
+      const index = Number(target.dataset.cvIndex);
+      const key = target.dataset.cvKey;
+      if (cvData[type]?.[index]) {
+        cvData[type][index][key] = target.value;
+        cvDebouncedSave_();
+        renderCvPreview_();
+      }
+      return;
+    }
+
+    if (target.matches('[name]')) {
       cvSyncSimpleFields_();
       cvDebouncedSave_();
       renderCvPreview_();
+    }
+  });
+
+  root.addEventListener('click', (event) => {
+    const addButton = event.target.closest('[data-cv-add]');
+    if (addButton) {
+      event.preventDefault();
+      cvAddItem_(addButton.dataset.cvAdd);
+      return;
+    }
+
+    const removeButton = event.target.closest('[data-cv-remove]');
+    if (removeButton) {
+      event.preventDefault();
+      cvRemoveItem_(removeButton.dataset.cvRemove, Number(removeButton.dataset.cvIndex));
+      return;
+    }
+
+    if (event.target.closest('#cvSummaryOutlineBtn')) {
+      cvSyncSimpleFields_();
+      const summary = cvBuildSummaryOutline_();
+      $('cvSummary').value = summary;
+      cvData.summary = summary;
+      cvSave_(true);
+      renderCvPreview_();
+      toast('Kerangka ringkasan dibuat. Kamu masih bisa mengeditnya.', 'success');
+      return;
+    }
+
+    if (event.target.closest('#cvBuildBtn, #cvBuildBtnBottom')) {
+      event.preventDefault();
+      cvBuildAndPreview_();
+      return;
+    }
+
+    if (event.target.closest('#cvPrintBtn, #cvPrintBtnBottom')) {
+      event.preventDefault();
+      cvSyncSimpleFields_();
+      cvSave_(true);
+      renderCvPreview_();
+      window.print();
+      return;
+    }
+
+    if (event.target.closest('#cvExportBtn')) {
+      event.preventDefault();
+      cvSyncSimpleFields_();
+      cvSave_(true);
+      const blob = new Blob([JSON.stringify(cvData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `MyPsych-CV-${(cvData.fullName || 'draft').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}.json`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+      toast('Backup CV berhasil diekspor.', 'success');
+      return;
+    }
+
+    if (event.target.closest('#cvImportBtn')) {
+      event.preventDefault();
+      $('cvImportInput')?.click();
+    }
+
+    if (event.target.closest('#cvPhotoRemoveBtn')) {
+      event.preventDefault();
+      cvData.photo = '';
+      if ($('cvPhotoInput')) $('cvPhotoInput').value = '';
+      cvSave_(true);
+      updateCvPhotoPreview_();
+      renderCvPreview_();
+      toast('Foto dihapus.', 'info');
     }
   });
 
@@ -366,57 +452,18 @@ function bindCvOnce_() {
     renderCvPreview_();
   });
 
-  document.querySelectorAll('[data-cv-add]').forEach((button) => {
-    button.addEventListener('click', () => cvAddItem_(button.dataset.cvAdd));
+  $('cvPhotoInput')?.addEventListener('change', (event) => {
+    cvProcessPhoto_(event.target.files?.[0]);
   });
-
-  $('cvSummaryOutlineBtn')?.addEventListener('click', () => {
-    cvSyncSimpleFields_();
-    $('cvSummary').value = cvBuildSummaryOutline_();
-    cvData.summary = $('cvSummary').value;
-    cvSave_(true);
-    renderCvPreview_();
-  });
-
-  $('cvPrintBtn')?.addEventListener('click', () => {
-    cvSyncSimpleFields_();
-    cvSave_(true);
-    renderCvPreview_();
-    window.print();
-  });
-
-  $('cvPrintBtnBottom')?.addEventListener('click', () => $('cvPrintBtn')?.click());
-
-  $('cvPhotoInput')?.addEventListener('change', (event) => cvProcessPhoto_(event.target.files?.[0]));
-
-  $('cvPhotoRemoveBtn')?.addEventListener('click', () => {
-    cvData.photo = '';
-    if ($('cvPhotoInput')) $('cvPhotoInput').value = '';
-    cvSave_(true);
-    updateCvPhotoPreview_();
-    renderCvPreview_();
-  });
-
-  $('cvExportBtn')?.addEventListener('click', () => {
-    cvSyncSimpleFields_();
-    cvSave_(true);
-    const blob = new Blob([JSON.stringify(cvData,null,2)],{type:'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `MyPsych-CV-${(cvData.fullName || 'draft').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  $('cvImportBtn')?.addEventListener('click', () => $('cvImportInput')?.click());
 
   $('cvImportInput')?.addEventListener('change', async (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
+
     try {
       const imported = JSON.parse(await file.text());
       if (imported?.version !== 1) throw new Error('Format CV tidak dikenali.');
+
       cvData = { ...cvDefaultData_(), ...imported, lastActivityAt: Date.now() };
       cvSave_(true);
       renderCvForm_();
@@ -429,19 +476,18 @@ function bindCvOnce_() {
     }
   });
 
-  window.addEventListener('beforeunload', () => {
-    cvSyncSimpleFields_();
-    cvSave_(false);
-  });
+  cvInitialized = true;
 }
+
 
 function initCvBuilder() {
   if (!state.session) return;
-  cvData = cvLoad_();
   bindCvOnce_();
+  cvData = cvLoad_();
   renderCvForm_();
-  cvBindDynamicInputs_();
   renderCvPreview_();
+  updateCvExpiry_();
 }
+
 
 window.MyPsychCv = { init: initCvBuilder };
