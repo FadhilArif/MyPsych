@@ -4977,3 +4977,74 @@ body[data-view="admin"] .app-layout .content {
     margin: 0;
   }
 }
+
+
+/* ============================================================
+   SIDEBAR INITIAL-STATE GUARD
+   Prevent legacy :hover rules from leaving the rail expanded
+   after a fresh page load while its labels are hidden.
+   Desktop expansion is controlled ONLY by .is-expanded.
+   ============================================================ */
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .sidebar,
+  .sidebar:hover,
+  .sidebar:focus,
+  .sidebar:focus-within,
+  .sidebar:not(.is-expanded),
+  .sidebar:hover:not(.is-expanded),
+  .sidebar:focus-within:not(.is-expanded) {
+    width: var(--sidebar-rail-w) !important;
+    min-width: var(--sidebar-rail-w) !important;
+    max-width: var(--sidebar-rail-w) !important;
+  }
+
+  .sidebar.is-expanded,
+  .sidebar:hover.is-expanded,
+  .sidebar:focus-within.is-expanded {
+    width: var(--sidebar-expanded-w) !important;
+    min-width: var(--sidebar-expanded-w) !important;
+    max-width: var(--sidebar-expanded-w) !important;
+  }
+
+  .sidebar:not(.is-expanded) .brand-text,
+  .sidebar:not(.is-expanded) .sidebar-label,
+  .sidebar:not(.is-expanded) .nav-item > span:not(.nav-icon),
+  .sidebar:not(.is-expanded) .sidebar-user .user-info,
+  .sidebar:not(.is-expanded) .logout-btn > span {
+    display: none !important;
+  }
+
+  .sidebar.is-expanded .brand-text,
+  .sidebar.is-expanded .sidebar-label,
+  .sidebar.is-expanded .nav-item > span:not(.nav-icon),
+  .sidebar.is-expanded .sidebar-user .user-info,
+  .sidebar.is-expanded .logout-btn > span {
+    display: initial;
+  }
+
+  .sidebar.is-expanded .sidebar-label {
+    display: block;
+  }
+
+  .sidebar.is-expanded .sidebar-user .user-info {
+    display: flex;
+  }
+
+  .sidebar.is-expanded .nav-item {
+    width: 100%;
+    max-width: none;
+  }
+
+  .sidebar:not(.is-expanded) .nav-item {
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+  }
+
+  .sidebar:not(.is-expanded) .sidebar-user,
+  .sidebar:not(.is-expanded) .logout-btn {
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+  }
+}
