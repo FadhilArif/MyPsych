@@ -10,6 +10,7 @@
     '/src/features/pdf/pdf-core.js',
     '/src/features/dashboard/dashboard.js',
     '/src/features/auth/auth.js',
+    '/src/features/cv/cv-builder.js',
     '/src/features/tests/instructions.js',
     '/src/features/tests/engine.js',
     '/src/features/tests/skd-complete.js',
