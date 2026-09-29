@@ -161,14 +161,12 @@ function cvAddItem_(type, item = null) {
   if (!config) return;
   cvData[type].push(item || Object.fromEntries(config.fields.map(([key]) => [key, ''])));
   renderCvRepeater_(type);
-  cvBindDynamicInputs_();
   cvSave_(true);
 }
 
 function cvRemoveItem_(type, index) {
   cvData[type].splice(index, 1);
   renderCvRepeater_(type);
-  cvBindDynamicInputs_();
   cvSave_(true);
   renderCvPreview_();
 }
