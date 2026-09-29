@@ -5529,3 +5529,152 @@ body[data-view="admin"] .app-layout .content {
     padding: 9px;
   }
 }
+
+
+/* ============================================================
+   SKD PAKET LENGKAP — DESKTOP SIDE NAVIGATION
+   Desktop only. Mobile keeps the existing stacked navigator.
+   ============================================================ */
+@media (min-width: 901px) {
+  .test-view.skd-complete-mode .test-body {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "navigator question"
+      "navigator keypad"
+      "controls hint";
+    align-items: stretch;
+    gap: 10px 12px;
+    min-height: 0;
+    overflow: hidden;
+    padding: 2px 0 8px;
+  }
+
+  .test-view.skd-complete-mode .test-question-card {
+    grid-area: question;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 24px 28px;
+    overflow-y: auto;
+  }
+
+  .test-view.skd-complete-mode .test-question-card h2 {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .test-view.skd-complete-mode .test-keypad-answer {
+    grid-area: keypad;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  .test-view.skd-complete-mode .test-hint {
+    grid-area: hint;
+    align-self: center;
+    padding: 3px 4px;
+  }
+
+  .test-view.skd-complete-mode .skd-question-navigator {
+    grid-area: navigator;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 12px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    scrollbar-width: thin;
+  }
+
+  .test-view.skd-complete-mode .skd-nav-title-row {
+    margin: 2px 2px 10px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .test-view.skd-complete-mode .skd-nav-title-row strong {
+    font-size: .76rem;
+  }
+
+  .test-view.skd-complete-mode .skd-nav-title-row span {
+    font-size: .62rem;
+  }
+
+  .test-view.skd-complete-mode .skd-question-nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .test-view.skd-complete-mode .skd-question-number {
+    min-height: 36px;
+    border-radius: 9px;
+    font-size: .7rem;
+  }
+
+  .test-view.skd-complete-mode .skd-controls {
+    grid-area: controls;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    padding: 10px 10px 0;
+    box-sizing: border-box;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .test-view.skd-complete-mode .skd-nav-buttons {
+    grid-template-columns: 1fr;
+    gap: 7px;
+    margin-bottom: 8px;
+  }
+
+  .test-view.skd-complete-mode .skd-nav-buttons .secondary-btn,
+  .test-view.skd-complete-mode .skd-finish-section-btn {
+    min-height: 42px;
+    width: 100%;
+    font-size: .76rem;
+  }
+
+  .test-view.skd-complete-mode .skd-finish-section-btn {
+    margin-bottom: 10px;
+  }
+
+  .test-view.skd-complete-mode .skd-complete-section-head {
+    width: 100%;
+    max-width: 940px;
+  }
+}
+
+/* Narrower desktop/laptop: slightly narrower navigation rail. */
+@media (min-width: 901px) and (max-width: 1180px) {
+  .test-view.skd-complete-mode .test-body {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .test-view.skd-complete-mode .skd-question-nav {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
