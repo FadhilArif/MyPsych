@@ -5,6 +5,11 @@
   // ============================================================
 
   function showView(name) {
+    if ((name === 'skd' || name === 'cv') && !state.session) {
+      openAccountGate_(name);
+      return;
+    }
+
     Object.values(views).forEach((view) => view?.classList.remove('active'));
     if (name !== 'test') {
       $('testView')?.classList.remove('skd-complete-mode');
