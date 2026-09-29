@@ -2944,6 +2944,7 @@ body[data-view="skd"] .app-layout,
 body[data-view="history"] .app-layout,
 body[data-view="instruction"] .app-layout,
 body[data-view="result"] .app-layout,
+body[data-view="psikotes"] .app-layout,
 body[data-view="cv"] .app-layout,
 body[data-view="admin"] .app-layout {
   display: grid;
@@ -5046,5 +5047,22 @@ body[data-view="admin"] .app-layout .content {
     width: 48px !important;
     min-width: 48px !important;
     max-width: 48px !important;
+  }
+}
+
+
+/* Dedicated general psychotest page. Dashboard stays summary-only. */
+.psikotes-page-head {
+  margin-bottom: 10px;
+}
+.psikotes-catalog-section {
+  margin-top: 20px;
+}
+.psikotes-catalog-section .catalog-head {
+  margin-bottom: 12px;
+}
+@media (max-width: 640px) {
+  .psikotes-catalog-section {
+    margin-top: 16px;
   }
 }
