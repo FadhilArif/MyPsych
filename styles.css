@@ -5539,11 +5539,10 @@ body[data-view="admin"] .app-layout .content {
   .test-view.skd-complete-mode .test-body {
     display: grid;
     grid-template-columns: 250px minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto auto;
+    grid-template-rows: minmax(0, 1fr) auto;
     grid-template-areas:
-      "navigator question"
-      "navigator keypad"
-      "controls hint";
+      "navigator workspace"
+      "controls workspace";
     align-items: stretch;
     gap: 10px 12px;
     min-height: 0;
@@ -5552,15 +5551,36 @@ body[data-view="admin"] .app-layout .content {
   }
 
   .test-view.skd-complete-mode .test-question-card {
-    grid-area: question;
+    grid-area: workspace;
     width: 100%;
     max-width: none;
     min-width: 0;
     min-height: 0;
+    height: 100%;
     margin: 0;
     box-sizing: border-box;
     padding: 24px 28px;
     overflow-y: auto;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .test-view.skd-complete-mode .test-question-card .test-question-label,
+  .test-view.skd-complete-mode .test-question-card h2,
+  .test-view.skd-complete-mode .test-question-card .test-keypad-answer {
+    flex: 0 0 auto;
+  }
+
+  .test-view.skd-complete-mode .test-question-card .test-question-label {
+    margin-top: 2px;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .test-view.skd-complete-mode .test-question-card h2 {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 18px;
   }
 
   .test-view.skd-complete-mode .test-question-card h2 {
@@ -5570,19 +5590,26 @@ body[data-view="admin"] .app-layout .content {
     margin-right: auto;
   }
 
-  .test-view.skd-complete-mode .test-keypad-answer {
-    grid-area: keypad;
+  /* In SKD Complete desktop the answer buttons belong inside
+     the same workspace card as the question. */
+  .test-view.skd-complete-mode .test-question-card .test-keypad-answer {
+    display: grid;
+    grid-template-columns: 1fr;
     width: 100%;
     max-width: none;
     min-width: 0;
     margin: 0;
     box-sizing: border-box;
+    align-self: stretch;
+  }
+
+  .test-view.skd-complete-mode > .test-body > #keypad {
+    /* The standalone keypad is hidden because answers are relocated
+       into the question workspace below via layout override. */
   }
 
   .test-view.skd-complete-mode .test-hint {
-    grid-area: hint;
-    align-self: center;
-    padding: 3px 4px;
+    display: none;
   }
 
   .test-view.skd-complete-mode .skd-question-navigator {
