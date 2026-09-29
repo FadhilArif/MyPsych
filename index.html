@@ -562,7 +562,7 @@
 
 <div class="app app-layout" id="appLayout">
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
+    <div class="sidebar-brand" title="MyPsych">
       <div class="brand-logo" aria-hidden="true"><span class="brand-logo-dot"></span></div>
       <div class="brand-text">
         <strong>MyPsych</strong>
@@ -572,24 +572,66 @@
 
     <nav class="sidebar-nav" aria-label="Navigasi utama">
       <div class="sidebar-label">MENU</div>
-      <button class="nav-item" type="button" data-app-nav="dashboard"><span class="nav-icon" aria-hidden="true">D</span><span>Dashboard</span></button>
-      <button class="nav-item" type="button" data-app-nav="history"><span class="nav-icon" aria-hidden="true">H</span><span>Histori</span></button>
+
+      <button class="nav-item" type="button" title="Dashboard" aria-label="Dashboard" data-app-nav="dashboard">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="6" height="6" rx="1.5"></rect><rect x="14" y="4" width="6" height="6" rx="1.5"></rect><rect x="4" y="14" width="6" height="6" rx="1.5"></rect><rect x="14" y="14" width="6" height="6" rx="1.5"></rect></svg>
+        </span>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav-item" type="button" title="Histori" aria-label="Histori" data-app-nav="history">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 0 2.34-5.66L4 8.67"></path><path d="M4 4v4.67h4.67"></path><path d="M12 8v4l2.6 1.6"></path></svg>
+        </span>
+        <span>Histori</span>
+      </button>
+
+      <button class="nav-item nav-cv" type="button" title="Buat CV" aria-label="Buat CV" data-app-nav="cv">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 4.5h7l3 3V19.5A1.5 1.5 0 0 1 15.5 21h-9A1.5 1.5 0 0 1 5 19.5v-13A1.5 1.5 0 0 1 6.5 5"></path><path d="M14 5v3h3"></path><path d="M8 13h8"></path><path d="M8 16h6"></path></svg>
+        </span>
+        <span>Buat CV</span>
+        <span class="nav-tag-muted">SEGERA</span>
+      </button>
 
       <div class="sidebar-label">KATEGORI</div>
-      <button class="nav-item nav-highlight" type="button" data-test="kraepelin"><span class="nav-icon" aria-hidden="true">K</span><span>Kraepelin</span><span class="nav-tag">POPULER</span></button>
-      <button class="nav-item" type="button" data-app-nav="psikotes"><span class="nav-icon" aria-hidden="true">P</span><span>Psikotes Umum</span></button>
-      <button class="nav-item" type="button" data-app-nav="skd"><span class="nav-icon" aria-hidden="true">S</span><span>SKD (CPNS)</span></button>
+
+      <button class="nav-item nav-highlight" type="button" title="Kraepelin" aria-label="Kraepelin" data-test="kraepelin">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 5.5 4.5 8 7 10.5"></path><path d="m17 5.5 2.5 2.5-2.5 2.5"></path><path d="M14.5 4 9.5 12"></path><path d="M6 15h12"></path><path d="M6 18h8"></path></svg>
+        </span>
+        <span>Kraepelin</span>
+        <span class="nav-tag">POPULER</span>
+      </button>
+
+      <button class="nav-item" type="button" title="Psikotes Umum" aria-label="Psikotes Umum" data-app-nav="psikotes">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8"></circle><path d="M9.5 9.5a2.6 2.6 0 1 1 4.33 1.94c-.95.82-1.83 1.24-1.83 2.56"></path><path d="M12 17h.01"></path></svg>
+        </span>
+        <span>Psikotes Umum</span>
+      </button>
+
+      <button class="nav-item" type="button" title="SKD (CPNS)" aria-label="SKD (CPNS)" data-app-nav="skd">
+        <span class="nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v12a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18V6A1.5 1.5 0 0 1 6 4.5Z"></path><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+        </span>
+        <span>SKD (CPNS)</span>
+      </button>
     </nav>
 
     <div class="sidebar-footer">
-      <div class="sidebar-user">
+      <div class="sidebar-user" title="Akun peserta">
         <div class="user-avatar" id="sidebarAvatar">P</div>
         <div class="user-info">
           <strong id="sidebarUserName">Peserta</strong>
           <small id="sidebarUserRole">Akun peserta</small>
         </div>
       </div>
-      <button id="logoutBtn" class="logout-btn" type="button"><span>Keluar</span></button>
+      <button id="logoutBtn" class="logout-btn" type="button" title="Keluar" aria-label="Keluar">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 4.5H6.5A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5H10"></path><path d="M13 8.5 16.5 12 13 15.5"></path><path d="M16 12H9"></path></svg>
+        <span>Keluar</span>
+      </button>
     </div>
   </aside>
 
@@ -604,59 +646,123 @@
 
     <div class="content">
       <section id="dashboardView" class="screen app-screen active">
-        <div class="hero-card">
+        <div class="hero-card dashboard-hero">
           <div class="hero-text">
-            <div class="eyebrow">HOME</div>
+            <div class="eyebrow">DASHBOARD</div>
             <h2>Halo, <span class="text-blue" id="welcomeName">Peserta</span></h2>
-            <p class="hero-sub">Pilih latihan sesuai kebutuhanmu. Kerjakan kapan saja dan pantau perkembangan hasilnya.</p>
+            <p class="hero-sub">Ringkasan perkembangan latihanmu dalam satu tempat.</p>
             <div class="hero-date">Tes terakhir: <span id="latestDate">Belum ada tes</span></div>
-            <button id="viewHistoryBtn" class="btn btn-secondary hero-history-btn" type="button">Lihat Histori</button>
+            <div class="dashboard-hero-actions">
+              <button id="dashboardOpenMenuBtn" class="btn btn-primary" type="button">Buka menu latihan →</button>
+              <button id="viewHistoryBtn" class="btn btn-secondary hero-history-btn" type="button">Lihat Histori</button>
+            </div>
           </div>
           <div class="hero-stats">
             <div class="hero-stat"><strong id="historyCount">0</strong><span>Total tes</span></div>
             <div class="hero-stat"><strong id="dashScore">—</strong><span>Skor terakhir</span></div>
-            <div class="hero-stat"><strong id="dashSpeed">—</strong><span>Kecepatan</span></div>
+            <div class="hero-stat"><strong id="dashAccuracy">—</strong><span>Ketelitian</span></div>
           </div>
         </div>
 
-        <div class="section-head">
-          <h2>Kategori Latihan</h2>
-          <p class="muted">Pilih jalur latihan yang ingin kamu fokuskan.</p>
-        </div>
-        <div class="category-grid">
-          <article class="category-card category-highlight">
-            <div class="category-icon category-logo"><img src="./assets/logos/logo_kreaplin.png" alt="Kraepelin"></div>
-            <h4>Kraepelin</h4>
-            <p>Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan.</p>
-            <div class="category-meta"><span>50 kolom · 26 soal</span><span>15–20 detik</span></div>
-            <button class="btn btn-primary" type="button" data-test="kraepelin">Mulai latihan</button>
-          </article>
-
-          <article class="category-card">
-            <div class="category-icon category-logo icon-green"><img src="./assets/logos/logo_mypsych.png" alt="Psikotes Umum"></div>
-            <h4>Psikotes Umum</h4>
-            <p>Kuantitatif, numerical, verbal, silogisme, analogi, dan tes kognitif untuk latihan seleksi kerja.</p>
-            <div class="category-meta"><span>6 tes tersedia</span><span>20 soal per paket</span></div>
-            <button class="btn btn-secondary" type="button" data-app-nav="psikotes">Lihat semua tes</button>
-          </article>
-
-          <article class="category-card category-highlight">
-            <div class="category-icon category-logo"><img src="./assets/logos/logo_mypsych.png" alt="SKD (CPNS)"></div>
-            <h4>SKD (CPNS)</h4>
-            <p>Latihan TWK, TIU, dan TKP dengan bank soal yang dikelola dari panel admin.</p>
-            <div class="category-meta"><span>3 kategori</span><span>Paket 1–3</span></div>
-            <button class="btn btn-secondary" type="button" data-app-nav="skd">Buka SKD</button>
-          </article>
+        <div class="dashboard-section-head">
+          <div>
+            <span class="dashboard-kicker">RINGKASAN PERFORMA</span>
+            <h2>Performa kamu saat ini</h2>
+            <p class="muted">Angka di bawah diringkas dari histori latihan yang sudah tersimpan.</p>
+          </div>
         </div>
 
-        <div class="catalog-section" id="psikotesCatalog">
+        <div class="performance-grid">
+          <article class="performance-card performance-main">
+            <span class="performance-label">KEUNGGULAN SAAT INI</span>
+            <strong id="dashStrengthValue">—</strong>
+            <span id="dashStrengthLabel" class="performance-sub">Belum ada data latihan</span>
+            <div class="performance-bar"><span id="dashStrengthBar"></span></div>
+          </article>
+
+          <article class="performance-card">
+            <span class="performance-label">REKOR KECEPATAN</span>
+            <strong id="dashRecordValue">—</strong>
+            <span class="performance-sub">Skor kecepatan terbaik</span>
+          </article>
+
+          <article class="performance-card">
+            <span class="performance-label">KONSISTENSI</span>
+            <strong id="dashConsistency">—</strong>
+            <span class="performance-sub">Dari latihan terakhir</span>
+          </article>
+
+          <article class="performance-card">
+            <span class="performance-label">KETAHANAN</span>
+            <strong id="dashEndurance">—</strong>
+            <span class="performance-sub">Dari latihan terakhir</span>
+          </article>
+        </div>
+
+        <section class="kraepelin-highlight">
+          <div class="kraepelin-highlight-copy">
+            <div class="category-icon category-logo">
+              <img src="./assets/logos/logo_kreaplin.png" alt="Kraepelin">
+            </div>
+            <div>
+              <span class="dashboard-kicker">LATIHAN UNGGULAN</span>
+              <h2>Kraepelin</h2>
+              <p>Latihan ritme kerja, kecepatan, ketelitian, konsistensi, dan ketahanan dalam satu sesi.</p>
+              <div class="category-meta"><span>50 kolom · 26 soal</span><span>15–20 detik</span></div>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="button" data-test="kraepelin">Mulai Kraepelin →</button>
+        </section>
+
+        <div class="dashboard-cta-grid">
+          <button class="dashboard-cta" type="button" id="dashboardOpenMenuBtnSecondary">
+            <span class="dashboard-cta-icon">≡</span>
+            <span><strong>Pilih latihan lain</strong><small>Buka sidebar untuk melihat semua tes</small></span>
+            <b>→</b>
+          </button>
+          <button class="dashboard-cta" type="button" data-app-nav="history">
+            <span class="dashboard-cta-icon">H</span>
+            <span><strong>Lihat histori lengkap</strong><small>Bandingkan hasil latihanmu</small></span>
+            <b>→</b>
+          </button>
+        </div>
+      </section>
+      <section id="psikotesView" class="screen app-screen">
+        <div class="section-head psikotes-page-head">
+          <div>
+            <div class="eyebrow">BANK LATIHAN</div>
+            <h2>Psikotes Umum</h2>
+            <p class="muted">Pilih tes dan paket latihan yang ingin kamu kerjakan.</p>
+          </div>
+        </div>
+
+        <button id="backFromPsikotesBtn" class="back-link" type="button">← Kembali ke Dashboard</button>
+
+        <div class="catalog-section psikotes-catalog-section">
           <div class="section-head catalog-head">
             <div>
-              <h2>Tes yang tersedia</h2>
-              <p class="muted">Pilih paket atau pengaturan waktu, lalu baca instruksi sebelum memulai.</p>
+              <h3>Semua tes tersedia</h3>
+              <p class="muted">Atur paket atau waktu, lalu mulai latihan.</p>
             </div>
           </div>
           <div id="testCatalog" class="test-grid large"></div>
+        </div>
+      </section>
+
+      <section id="cvView" class="screen app-screen">
+        <div class="cv-placeholder-shell">
+          <div class="eyebrow">PERSIAPAN KARIER</div>
+          <h2>Buat CV</h2>
+          <p class="muted cv-placeholder-lead">Fitur ini sedang dipersiapkan untuk membantu kamu membuat CV yang rapi dan siap digunakan untuk melamar kerja.</p>
+          <div class="cv-placeholder-card">
+            <div class="cv-placeholder-icon">CV</div>
+            <div>
+              <span class="dashboard-kicker">COMING SOON</span>
+              <h3>CV Builder MyPsych</h3>
+              <p>Untuk sementara halaman ini adalah placeholder. Struktur fitur, form data, template, dan ekspor PDF akan kita bangun bertahap setelah konsepnya siap.</p>
+            </div>
+          </div>
+          <button class="btn btn-secondary" type="button" data-app-nav="dashboard">← Kembali ke Dashboard</button>
         </div>
       </section>
 
@@ -737,9 +843,6 @@
           </div>
         </article>
 
-        <div class="warning-box" style="margin-top:16px;">
-          <strong>Catatan:</strong> kategori sudah dibuka di antarmuka, tetapi tes baru bisa dikerjakan setelah soal aktif untuk kategori dan paket tersebut tersedia di bank soal.
-        </div>
       </section>
 
       <section id="historyView" class="screen app-screen">
@@ -759,6 +862,7 @@
             <tbody id="historyTableBody"></tbody>
           </table>
         </div>
+        <div id="historyMobileList" class="history-mobile-list" hidden aria-label="Riwayat latihan versi mobile"></div>
       </section>
 
       <section id="instructionView" class="screen app-screen">
@@ -790,7 +894,7 @@
             <p class="chart-note"><strong>Detail kesalahan:</strong> cetak laporan PDF untuk melihat jawaban yang salah dan detail pengerjaan per soal.</p>
           </div>
           <div class="disclaimer">Catatan: skor di website ini adalah skor latihan internal. Gunakan untuk melihat perkembangan latihan pribadi, bukan sebagai penilaian psikologis resmi.</div>
-          <div class="result-actions"><button id="downloadPdfBtn" class="btn btn-primary btn-block" type="button">Simpan dalam PDF</button><button id="resultHistoryBtn" class="btn btn-secondary btn-block" type="button">Lihat Histori</button><button id="finishBtn" class="btn btn-ghost btn-block" type="button">Kembali ke Dashboard</button></div>
+          <div class="result-actions"><button id="downloadPdfBtn" class="btn btn-primary btn-block" type="button">Simpan dalam PDF</button><button id="resultHistoryBtn" class="btn btn-secondary btn-block" type="button">Lihat Histori</button><button id="finishBtn" class="btn btn-ghost btn-block" type="button">Kembali ke Menu Latihan</button></div>
         </div>
       </section>
 
@@ -933,8 +1037,10 @@
     <div class="test-progress"><div id="progressBar" class="test-progress-fill" style="width:0%"></div></div>
   </header>
   <div class="test-body">
-    <div id="testContent" class="test-question-card"></div>
-    <div id="keypad" class="test-keypad"></div>
+    <div id="testWorkspace" class="test-workspace">
+      <div id="testContent" class="test-question-card"></div>
+      <div id="keypad" class="test-keypad"></div>
+    </div>
     <div id="skdQuestionNavigator" class="skd-question-navigator"></div>
     <div id="skdControls" class="skd-controls"></div>
     <div id="testHint" class="test-hint"></div>

@@ -176,6 +176,8 @@ const views = {
   history: $('historyView'),
   admin: $('adminView'),
   about: $('aboutView'),
+  cv: $('cvView'),
+  psikotes: $('psikotesView'),
 };
   
   const state = {
@@ -197,6 +199,7 @@ const views = {
     questionStartedAt: 0,
     testStartedAt: 0,
     lastResult: null,
+    returnView: 'dashboard',
     finished: true,
     savingHistory: false,
     kraepelinSecondsChoice: 15,
@@ -309,6 +312,8 @@ async function submitInterest(event) {
       instruction: 'Persiapan Tes',
       result: 'Hasil Latihan',
       admin: 'Admin Panel',
+      cv: 'Buat CV',
+      psikotes: 'Psikotes Umum',
     };
     const pageTitle = $('pageTitle');
     if (pageTitle) pageTitle.textContent = pageTitles[name] || 'MyPsych';
@@ -1133,6 +1138,10 @@ async function submitInterest(event) {
       if ($('dashAccuracy')) $('dashAccuracy').textContent = '—';
       if ($('dashConsistency')) $('dashConsistency').textContent = '—';
       if ($('dashEndurance')) $('dashEndurance').textContent = '—';
+      if ($('dashStrengthValue')) $('dashStrengthValue').textContent = '—';
+      if ($('dashStrengthLabel')) $('dashStrengthLabel').textContent = 'Belum ada data latihan';
+      if ($('dashStrengthBar')) $('dashStrengthBar').style.width = '0%';
+      if ($('dashRecordValue')) $('dashRecordValue').textContent = '—';
       return;
     }
 
@@ -1143,6 +1152,28 @@ async function submitInterest(event) {
     if ($('dashAccuracy')) $('dashAccuracy').textContent = `${Number(latest.accuracy) || 0}%`;
     if ($('dashConsistency')) $('dashConsistency').textContent = `${Number(latest.consistency) || 0}%`;
     if ($('dashEndurance')) $('dashEndurance').textContent = `${Number(latest.endurance) || 0}%`;
+
+    const metrics = [
+      { key: 'accuracy', label: 'Ketelitian' },
+      { key: 'consistency', label: 'Konsistensi' },
+      { key: 'endurance', label: 'Ketahanan' },
+      { key: 'speed', label: 'Kecepatan' },
+    ];
+    const strongest = metrics.reduce((best, item) => {
+      const value = Number(latest[item.key]) || 0;
+      return value > best.value ? { ...item, value } : best;
+    }, { key: '', label: '—', value: -1 });
+
+    const recordSpeed = state.history.reduce((max, item) => {
+      return Math.max(max, Number(item.speed) || 0);
+    }, 0);
+
+    if ($('dashStrengthValue')) $('dashStrengthValue').textContent = strongest.value >= 0 ? `${strongest.value}%` : '—';
+    if ($('dashStrengthLabel')) $('dashStrengthLabel').textContent = strongest.value >= 0
+      ? `${strongest.label} — kekuatan tertinggi pada tes terakhir`
+      : 'Belum ada data latihan';
+    if ($('dashStrengthBar')) $('dashStrengthBar').style.width = `${Math.min(100, Math.max(0, strongest.value))}%`;
+    if ($('dashRecordValue')) $('dashRecordValue').textContent = recordSpeed ? `${recordSpeed}%` : '—';
   }
 
   function formatDate(value) {
@@ -1153,15 +1184,18 @@ async function submitInterest(event) {
 
   function renderHistory() {
     const body = $('historyTableBody');
+    const mobileList = $('historyMobileList');
     if (!body) return;
 
     const history = state.isGuest ? [] : state.history;
     $('historyPageCount').textContent = String(history.length);
     body.innerHTML = '';
+    if (mobileList) mobileList.innerHTML = '';
+
     $('emptyHistory').hidden = history.length > 0;
     $('historyTable').hidden = history.length === 0;
+    if (mobileList) mobileList.hidden = history.length === 0;
 
-    // Tambahkan kolom aksi secara dinamis supaya tidak perlu mengubah HTML.
     const headerRow = $('historyTable')?.querySelector('thead tr');
     if (headerRow) {
       headerRow.innerHTML = `
@@ -1179,17 +1213,26 @@ async function submitInterest(event) {
     }
 
     history.forEach((item, index) => {
+      const testName = TESTS[item.test_type]?.name || item.test_type || '—';
+      const dateLabel = formatDate(item.tanggal);
+      const score = Number(item.score) || 0;
+      const speed = Number(item.speed) || 0;
+      const accuracy = Number(item.accuracy) || 0;
+      const consistency = Number(item.consistency) || 0;
+      const endurance = Number(item.endurance) || 0;
+      const packageLabel = item.package ?? '—';
+
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${index + 1}</td>
-        <td>${escapeHtml(formatDate(item.tanggal))}</td>
-        <td>${escapeHtml(TESTS[item.test_type]?.name || item.test_type || '—')}</td>
-        <td>${escapeHtml(item.package ?? '—')}</td>
-        <td>${Number(item.score) || 0}%</td>
-        <td>${Number(item.speed) || 0}%</td>
-        <td>${Number(item.accuracy) || 0}%</td>
-        <td>${Number(item.consistency) || 0}%</td>
-        <td>${Number(item.endurance) || 0}%</td>
+        <td>${escapeHtml(dateLabel)}</td>
+        <td>${escapeHtml(testName)}</td>
+        <td>${escapeHtml(packageLabel)}</td>
+        <td>${score}%</td>
+        <td>${speed}%</td>
+        <td>${accuracy}%</td>
+        <td>${consistency}%</td>
+        <td>${endurance}%</td>
         <td class="history-action-cell"></td>
       `;
 
@@ -1202,9 +1245,62 @@ async function submitInterest(event) {
       pdfButton.addEventListener('click', () => {
         downloadHistoryPdf(item, pdfButton);
       });
-
       actionCell.appendChild(pdfButton);
       body.appendChild(row);
+
+      if (mobileList) {
+        const card = document.createElement('article');
+        card.className = 'history-mobile-card';
+
+        const summary = document.createElement('button');
+        summary.type = 'button';
+        summary.className = 'history-mobile-summary';
+        summary.setAttribute('aria-expanded', 'false');
+        summary.innerHTML = `
+          <span class="history-mobile-main">
+            <strong>${escapeHtml(testName)}</strong>
+            <small>${escapeHtml(dateLabel)} · Paket ${escapeHtml(packageLabel)}</small>
+          </span>
+          <span class="history-mobile-score">
+            <strong>${score}%</strong>
+            <small>Skor</small>
+          </span>
+          <span class="history-mobile-chevron" aria-hidden="true">›</span>
+        `;
+
+        const details = document.createElement('div');
+        details.className = 'history-mobile-details';
+        details.hidden = true;
+        details.innerHTML = `
+          <div class="history-mobile-metrics">
+            <div><span>Kecepatan</span><strong>${speed}%</strong></div>
+            <div><span>Ketelitian</span><strong>${accuracy}%</strong></div>
+            <div><span>Konsistensi</span><strong>${consistency}%</strong></div>
+            <div><span>Ketahanan</span><strong>${endurance}%</strong></div>
+          </div>
+          <div class="history-mobile-actions"></div>
+        `;
+
+        const mobilePdfButton = document.createElement('button');
+        mobilePdfButton.type = 'button';
+        mobilePdfButton.className = 'secondary-btn history-mobile-pdf';
+        mobilePdfButton.textContent = 'Cetak PDF';
+        mobilePdfButton.addEventListener('click', () => {
+          downloadHistoryPdf(item, mobilePdfButton);
+        });
+        details.querySelector('.history-mobile-actions').appendChild(mobilePdfButton);
+
+        summary.addEventListener('click', () => {
+          const expanded = summary.getAttribute('aria-expanded') === 'true';
+          summary.setAttribute('aria-expanded', String(!expanded));
+          details.hidden = expanded;
+          card.classList.toggle('is-open', !expanded);
+        });
+
+        card.appendChild(summary);
+        card.appendChild(details);
+        mobileList.appendChild(card);
+      }
     });
   }
 
@@ -1632,9 +1728,17 @@ trackEvent('register_attempt');
   // INSTRUCTIONS
   // ============================================================
 
+  function getTestReturnView_() {
+    const current = document.body.dataset.view;
+    return ['dashboard', 'psikotes', 'skd', 'history', 'cv'].includes(current)
+      ? current
+      : 'dashboard';
+  }
+
   function openInstruction(testId, packageNumber) {
     state.test = testId;
     state.package = packageNumber;
+    state.returnView = getTestReturnView_();
 
     const test = TESTS[testId];
     $('instructionEyebrow').textContent = `${test.name.toUpperCase()} • PAKET ${packageNumber}`;
@@ -2439,6 +2543,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
         isGuest: state.isGuest,
         test: 'skd_lengkap',
         package: state.skdComplete.package,
+        returnView: state.returnView || 'skd',
         currentTestId: state.currentTestId,
         sectionIndex: state.skdComplete.sectionIndex,
         waiting: state.skdComplete.waiting,
@@ -2481,6 +2586,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
     state.test = 'skd_lengkap';
     state.package = Number(saved.package) || 1;
+    state.returnView = saved.returnView || 'skd';
     state.currentTestId = saved.currentTestId || `SKD-${Date.now()}-${randomInt(100000)}`;
     state.finished = false;
 
@@ -3057,6 +3163,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
           userId: state.session.user_id,
           test: state.test,
           package: state.package,
+          returnView: state.returnView || 'dashboard',
           currentTestId: state.currentTestId,
           questions: state.questions,
           answers: state.answers,
@@ -3108,6 +3215,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
     state.test = saved.test;
     state.package = Number(saved.package) || 1;
+    state.returnView = saved.returnView || (saved.test === 'skd_lengkap' ? 'skd' : 'dashboard');
     state.currentTestId = saved.currentTestId || `T-${Date.now()}-${randomInt(100000)}`;
     state.questions = Array.isArray(saved.questions) ? saved.questions : [];
     state.answers = Array.isArray(saved.answers) ? saved.answers : [];
@@ -3658,6 +3766,38 @@ trackEvent('test_start', { type: state.test, package: state.package });
     $('confirmModal').hidden = false;
   }
 
+  async function returnToTestOrigin_() {
+    const target = state.returnView || 'dashboard';
+    closeSidebar_();
+
+    if (target === 'psikotes') {
+      renderCatalog();
+      showView('psikotes');
+      return;
+    }
+
+    if (target === 'skd') {
+      showView('skd');
+      return;
+    }
+
+    if (target === 'history') {
+      if (!state.isGuest) {
+        try { await refreshHistory(); } catch (error) { toast(error.message, 'warning'); }
+      }
+      renderHistory();
+      showView('history');
+      return;
+    }
+
+    if (target === 'cv') {
+      showView('cv');
+      return;
+    }
+
+    await goDashboard();
+  }
+
   function abandonTest() {
     stopTimer();
     stopSKDCompleteTimer_();
@@ -3668,7 +3808,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
     state.lastResult = null;
     clearPersistedTest();
     $('confirmModal').hidden = true;
-    showView('dashboard');
+    returnToTestOrigin_();
     toast('Tes dibatalkan. Progress tidak disimpan.', 'info');
   }
 
@@ -4231,20 +4371,48 @@ trackEvent('test_start', { type: state.test, package: state.package });
   // SIDEBAR / APP SHELL
   // ============================================================
 
+  function isDesktopRail_() {
+    return window.matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)').matches;
+  }
+
   function setSidebar_(open) {
     const sidebar = $('sidebar');
     const overlay = $('sidebarOverlay');
     if (!sidebar) return;
+
+    if (isDesktopRail_()) {
+      sidebar.classList.toggle('is-expanded', Boolean(open));
+      sidebar.classList.remove('open');
+      overlay?.classList.remove('open');
+      return;
+    }
+
     sidebar.classList.toggle('open', Boolean(open));
     overlay?.classList.toggle('open', Boolean(open));
+    sidebar.classList.remove('is-expanded');
+  }
+
+  function openSidebar_() {
+    setSidebar_(true);
   }
 
   function toggleSidebar_() {
-    setSidebar_(!$('sidebar')?.classList.contains('open'));
+    const sidebar = $('sidebar');
+    if (!sidebar) return;
+
+    if (isDesktopRail_()) {
+      setSidebar_(!sidebar.classList.contains('is-expanded'));
+      return;
+    }
+
+    setSidebar_(!sidebar.classList.contains('open'));
   }
 
   function closeSidebar_() {
-    setSidebar_(false);
+    const sidebar = $('sidebar');
+    if (!sidebar) return;
+    sidebar.classList.remove('open', 'is-expanded');
+    $('sidebarOverlay')?.classList.remove('open');
   }
 
   // ============================================================
@@ -4273,6 +4441,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
     document.querySelectorAll('[data-app-nav]').forEach((item) => {
       item.addEventListener('click', async () => {
         const target = item.dataset.appNav;
+        item.blur();
         closeSidebar_();
 
         if (target === 'dashboard') {
@@ -4294,11 +4463,15 @@ trackEvent('test_start', { type: state.test, package: state.package });
           return;
         }
 
+        if (target === 'cv') {
+          showView('cv');
+          return;
+        }
+
         if (target === 'psikotes') {
-          await goDashboard();
-          setTimeout(() => {
-            $('psikotesCatalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 0);
+          renderCatalog();
+          showView('psikotes');
+          return;
         }
       });
     });
@@ -4315,7 +4488,32 @@ trackEvent('test_start', { type: state.test, package: state.package });
 
     const hamburger = $('hamburger');
     hamburger?.addEventListener('click', () => toggleSidebar_());
+
+    $('dashboardOpenMenuBtn')?.addEventListener('click', () => openSidebar_());
+    $('dashboardOpenMenuBtnSecondary')?.addEventListener('click', () => openSidebar_());
     $('sidebarOverlay')?.addEventListener('click', closeSidebar_);
+
+    const sidebar = $('sidebar');
+    sidebar?.addEventListener('pointerenter', () => {
+      if (isDesktopRail_()) {
+        sidebar.classList.add('is-expanded');
+      }
+    });
+
+    sidebar?.addEventListener('pointerleave', () => {
+      if (isDesktopRail_()) {
+        sidebar.classList.remove('is-expanded');
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (!isDesktopRail_()) {
+        sidebar?.classList.remove('is-expanded');
+      } else {
+        sidebar?.classList.remove('open');
+        $('sidebarOverlay')?.classList.remove('open');
+      }
+    });
 // About page
 document.querySelectorAll('[data-goto="about"]').forEach((el) => {
   el.addEventListener('click', () => { showView('about'); loadStats(); });
@@ -4368,7 +4566,7 @@ $('interestModal')?.addEventListener('click', (e) => {
       submitNewPassword(token);
     });
 
-    $('backFromInstructionBtn').addEventListener('click', () => showView('dashboard'));
+    $('backFromInstructionBtn').addEventListener('click', () => returnToTestOrigin_());
     $('startTestBtn').addEventListener('click', startTest);
 
     $('testHomeBtn').addEventListener('click', openEndTestModal);
@@ -4385,12 +4583,7 @@ $('interestModal')?.addEventListener('click', (e) => {
     });
 
     $('finishBtn').addEventListener('click', async () => {
-      if (state.isGuest) {
-        leaveGuest();
-        showView('landing');
-        return;
-      }
-      await goDashboard();
+      await returnToTestOrigin_();
     });
 
     $('viewHistoryBtn').addEventListener('click', async () => {
@@ -4402,6 +4595,7 @@ $('interestModal')?.addEventListener('click', (e) => {
     });
 
     $('backDashboardBtn').addEventListener('click', () => goDashboard());
+    $('backFromPsikotesBtn')?.addEventListener('click', () => goDashboard());
     $('logoutBtn').addEventListener('click', logout);
     $('adminLogoutBtn')?.addEventListener('click', logout);
 
@@ -4458,6 +4652,14 @@ function formatNumber(n) {
 }
   async function init() {
     bind();
+
+    // Always start with the desktop rail collapsed / mobile drawer closed.
+    // This also clears a stale UI state when the browser restores a page.
+    closeSidebar_();
+
+    window.addEventListener('pageshow', () => {
+      closeSidebar_();
+    });
 
     const params = new URLSearchParams(location.search);
     const resetToken = params.get('reset');
