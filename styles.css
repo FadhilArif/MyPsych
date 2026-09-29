@@ -5066,3 +5066,88 @@ body[data-view="admin"] .app-layout .content {
     margin-top: 16px;
   }
 }
+
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .sidebar.is-expanded .brand-text,
+  .sidebar.is-expanded .sidebar-label,
+  .sidebar.is-expanded .nav-item > span:not(.nav-icon),
+  .sidebar.is-expanded .sidebar-user .user-info,
+  .sidebar.is-expanded .logout-btn > span {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+  .sidebar.is-expanded .brand-text { display: flex !important; }
+  .sidebar.is-expanded .sidebar-label { display: block !important; }
+  .sidebar.is-expanded .nav-item > span:nth-child(2) { display: block !important; }
+  .sidebar.is-expanded .nav-tag,
+  .sidebar.is-expanded .nav-tag-muted { display: inline-flex !important; }
+  .sidebar.is-expanded .sidebar-user .user-info { display: flex !important; }
+  .sidebar.is-expanded .logout-btn > span { display: inline !important; }
+}
+
+.psikotes-catalog-section .test-grid.large {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+.psikotes-catalog-section .app-test-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 250px;
+  padding: 18px;
+  gap: 14px;
+  box-sizing: border-box;
+}
+.psikotes-catalog-section .app-test-item .test-icon {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: 13px;
+}
+.psikotes-catalog-section .app-test-item .test-info {
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.psikotes-catalog-section .app-test-item .test-info strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: .92rem;
+}
+.psikotes-catalog-section .app-test-item .test-info small {
+  display: block;
+  max-width: none;
+  font-size: .72rem;
+  line-height: 1.55;
+}
+.psikotes-catalog-section .app-test-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  width: 100%;
+  gap: 8px;
+  margin-top: auto;
+}
+.psikotes-catalog-section .app-test-controls select {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  box-sizing: border-box;
+}
+.psikotes-catalog-section .app-test-controls .btn {
+  min-height: 40px;
+  white-space: nowrap;
+}
+@media (max-width: 1050px) {
+  .psikotes-catalog-section .test-grid.large { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .psikotes-catalog-section .test-grid.large { grid-template-columns: 1fr; }
+  .psikotes-catalog-section .app-test-item { min-height: 0; }
+}
+@media (max-width: 380px) {
+  .psikotes-catalog-section .app-test-controls { grid-template-columns: 1fr; }
+  .psikotes-catalog-section .app-test-controls .btn { width: 100%; }
+}
