@@ -36,6 +36,11 @@
     });
 
     if (name !== 'test') stopTimer();
+
+    if (name === 'cv' && typeof initCvBuilder === 'function') {
+      initCvBuilder();
+    }
+
     window.scrollTo(0, 0);
   }
 
