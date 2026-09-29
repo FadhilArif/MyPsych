@@ -5360,3 +5360,172 @@ body[data-view="admin"] .app-layout .content {
     background:rgba(217,83,79,.18) !important;
   }
 }
+
+
+/* ============================================================
+   HISTORY — MOBILE CARDS
+   Desktop keeps the dense comparison table. Mobile gets a
+   compact expandable card per test result.
+   ============================================================ */
+.history-mobile-list {
+  display: none;
+}
+
+.history-mobile-card {
+  overflow: hidden;
+  margin-bottom: 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.history-mobile-summary {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto 20px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 15px 14px;
+  color: var(--text);
+  text-align: left;
+}
+
+.history-mobile-summary:hover {
+  background: var(--soft);
+}
+
+.history-mobile-main {
+  min-width: 0;
+}
+
+.history-mobile-main strong,
+.history-mobile-main small,
+.history-mobile-score strong,
+.history-mobile-score small {
+  display: block;
+}
+
+.history-mobile-main strong {
+  margin-bottom: 3px;
+  font-size: .83rem;
+  line-height: 1.25;
+}
+
+.history-mobile-main small {
+  color: var(--muted);
+  font-size: .63rem;
+  line-height: 1.45;
+}
+
+.history-mobile-score {
+  text-align: right;
+}
+
+.history-mobile-score strong {
+  color: var(--blue-dark);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.history-mobile-score small {
+  margin-top: 3px;
+  color: var(--soft-text);
+  font-size: .56rem;
+}
+
+.history-mobile-chevron {
+  color: var(--soft-text);
+  font-size: 1.5rem;
+  line-height: 1;
+  transform: translateY(-1px);
+  transition: transform .18s ease, color .18s ease;
+}
+
+.history-mobile-card.is-open .history-mobile-chevron {
+  transform: rotate(90deg);
+  color: var(--blue);
+}
+
+.history-mobile-details {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--soft);
+}
+
+.history-mobile-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-top: 12px;
+}
+
+.history-mobile-metrics > div {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.history-mobile-metrics span,
+.history-mobile-metrics strong {
+  display: block;
+}
+
+.history-mobile-metrics span {
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-size: .58rem;
+}
+
+.history-mobile-metrics strong {
+  font-size: .84rem;
+}
+
+.history-mobile-actions {
+  margin-top: 10px;
+}
+
+.history-mobile-pdf {
+  width: 100%;
+  min-height: 40px;
+}
+
+@media (max-width: 700px), (pointer: coarse) and (max-width: 900px) {
+  .history-table-wrap {
+    display: none;
+  }
+
+  .history-mobile-list {
+    display: block;
+  }
+
+  .history-page-head {
+    align-items: flex-start;
+  }
+
+  .history-total {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 380px) {
+  .history-mobile-summary {
+    grid-template-columns: minmax(0,1fr) auto 16px;
+    gap: 8px;
+    padding: 14px 12px;
+  }
+
+  .history-mobile-details {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .history-mobile-metrics {
+    gap: 6px;
+  }
+
+  .history-mobile-metrics > div {
+    padding: 9px;
+  }
+}
