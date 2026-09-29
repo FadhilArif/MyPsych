@@ -177,6 +177,7 @@ const views = {
   admin: $('adminView'),
   about: $('aboutView'),
   cv: $('cvView'),
+  psikotes: $('psikotesView'),
 };
   
   const state = {
@@ -311,6 +312,7 @@ async function submitInterest(event) {
       result: 'Hasil Latihan',
       admin: 'Admin Panel',
       cv: 'Buat CV',
+      psikotes: 'Psikotes Umum',
     };
     const pageTitle = $('pageTitle');
     if (pageTitle) pageTitle.textContent = pageTitles[name] || 'MyPsych';
@@ -4353,10 +4355,9 @@ trackEvent('test_start', { type: state.test, package: state.package });
         }
 
         if (target === 'psikotes') {
-          await goDashboard();
-          setTimeout(() => {
-            $('psikotesCatalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 0);
+          renderCatalog();
+          showView('psikotes');
+          return;
         }
       });
     });
@@ -4485,6 +4486,7 @@ $('interestModal')?.addEventListener('click', (e) => {
     });
 
     $('backDashboardBtn').addEventListener('click', () => goDashboard());
+    $('backFromPsikotesBtn')?.addEventListener('click', () => goDashboard());
     $('logoutBtn').addEventListener('click', logout);
     $('adminLogoutBtn')?.addEventListener('click', logout);
 
