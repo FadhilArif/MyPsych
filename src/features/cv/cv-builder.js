@@ -217,7 +217,7 @@ function renderCvForm_() {
   const form = $('cvForm');
   if (!form) return;
 
-  ['fullName','targetRole','address','phone','email','linkedin','currentActivity','summary','skills'].forEach((name) => {
+  ['fullName','targetRole','address','phone','email','linkedin','summary','skills'].forEach((name) => {
     if (form.elements[name]) form.elements[name].value = cvData[name] || '';
   });
 
