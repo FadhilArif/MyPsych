@@ -2544,7 +2544,6 @@ trackEvent('test_start', { type: state.test, package: state.package });
         test: 'skd_lengkap',
         package: state.skdComplete.package,
         returnView: state.returnView || 'skd',
-        package: state.skdComplete.package,
         currentTestId: state.currentTestId,
         sectionIndex: state.skdComplete.sectionIndex,
         waiting: state.skdComplete.waiting,
