@@ -937,12 +937,65 @@
 
             <div class="cv-job-match-shell">
               <div class="cv-job-match-card">
-                <span class="cv-feature-kicker">TAHAP V1</span>
-                <h4>Cocokkan CV dengan lowongan</h4>
-                <p>Masukkan deskripsi pekerjaan untuk mendapatkan analisis kata kunci, skill yang cocok, dan gap yang perlu diperbaiki.</p>
-                <div class="cv-job-match-note">
-                  <strong>Mode pengembangan</strong>
-                  <span>Mesin matching belum diaktifkan di branch ini. Halaman ini disiapkan sebagai tempat fitur Job Matching agar bisa dikembangkan terpisah dari CV Builder.</span>
+                <div class="cv-job-match-intro">
+                  <span class="cv-feature-kicker">SMART JOB SEARCH · V1</span>
+                  <h4>Cari lowongan yang sesuai dengan CV-mu</h4>
+                  <p>MyPsych memakai data CV yang tersimpan lokal untuk menyusun pencarian yang lebih relevan. Hasil lowongan tetap dibuka di mesin pencari atau situs sumber aslinya.</p>
+                </div>
+
+                <div class="cv-job-match-form">
+                  <label>
+                    Posisi yang dicari
+                    <input id="cvJobRole" type="text" maxlength="80" placeholder="Contoh: Admin Produksi">
+                  </label>
+                  <label>
+                    Lokasi
+                    <input id="cvJobLocation" type="text" maxlength="80" placeholder="Contoh: Gresik">
+                  </label>
+                  <label class="cv-job-match-full">
+                    Tambahan pencarian <span class="cv-field-optional">opsional</span>
+                    <input id="cvJobExtra" type="text" maxlength="120" placeholder="Contoh: full time, D3, fresh graduate, warehouse">
+                  </label>
+                  <div class="cv-job-match-actions cv-job-match-full">
+                    <button type="button" class="btn btn-primary" id="cvJobSearchBtn">🔎 Cari Lowongan</button>
+                    <button type="button" class="btn btn-secondary" id="cvJobUseCvBtn">Gunakan data CV</button>
+                  </div>
+                </div>
+
+                <div id="cvJobSearchResult" class="cv-job-search-result" aria-live="polite" hidden>
+                  <div class="cv-job-query-head">
+                    <div>
+                      <span class="cv-feature-kicker">QUERY DIBUAT DARI CV</span>
+                      <strong id="cvJobQueryLabel">—</strong>
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-small" id="cvJobCopyQueryBtn">Salin query</button>
+                  </div>
+                  <div class="cv-job-source-grid">
+                    <a id="cvJobGoogleLink" class="cv-job-source-card cv-job-source-primary" href="#" target="_blank" rel="noopener noreferrer">
+                      <strong>Google</strong>
+                      <span>Telusuri lowongan yang relevan, termasuk hasil Job Search Google jika tersedia.</span>
+                      <em>Buka pencarian →</em>
+                    </a>
+                    <a id="cvJobJobstreetLink" class="cv-job-source-card" href="#" target="_blank" rel="noopener noreferrer">
+                      <strong>Jobstreet</strong>
+                      <span>Cari hasil yang berasal dari domain Jobstreet melalui Google.</span>
+                      <em>Lihat hasil →</em>
+                    </a>
+                    <a id="cvJobGlintsLink" class="cv-job-source-card" href="#" target="_blank" rel="noopener noreferrer">
+                      <strong>Glints</strong>
+                      <span>Cari hasil lowongan dari domain Glints melalui Google.</span>
+                      <em>Lihat hasil →</em>
+                    </a>
+                    <a id="cvJobLinkedinLink" class="cv-job-source-card" href="#" target="_blank" rel="noopener noreferrer">
+                      <strong>LinkedIn</strong>
+                      <span>Cari hasil lowongan dari LinkedIn melalui Google.</span>
+                      <em>Lihat hasil →</em>
+                    </a>
+                  </div>
+                  <div class="cv-job-match-note">
+                    <strong>MyPsych tidak menyalin lowongan</strong>
+                    <span>Kamu akan dibawa ke sumber asli untuk melihat detail, memeriksa perusahaan, dan melamar. MyPsych hanya membantu membentuk pencarian berdasarkan profilmu.</span>
+                  </div>
                 </div>
               </div>
             </div>
