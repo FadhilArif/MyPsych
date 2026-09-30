@@ -294,20 +294,22 @@ function cvRichHtml_(value = '') {
     nonEmptyRawLines.every(line => /^\d+[.)]\s+/.test(line));
 
   if (numbered) {
-    return `<ol class="cv-rich-list">${nonEmptyRawLines.map(line => {
-      const content = line.replace(/^\d+[.)]\s+/, '');
-      return `<li>${cvText_(content)}</li>`;
-    }).join('')}</ol>`;
+    return `<div class="cv-rich-list cv-rich-ordered">${nonEmptyRawLines.map(line => {
+      const match = line.match(/^(\d+)[.)]\s+(.*)$/);
+      const marker = match ? `${match[1]}.` : '';
+      const content = match ? match[2] : line;
+      return `<div class="cv-rich-list-item"><span class="cv-rich-marker">${cvText_(marker)}</span><div class="cv-rich-list-content">${cvText_(content)}</div></div>`;
+    }).join('')}</div>`;
   }
 
   const bulleted = nonEmptyRawLines.length > 1 &&
     nonEmptyRawLines.every(line => /^[-•*]\s+/.test(line));
 
   if (bulleted) {
-    return `<ul class="cv-rich-list">${nonEmptyRawLines.map(line => {
+    return `<div class="cv-rich-list cv-rich-unordered">${nonEmptyRawLines.map(line => {
       const content = line.replace(/^[-•*]\s+/, '');
-      return `<li>${cvText_(content)}</li>`;
-    }).join('')}</ul>`;
+      return `<div class="cv-rich-list-item"><span class="cv-rich-marker">•</span><div class="cv-rich-list-content">${cvText_(content)}</div></div>`;
+    }).join('')}</div>`;
   }
 
   if (/\r?\n\s*\r?\n/.test(raw)) {
