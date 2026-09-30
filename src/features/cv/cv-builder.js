@@ -253,32 +253,41 @@ function cvRichHtml_(value = '') {
   const raw = String(value || '').trim();
   if (!raw) return '';
 
-  const escapedLines = raw.split(/\r?\n/).map(line => cvText_(line.trim()));
-  const lines = escapedLines.filter(Boolean);
-  if (!lines.length) return '';
+  const rawLines = raw.split(/\r?\n/);
+  const nonEmptyRawLines = rawLines.map(line => line.trim()).filter(Boolean);
 
   if (!cvAutoFormatEnabled_()) {
-    return `<p class="cv-rich-paragraph">${escapedLines.join('<br>')}</p>`;
+    return `<p class="cv-rich-paragraph">${cvText_(raw).replace(/\r?\n/g, '<br>')}</p>`;
   }
 
-  const numbered = lines.length > 1 && lines.every(line => /^\\d+[.)]\\s+/.test(line.replace(/^&/,'&')));
+  const numbered = nonEmptyRawLines.length > 1 &&
+    nonEmptyRawLines.every(line => /^\d+[.)]\s+/.test(line));
+
   if (numbered) {
-    return `<ol class="cv-rich-list">${lines.map(line => `<li>${line.replace(/^\\d+[.)]\\s+/, '')}</li>`).join('')}</ol>`;
+    return `<ol class="cv-rich-list">${nonEmptyRawLines.map(line => {
+      const content = line.replace(/^\d+[.)]\s+/, '');
+      return `<li>${cvText_(content)}</li>`;
+    }).join('')}</ol>`;
   }
 
-  const bulleted = lines.length > 1 && lines.every(line => /^[-•*]\\s+/.test(line));
+  const bulleted = nonEmptyRawLines.length > 1 &&
+    nonEmptyRawLines.every(line => /^[-•*]\s+/.test(line));
+
   if (bulleted) {
-    return `<ul class="cv-rich-list">${lines.map(line => `<li>${line.replace(/^[-•*]\\s+/, '')}</li>`).join('')}</ul>`;
+    return `<ul class="cv-rich-list">${nonEmptyRawLines.map(line => {
+      const content = line.replace(/^[-•*]\s+/, '');
+      return `<li>${cvText_(content)}</li>`;
+    }).join('')}</ul>`;
   }
 
-  if (/\n\s*\n/.test(raw)) {
+  if (/\r?\n\s*\r?\n/.test(raw)) {
     return raw.split(/\r?\n\s*\r?\n/).map(part => {
-      const text = cvText_(part.replace(/\r?\n/g, ' ').trim());
-      return text ? `<p class="cv-rich-paragraph">${text}</p>` : '';
+      const content = part.split(/\r?\n/).map(line => line.trim()).filter(Boolean).join(' ');
+      return content ? `<p class="cv-rich-paragraph">${cvText_(content)}</p>` : '';
     }).join('');
   }
 
-  return `<p class="cv-rich-paragraph">${lines.join('<br>')}</p>`;
+  return `<p class="cv-rich-paragraph">${nonEmptyRawLines.map(line => cvText_(line)).join('<br>')}</p>`;
 }
 
 function renderCvPreview_() {
