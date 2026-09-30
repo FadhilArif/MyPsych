@@ -2952,3 +2952,34 @@
     page-break-inside: auto;
   }
 }
+
+
+/* Screen preview: fit the A4 paper into the available preview pane.
+   Print mode below restores the true 210mm A4 canvas. */
+@media screen {
+  .cv-preview-shell .cv-paper-wrap {
+    overflow: hidden;
+    align-items: flex-start;
+  }
+
+  .cv-preview-shell .cv-paper {
+    width: min(210mm, 100%);
+    min-width: 0;
+    max-width: 100%;
+    min-height: 0;
+    aspect-ratio: 210 / 297;
+    height: auto;
+    margin: 0 auto;
+    padding: clamp(18px, 3vw, 38px);
+    overflow: hidden;
+  }
+
+  .cv-preview-shell .cv-paper-section,
+  .cv-preview-shell .cv-entry {
+    break-inside: avoid;
+  }
+
+  .cv-preview-shell .cv-paper-identity h1 {
+    font-size: clamp(18px, 2vw, 22pt);
+  }
+}
