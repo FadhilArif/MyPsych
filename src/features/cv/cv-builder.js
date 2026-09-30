@@ -488,6 +488,210 @@ function cvHandleStructuredEnter_(event) {
   target.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
+function cvPdfSafeText_(value = '') {
+  return String(value || '')
+    .replace(/[–—]/g, '-')
+    .replace(/[•·]/g, '-')
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/[^\x20-\x7E]/g, '?');
+}
+
+function cvPdfWrap_(value = '', maxChars = 88) {
+  const text = cvPdfSafeText_(value).replace(/\s+/g, ' ').trim();
+  if (!text) return [];
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  words.forEach((word) => {
+    const next = line ? line + ' ' + word : word;
+    if (next.length <= maxChars) {
+      line = next;
+    } else {
+      if (line) lines.push(line);
+      line = word;
+    }
+  });
+  if (line) lines.push(line);
+  return lines;
+}
+
+function cvPdfTextCommand_(text, x, y, size, color) {
+  const rgb = color || '0.10 0.15 0.22 rg';
+  return [
+    rgb,
+    'BT',
+    '/F1 ' + size + ' Tf',
+    '1 0 0 1 ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' Tm',
+    '(' + pdfEscape(text) + ') Tj',
+    'ET'
+  ].join('\n');
+}
+
+function cvCreatePdfBytes_(pages) {
+  const pageRefs = [];
+  const objects = [
+    '<< /Type /Catalog /Pages 2 0 R >>',
+    null,
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>'
+  ];
+
+  pages.forEach((content) => {
+    const pageRef = objects.length + 1;
+    const contentRef = pageRef + 1;
+    objects.push(
+      '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents ' + contentRef + ' 0 R >>',
+      '<< /Length ' + asciiBytes(content).length + ' >>\nstream\n' + content + '\nendstream'
+    );
+    pageRefs.push(pageRef);
+  });
+
+  objects[1] = '<< /Type /Pages /Kids [' + pageRefs.map((ref) => ref + ' 0 R').join(' ') + '] /Count ' + pageRefs.length + ' >>';
+
+  const parts = [asciiBytes('%PDF-1.4\n')];
+  const offsets = [0];
+  let offset = parts[0].length;
+
+  objects.forEach((object, index) => {
+    const ref = index + 1;
+    const bytes = asciiBytes(ref + ' 0 obj\n' + object + '\nendobj\n');
+    offsets[ref] = offset;
+    parts.push(bytes);
+    offset += bytes.length;
+  });
+
+  const xrefOffset = offset;
+  let xref = 'xref\n0 ' + (objects.length + 1) + '\n0000000000 65535 f \n';
+  for (let i = 1; i <= objects.length; i += 1) {
+    xref += String(offsets[i]).padStart(10, '0') + ' 00000 n \n';
+  }
+  xref += 'trailer\n<< /Size ' + (objects.length + 1) + ' /Root 1 0 R >>\nstartxref\n' + xrefOffset + '\n%%EOF';
+  parts.push(asciiBytes(xref));
+  return concatBytes(parts);
+}
+
+function cvBuildPdfPages_() {
+  const sections = [];
+  if (cvData.summary.trim()) sections.push(['PROFIL', cvData.summary]);
+  if (cvData.skills.trim()) sections.push(['KEAHLIAN', cvData.skills]);
+
+  const addEntries = (title, list, mapper) => {
+    const items = list.filter((item) => Object.values(item).some(Boolean)).map(mapper).filter(Boolean);
+    if (items.length) sections.push([title, items.join('\n\n')]);
+  };
+
+  addEntries('PENGALAMAN KERJA', cvData.work, (item) =>
+    [item.position, item.company, [item.start, item.end].filter(Boolean).join(' - '), item.description].filter(Boolean).join('\n')
+  );
+  addEntries('PENGALAMAN MAGANG', cvData.internship, (item) =>
+    [item.position, item.company, [item.start, item.end].filter(Boolean).join(' - '), item.description].filter(Boolean).join('\n')
+  );
+  addEntries('ORGANISASI', cvData.organization, (item) =>
+    [item.role, item.name, item.period, item.description].filter(Boolean).join('\n')
+  );
+  addEntries('PROJECT / PORTOFOLIO', cvData.project, (item) =>
+    [item.name, item.role, item.period, item.description, item.link].filter(Boolean).join('\n')
+  );
+  addEntries('PUBLIKASI', cvData.publication, (item) =>
+    [item.title, item.publisher, item.year, item.link].filter(Boolean).join('\n')
+  );
+  addEntries('PRESTASI', cvData.achievement, (item) =>
+    [item.name, item.issuer, item.year, item.description].filter(Boolean).join('\n')
+  );
+  addEntries('PENDIDIKAN', cvData.education, (item) =>
+    [[item.degree, item.field].filter(Boolean).join(' - '), item.institution, item.location, [item.start, item.end].filter(Boolean).join(' - '), item.description].filter(Boolean).join('\n')
+  );
+  addEntries('PELATIHAN & SERTIFIKASI', cvData.training, (item) =>
+    [item.name, item.provider, item.year, item.credential, item.link].filter(Boolean).join('\n')
+  );
+
+  const pages = [];
+  let commands = [];
+  let y = 790;
+  const left = 54;
+  const bottom = 48;
+  const lineGap = 13;
+
+  const newPage = () => {
+    if (commands.length) pages.push(commands.join('\n'));
+    commands = [];
+    y = 790;
+  };
+
+  const ensure = (height = lineGap) => {
+    if (y - height < bottom) newPage();
+  };
+
+  const pushText = (text, size = 9, gap = lineGap, color = '0.10 0.15 0.22 rg') => {
+    ensure(gap);
+    commands.push(cvPdfTextCommand_(text, left, y, size, color));
+    y -= gap;
+  };
+
+  const pushWrapped = (text, size = 9, gap = lineGap) => {
+    cvPdfWrap_(text).forEach((line) => pushText(line, size, gap));
+  };
+
+  const pushRich = (text) => {
+    const raw = String(text || '').trim();
+    raw.split(/\r?\n/).forEach((line) => {
+      const clean = line.trim();
+      if (!clean) { y -= 5; return; }
+      if (cvAutoFormatEnabled_() && /^\d+[.)]\s+/.test(clean)) {
+        pushWrapped('- ' + clean.replace(/^\d+[.)]\s+/, ''), 9, 12);
+      } else if (cvAutoFormatEnabled_() && /^[-•*]\s+/.test(clean)) {
+        pushWrapped('- ' + clean.replace(/^[-•*]\s+/, ''), 9, 12);
+      } else {
+        pushWrapped(clean, 9, 12);
+      }
+    });
+  };
+
+  pushText(cvData.fullName || 'Nama Lengkap', 20, 24, '0.08 0.35 0.60 rg');
+  if (cvData.targetRole) pushText(cvData.targetRole, 11, 16);
+  const contact = [cvData.address, cvData.phone, cvData.email, cvData.linkedin].filter(Boolean).join(' | ');
+  if (contact) pushWrapped(contact, 8, 12);
+  y -= 6;
+
+  sections.forEach(([title, body]) => {
+    if (!body || !String(body).trim()) return;
+    ensure(40);
+    pushText(title, 10, 15, '0.08 0.35 0.60 rg');
+    commands.push('0.08 0.35 0.60 RG');
+    commands.push('54 ' + (y + 5).toFixed(2) + ' m 541 ' + (y + 5).toFixed(2) + ' l S');
+    y -= 3;
+    pushRich(body);
+    y -= 6;
+  });
+
+  if (commands.length) pages.push(commands.join('\n'));
+  return pages;
+}
+
+function cvDownloadPdf_() {
+  try {
+    cvSyncSimpleFields_();
+    cvSave_(true);
+    renderCvPreview_();
+    const pages = cvBuildPdfPages_();
+    const bytes = cvCreatePdfBytes_(pages);
+    const safeName = (cvData.fullName || 'MyPsych').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '');
+    const filename = 'CV-' + (safeName || 'MyPsych') + '.pdf';
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+    toast('PDF berhasil dibuat: ' + filename, 'success', 4200);
+  } catch (error) {
+    console.error('[MyPsych CV] PDF generation failed:', error);
+    toast('PDF gagal dibuat. Periksa data CV lalu coba lagi.', 'warning', 5000);
+  }
+}
 function bindCvOnce_() {
   if (cvInitialized) return;
 
@@ -553,19 +757,7 @@ function bindCvOnce_() {
 
     if (event.target.closest('#cvPrintBtn, #cvPrintBtnBottom')) {
       event.preventDefault();
-      cvSyncSimpleFields_();
-      cvSave_(true);
-      renderCvPreview_();
-
-      const previousTitle = document.title;
-      const filename = `CV-${(cvData.fullName || 'MyPsych').replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}`;
-      document.title = filename;
-      const restoreTitle = () => {
-        document.title = previousTitle;
-        window.removeEventListener('afterprint', restoreTitle);
-      };
-      window.addEventListener('afterprint', restoreTitle, { once: true });
-      window.print();
+      cvDownloadPdf_();
       return;
     }
 
