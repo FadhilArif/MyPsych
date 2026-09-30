@@ -48,6 +48,7 @@ function cvDefaultData_() {
     version: 1,
     lastActivityAt: Date.now(),
     template: 'ats',
+    autoFormat: true,
     fullName: '',
     targetRole: '',
     address: '',
@@ -78,7 +79,7 @@ function cvLoad_() {
     }
     const cleaned = { ...data };
     delete cleaned.currentActivity;
-    return { ...cvDefaultData_(), ...cleaned };
+    return { ...cvDefaultData_(), ...cleaned, autoFormat: cleaned.autoFormat !== false };
   } catch {
     return cvDefaultData_();
   }
@@ -222,6 +223,7 @@ function renderCvForm_() {
   });
 
   if ($('cvTemplateSelect')) $('cvTemplateSelect').value = cvData.template || 'ats';
+  if ($('cvAutoFormatToggle')) $('cvAutoFormatToggle').checked = cvData.autoFormat !== false;
 
   Object.keys(CV_REPEATERS).forEach(renderCvRepeater_);
   updateCvPhotoPreview_();
@@ -243,6 +245,42 @@ function cvBuildSummaryOutline_() {
   return `Lulusan ${educationText || '[pendidikan terakhir]'}${experienceText} dengan keahlian pada ${skills}. Tertarik mengembangkan karier di bidang ${role} dan siap terus belajar, berkontribusi, serta berkembang di lingkungan kerja profesional.`;
 }
 
+function cvAutoFormatEnabled_() {
+  return cvData.autoFormat !== false;
+}
+
+function cvRichHtml_(value = '') {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+
+  const escapedLines = raw.split(/\r?\n/).map(line => cvText_(line.trim()));
+  const lines = escapedLines.filter(Boolean);
+  if (!lines.length) return '';
+
+  if (!cvAutoFormatEnabled_()) {
+    return `<p class="cv-rich-paragraph">${escapedLines.join('<br>')}</p>`;
+  }
+
+  const numbered = lines.length > 1 && lines.every(line => /^\\d+[.)]\\s+/.test(line.replace(/^&/,'&')));
+  if (numbered) {
+    return `<ol class="cv-rich-list">${lines.map(line => `<li>${line.replace(/^\\d+[.)]\\s+/, '')}</li>`).join('')}</ol>`;
+  }
+
+  const bulleted = lines.length > 1 && lines.every(line => /^[-•*]\\s+/.test(line));
+  if (bulleted) {
+    return `<ul class="cv-rich-list">${lines.map(line => `<li>${line.replace(/^[-•*]\\s+/, '')}</li>`).join('')}</ul>`;
+  }
+
+  if (/\n\s*\n/.test(raw)) {
+    return raw.split(/\r?\n\s*\r?\n/).map(part => {
+      const text = cvText_(part.replace(/\r?\n/g, ' ').trim());
+      return text ? `<p class="cv-rich-paragraph">${text}</p>` : '';
+    }).join('');
+  }
+
+  return `<p class="cv-rich-paragraph">${lines.join('<br>')}</p>`;
+}
+
 function renderCvPreview_() {
   const root = $('cvPreview');
   if (!root) return;
@@ -256,10 +294,10 @@ function renderCvPreview_() {
   const photo = cvData.photo ? `<img class="cv-paper-photo" src="${cvData.photo}" alt="Foto CV">` : '';
 
   const section = (title, html) => html ? `<section class="cv-paper-section"><h2>${title}</h2>${html}</section>` : '';
-  const bullets = (lines) => lines.length ? `<ul>${lines.map(line=>`<li>${cvText_(line)}</li>`).join('')}</ul>` : '';
+  const rich = (value) => cvRichHtml_(value);
 
   const work = cvData.work.filter(x=>Object.values(x).some(Boolean)).map(x =>
-    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.position)}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.company)}${x.location ? ' · '+cvText_(x.location):''}</div>${bullets(cvLines_(x.description))}</div>`).join('');
+    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.position)}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.company)}${x.location ? ' · '+cvText_(x.location):''}</div>${rich(x.description)}</div>`).join('');
 
   const internship = cvData.internship.filter(x=>Object.values(x).some(Boolean)).map(x =>
     `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.position)}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.company)}${x.location ? ' · '+cvText_(x.location):''}</div>${bullets(cvLines_(x.description))}</div>`).join('');
@@ -274,7 +312,7 @@ function renderCvPreview_() {
     `<div class="cv-entry"><strong>${cvText_(x.title)}</strong><div class="cv-entry-sub">${cvText_([x.publisher,x.year].filter(Boolean).join(' · '))}</div>${x.link ? `<div class="cv-entry-link">${cvText_(x.link)}</div>` : ''}</div>`).join('');
 
   const achievements = cvData.achievement.filter(x=>Object.values(x).some(Boolean)).map(x =>
-    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.name)}</strong><span>${cvText_(x.year)}</span></div><div class="cv-entry-sub">${cvText_(x.issuer)}</div>${x.description ? '<p>'+cvText_(x.description)+'</p>':''}</div>`).join('');
+    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.name)}</strong><span>${cvText_(x.year)}</span></div><div class="cv-entry-sub">${cvText_(x.issuer)}</div>${x.description ? rich(x.description):''}</div>`).join('');
 
   const education = cvData.education.filter(x=>Object.values(x).some(Boolean)).map(x =>
     `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_([x.degree,x.field].filter(Boolean).join(' · '))}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.institution)}${x.location ? ' · '+cvText_(x.location):''}</div>${x.description ? '<p>'+cvText_(x.description)+'</p>':''}</div>`).join('');
@@ -293,7 +331,7 @@ function renderCvPreview_() {
         <p class="cv-paper-contact">${contact || 'Kabupaten/Kota · WhatsApp · Email · LinkedIn'}</p>
       </div>
     </div>
-    ${section('Profil', `<p>${cvText_(summary)}</p>`)}
+    ${section('Profil', rich(summary))}
     ${cvData.skills ? section('Keahlian', `<p class="cv-skill-line">${cvText_(cvData.skills)}</p>`) : ''}
     ${section('Pengalaman Kerja',work)}
     ${section('Pengalaman Magang',internship)}
@@ -477,6 +515,12 @@ function bindCvOnce_() {
       renderCvPreview_();
       toast('Foto dihapus.', 'info');
     }
+  });
+
+  $('cvAutoFormatToggle')?.addEventListener('change', (event) => {
+    cvData.autoFormat = event.target.checked;
+    cvSave_(true);
+    renderCvPreview_();
   });
 
   $('cvTemplateSelect')?.addEventListener('change', () => {
