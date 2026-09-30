@@ -750,6 +750,7 @@
 
       <section id="cvView" class="screen app-screen">
         <div class="cv-page-shell">
+
           <div class="cv-page-head">
             <div>
               <div class="eyebrow">PERSIAPAN KARIER · PRIVATE WORKSPACE</div>
@@ -759,6 +760,39 @@
             <div class="cv-expiry" id="cvExpiryBadge" aria-live="polite">24 jam</div>
           </div>
 
+          <div id="cvFeaturePicker" class="cv-feature-picker">
+            <div class="cv-feature-intro">
+              <div class="eyebrow">PILIH FITUR</div>
+              <h3>Mau mulai dari mana?</h3>
+              <p class="muted">Pilih alat yang ingin kamu gunakan. Draft CV tetap tersimpan sementara di perangkatmu.</p>
+            </div>
+
+            <div class="cv-feature-grid">
+              <button type="button" class="cv-feature-card cv-feature-card-primary" data-cv-feature="ats">
+                <span class="cv-feature-kicker">CV BUILDER</span>
+                <span class="cv-feature-title">Buat CV ATS</span>
+                <span class="cv-feature-description">Susun CV profesional dengan format yang rapi, ramah ATS, dan siap disimpan sebagai PDF.</span>
+                <span class="cv-feature-action">Buka Pembuat CV →</span>
+              </button>
+
+              <button type="button" class="cv-feature-card" data-cv-feature="job-match">
+                <span class="cv-feature-kicker">CAREER MATCH</span>
+                <span class="cv-feature-title">Job Matching</span>
+                <span class="cv-feature-description">Cocokkan CV dengan deskripsi lowongan dan lihat kata kunci serta kompetensi yang masih perlu diperkuat.</span>
+                <span class="cv-feature-action">Buka Job Matching →</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="cvAtsFeature" class="cv-feature-panel" hidden>
+            <div class="cv-feature-panel-head">
+              <div>
+                <div class="eyebrow">CV BUILDER</div>
+                <h3>Buat CV ATS</h3>
+                <p class="muted">Bangun CV dari data yang kamu isi di workspace ini.</p>
+              </div>
+              <button type="button" class="btn btn-secondary" data-cv-feature-back>← Pilih fitur lain</button>
+            </div>
           <div class="cv-toolbar">
             <div class="cv-template-group">
               <span class="cv-toolbar-label">Template</span>
@@ -889,9 +923,33 @@
               </div>
             </aside>
           </div>
+          </div>
+
+          <div id="cvJobMatchFeature" class="cv-feature-panel" hidden>
+            <div class="cv-feature-panel-head">
+              <div>
+                <div class="eyebrow">CAREER MATCH</div>
+                <h3>Job Matching</h3>
+                <p class="muted">Bandingkan CV dengan deskripsi lowongan tanpa perlu menyimpan data CV ke database.</p>
+              </div>
+              <button type="button" class="btn btn-secondary" data-cv-feature-back>← Pilih fitur lain</button>
+            </div>
+
+            <div class="cv-job-match-shell">
+              <div class="cv-job-match-card">
+                <span class="cv-feature-kicker">TAHAP V1</span>
+                <h4>Cocokkan CV dengan lowongan</h4>
+                <p>Masukkan deskripsi pekerjaan untuk mendapatkan analisis kata kunci, skill yang cocok, dan gap yang perlu diperbaiki.</p>
+                <div class="cv-job-match-note">
+                  <strong>Mode pengembangan</strong>
+                  <span>Mesin matching belum diaktifkan di branch ini. Halaman ini disiapkan sebagai tempat fitur Job Matching agar bisa dikembangkan terpisah dari CV Builder.</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-      <section id="skdView" class="screen app-screen">
+<section id="skdView" class="screen app-screen">
         <div class="section-head">
           <div>
             <div class="eyebrow">SELEKSI KOMPETENSI DASAR</div>
