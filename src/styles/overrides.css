@@ -3107,3 +3107,35 @@
     box-sizing: border-box !important;
   }
 }
+
+
+/* CV ongoing-status controls + full-date fields */
+.cv-ongoing-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  color: var(--text);
+  font-size: .66rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.cv-ongoing-toggle input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--blue);
+}
+
+.cv-repeat-field input[type="date"] {
+  min-height: 38px;
+  color-scheme: light;
+}
+
+.cv-repeat-field input[type="date"]:disabled {
+  background: var(--soft);
+  color: var(--soft-text);
+  cursor: not-allowed;
+  opacity: .75;
+}
