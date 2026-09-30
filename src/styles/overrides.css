@@ -2799,17 +2799,54 @@
 }
 
 .cv-rich-list {
-  margin: 4px 0 7px;
-  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+  margin: 5px 0 8px;
+  padding: 0;
   text-align: left;
-  overflow-wrap: anywhere;
-  word-break: break-word;
 }
 
-.cv-rich-list li {
-  margin: 2px 0;
-  padding-left: 2px;
+.cv-rich-list-item {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  column-gap: 3px;
+  align-items: start;
+  width: 100%;
+  margin: 0;
 }
+
+.cv-rich-marker {
+  width: 24px;
+  color: inherit;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.cv-rich-list-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.cv-rich-list-content::after {
+  content: '';
+}
+
+.cv-rich-unordered .cv-rich-list-item {
+  grid-template-columns: 14px minmax(0, 1fr);
+}
+
+.cv-rich-unordered .cv-rich-marker {
+  width: 14px;
+  text-align: left;
+}
+
+.cv-paper-section li {
+  text-align: left;
+}
+
 
 .cv-paper,
 .cv-paper * {
