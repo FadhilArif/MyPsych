@@ -2890,6 +2890,11 @@
 
 /* Final print override: cvView lives inside main > content, not directly under body. */
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
   html,
   body {
     width: 210mm !important;
@@ -2900,43 +2905,21 @@
     overflow: visible !important;
   }
 
-  body[data-view="cv"] > #landingView,
-  body[data-view="cv"] > .modal-backdrop,
-  body[data-view="cv"] > #toastRoot,
   body[data-view="cv"] .sidebar,
   body[data-view="cv"] .sidebar-overlay,
-  body[data-view="cv"] .topbar {
+  body[data-view="cv"] .topbar,
+  body[data-view="cv"] .cv-page-head,
+  body[data-view="cv"] .cv-toolbar,
+  body[data-view="cv"] .cv-editor,
+  body[data-view="cv"] .cv-preview-head,
+  body[data-view="cv"] .floating-widget,
+  body[data-view="cv"] .toast-root {
     display: none !important;
   }
 
   body[data-view="cv"] .main,
-  body[data-view="cv"] .content {
-    display: block !important;
-    width: 210mm !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    background: #fff !important;
-  }
-
-  body[data-view="cv"] .content > .screen:not(#cvView) {
-    display: none !important;
-  }
-
-  body[data-view="cv"] #cvView {
-    display: block !important;
-    position: static !important;
-    width: 210mm !important;
-    max-width: none !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    background: #fff !important;
-  }
-
+  body[data-view="cv"] .content,
+  body[data-view="cv"] #cvView,
   body[data-view="cv"] #cvView .cv-page-shell,
   body[data-view="cv"] #cvView .cv-workspace,
   body[data-view="cv"] #cvView .cv-preview-shell,
@@ -2947,6 +2930,7 @@
     max-width: none !important;
     min-width: 0 !important;
     min-height: 0 !important;
+    height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     overflow: visible !important;
@@ -2955,10 +2939,7 @@
     box-shadow: none !important;
   }
 
-  body[data-view="cv"] #cvView .cv-page-head,
-  body[data-view="cv"] #cvView .cv-toolbar,
-  body[data-view="cv"] #cvView .cv-editor,
-  body[data-view="cv"] #cvView .cv-preview-head {
+  body[data-view="cv"] .content > .screen:not(#cvView) {
     display: none !important;
   }
 
@@ -2966,27 +2947,27 @@
     display: block !important;
     position: static !important;
     width: 210mm !important;
-    min-height: 297mm !important;
     max-width: none !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
     margin: 0 !important;
-    padding: 16mm 15mm !important;
+    padding: 38px !important;
     box-sizing: border-box !important;
     overflow: visible !important;
     background: #fff !important;
-    color: #15233a !important;
     box-shadow: none !important;
   }
 
   body[data-view="cv"] #cvView .cv-paper-section,
   body[data-view="cv"] #cvView .cv-entry {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-
-  body[data-view="cv"] #cvView .cv-rich-paragraph,
-  body[data-view="cv"] #cvView .cv-rich-list {
     break-inside: auto;
     page-break-inside: auto;
+  }
+
+  body[data-view="cv"] #cvView .cv-rich-list-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 }
 
