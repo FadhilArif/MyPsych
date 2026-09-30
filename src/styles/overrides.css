@@ -2957,21 +2957,29 @@
 /* Screen preview: fit the A4 paper into the available preview pane.
    Print mode below restores the true 210mm A4 canvas. */
 @media screen {
+  .cv-preview-shell {
+    min-height: 0;
+  }
+
   .cv-preview-shell .cv-paper-wrap {
-    overflow: hidden;
+    height: min(78vh, 920px);
+    min-height: 420px;
+    overflow-y: auto;
+    overflow-x: hidden;
     align-items: flex-start;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
   }
 
   .cv-preview-shell .cv-paper {
     width: min(210mm, 100%);
     min-width: 0;
     max-width: 100%;
-    min-height: 0;
-    aspect-ratio: 210 / 297;
+    min-height: 297mm;
     height: auto;
     margin: 0 auto;
     padding: clamp(18px, 3vw, 38px);
-    overflow: hidden;
+    overflow: visible;
   }
 
   .cv-preview-shell .cv-paper-section,
@@ -2981,5 +2989,27 @@
 
   .cv-preview-shell .cv-paper-identity h1 {
     font-size: clamp(18px, 2vw, 22pt);
+  }
+}
+
+
+@media screen and (max-width: 1180px) {
+  .cv-preview-shell .cv-paper-wrap {
+    height: min(72vh, 760px);
+    min-height: 360px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .cv-preview-shell .cv-paper-wrap {
+    height: 68vh;
+    min-height: 320px;
+  }
+
+  .cv-preview-shell .cv-paper {
+    min-width: 210mm;
+    width: 210mm;
+    max-width: none;
+    min-height: 297mm;
   }
 }
