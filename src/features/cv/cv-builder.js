@@ -544,25 +544,126 @@ function cvHandleStructuredEnter_(event) {
   target.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
-function cvPreparePrint_() {
-  cvSyncSimpleFields_();
-  cvSave_(true);
-  renderCvPreview_();
+let cvPdfLibraryPromise_ = null;
 
-  const previousTitle = document.title;
-  const safeName = (cvData.fullName || 'MyPsych')
-    .replace(/[^a-z0-9]+/gi, '-')
-    .replace(/^-|-$/g, '');
+function loadCvPdfLibrary_() {
+  if (window.html2pdf) return Promise.resolve(window.html2pdf);
 
-  document.title = `CV-${safeName || 'MyPsych'}`;
+  if (cvPdfLibraryPromise_) return cvPdfLibraryPromise_;
 
-  const restoreTitle = () => {
-    document.title = previousTitle;
-    window.removeEventListener('afterprint', restoreTitle);
-  };
+  cvPdfLibraryPromise_ = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js';
+    script.async = true;
+    script.onload = () => {
+      if (window.html2pdf) {
+        resolve(window.html2pdf);
+      } else {
+        reject(new Error('PDF library loaded but is unavailable.'));
+      }
+    };
+    script.onerror = () => reject(new Error('PDF library could not be loaded.'));
+    document.head.appendChild(script);
+  });
 
-  window.addEventListener('afterprint', restoreTitle);
-  window.print();
+  return cvPdfLibraryPromise_;
+}
+
+async function cvDownloadPdf_() {
+  const button = $('cvPrintBtn');
+  const bottomButton = $('cvPrintBtnBottom');
+  const originalTop = button?.textContent;
+  const originalBottom = bottomButton?.textContent;
+
+  try {
+    cvSyncSimpleFields_();
+    cvSave_(true);
+    renderCvPreview_();
+
+    const html2pdf = await loadCvPdfLibrary_();
+    const source = $('cvPreview');
+    if (!source) throw new Error('CV preview tidak ditemukan.');
+
+    const clone = source.cloneNode(true);
+    clone.id = 'cvPdfCapture';
+    clone.className = source.className;
+
+    const wrapper = document.createElement('div');
+    wrapper.id = 'cvPdfCaptureWrapper';
+    wrapper.style.position = 'fixed';
+    wrapper.style.left = '-100000px';
+    wrapper.style.top = '0';
+    wrapper.style.width = '210mm';
+    wrapper.style.minHeight = '297mm';
+    wrapper.style.padding = '0';
+    wrapper.style.margin = '0';
+    wrapper.style.background = '#fff';
+    wrapper.style.zIndex = '-1';
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    clone.style.width = '210mm';
+    clone.style.maxWidth = 'none';
+    clone.style.minWidth = '0';
+    clone.style.minHeight = '0';
+    clone.style.height = 'auto';
+    clone.style.margin = '0';
+    clone.style.padding = '16mm 15mm';
+    clone.style.background = '#fff';
+    clone.style.boxShadow = 'none';
+    clone.style.overflow = 'visible';
+
+    if (button) button.textContent = 'Menyiapkan PDF...';
+    if (bottomButton) bottomButton.textContent = 'Menyiapkan PDF...';
+
+    const safeName = (cvData.fullName || 'MyPsych')
+      .replace(/[^a-z0-9]+/gi, '-')
+      .replace(/^-|-$/g, '');
+
+    await html2pdf()
+      .set({
+        margin: [18, 15, 16, 15],
+        filename: `CV-${safeName || 'MyPsych'}.pdf`,
+        image: {
+          type: 'jpeg',
+          quality: 0.98,
+        },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: clone.scrollWidth,
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait',
+          compress: true,
+        },
+        pagebreak: {
+          mode: ['css', 'legacy'],
+          avoid: [
+            '.cv-paper-section',
+            '.cv-entry',
+            '.cv-rich-list-item',
+          ],
+        },
+      })
+      .from(clone)
+      .save();
+
+    toast('CV berhasil diunduh sebagai PDF.', 'success', 4200);
+  } catch (error) {
+    console.error('[MyPsych CV] PDF export failed:', error);
+    toast('PDF gagal dibuat. Coba lagi setelah preview selesai dimuat.', 'warning', 5000);
+  } finally {
+    document.getElementById('cvPdfCaptureWrapper')?.remove();
+    if (button) button.textContent = originalTop || 'Unduh PDF';
+    if (bottomButton) bottomButton.textContent = originalBottom || 'Unduh PDF';
+  }
 }
 
 
@@ -631,7 +732,7 @@ function bindCvOnce_() {
 
     if (event.target.closest('#cvPrintBtn, #cvPrintBtnBottom')) {
       event.preventDefault();
-      cvPreparePrint_();
+      cvDownloadPdf_();
       return;
     }
 
