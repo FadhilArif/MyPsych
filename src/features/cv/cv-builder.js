@@ -372,7 +372,7 @@ function renderCvPreview_() {
       </div>
     </div>
     ${section('Profil', rich(summary))}
-    ${cvData.skills ? section('Keahlian', `<p class="cv-skill-line">${cvText_(cvData.skills)}</p>`) : ''}
+    ${cvData.skills ? section('Keahlian', rich(cvData.skills)) : ''}
     ${section('Pengalaman Kerja',work)}
     ${section('Pengalaman Magang',internship)}
     ${section('Organisasi',organization)}
@@ -458,31 +458,31 @@ function cvHandleStructuredEnter_(event) {
   const start = target.selectionStart;
   const lineStart = target.value.lastIndexOf('\n', start - 1) + 1;
   const currentLine = target.value.slice(lineStart, start);
-
   const numberMatch = currentLine.match(/^(\s*)(\d+)[.)]\s*(.*)$/);
   const bulletMatch = currentLine.match(/^(\s*)([-•*])\s*(.*)$/);
 
   if (numberMatch) {
     event.preventDefault();
-
-    if (!numberMatch[3].trim()) {
-      target.value = target.value.slice(0, lineStart) + target.value.slice(start);
-      target.selectionStart = target.selectionEnd = lineStart;
+    const indent = numberMatch[1];
+    const number = Number(numberMatch[2]);
+    const content = numberMatch[3].trim();
+    if (!content) {
+      if (number === 1) {
+        target.setRangeText('\n' + indent + '2. ', start, start, 'end');
+      } else {
+        target.setRangeText('\n', start, start, 'end');
+      }
     } else {
-      const nextNumber = Number(numberMatch[2]) + 1;
-      const prefix = `\n${numberMatch[1]}${nextNumber}. `;
-      target.setRangeText(prefix, start, start, 'end');
+      target.setRangeText('\n' + indent + String(number + 1) + '. ', start, start, 'end');
     }
   } else if (bulletMatch) {
     event.preventDefault();
-
-    if (!bulletMatch[3].trim()) {
-      target.value = target.value.slice(0, lineStart) + target.value.slice(start);
-      target.selectionStart = target.selectionEnd = lineStart;
-    } else {
-      const prefix = `\n${bulletMatch[1]}${bulletMatch[2]} `;
-      target.setRangeText(prefix, start, start, 'end');
-    }
+    const indent = bulletMatch[1];
+    const marker = bulletMatch[2];
+    const content = bulletMatch[3].trim();
+    target.setRangeText('\n' + indent + marker + (content ? ' ' : ' '), start, start, 'end');
+  } else {
+    return;
   }
 
   target.dispatchEvent(new Event('input', { bubbles: true }));
