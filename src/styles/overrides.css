@@ -3031,3 +3031,39 @@
     min-height: 297mm;
   }
 }
+
+
+/* ============================================================
+   CV PRINT — FINAL VISIBILITY OVERRIDE
+   Must override the legacy result-print fallback in base.css.
+   ============================================================ */
+@media print {
+  body[data-view="cv"],
+  body[data-view="cv"] #cvView,
+  body[data-view="cv"] #cvView * {
+    visibility: visible !important;
+  }
+
+  body[data-view="cv"] .app-layout {
+    display: grid !important;
+    visibility: visible !important;
+  }
+
+  body[data-view="cv"] .main,
+  body[data-view="cv"] .content,
+  body[data-view="cv"] #cvView,
+  body[data-view="cv"] #cvPreview {
+    visibility: visible !important;
+  }
+
+  /* Everything outside the CV remains removed from print layout. */
+  body[data-view="cv"] .sidebar,
+  body[data-view="cv"] .sidebar-overlay,
+  body[data-view="cv"] .topbar,
+  body[data-view="cv"] .cv-page-head,
+  body[data-view="cv"] .cv-toolbar,
+  body[data-view="cv"] .cv-editor,
+  body[data-view="cv"] .cv-preview-head {
+    display: none !important;
+  }
+}
