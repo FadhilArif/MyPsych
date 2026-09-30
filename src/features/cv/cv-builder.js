@@ -309,13 +309,13 @@ function renderCvPreview_() {
     `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.position)}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.company)}${x.location ? ' · '+cvText_(x.location):''}</div>${rich(x.description)}</div>`).join('');
 
   const internship = cvData.internship.filter(x=>Object.values(x).some(Boolean)).map(x =>
-    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.position)}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.company)}${x.location ? ' · '+cvText_(x.location):''}</div>${bullets(cvLines_(x.description))}</div>`).join('');
+    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.position)}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.company)}${x.location ? ' · '+cvText_(x.location):''}</div>${rich(x.description)}</div>`).join('');
 
   const organization = cvData.organization.filter(x=>Object.values(x).some(Boolean)).map(x =>
-    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.role)}</strong><span>${cvText_(x.period)}</span></div><div class="cv-entry-sub">${cvText_(x.name)}</div>${bullets(cvLines_(x.description))}</div>`).join('');
+    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.role)}</strong><span>${cvText_(x.period)}</span></div><div class="cv-entry-sub">${cvText_(x.name)}</div>${rich(x.description)}</div>`).join('');
 
   const projects = cvData.project.filter(x=>Object.values(x).some(Boolean)).map(x =>
-    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.name)}</strong><span>${cvText_(x.period)}</span></div><div class="cv-entry-sub">${cvText_(x.role)}${x.link ? ' · '+cvText_(x.link):''}</div>${bullets(cvLines_(x.description))}</div>`).join('');
+    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.name)}</strong><span>${cvText_(x.period)}</span></div><div class="cv-entry-sub">${cvText_(x.role)}${x.link ? ' · '+cvText_(x.link):''}</div>${rich(x.description)}</div>`).join('');
 
   const publications = cvData.publication.filter(x=>Object.values(x).some(Boolean)).map(x =>
     `<div class="cv-entry"><strong>${cvText_(x.title)}</strong><div class="cv-entry-sub">${cvText_([x.publisher,x.year].filter(Boolean).join(' · '))}</div>${x.link ? `<div class="cv-entry-link">${cvText_(x.link)}</div>` : ''}</div>`).join('');
