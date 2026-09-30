@@ -279,47 +279,101 @@ function cvAutoFormatEnabled_() {
   return cvData.autoFormat !== false;
 }
 
-function cvRichHtml_(value = '') {
+function cvParseStructuredText_(value = '') {
   const raw = String(value || '').trim();
-  if (!raw) return '';
+  if (!raw) return { type: 'empty', items: [] };
 
-  const rawLines = raw.split(/\r?\n/);
-  const nonEmptyRawLines = rawLines.map(line => line.trim()).filter(Boolean);
+  const lines = raw.split(/\r?\n/);
+  const nonEmpty = lines.map(line => line.trim()).filter(Boolean);
 
-  if (!cvAutoFormatEnabled_()) {
-    return `<p class="cv-rich-paragraph">${cvText_(raw).replace(/\r?\n/g, '<br>')}</p>`;
+  const orderedMarker = /^\s*(\d+)[.)](?:\s+(.*))?$/;
+  const bulletMarker = /^\s*[-•*](?:\s+(.*))?$/;
+
+  const hasOrdered = nonEmpty.some(line => orderedMarker.test(line));
+  const hasBullet = nonEmpty.some(line => bulletMarker.test(line));
+
+  if (cvAutoFormatEnabled_() && hasOrdered && !hasBullet) {
+    const items = [];
+    let current = null;
+
+    lines.forEach((line) => {
+      const trimmed = line.trim();
+      const match = trimmed.match(orderedMarker);
+
+      if (match) {
+        current = {
+          marker: `${match[1]}.`,
+          lines: [],
+        };
+        if (match[2]) current.lines.push(match[2].trim());
+        items.push(current);
+        return;
+      }
+
+      if (trimmed && current) {
+        current.lines.push(trimmed);
+      }
+    });
+
+    if (items.length) {
+      return {
+        type: 'ordered',
+        items: items.map(item => ({
+          marker: item.marker,
+          text: item.lines.join(' '),
+        })),
+      };
+    }
   }
 
-  const numbered = nonEmptyRawLines.length > 1 &&
-    nonEmptyRawLines.every(line => /^\d+[.)]\s+/.test(line));
+  if (cvAutoFormatEnabled_() && hasBullet && !hasOrdered) {
+    const items = [];
+    let current = null;
 
-  if (numbered) {
-    return `<div class="cv-rich-list cv-rich-ordered">${nonEmptyRawLines.map(line => {
-      const match = line.match(/^(\d+)[.)]\s+(.*)$/);
-      const marker = match ? `${match[1]}.` : '';
-      const content = match ? match[2] : line;
-      return `<div class="cv-rich-list-item"><span class="cv-rich-marker">${cvText_(marker)}</span><div class="cv-rich-list-content">${cvText_(content)}</div></div>`;
-    }).join('')}</div>`;
+    lines.forEach((line) => {
+      const trimmed = line.trim();
+      const match = trimmed.match(bulletMarker);
+
+      if (match) {
+        current = { marker: '•', lines: [] };
+        if (match[1]) current.lines.push(match[1].trim());
+        items.push(current);
+        return;
+      }
+
+      if (trimmed && current) {
+        current.lines.push(trimmed);
+      }
+    });
+
+    if (items.length) {
+      return {
+        type: 'unordered',
+        items: items.map(item => ({
+          marker: item.marker,
+          text: item.lines.join(' '),
+        })),
+      };
+    }
   }
 
-  const bulleted = nonEmptyRawLines.length > 1 &&
-    nonEmptyRawLines.every(line => /^[-•*]\s+/.test(line));
+  return {
+    type: 'paragraph',
+    text: raw,
+  };
+}
 
-  if (bulleted) {
-    return `<div class="cv-rich-list cv-rich-unordered">${nonEmptyRawLines.map(line => {
-      const content = line.replace(/^[-•*]\s+/, '');
-      return `<div class="cv-rich-list-item"><span class="cv-rich-marker">•</span><div class="cv-rich-list-content">${cvText_(content)}</div></div>`;
-    }).join('')}</div>`;
+function cvRichHtml_(value = '') {
+  const parsed = cvParseStructuredText_(value);
+  if (parsed.type === 'empty') return '';
+
+  if (parsed.type === 'ordered' || parsed.type === 'unordered') {
+    return `<div class="cv-rich-list cv-rich-${parsed.type}">${parsed.items.map(item =>
+      `<div class="cv-rich-list-item"><span class="cv-rich-marker">${cvText_(item.marker)}</span><div class="cv-rich-list-content">${cvText_(item.text)}</div></div>`
+    ).join('')}</div>`;
   }
 
-  if (/\r?\n\s*\r?\n/.test(raw)) {
-    return raw.split(/\r?\n\s*\r?\n/).map(part => {
-      const content = part.split(/\r?\n/).map(line => line.trim()).filter(Boolean).join(' ');
-      return content ? `<p class="cv-rich-paragraph">${cvText_(content)}</p>` : '';
-    }).join('');
-  }
-
-  return `<p class="cv-rich-paragraph">${nonEmptyRawLines.map(line => cvText_(line)).join('<br>')}</p>`;
+  return `<p class="cv-rich-paragraph">${cvText_(parsed.text).replace(/\r?\n/g, '<br>')}</p>`;
 }
 
 function renderCvPreview_() {
@@ -635,32 +689,41 @@ function cvBuildPdfPages_() {
   };
 
   const pushRich = (text) => {
-    const raw = String(text || '').trim();
-    raw.split(/\r?\n/).forEach((line) => {
+    const parsed = cvParseStructuredText_(text);
+
+    if (parsed.type === 'ordered' || parsed.type === 'unordered') {
+      parsed.items.forEach((item) => {
+        const marker = item.marker;
+        const content = item.text;
+        ensure(12);
+        commands.push(cvPdfTextCommand_(marker, left, y, 9));
+        const contentLeft = left + 20;
+        const wrapped = cvPdfWrap_(content, 82);
+
+        if (!wrapped.length) {
+          y -= 12;
+          return;
+        }
+
+        wrapped.forEach((wrappedLine) => {
+          ensure(12);
+          commands.push(cvPdfTextCommand_(wrappedLine, contentLeft, y, 9));
+          y -= 12;
+        });
+
+        y -= 2;
+      });
+      return;
+    }
+
+    const lines = String(parsed.text || '').split(/\r?\n/);
+    lines.forEach((line) => {
       const clean = line.trim();
       if (!clean) {
         y -= 5;
         return;
       }
-
-      const numbered = cvAutoFormatEnabled_() && clean.match(/^(\d+)[.)]\s+(.*)$/);
-      const bulleted = cvAutoFormatEnabled_() && clean.match(/^[-•*]\s+(.*)$/);
-
-      if (numbered || bulleted) {
-        const marker = numbered ? numbered[1] + '.' : '-';
-        const content = numbered ? numbered[2] : bulleted[1];
-        ensure(12);
-        commands.push(cvPdfTextCommand_(marker, left, y, 9));
-        const contentLeft = left + 20;
-        const wrapped = cvPdfWrap_(content, 82);
-        wrapped.forEach((wrappedLine, index) => {
-          ensure(12);
-          commands.push(cvPdfTextCommand_(wrappedLine, contentLeft, y, 9));
-          y -= 12;
-        });
-      } else {
-        pushWrapped(clean, 9, 12);
-      }
+      pushWrapped(clean, 9, 12);
     });
   };
 
