@@ -638,16 +638,32 @@ function cvBuildPdfPages_() {
     const raw = String(text || '').trim();
     raw.split(/\r?\n/).forEach((line) => {
       const clean = line.trim();
-      if (!clean) { y -= 5; return; }
-      if (cvAutoFormatEnabled_() && /^\d+[.)]\s+/.test(clean)) {
-        pushWrapped('- ' + clean.replace(/^\d+[.)]\s+/, ''), 9, 12);
-      } else if (cvAutoFormatEnabled_() && /^[-•*]\s+/.test(clean)) {
-        pushWrapped('- ' + clean.replace(/^[-•*]\s+/, ''), 9, 12);
+      if (!clean) {
+        y -= 5;
+        return;
+      }
+
+      const numbered = cvAutoFormatEnabled_() && clean.match(/^(\d+)[.)]\s+(.*)$/);
+      const bulleted = cvAutoFormatEnabled_() && clean.match(/^[-•*]\s+(.*)$/);
+
+      if (numbered || bulleted) {
+        const marker = numbered ? numbered[1] + '.' : '-';
+        const content = numbered ? numbered[2] : bulleted[1];
+        ensure(12);
+        commands.push(cvPdfTextCommand_(marker, left, y, 9));
+        const contentLeft = left + 20;
+        const wrapped = cvPdfWrap_(content, 82);
+        wrapped.forEach((wrappedLine, index) => {
+          ensure(12);
+          commands.push(cvPdfTextCommand_(wrappedLine, contentLeft, y, 9));
+          y -= 12;
+        });
       } else {
         pushWrapped(clean, 9, 12);
       }
     });
   };
+
 
   pushText(cvData.fullName || 'Nama Lengkap', 20, 24, '0.08 0.35 0.60 rg');
   if (cvData.targetRole) pushText(cvData.targetRole, 11, 16);
