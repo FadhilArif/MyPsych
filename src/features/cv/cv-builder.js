@@ -808,6 +808,123 @@ function cvShowFeature_(mode = 'picker') {
   }
 }
 
+function cvJobGetLocation_() {
+  const address = String(cvData.address || '').trim();
+  if (!address) return '';
+  return address.split(',')[0].trim();
+}
+
+function cvJobGetSkills_() {
+  return String(cvData.skills || '')
+    .split(/[;,\\n]+/)
+    .map(item => item.replace(/^[•*\\-]+\\s*/, '').trim())
+    .filter(Boolean)
+    .slice(0, 5);
+}
+
+function cvJobBuildQuery_({ source = '', role = '', location = '', extra = '' } = {}) {
+  const parts = [];
+  const cleanRole = role.trim();
+  const cleanLocation = location.trim();
+  const cleanExtra = extra.trim();
+  if (cleanRole) parts.push(cleanRole);
+  if (cleanLocation) parts.push(cleanLocation);
+  const skills = cvJobGetSkills_();
+  if (skills.length) parts.push(skills.slice(0, 3).join(' '));
+  if (cleanExtra) parts.push(cleanExtra);
+  parts.push('lowongan');
+  if (source) parts.push(`site:${source}`);
+  return parts.join(' ').replace(/\\s+/g, ' ').trim();
+}
+
+function cvJobOpenSearch_(query) {
+  if (!query) return;
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+function cvJobUseCv_() {
+  const role = $('cvJobRole');
+  const location = $('cvJobLocation');
+  if (role) role.value = cvData.targetRole || '';
+  if (location) location.value = cvJobGetLocation_();
+  const extra = $('cvJobExtra');
+  if (extra && !extra.value) {
+    const education = cvData.education?.find(item => item.degree || item.field)?.degree || '';
+    extra.value = [education, cvJobGetSkills_().slice(0, 2).join(' ')].filter(Boolean).join(' ');
+  }
+}
+
+function cvJobRenderSearch_() {
+  const role = String($('cvJobRole')?.value || '').trim();
+  const location = String($('cvJobLocation')?.value || '').trim();
+  const extra = String($('cvJobExtra')?.value || '').trim();
+
+  if (!role && !location) {
+    toast('Isi posisi atau lokasi yang ingin dicari dulu.', 'warning');
+    return;
+  }
+
+  const query = cvJobBuildQuery_({ role, location, extra });
+  const sources = {
+    google: query,
+    jobstreet: cvJobBuildQuery_({ role, location, extra, source: 'jobstreet.com' }),
+    glints: cvJobBuildQuery_({ role, location, extra, source: 'glints.com' }),
+    linkedin: cvJobBuildQuery_({ role, location, extra, source: 'linkedin.com/jobs' })
+  };
+
+  const result = $('cvJobSearchResult');
+  const label = $('cvJobQueryLabel');
+  if (label) label.textContent = query;
+  if (result) result.hidden = false;
+
+  [['cvJobGoogleLink', sources.google], ['cvJobJobstreetLink', sources.jobstreet], ['cvJobGlintsLink', sources.glints], ['cvJobLinkedinLink', sources.linkedin]]
+    .forEach(([id, value]) => {
+      const link = $(id);
+      if (link) link.href = `https://www.google.com/search?q=${encodeURIComponent(value)}`;
+    });
+
+  try {
+    localStorage.setItem('mypsych_job_search_v1', JSON.stringify({ role, location, extra, query, savedAt: Date.now() }));
+  } catch {}
+
+  cvJobOpenSearch_(sources.google);
+}
+
+function cvJobInit_() {
+  const role = $('cvJobRole');
+  const location = $('cvJobLocation');
+  const extra = $('cvJobExtra');
+  if (!role || !location || !extra) return;
+
+  const stored = (() => {
+    try { return JSON.parse(localStorage.getItem('mypsych_job_search_v1') || 'null'); } catch { return null; }
+  })();
+
+  role.value = stored?.role || cvData.targetRole || '';
+  location.value = stored?.location || cvJobGetLocation_();
+  extra.value = stored?.extra || '';
+
+  $('cvJobUseCvBtn')?.addEventListener('click', () => {
+    cvJobUseCv_();
+  });
+
+  $('cvJobSearchBtn')?.addEventListener('click', () => {
+    cvJobRenderSearch_();
+  });
+
+  $('cvJobCopyQueryBtn')?.addEventListener('click', async () => {
+    const query = $('cvJobQueryLabel')?.textContent || '';
+    if (!query || query === '—') return;
+    try {
+      await navigator.clipboard.writeText(query);
+      toast('Query pencarian disalin.', 'success');
+    } catch {
+      toast('Query tidak bisa disalin otomatis.', 'warning');
+    }
+  });
+}
+
 function initCvBuilder() {
   if (!state.session) return;
   bindCvOnce_();
@@ -816,6 +933,7 @@ function initCvBuilder() {
   renderCvPreview_();
   updateCvExpiry_();
   cvShowFeature_('picker');
+  cvJobInit_();
 }
 
 
