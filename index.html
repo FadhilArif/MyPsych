@@ -10,8 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/landing.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/overrides.css">
+  <link rel="stylesheet" href="/src/styles/landing.css">
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
@@ -184,7 +185,7 @@
 <span class="lp-category-count">1 tes</span>
 <span>13 menit</span>
 </div>
-<span class="lp-category-link">Jelajahi →</span>
+<button class="lp-category-link" type="button" data-landing-route="kraepelin">Jelajahi →</button>
 </article>
 <article class="lp-category-card lp-category-active">
 
@@ -194,7 +195,7 @@
 <span class="lp-category-count">6 tes</span>
 <span>10–15 menit</span>
 </div>
-<span class="lp-category-link">Jelajahi →</span>
+<button class="lp-category-link" type="button" data-landing-route="psikotes">Jelajahi →</button>
 </article>
 <article class="lp-category-card lp-category-coming">
 <span class="lp-badge-coming">SEGERA</span>
@@ -207,16 +208,14 @@
 </div>
 <button class="lp-category-link" data-interest="kepribadian" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;" type="button">Beri tahu saya →</button>
 </article>
-<article class="lp-category-card lp-category-coming">
-<span class="lp-badge-coming">SEGERA</span>
-<div class="lp-category-icon">️</div>
-<h3>Tes Situasional</h3>
-<p>Situational Judgement dan Etika Kerja untuk posisi manajerial.</p>
+<article class="lp-category-card lp-category-active">
+<h3>Tes SKD</h3>
+<p>Latihan TWK, TIU, dan TKP untuk persiapan SKD, termasuk simulasi Paket Lengkap.</p>
 <div class="lp-category-meta">
-<span class="lp-category-count">—</span>
-<span>Coming Soon</span>
+<span class="lp-category-count">3 tes</span>
+<span>20 menit/bagian</span>
 </div>
-<button class="lp-category-link" data-interest="situasional" style="background:none;border:0;padding:0;cursor:pointer;text-align:left;" type="button">Beri tahu saya →</button>
+<button class="lp-category-link" type="button" data-account-gate="skd">Masuk untuk akses →</button>
 </article>
 </div>
 </div>
@@ -750,22 +749,148 @@
       </section>
 
       <section id="cvView" class="screen app-screen">
-        <div class="cv-placeholder-shell">
-          <div class="eyebrow">PERSIAPAN KARIER</div>
-          <h2>Buat CV</h2>
-          <p class="muted cv-placeholder-lead">Fitur ini sedang dipersiapkan untuk membantu kamu membuat CV yang rapi dan siap digunakan untuk melamar kerja.</p>
-          <div class="cv-placeholder-card">
-            <div class="cv-placeholder-icon">CV</div>
+        <div class="cv-page-shell">
+          <div class="cv-page-head">
             <div>
-              <span class="dashboard-kicker">COMING SOON</span>
-              <h3>CV Builder MyPsych</h3>
-              <p>Untuk sementara halaman ini adalah placeholder. Struktur fitur, form data, template, dan ekspor PDF akan kita bangun bertahap setelah konsepnya siap.</p>
+              <div class="eyebrow">PERSIAPAN KARIER · PRIVATE WORKSPACE</div>
+              <h2>Buat CV</h2>
+              <p class="muted">Isi CV langsung di browser. Draft tidak dikirim ke database MyPsych dan akan otomatis hangus 24 jam setelah aktivitas terakhir.</p>
+            </div>
+            <div class="cv-expiry" id="cvExpiryBadge" aria-live="polite">24 jam</div>
+          </div>
+
+          <div class="cv-toolbar">
+            <div class="cv-template-group">
+              <span class="cv-toolbar-label">Template</span>
+              <select id="cvTemplateSelect" aria-label="Pilih template CV">
+                <option value="ats">ATS Clean</option>
+                <option value="academic">Classic Academic · Harvard-inspired</option>
+                <option value="formal-photo">Formal · dengan foto</option>
+              </select>
+            </div>
+            <div class="cv-toolbar-actions">
+              <label class="cv-auto-format-toggle">
+                <input id="cvAutoFormatToggle" type="checkbox" checked>
+                <span>Format otomatis</span>
+              </label>
+              <button class="btn btn-secondary" id="cvImportBtn" type="button">Import JSON</button>
+              <button class="btn btn-secondary" id="cvExportBtn" type="button">Export JSON</button>
+              <button class="btn btn-secondary" id="cvPrintBtn" type="button">Simpan PDF</button>
+              <button class="btn btn-primary" id="cvBuildBtn" type="button">Buat CV →</button>
+              <input id="cvImportInput" type="file" accept="application/json,.json" hidden>
             </div>
           </div>
-          <button class="btn btn-secondary" type="button" data-app-nav="dashboard">← Kembali ke Dashboard</button>
+
+          <div class="cv-workspace">
+            <form class="cv-editor" id="cvForm" autocomplete="off">
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>01</span><div><h3>Identitas</h3><p>Informasi dasar yang tampil di bagian paling atas CV.</p></div></div>
+                <div class="cv-form-grid">
+                  <label>Nama lengkap <input name="fullName" required placeholder="Nama lengkap"></label>
+                  <label>Bidang pekerjaan yang dituju <input name="targetRole" placeholder="Contoh: Perekam Medis"></label>
+                  <label>Alamat <span class="field-help-inline">Kabupaten/Kota + Provinsi</span><input name="address" placeholder="Kabupaten/Kota, Provinsi"></label>
+                  <label>Nomor WhatsApp <input name="phone" inputmode="tel" placeholder="08xxxxxxxxxx"></label>
+                  <label>Email <input name="email" type="email" placeholder="nama@email.com"></label>
+                  <label>LinkedIn <span class="field-help-inline">opsional</span><input name="linkedin" placeholder="linkedin.com/in/username"></label>
+                </div>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>02</span><div><h3>Ringkasan Personal</h3><p>Singkat, faktual, dan diarahkan ke posisi yang dituju.</p></div></div>
+                <div class="cv-guidance">Ringkasan sebaiknya memuat latar pendidikan, pengalaman atau kegiatan yang relevan, keahlian utama, dan arah pekerjaan yang dituju.</div>
+                <textarea id="cvSummary" name="summary" rows="6" placeholder="Contoh: Lulusan D3 ... dengan pengalaman ... memiliki keahlian ... dan tertarik berkembang di bidang ..."></textarea>
+                <button type="button" class="cv-inline-btn" id="cvSummaryOutlineBtn">Buat kerangka ringkasan</button>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>03</span><div><h3>Keahlian</h3><p>Pisahkan dengan koma. Gunakan nama skill yang umum dipakai di lowongan kerja.</p></div></div>
+                <textarea name="skills" rows="3" placeholder="Microsoft Excel, Administrasi, Rekam Medis, Data Entry, Komunikasi"></textarea>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>04</span><div><h3>Pengalaman Kerja</h3><p>Tambahkan hanya jika ada.</p></div></div>
+                <div id="cvWorkList" class="cv-repeat-list"></div>
+                <button type="button" class="cv-add-btn" data-cv-add="work">+ Tambah pengalaman kerja</button>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>05</span><div><h3>Pengalaman Magang</h3><p>Tambahkan pengalaman magang yang relevan.</p></div></div>
+                <div id="cvInternshipList" class="cv-repeat-list"></div>
+                <button type="button" class="cv-add-btn" data-cv-add="internship">+ Tambah pengalaman magang</button>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>06</span><div><h3>Pengalaman Organisasi</h3><p>Organisasi, kepanitiaan, komunitas, atau kegiatan kampus.</p></div></div>
+                <div id="cvOrganizationList" class="cv-repeat-list"></div>
+                <button type="button" class="cv-add-btn" data-cv-add="organization">+ Tambah organisasi</button>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>07</span><div><h3>Project / Portofolio</h3><p>Bagus untuk fresh graduate atau pencari kerja tanpa banyak pengalaman.</p></div></div>
+                <div id="cvProjectList" class="cv-repeat-list"></div>
+                <button type="button" class="cv-add-btn" data-cv-add="project">+ Tambah project</button>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>08</span><div><h3>Publikasi</h3><p>Opsional: artikel, jurnal, prosiding, atau karya yang pernah diterbitkan.</p></div></div>
+                <div id="cvPublicationList" class="cv-repeat-list"></div>
+                <button type="button" class="cv-add-btn" data-cv-add="publication">+ Tambah publikasi</button>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>09</span><div><h3>Prestasi</h3><p>Gunakan hasil yang bisa dibuktikan bila memungkinkan.</p></div></div>
+                <div id="cvAchievementList" class="cv-repeat-list"></div>
+                <button type="button" class="cv-add-btn" data-cv-add="achievement">+ Tambah prestasi</button>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>10</span><div><h3>Pendidikan Terakhir</h3><p>Urutkan dari pendidikan terbaru.</p></div></div>
+                <div id="cvEducationList" class="cv-repeat-list"></div>
+                <button type="button" class="cv-add-btn" data-cv-add="education">+ Tambah pendidikan</button>
+              </section>
+
+              <section class="cv-form-section">
+                <div class="cv-section-title"><span>11</span><div><h3>Pelatihan &amp; Sertifikasi</h3><p>Sertifikat, pelatihan kerja, kursus, dan credential relevan.</p></div></div>
+                <div id="cvTrainingList" class="cv-repeat-list"></div>
+                <button type="button" class="cv-add-btn" data-cv-add="training">+ Tambah pelatihan / sertifikasi</button>
+              </section>
+
+              <section class="cv-form-section cv-photo-section">
+                <div class="cv-section-title"><span>12</span><div><h3>Foto</h3><p>Hanya digunakan pada template Formal · dengan foto.</p></div></div>
+                <div class="cv-photo-row">
+                  <div class="cv-photo-preview" id="cvPhotoPreview">FOTO</div>
+                  <div class="cv-photo-copy">
+                    <input id="cvPhotoInput" type="file" accept="image/jpeg,image/png,image/webp">
+                    <p class="field-help">Maks. 2 MB. MyPsych mengecilkan foto di browser menjadi crop 3:4, maksimal 800×1067 px. Foto tidak dikirim ke database.</p>
+                    <button type="button" class="cv-inline-btn" id="cvPhotoRemoveBtn">Hapus foto</button>
+                  </div>
+                </div>
+              </section>
+
+              <div class="cv-editor-footer">
+                <div>
+                  <strong class="cv-final-label">Sudah selesai mengisi?</strong>
+                  <span id="cvSaveStatus">Draft belum disimpan.</span>
+                </div>
+                <div class="cv-final-actions">
+                  <button class="btn btn-primary cv-build-btn" type="button" id="cvBuildBtnBottom">Buat CV →</button>
+                  <button class="btn btn-secondary" type="button" id="cvPrintBtnBottom">Simpan PDF</button>
+                </div>
+              </div>
+            </form>
+
+            <aside class="cv-preview-shell">
+              <div class="cv-preview-head">
+                <span>LIVE PREVIEW</span>
+                <span id="cvPreviewTemplateLabel">ATS Clean</span>
+              </div>
+              <div class="cv-paper-wrap">
+                <article id="cvPreview" class="cv-paper cv-template-ats" aria-label="Preview CV"></article>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
-
       <section id="skdView" class="screen app-screen">
         <div class="section-head">
           <div>
@@ -1004,6 +1129,24 @@
 </section>
 
 <div class="modal-backdrop" hidden="" id="guestModal"><div class="modal-card card"><div class="modal-icon">i</div><h3>Lanjut sebagai Tamu?</h3><p>Kamu tetap bisa mengerjakan semua latihan dan <strong>mengunduh hasil PDF</strong>. Namun hasil tidak disimpan ke akun atau histori.</p><div class="guest-note">✓ <span><b>Tes tetap berjalan normal</b><small>Semua fitur latihan dan hasil tetap tersedia.</small></span></div><div class="guest-note">↓ <span><b>PDF tetap bisa diunduh</b><small>Simpan PDF setelah selesai jika ingin menyimpan hasil.</small></span></div><div class="modal-actions"><button class="secondary-btn" id="cancelGuestBtn">Batal</button><button class="primary-btn" id="confirmGuestBtn">Ya, lanjut sebagai tamu</button></div></div></div>
+<div class="modal-backdrop" hidden id="accountGateModal">
+  <div class="modal-card card account-gate-modal">
+    <div class="modal-icon">!</div>
+    <span class="dashboard-kicker">AKSES AKUN</span>
+    <h3 id="accountGateTitle">Fitur ini memerlukan akun</h3>
+    <p id="accountGateMessage">Daftar atau masuk untuk mengakses fitur ini.</p>
+    <div class="account-gate-benefits">
+      <div><strong>✓</strong><span>Simpan progres dan histori latihan</span></div>
+      <div><strong>✓</strong><span>Akses fitur akun seperti SKD dan CV</span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="secondary-btn" id="accountGateCancelBtn" type="button">Nanti</button>
+      <button class="secondary-btn" id="accountGateLoginBtn" type="button">Masuk</button>
+      <button class="primary-btn" id="accountGateRegisterBtn" type="button">Daftar Gratis</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" hidden="" id="confirmModal"><div class="modal-card card"><div class="modal-icon">!</div><h3>Akhiri tes?</h3><p>Progress tes yang sedang berjalan akan dihapus. Hasil tidak akan dibuat.</p><div class="modal-actions"><button class="secondary-btn" id="cancelEndTestBtn">Batal</button><button class="danger-btn" id="confirmEndTestBtn">Ya, akhiri</button></div></div></div>
 <div class="modal-backdrop" hidden="" id="interestModal">
 <div class="modal-card card">
@@ -1048,6 +1191,7 @@
 </div>
 
 <div id="toastRoot" aria-live="polite" aria-atomic="true"></div>
-<script defer src="/app.js"></script>
+<script defer src="/src/core/config.js"></script>
+<script defer src="/src/bootstrap/app.js"></script>
 </body>
 </html>
