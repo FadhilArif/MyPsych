@@ -3316,3 +3316,161 @@
     width: 100%;
   }
 }
+
+/* ============================================================
+   CV JOB MATCH — SMART JOB SEARCH V1
+   ============================================================ */
+.cv-job-match-intro {
+  margin-bottom: 18px;
+}
+
+.cv-job-match-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.cv-job-match-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--text);
+  font-size: .68rem;
+  font-weight: 800;
+}
+
+.cv-job-match-form input {
+  width: 100%;
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 9px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: .72rem;
+  outline: none;
+}
+
+.cv-job-match-form input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(47,125,242,.10);
+}
+
+.cv-job-match-full {
+  grid-column: 1 / -1;
+}
+
+.cv-field-optional {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.cv-job-match-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.cv-job-search-result {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.cv-job-query-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cv-job-query-head > div {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.cv-job-query-head strong {
+  overflow-wrap: anywhere;
+  font-size: .74rem;
+}
+
+.cv-job-source-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cv-job-source-card {
+  display: grid;
+  gap: 6px;
+  min-height: 120px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--soft);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease;
+}
+
+.cv-job-source-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.cv-job-source-card strong {
+  font-size: .76rem;
+}
+
+.cv-job-source-card span {
+  color: var(--muted);
+  font-size: .64rem;
+  line-height: 1.5;
+}
+
+.cv-job-source-card em {
+  margin-top: auto;
+  color: var(--blue-dark);
+  font-size: .64rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.cv-job-source-primary {
+  border-color: var(--blue-border, #d6e5fb);
+  background: var(--blue-subtle, #f4f8ff);
+}
+
+.btn-small {
+  min-height: 32px;
+  padding: 6px 10px;
+  font-size: .62rem;
+}
+
+@media (max-width: 700px) {
+  .cv-job-match-form,
+  .cv-job-source-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cv-job-match-full {
+    grid-column: auto;
+  }
+
+  .cv-job-match-actions,
+  .cv-job-query-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .cv-job-match-actions .btn,
+  .cv-job-query-head .btn {
+    width: 100%;
+  }
+}
