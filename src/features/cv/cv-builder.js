@@ -12,11 +12,11 @@ let cvSaveTimer = null;
 let cvExpiryTimer = null;
 
 const CV_REPEATERS = {
-  work: { container: 'cvWorkList', key: 'work', addLabel: 'pengalaman kerja', fields: [
-    ['company','Perusahaan','Contoh: RS / PT / Klinik'], ['position','Posisi','Contoh: Staff Administrasi'], ['location','Lokasi','Kabupaten/Kota'], ['start','Mulai','YYYY-MM'], ['end','Selesai','YYYY-MM atau Sekarang'], ['description','Pencapaian / tanggung jawab','Satu poin per baris']
+  work: { container: 'cvWorkList', key: 'work', addLabel: 'pengalaman kerja', ongoingKey: 'ongoing', ongoingLabel: 'Saya masih disini', fields: [
+    ['company','Perusahaan','Contoh: RS / PT / Klinik'], ['position','Posisi','Contoh: Staff Administrasi'], ['location','Lokasi','Kabupaten/Kota'], ['start','Mulai','DD-MM-YYYY'], ['end','Selesai','DD-MM-YYYY'], ['description','Pencapaian / tanggung jawab','Satu poin per baris']
   ]},
-  internship: { container: 'cvInternshipList', key: 'internship', addLabel: 'pengalaman magang', fields: [
-    ['company','Institusi / tempat magang','Nama instansi'], ['position','Posisi / unit','Contoh: Rekam Medis'], ['location','Lokasi','Kabupaten/Kota'], ['start','Mulai','YYYY-MM'], ['end','Selesai','YYYY-MM'], ['description','Tugas / hasil','Satu poin per baris']
+  internship: { container: 'cvInternshipList', key: 'internship', addLabel: 'pengalaman magang', ongoingKey: 'ongoing', ongoingLabel: 'Saya masih disini', fields: [
+    ['company','Institusi / tempat magang','Nama instansi'], ['position','Posisi / unit','Contoh: Rekam Medis'], ['location','Lokasi','Kabupaten/Kota'], ['start','Mulai','DD-MM-YYYY'], ['end','Selesai','DD-MM-YYYY'], ['description','Tugas / hasil','Satu poin per baris']
   ]},
   organization: { container: 'cvOrganizationList', key: 'organization', addLabel: 'organisasi', fields: [
     ['name','Organisasi','Nama organisasi'], ['role','Jabatan / peran','Contoh: Koordinator'], ['period','Periode','2024–2025'], ['description','Kontribusi','Satu poin per baris']
@@ -30,8 +30,8 @@ const CV_REPEATERS = {
   achievement: { container: 'cvAchievementList', key: 'achievement', addLabel: 'prestasi', fields: [
     ['name','Prestasi','Nama pencapaian'], ['issuer','Penyelenggara','Nama institusi'], ['year','Tahun','2025'], ['description','Detail','Opsional']
   ]},
-  education: { container: 'cvEducationList', key: 'education', addLabel: 'pendidikan', fields: [
-    ['institution','Institusi','Universitas / sekolah'], ['degree','Jenjang / gelar','D3 / S1 / SMA'], ['field','Program studi','Contoh: Rekam Medis'], ['location','Lokasi','Kabupaten/Kota'], ['start','Mulai','2022'], ['end','Selesai','2025'], ['description','Prestasi / kegiatan relevan','Opsional']
+  education: { container: 'cvEducationList', key: 'education', addLabel: 'pendidikan', ongoingKey: 'ongoing', ongoingLabel: 'Saya masih aktif', fields: [
+    ['institution','Institusi','Universitas / sekolah'], ['degree','Jenjang / gelar','D3 / S1 / SMA'], ['field','Program studi','Contoh: Rekam Medis'], ['location','Lokasi','Kabupaten/Kota'], ['start','Mulai','DD-MM-YYYY'], ['end','Selesai','DD-MM-YYYY'], ['description','Prestasi / kegiatan relevan','Opsional']
   ]},
   training: { container: 'cvTrainingList', key: 'training', addLabel: 'pelatihan / sertifikasi', fields: [
     ['name','Nama pelatihan / sertifikasi','Nama credential'], ['provider','Penyelenggara','Lembaga'], ['year','Tahun','2025'], ['credential','Nomor / credential','Opsional'], ['link','Link verifikasi','https://...']
@@ -64,9 +64,39 @@ function cvDefaultData_() {
     project: [],
     publication: [],
     achievement: [],
-    education: [{ institution:'', degree:'', field:'', location:'', start:'', end:'', description:'' }],
+    education: [{ institution:'', degree:'', field:'', location:'', start:'', end:'', ongoing:false, description:'' }],
     training: [],
   };
+}
+
+function cvNormalizeDateValue_(value = '') {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+
+  if (/^\d{4}-\d{2}$/.test(raw)) return `${raw}-01`;
+  if (/^\d{4}\/\d{2}$/.test(raw)) return raw.replace('/', '-') + '-01';
+  if (/^\d{2}-\d{2}-\d{4}$/.test(raw)) {
+    const [day, month, year] = raw.split('-');
+    return `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}`;
+  }
+
+  return raw;
+}
+
+function cvFormatDate_(value = '') {
+  const normalized = cvNormalizeDateValue_(value);
+  const match = normalized.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return String(value || '').trim();
+
+  return `${match[3]}-${match[2]}-${match[1]}`;
+}
+
+function cvPeriodEnd_(item, type) {
+  const config = CV_REPEATERS[type];
+  if (config?.ongoingKey && item?.[config.ongoingKey]) {
+    return config.ongoingLabel === 'Saya masih aktif' ? 'Masih aktif' : 'Sekarang';
+  }
+  return cvFormatDate_(item?.end);
 }
 
 function cvNormalizeData_(input = {}) {
@@ -82,20 +112,30 @@ function cvNormalizeData_(input = {}) {
   });
 
   Object.keys(CV_REPEATERS).forEach((type) => {
+    const config = CV_REPEATERS[type];
     if (!Array.isArray(data[type])) data[type] = [];
     data[type] = data[type]
       .filter((item) => item && typeof item === 'object')
       .map((item) => {
         const clean = {};
-        CV_REPEATERS[type].fields.forEach(([key]) => {
+        config.fields.forEach(([key]) => {
           clean[key] = typeof item[key] === 'string' ? item[key] : '';
         });
+
+        if (config.ongoingKey) {
+          clean[config.ongoingKey] = item[config.ongoingKey] === true || item[config.ongoingKey] === 'true';
+        }
+
+        ['start','end'].forEach((key) => {
+          if (clean[key]) clean[key] = cvNormalizeDateValue_(clean[key]);
+        });
+
         return clean;
       });
   });
 
   if (!data.education.length) {
-    data.education = [{ institution:'', degree:'', field:'', location:'', start:'', end:'', description:'' }];
+    data.education = [{ institution:'', degree:'', field:'', location:'', start:'', end:'', ongoing:false, description:'' }];
   }
 
   return data;
@@ -211,7 +251,7 @@ function cvInputType_(key) {
 
 function cvInputAttributes_(key) {
   if (key === 'start' || key === 'end') {
-    return 'type="month"';
+    return 'type="date"';
   }
   if (key === 'link') {
     return 'type="url" inputmode="url"';
@@ -232,14 +272,20 @@ function renderCvRepeater_(type) {
       const multiline = key === 'description';
       const full = multiline || key === 'link';
       const value = cvEscape_(item[key] || '');
+      const disabled = key === 'end' && config.ongoingKey && item[config.ongoingKey] ? 'disabled' : '';
       return multiline
         ? `<label class="cv-repeat-field cv-field-full">${label}<textarea data-cv-type="${type}" data-cv-index="${index}" data-cv-key="${key}" rows="4" placeholder="${placeholder}">${value}</textarea></label>`
-        : `<label class="cv-repeat-field ${full ? 'cv-field-full' : ''}">${label}<input ${cvInputAttributes_(key)} data-cv-type="${type}" data-cv-index="${index}" data-cv-key="${key}" value="${value}" placeholder="${placeholder}"></label>`;
+        : `<label class="cv-repeat-field ${full ? 'cv-field-full' : ''}">${label}<input ${cvInputAttributes_(key)} data-cv-type="${type}" data-cv-index="${index}" data-cv-key="${key}" value="${value}" placeholder="${placeholder}" aria-label="${label} (${key === 'start' || key === 'end' ? 'DD-MM-YYYY' : placeholder})" ${disabled}></label>`;
     }).join('');
+
+    const ongoingControl = config.ongoingKey
+      ? `<label class="cv-ongoing-toggle"><input type="checkbox" data-cv-ongoing-type="${type}" data-cv-index="${index}" ${item[config.ongoingKey] ? 'checked' : ''}><span>${config.ongoingLabel}</span></label>`
+      : '';
 
     return `<div class="cv-repeat-card">
       <div class="cv-repeat-head"><strong>${config.addLabel} ${index + 1}</strong><button type="button" class="cv-remove-btn" data-cv-remove="${type}" data-cv-index="${index}">Hapus</button></div>
       <div class="cv-repeat-grid">${controls}</div>
+      ${ongoingControl}
     </div>`;
   }).join('') || `<div class="cv-repeat-empty">Belum ada data. Tambahkan bila diperlukan.</div>`;
 }
@@ -579,7 +625,7 @@ function bindCvOnce_() {
       const index = Number(target.dataset.cvIndex);
       const key = target.dataset.cvKey;
       if (cvData[type]?.[index]) {
-        cvData[type][index][key] = target.value;
+        cvData[type][index][key] = (key === 'start' || key === 'end') ? cvNormalizeDateValue_(target.value) : target.value;
         cvDebouncedSave_();
         renderCvPreview_();
       }
@@ -590,6 +636,36 @@ function bindCvOnce_() {
       cvSyncSimpleFields_();
       cvDebouncedSave_();
       renderCvPreview_();
+    }
+  });
+
+  form.addEventListener('change', (event) => {
+    const ongoing = event.target.closest('[data-cv-ongoing-type]');
+    if (ongoing) {
+      const type = ongoing.dataset.cvOngoingType;
+      const index = Number(ongoing.dataset.cvIndex);
+      const config = CV_REPEATERS[type];
+      if (!config || !cvData[type]?.[index]) return;
+
+      cvData[type][index][config.ongoingKey] = ongoing.checked;
+      if (ongoing.checked) cvData[type][index].end = '';
+
+      renderCvRepeater_(type);
+      renderCvPreview_();
+      cvSave_(true);
+      return;
+    }
+
+    if (event.target.matches('input[type="date"]')) {
+      const target = event.target;
+      const type = target.dataset.cvType;
+      const index = Number(target.dataset.cvIndex);
+      const key = target.dataset.cvKey;
+      if (type && cvData[type]?.[index] && (key === 'start' || key === 'end')) {
+        cvData[type][index][key] = cvNormalizeDateValue_(target.value);
+        cvDebouncedSave_();
+        renderCvPreview_();
+      }
     }
   });
 
