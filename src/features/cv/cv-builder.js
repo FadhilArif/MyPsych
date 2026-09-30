@@ -670,6 +670,17 @@ function bindCvOnce_() {
   });
 
   root.addEventListener('click', (event) => {
+    const featureButton = event.target.closest('[data-cv-feature]');
+    if (featureButton) {
+      cvShowFeature_(featureButton.dataset.cvFeature);
+      return;
+    }
+
+    if (event.target.closest('[data-cv-feature-back]')) {
+      cvShowFeature_('picker');
+      return;
+    }
+
     const addButton = event.target.closest('[data-cv-add]');
     if (addButton) {
       event.preventDefault();
@@ -779,6 +790,24 @@ function bindCvOnce_() {
 }
 
 
+function cvShowFeature_(mode = 'picker') {
+  const picker = $('cvFeaturePicker');
+  const ats = $('cvAtsFeature');
+  const jobMatch = $('cvJobMatchFeature');
+
+  if (!picker || !ats || !jobMatch) return;
+
+  picker.hidden = mode !== 'picker';
+  ats.hidden = mode !== 'ats';
+  jobMatch.hidden = mode !== 'job-match';
+
+  if (mode === 'ats') {
+    document.getElementById('cvForm')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
 function initCvBuilder() {
   if (!state.session) return;
   bindCvOnce_();
@@ -786,6 +815,7 @@ function initCvBuilder() {
   renderCvForm_();
   renderCvPreview_();
   updateCvExpiry_();
+  cvShowFeature_('picker');
 }
 
 
