@@ -3067,3 +3067,43 @@
     display: none !important;
   }
 }
+
+
+/* ============================================================
+   CV PRINT — PAGE GUTTER / RUNNING PAGE SPACING
+   Apply real @page margins so every printed A4 page gets
+   the same breathing room, including page 2+.
+   ============================================================ */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 18mm 15mm 16mm 15mm;
+  }
+
+  html,
+  body {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  body[data-view="cv"] .main,
+  body[data-view="cv"] .content,
+  body[data-view="cv"] #cvView,
+  body[data-view="cv"] #cvView .cv-page-shell,
+  body[data-view="cv"] #cvView .cv-workspace,
+  body[data-view="cv"] #cvView .cv-preview-shell,
+  body[data-view="cv"] #cvView .cv-paper-wrap {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  body[data-view="cv"] #cvView #cvPreview {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
