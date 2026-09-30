@@ -109,9 +109,7 @@ function cvLoad_() {
       localStorage.removeItem(cvStorageKey_());
       return cvDefaultData_();
     }
-    const cleaned = { ...data };
-    delete cleaned.currentActivity;
-    return { ...cvDefaultData_(), ...cleaned, autoFormat: cleaned.autoFormat !== false };
+    return cvNormalizeData_(data);
   } catch {
     return cvDefaultData_();
   }
