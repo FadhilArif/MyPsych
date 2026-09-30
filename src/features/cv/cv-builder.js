@@ -411,7 +411,7 @@ function renderCvPreview_() {
     `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.name)}</strong><span>${cvText_(x.year)}</span></div><div class="cv-entry-sub">${cvText_(x.issuer)}</div>${x.description ? rich(x.description):''}</div>`).join('');
 
   const education = cvData.education.filter(x=>Object.values(x).some(Boolean)).map(x =>
-    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_([x.degree,x.field].filter(Boolean).join(' · '))}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.institution)}${x.location ? ' · '+cvText_(x.location):''}</div>${x.description ? '<p>'+cvText_(x.description)+'</p>':''}</div>`).join('');
+    `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_([x.degree,x.field].filter(Boolean).join(' · '))}</strong><span>${cvText_([x.start,x.end].filter(Boolean).join(' – '))}</span></div><div class="cv-entry-sub">${cvText_(x.institution)}${x.location ? ' · '+cvText_(x.location):''}</div>${x.description ? rich(x.description):''}</div>`).join('');
 
   const training = cvData.training.filter(x=>Object.values(x).some(Boolean)).map(x =>
     `<div class="cv-entry"><div class="cv-entry-head"><strong>${cvText_(x.name)}</strong><span>${cvText_(x.year)}</span></div><div class="cv-entry-sub">${cvText_([x.provider,x.credential].filter(Boolean).join(' · '))}</div>${x.link ? `<div class="cv-entry-link">${cvText_(x.link)}</div>` : ''}</div>`).join('');
