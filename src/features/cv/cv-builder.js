@@ -69,6 +69,38 @@ function cvDefaultData_() {
   };
 }
 
+function cvNormalizeData_(input = {}) {
+  const base = cvDefaultData_();
+  const data = { ...base, ...input };
+
+  delete data.currentActivity;
+  data.autoFormat = data.autoFormat !== false;
+
+  const textFields = ['fullName','targetRole','address','phone','email','linkedin','summary','skills','photo','template'];
+  textFields.forEach((key) => {
+    if (typeof data[key] !== 'string') data[key] = key === 'template' ? 'ats' : '';
+  });
+
+  Object.keys(CV_REPEATERS).forEach((type) => {
+    if (!Array.isArray(data[type])) data[type] = [];
+    data[type] = data[type]
+      .filter((item) => item && typeof item === 'object')
+      .map((item) => {
+        const clean = {};
+        CV_REPEATERS[type].fields.forEach(([key]) => {
+          clean[key] = typeof item[key] === 'string' ? item[key] : '';
+        });
+        return clean;
+      });
+  });
+
+  if (!data.education.length) {
+    data.education = [{ institution:'', degree:'', field:'', location:'', start:'', end:'', description:'' }];
+  }
+
+  return data;
+}
+
 function cvLoad_() {
   try {
     const data = JSON.parse(localStorage.getItem(cvStorageKey_()) || 'null');
@@ -294,6 +326,7 @@ function renderCvPreview_() {
   const root = $('cvPreview');
   if (!root) return;
 
+  cvData = cvNormalizeData_(cvData);
   const template = cvData.template || 'ats';
   root.className = `cv-paper cv-template-${template}`;
   if ($('cvPreviewTemplateLabel')) $('cvPreviewTemplateLabel').textContent =
@@ -416,12 +449,55 @@ function cvBuildAndPreview_() {
   toast('CV berhasil dibuat. Periksa preview lalu simpan sebagai PDF.', 'success', 4200);
 }
 
+function cvHandleStructuredEnter_(event) {
+  if (!cvAutoFormatEnabled_() || event.key !== 'Enter' || event.shiftKey || event.ctrlKey || event.metaKey || event.altKey) {
+    return;
+  }
+
+  const target = event.target;
+  if (!(target instanceof HTMLTextAreaElement)) return;
+
+  const start = target.selectionStart;
+  const lineStart = target.value.lastIndexOf('\n', start - 1) + 1;
+  const currentLine = target.value.slice(lineStart, start);
+
+  const numberMatch = currentLine.match(/^(\s*)(\d+)[.)]\s*(.*)$/);
+  const bulletMatch = currentLine.match(/^(\s*)([-•*])\s*(.*)$/);
+
+  if (numberMatch) {
+    event.preventDefault();
+
+    if (!numberMatch[3].trim()) {
+      target.value = target.value.slice(0, lineStart) + target.value.slice(start);
+      target.selectionStart = target.selectionEnd = lineStart;
+    } else {
+      const nextNumber = Number(numberMatch[2]) + 1;
+      const prefix = `\n${numberMatch[1]}${nextNumber}. `;
+      target.setRangeText(prefix, start, start, 'end');
+    }
+  } else if (bulletMatch) {
+    event.preventDefault();
+
+    if (!bulletMatch[3].trim()) {
+      target.value = target.value.slice(0, lineStart) + target.value.slice(start);
+      target.selectionStart = target.selectionEnd = lineStart;
+    } else {
+      const prefix = `\n${bulletMatch[1]}${bulletMatch[2]} `;
+      target.setRangeText(prefix, start, start, 'end');
+    }
+  }
+
+  target.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 function bindCvOnce_() {
   if (cvInitialized) return;
 
   const root = $('cvView');
   const form = $('cvForm');
   if (!root || !form) return;
+
+  form.addEventListener('keydown', cvHandleStructuredEnter_);
 
   form.addEventListener('input', (event) => {
     const target = event.target;
@@ -550,8 +626,8 @@ function bindCvOnce_() {
       const imported = JSON.parse(await file.text());
       if (imported?.version !== 1) throw new Error('Format CV tidak dikenali.');
 
-      delete imported.currentActivity;
-      cvData = { ...cvDefaultData_(), ...imported, lastActivityAt: Date.now() };
+      cvData = cvNormalizeData_(imported);
+      cvData.lastActivityAt = Date.now();
       cvSave_(true);
       renderCvForm_();
       renderCvPreview_();
