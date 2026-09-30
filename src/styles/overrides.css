@@ -2765,3 +2765,190 @@
     break-inside: avoid;
   }
 }
+
+
+/* ============================================================
+   CV V1.1 — INPUT BOUNDS, AUTO FORMAT & PRINT
+   ============================================================ */
+.cv-auto-format-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--soft);
+  color: var(--text);
+  font-size: .62rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.cv-auto-format-toggle input {
+  margin: 0;
+  accent-color: var(--blue);
+}
+
+.cv-rich-paragraph {
+  margin: 0 0 6px;
+  text-align: justify;
+  text-justify: inter-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.cv-rich-list {
+  margin: 4px 0 7px;
+  padding-left: 18px;
+  text-align: left;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.cv-rich-list li {
+  margin: 2px 0;
+  padding-left: 2px;
+}
+
+.cv-paper,
+.cv-paper * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.cv-paper .cv-entry,
+.cv-paper .cv-entry-sub,
+.cv-paper .cv-entry-link,
+.cv-paper p,
+.cv-paper li,
+.cv-paper strong,
+.cv-paper span {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.cv-repeat-field textarea {
+  min-height: 96px;
+  max-height: 260px;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.cv-form-section > textarea {
+  min-height: 120px;
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (max-width: 700px) {
+  .cv-auto-format-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Final print override: cvView lives inside main > content, not directly under body. */
+@media print {
+  html,
+  body {
+    width: 210mm !important;
+    min-width: 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    overflow: visible !important;
+  }
+
+  body[data-view="cv"] > #landingView,
+  body[data-view="cv"] > .modal-backdrop,
+  body[data-view="cv"] > #toastRoot,
+  body[data-view="cv"] .sidebar,
+  body[data-view="cv"] .sidebar-overlay,
+  body[data-view="cv"] .topbar {
+    display: none !important;
+  }
+
+  body[data-view="cv"] .main,
+  body[data-view="cv"] .content {
+    display: block !important;
+    width: 210mm !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  body[data-view="cv"] .content > .screen:not(#cvView) {
+    display: none !important;
+  }
+
+  body[data-view="cv"] #cvView {
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  body[data-view="cv"] #cvView .cv-page-shell,
+  body[data-view="cv"] #cvView .cv-workspace,
+  body[data-view="cv"] #cvView .cv-preview-shell,
+  body[data-view="cv"] #cvView .cv-paper-wrap {
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  body[data-view="cv"] #cvView .cv-page-head,
+  body[data-view="cv"] #cvView .cv-toolbar,
+  body[data-view="cv"] #cvView .cv-editor,
+  body[data-view="cv"] #cvView .cv-preview-head {
+    display: none !important;
+  }
+
+  body[data-view="cv"] #cvView #cvPreview {
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 16mm 15mm !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    background: #fff !important;
+    color: #15233a !important;
+    box-shadow: none !important;
+  }
+
+  body[data-view="cv"] #cvView .cv-paper-section,
+  body[data-view="cv"] #cvView .cv-entry {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  body[data-view="cv"] #cvView .cv-rich-paragraph,
+  body[data-view="cv"] #cvView .cv-rich-list {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+}
