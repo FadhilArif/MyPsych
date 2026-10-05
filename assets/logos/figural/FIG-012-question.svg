@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400"><rect x="0" y="0" width="600" height="400" fill="#FFFFFF"/>
+<rect x="20" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(-230.0,0.0) scale(0.7)"><polygon points="300.0,150.0 250.0,250.0 350.0,250.0" fill="none" stroke="#111111" stroke-width="6" stroke-linejoin="round"/></g>
+<rect x="135" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(-115.0,0.0) scale(0.7)"><rect x="250.0" y="150.0" width="100" height="100" fill="none" stroke="#111111" stroke-width="6" rx="0"/></g>
+<rect x="250" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(0.0,0.0) scale(0.7)"><polygon points="300.0,145.0 314.5476849942387,179.97682938922006 352.3081083962334,183.0040653093779 323.53864877830506,207.64817061077994 332.328188876086,244.4959346906221 300.0,224.75 267.671811123914,244.4959346906221 276.46135122169494,207.64817061077994 247.69189160376655,183.0040653093779 285.4523150057613,179.97682938922006" fill="none" stroke="#111111" stroke-width="5" stroke-linejoin="round"/></g>
+<rect x="365" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(115.0,0.0) scale(0.7)"><polygon points="300.0,145.0 312.375,178.56587125633516 347.6313972081441,172.5 324.75,200.0 347.6313972081441,227.5 312.375,221.43412874366484 300.0,255.0 287.625,221.43412874366487 252.36860279185586,227.5 275.25,200.0 252.3686027918559,172.5 287.625,178.56587125633516" fill="none" stroke="#111111" stroke-width="5" stroke-linejoin="round"/></g>
+<rect x="480" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400"><rect x="0" y="0" width="600" height="400" fill="#FFFFFF"/>
+<rect x="155" y="55" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(-100.0,-100.0) scale(0.70)"><circle cx="300" cy="200" r="40" fill="none" stroke="#111111" stroke-width="6"/></g>
+<rect x="255" y="55" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(0.0,-100.0) scale(0.70)"><rect x="265.0" y="165.0" width="70" height="70" fill="none" stroke="#111111" stroke-width="6" rx="0"/></g>
+<rect x="355" y="55" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(100.0,-100.0) scale(0.70)"><polygon points="300,157.5 342.5,200 300,242.5 257.5,200" fill="none" stroke="#111111" stroke-width="6" stroke-linejoin="round"/></g>
+<rect x="155" y="155" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(-100.0,0.0) scale(0.70)"><polygon points="300.0,160.0 260.0,240.0 340.0,240.0" fill="none" stroke="#111111" stroke-width="6" stroke-linejoin="round"/></g>
+<rect x="255" y="155" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(0.0,0.0) scale(0.70)"><polygon points="260.0,184.0 308.0,184.0 308.0,160.0 340.0,200.0 308.0,240.0 308.0,216.0 260.0,216.0" fill="#111111" stroke="#111111" stroke-width="4" stroke-linejoin="round"/></g>
+<rect x="355" y="155" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(100.0,0.0) scale(0.70)"><line x1="260.0" y1="200" x2="340.0" y2="200" stroke="#111111" stroke-width="10" stroke-linecap="round"/><line x1="300" y1="160.0" x2="300" y2="240.0" stroke="#111111" stroke-width="10" stroke-linecap="round"/></g>
+<rect x="155" y="255" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(-100.0,100.0) scale(0.70)"><circle cx="300" cy="200" r="60" fill="none" stroke="#111111" stroke-width="6"/></g>
+<rect x="255" y="255" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(0.0,100.0) scale(0.70)"><rect x="255.0" y="155.0" width="90" height="90" fill="none" stroke="#111111" stroke-width="6" rx="0"/></g>
+<rect x="355" y="255" width="90" height="90" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+</svg>
