@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400"><rect x="0" y="0" width="600" height="400" fill="#FFFFFF"/>
+<rect x="20" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(-230.0,0.0) scale(0.7)"><rect x="245.0" y="145.0" width="110" height="110" fill="none" stroke="#111111" stroke-width="6" rx="0"/><line x1="260.0" y1="200" x2="340.0" y2="200" stroke="#111111" stroke-width="10" stroke-linecap="round"/><line x1="300" y1="160.0" x2="300" y2="240.0" stroke="#111111" stroke-width="10" stroke-linecap="round"/><circle cx="300" cy="130" r="8" fill="#111111" stroke="#111111" stroke-width="1"/><circle cx="300" cy="270" r="8" fill="#111111" stroke="#111111" stroke-width="1"/></g>
+<rect x="135" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(-115.0,0.0) scale(0.7)"><rect x="245.0" y="145.0" width="110" height="110" fill="none" stroke="#111111" stroke-width="6" rx="0"/><line x1="260.0" y1="200" x2="340.0" y2="200" stroke="#111111" stroke-width="10" stroke-linecap="round"/><line x1="300" y1="160.0" x2="300" y2="240.0" stroke="#111111" stroke-width="10" stroke-linecap="round"/><circle cx="300" cy="130" r="8" fill="#111111" stroke="#111111" stroke-width="1"/></g>
+<rect x="250" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(0.0,0.0) scale(0.7)"><rect x="245.0" y="145.0" width="110" height="110" fill="none" stroke="#111111" stroke-width="6" rx="0"/><line x1="260.0" y1="200" x2="340.0" y2="200" stroke="#111111" stroke-width="10" stroke-linecap="round"/><line x1="300" y1="160.0" x2="300" y2="240.0" stroke="#111111" stroke-width="10" stroke-linecap="round"/></g>
+<rect x="365" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+<g transform="translate(115.0,0.0) scale(0.7)"><rect x="245.0" y="145.0" width="110" height="110" fill="none" stroke="#111111" stroke-width="6" rx="0"/><line x1="260" y1="200" x2="340" y2="200" stroke="#111111" stroke-width="8" stroke-linecap="round"/></g>
+<rect x="480" y="75" width="100" height="250" fill="#FFFFFF" stroke="#888888" stroke-width="3"/>
+</svg>
