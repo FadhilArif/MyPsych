@@ -152,6 +152,10 @@ case 'adminGetInterests':
         result = await adminDeleteQuestion_(body.token, body.question_id);
         break;
 
+      case 'adminDeleteQuestions':
+        result = await adminDeleteQuestions_(body.token, body.question_ids);
+        break;
+
       case 'adminGetScoreLabels':
         result = await adminGetScoreLabels_(body.token, body.test_type);
         break;
@@ -908,6 +912,33 @@ async function adminSaveQuestions_(token, questions) {
   await logAdminAction_(auth.session, 'adminSaveQuestions', '', `${added} added, ${updated} updated`, true, '');
 
   return { success: true, added, updated, total: questions.length };
+}
+
+async function adminDeleteQuestions_(token, questionIds) {
+  const auth = await verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const ids = Array.isArray(questionIds)
+    ? [...new Set(questionIds.map((id) => String(id || '').trim()).filter(Boolean))]
+    : [];
+
+  if (!ids.length) return { success: false, message: 'Tidak ada soal yang dipilih.' };
+  if (ids.length > 500) return { success: false, message: 'Maksimal 500 soal per aksi bulk.' };
+
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase
+    .from('question_bank')
+    .update({ active: false })
+    .in('question_id', ids);
+  if (error) throw error;
+
+  await logAdminAction_(auth.session, 'adminDeleteQuestions', '', `${ids.length} questions`, true, '');
+
+  return {
+    success: true,
+    message: `${ids.length} soal dinonaktifkan.`,
+    count: ids.length
+  };
 }
 
 async function adminDeleteQuestion_(token, questionId) {
