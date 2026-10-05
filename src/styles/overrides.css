@@ -3139,3 +3139,21 @@
   cursor: not-allowed;
   opacity: .75;
 }
+
+/* ============================================================
+   ADMIN QUESTION BULK ACTIONS
+   ============================================================ */
+.admin-question-table-head { gap: 12px; align-items: center; }
+.admin-question-bulk-actions { display: flex; align-items: center; justify-content: flex-end; gap: 9px; flex-wrap: wrap; }
+.admin-question-select-all {
+  display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 9px;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--soft); color: var(--text);
+  font-size: .64rem; font-weight: 800; cursor: pointer; user-select: none;
+}
+.admin-question-select-all input, .admin-question-check { width: 15px; height: 15px; margin: 0; accent-color: var(--blue); }
+.admin-question-check-col { width: 38px; text-align: center; }
+@media (max-width: 700px) {
+  .admin-question-table-head, .admin-question-bulk-actions { align-items: stretch; flex-direction: column; }
+  .admin-question-bulk-actions > * { width: 100%; }
+  .admin-question-select-all { justify-content: center; }
+}
