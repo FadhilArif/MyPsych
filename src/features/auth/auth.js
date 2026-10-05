@@ -125,6 +125,9 @@ trackEvent('register_attempt');
           if (pendingView === 'skd' || pendingView === 'cv') {
             showView(pendingView);
             toast('Login berhasil.', 'success');
+          } else if (isAdmin()) {
+            await openAdminDashboard('overview');
+            toast('Login berhasil sebagai administrator.', 'success');
           } else {
             await goDashboard('Login berhasil.');
           }
