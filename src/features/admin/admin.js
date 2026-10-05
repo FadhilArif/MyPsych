@@ -296,7 +296,24 @@
         <div class="warning-box"><strong>Format:</strong> file JSON mengikuti struktur <code>kategori → paket[] → soal[]</code>. Upload tidak perlu memilih paket karena semua paket di dalam file akan diproses otomatis. Sistem mengirim maksimal 25 soal per request agar migrasi aman.</div>
         <div id="adminQuestionProgress" class="admin-muted" style="margin-top:10px"></div>
       </div>
-      <div class="admin-card card"><div class="admin-table-title"><h3>Soal tersimpan</h3><span id="adminQuestionCount" class="admin-muted">0 soal</span></div><div class="table-wrap admin-table-wrap"><table><thead><tr><th>Paket</th><th>No</th><th>Pertanyaan</th><th>Jawaban</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="adminQuestionsBody"></tbody></table></div></div>
+      <div class="admin-card card">
+        <div class="admin-table-title admin-question-table-head">
+          <div>
+            <h3>Soal tersimpan</h3>
+            <span id="adminQuestionCount" class="admin-muted">0 soal</span>
+          </div>
+          <div class="admin-question-bulk-actions">
+            <label class="admin-question-select-all"><input type="checkbox" id="adminQuestionSelectAll"> <span>Ceklis semua</span></label>
+            <button type="button" class="danger-btn admin-small-btn" id="adminDeleteSelectedQuestionsBtn" disabled>Nonaktifkan terpilih (<span id="adminSelectedQuestionCount">0</span>)</button>
+          </div>
+        </div>
+        <div class="table-wrap admin-table-wrap">
+          <table><thead><tr>
+            <th class="admin-question-check-col"><span class="sr-only">Pilih</span></th>
+            <th>Paket</th><th>No</th><th>Pertanyaan</th><th>Jawaban</th><th>Status</th><th>Aksi</th>
+          </tr></thead><tbody id="adminQuestionsBody"></tbody></table>
+        </div>
+      </div>
     `;
     $('adminUploadQuestionBtn').addEventListener('click', adminUploadQuestionFile);
     $('adminMigrateAllQuestionsBtn').addEventListener('click', adminMigrateAllQuestions);
@@ -320,10 +337,24 @@
       adminQuestionsCache = response.questions || [];
       $('adminQuestionCount').textContent = `${adminQuestionsCache.length} soal`;
       $('adminQuestionsBody').innerHTML = adminQuestionsCache.length ? adminQuestionsCache.map((q) => `
-        <tr><td>${Number(q.package) || 0}</td><td>${Number(q.no_soal) || 0}</td><td class="admin-question-cell">${escapeHtml(q.question)}</td><td><strong>${escapeHtml(q.answer)}</strong></td><td><span class="admin-role ${q.active ? '' : 'admin-role-off'}">${q.active ? 'Aktif' : 'Nonaktif'}</span></td><td class="admin-actions-cell"><button type="button" class="secondary-btn admin-small-btn" data-q-edit="${escapeHtml(q.question_id)}">Edit</button>${q.active ? `<button type="button" class="danger-btn admin-small-btn" data-q-delete="${escapeHtml(q.question_id)}">Hapus</button>` : ''}</td></tr>
-      `).join('') : `<tr><td colspan="6" class="admin-empty-cell">Belum ada soal pada filter ini. Upload JSON untuk memindahkan bank soal.</td></tr>`;
+        <tr>
+          <td class="admin-question-check-col">${q.active ? `<input type="checkbox" class="admin-question-check" data-q-check="${escapeHtml(q.question_id)}" aria-label="Pilih soal nomor ${Number(q.no_soal) || 0} paket ${Number(q.package) || 0}">` : ''}</td>
+          <td>${Number(q.package) || 0}</td><td>${Number(q.no_soal) || 0}</td>
+          <td class="admin-question-cell">${escapeHtml(q.question)}</td>
+          <td><strong>${escapeHtml(q.answer)}</strong></td>
+          <td><span class="admin-role ${q.active ? '' : 'admin-role-off'}">${q.active ? 'Aktif' : 'Nonaktif'}</span></td>
+          <td class="admin-actions-cell"><button type="button" class="secondary-btn admin-small-btn" data-q-edit="${escapeHtml(q.question_id)}">Edit</button>${q.active ? `<button type="button" class="danger-btn admin-small-btn" data-q-delete="${escapeHtml(q.question_id)}">Hapus</button>` : ''}</td>
+        </tr>
+      `).join('') : `<tr><td colspan="7" class="admin-empty-cell">Belum ada soal pada filter ini. Upload JSON untuk memindahkan bank soal.</td></tr>`;
+      updateAdminQuestionSelection_();
       document.querySelectorAll('[data-q-edit]').forEach((button) => button.addEventListener('click', () => adminEditQuestion(button.dataset.qEdit)));
       document.querySelectorAll('[data-q-delete]').forEach((button) => button.addEventListener('click', () => adminDeleteQuestion(button.dataset.qDelete)));
+      document.querySelectorAll('[data-q-check]').forEach((checkbox) => checkbox.addEventListener('change', updateAdminQuestionSelection_));
+      $('adminQuestionSelectAll')?.addEventListener('change', (event) => {
+        document.querySelectorAll('.admin-question-check').forEach((checkbox) => { checkbox.checked = event.target.checked; });
+        updateAdminQuestionSelection_();
+      });
+      $('adminDeleteSelectedQuestionsBtn')?.addEventListener('click', adminDeleteSelectedQuestions);
     } catch (error) { toast(error.message, 'warning'); }
   }
 
@@ -456,6 +487,51 @@
       const progress = $('adminQuestionProgress');
       if (progress) progress.textContent = `Migrasi berhenti: ${error.message}`;
       toast(`Migrasi semua JSON gagal: ${error.message}`, 'warning', 7000);
+    } finally {
+      busy(button, '', false);
+    }
+  }
+
+  function updateAdminQuestionSelection_() {
+    const checks = Array.from(document.querySelectorAll('.admin-question-check'));
+    const selected = checks.filter((checkbox) => checkbox.checked);
+    const button = $('adminDeleteSelectedQuestionsBtn');
+    const count = $('adminSelectedQuestionCount');
+    const selectAll = $('adminQuestionSelectAll');
+
+    if (count) count.textContent = String(selected.length);
+    if (button) button.disabled = selected.length === 0;
+
+    if (selectAll) {
+      selectAll.checked = checks.length > 0 && selected.length === checks.length;
+      selectAll.indeterminate = selected.length > 0 && selected.length < checks.length;
+    }
+  }
+
+  async function adminDeleteSelectedQuestions() {
+    const selectedIds = Array.from(document.querySelectorAll('.admin-question-check:checked'))
+      .map((checkbox) => String(checkbox.dataset.qCheck || '').trim())
+      .filter(Boolean);
+
+    if (!selectedIds.length) return;
+
+    const packageValue = $('adminQuestionPackage')?.value || '';
+    const testName = TESTS[$('adminQuestionTest')?.value]?.name || $('adminQuestionTest')?.value || 'tes ini';
+    const filterLabel = packageValue ? `Paket ${packageValue}` : 'semua paket yang sedang ditampilkan';
+
+    if (!window.confirm(`Nonaktifkan ${selectedIds.length} soal untuk ${testName} — ${filterLabel}?\\n\\nSoal tidak akan dipakai peserta, tetapi datanya tetap tersimpan.`)) return;
+
+    const button = $('adminDeleteSelectedQuestionsBtn');
+    try {
+      busy(button, 'Memproses…', true);
+      const response = await apiChecked('adminDeleteQuestions', {
+        token: state.session.token,
+        question_ids: selectedIds
+      });
+      toast(response.message || `${selectedIds.length} soal dinonaktifkan.`, 'success');
+      await adminLoadQuestions();
+    } catch (error) {
+      toast(error.message, 'warning');
     } finally {
       busy(button, '', false);
     }
