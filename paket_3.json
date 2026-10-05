@@ -1,0 +1,612 @@
+{
+  "kategori": "Tes Figural — Figural Reasoning",
+  "id_paket": 3,
+  "nama_paket": "Paket 3",
+  "soal_per_paket": 20,
+  "soal": [
+    {
+      "question_id": "FIG-041",
+      "category": "figural",
+      "type": "movement",
+      "difficulty": "hard",
+      "instruction": "Pilih posisi berikutnya.",
+      "question": "Kotak bergerak zig-zag, sedangkan lingkaran bergerak satu posisi ke kanan setiap langkah.",
+      "question_image": "/assets/figural/FIG-041-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-041-A.svg",
+        "B": "/assets/figural/FIG-041-B.svg",
+        "C": "/assets/figural/FIG-041-C.svg",
+        "D": "/assets/figural/FIG-041-D.svg",
+        "E": "/assets/figural/FIG-041-E.svg"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Kotak bergerak kiri-atas → tengah-bawah → kanan-atas → tengah-bawah → kiri-atas; lingkaran bergerak +50 pada sumbu horizontal.",
+        "steps": [
+          "Kotak kembali ke kiri-atas.",
+          "Lingkaran x: 250 → 300 → 350 → 400 → 450.",
+          "Jadi jawaban adalah kotak kiri-atas + lingkaran x=450."
+        ]
+      },
+      "explanation": "Kotak bergerak kiri-atas → tengah-bawah → kanan-atas → tengah-bawah → kiri-atas; lingkaran bergerak +50 pada sumbu horizontal. Opsi D benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. B: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. C: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. E: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan.",
+      "metadata": {
+        "shape": "square + circle",
+        "rotation": "zigzag + linear",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-042",
+      "category": "figural",
+      "type": "count_change",
+      "difficulty": "medium",
+      "instruction": "Tentukan jumlah berikutnya.",
+      "question": "Jumlah lingkaran bertambah dua pada setiap langkah.",
+      "question_image": "/assets/figural/FIG-042-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-042-A.svg",
+        "B": "/assets/figural/FIG-042-B.svg",
+        "C": "/assets/figural/FIG-042-C.svg",
+        "D": "/assets/figural/FIG-042-D.svg",
+        "E": "/assets/figural/FIG-042-E.svg"
+      },
+      "answer": "B",
+      "rule": {
+        "description": "Jumlah lingkaran: 2 → 4 → 6 → 8.",
+        "steps": [
+          "Setiap langkah menambah dua lingkaran.",
+          "Maka gambar berikutnya memuat delapan lingkaran."
+        ]
+      },
+      "explanation": "Jumlah lingkaran: 2 → 4 → 6 → 8. Opsi E benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut memiliki jumlah elemen yang tidak sesuai dengan perubahan jumlah pada pola. B: Opsi tersebut memiliki jumlah elemen yang tidak sesuai dengan perubahan jumlah pada pola. C: Opsi tersebut memiliki jumlah elemen yang tidak sesuai dengan perubahan jumlah pada pola. D: Opsi tersebut memiliki jumlah elemen yang tidak sesuai dengan perubahan jumlah pada pola.",
+      "metadata": {
+        "shape": "circle",
+        "rotation": "count +2",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-043",
+      "category": "figural",
+      "type": "rotation",
+      "difficulty": "easy",
+      "instruction": "Pilih orientasi berikutnya.",
+      "question": "Segitiga mengarah ke empat arah secara berurutan.",
+      "question_image": "/assets/figural/FIG-043-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-043-A.svg",
+        "B": "/assets/figural/FIG-043-B.svg",
+        "C": "/assets/figural/FIG-043-C.svg",
+        "D": "/assets/figural/FIG-043-D.svg",
+        "E": "/assets/figural/FIG-043-E.svg"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Segitiga berputar 90° searah jarum jam.",
+        "steps": [
+          "0°, 90°, 180°, 270°.",
+          "Berikutnya 0°."
+        ]
+      },
+      "explanation": "Segitiga berputar 90° searah jarum jam. Opsi A benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: B: Opsi tersebut memiliki orientasi yang tidak sesuai dengan sudut rotasi berikutnya. C: Opsi tersebut memiliki orientasi yang tidak sesuai dengan sudut rotasi berikutnya. D: Opsi tersebut memiliki orientasi yang tidak sesuai dengan sudut rotasi berikutnya. E: Opsi tersebut memiliki orientasi yang tidak sesuai dengan sudut rotasi berikutnya.",
+      "metadata": {
+        "shape": "triangle",
+        "rotation": "90°",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-044",
+      "category": "figural",
+      "type": "reflection",
+      "difficulty": "medium",
+      "instruction": "Pilih hasil berikutnya.",
+      "question": "Sebuah simbol dicerminkan terhadap sumbu horizontal secara bergantian.",
+      "question_image": "/assets/figural/FIG-044-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-044-A.svg",
+        "B": "/assets/figural/FIG-044-B.svg",
+        "C": "/assets/figural/FIG-044-C.svg",
+        "D": "/assets/figural/FIG-044-D.svg",
+        "E": "/assets/figural/FIG-044-E.svg"
+      },
+      "answer": "D",
+      "rule": {
+        "description": "Arah atas dan bawah berganti.",
+        "steps": [
+          "90° ↔ 270°.",
+          "Maka berikutnya 90°."
+        ]
+      },
+      "explanation": "Arah atas dan bawah berganti. Opsi B benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut tidak merupakan hasil pencerminan yang ditentukan. C: Opsi tersebut tidak merupakan hasil pencerminan yang ditentukan. D: Opsi tersebut tidak merupakan hasil pencerminan yang ditentukan. E: Opsi tersebut tidak merupakan hasil pencerminan yang ditentukan.",
+      "metadata": {
+        "shape": "arrow",
+        "rotation": "horizontal reflection",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-045",
+      "category": "figural",
+      "type": "movement",
+      "difficulty": "medium",
+      "instruction": "Pilih posisi berikutnya.",
+      "question": "Sebuah titik bergerak satu sudut searah jarum jam pada persegi.",
+      "question_image": "/assets/figural/FIG-045-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-045-A.svg",
+        "B": "/assets/figural/FIG-045-B.svg",
+        "C": "/assets/figural/FIG-045-C.svg",
+        "D": "/assets/figural/FIG-045-D.svg",
+        "E": "/assets/figural/FIG-045-E.svg"
+      },
+      "answer": "E",
+      "rule": {
+        "description": "Titik mengelilingi empat sudut searah jarum jam.",
+        "steps": [
+          "Kiri-atas → kanan-atas → kanan-bawah → kiri-bawah.",
+          "Berikutnya kembali kiri-atas."
+        ]
+      },
+      "explanation": "Titik mengelilingi empat sudut searah jarum jam. Opsi C benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. B: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. D: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. E: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan.",
+      "metadata": {
+        "shape": "dot",
+        "rotation": "clockwise square",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-046",
+      "category": "figural",
+      "type": "shape_change",
+      "difficulty": "medium",
+      "instruction": "Pilih bentuk berikutnya.",
+      "question": "Bentuk berubah dari 3 sisi ke 4, 5, lalu 6 sisi.",
+      "question_image": "/assets/figural/FIG-046-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-046-A.svg",
+        "B": "/assets/figural/FIG-046-B.svg",
+        "C": "/assets/figural/FIG-046-C.svg",
+        "D": "/assets/figural/FIG-046-D.svg",
+        "E": "/assets/figural/FIG-046-E.svg"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Jumlah titik/sisi bertambah satu setiap langkah.",
+        "steps": [
+          "3 → 4 → 5 → 6.",
+          "Berikutnya 7."
+        ]
+      },
+      "explanation": "Jumlah titik/sisi bertambah satu setiap langkah. Opsi D benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut menggunakan bentuk/jumlah sisi yang tidak melanjutkan urutan. B: Opsi tersebut menggunakan bentuk/jumlah sisi yang tidak melanjutkan urutan. C: Opsi tersebut menggunakan bentuk/jumlah sisi yang tidak melanjutkan urutan. E: Opsi tersebut menggunakan bentuk/jumlah sisi yang tidak melanjutkan urutan.",
+      "metadata": {
+        "shape": "polygon",
+        "rotation": "sides +1",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-047",
+      "category": "figural",
+      "type": "size_change",
+      "difficulty": "hard",
+      "instruction": "Pilih kombinasi ukuran berikutnya.",
+      "question": "Bentuk luar membesar 10, sementara simbol dalam mengecil 3 pada setiap langkah.",
+      "question_image": "/assets/figural/FIG-047-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-047-A.svg",
+        "B": "/assets/figural/FIG-047-B.svg",
+        "C": "/assets/figural/FIG-047-C.svg",
+        "D": "/assets/figural/FIG-047-D.svg",
+        "E": "/assets/figural/FIG-047-E.svg"
+      },
+      "answer": "B",
+      "rule": {
+        "description": "Jari-jari lingkaran +10; jari-jari titik -3.",
+        "steps": [
+          "60→70→80→90→100.",
+          "18→15→12→9→6.",
+          "Opsi A."
+        ]
+      },
+      "explanation": "Jari-jari lingkaran +10; jari-jari titik -3. Opsi E benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut menggunakan ukuran yang tidak mengikuti perubahan ukuran. B: Opsi tersebut menggunakan ukuran yang tidak mengikuti perubahan ukuran. C: Opsi tersebut menggunakan ukuran yang tidak mengikuti perubahan ukuran. D: Opsi tersebut menggunakan ukuran yang tidak mengikuti perubahan ukuran.",
+      "metadata": {
+        "shape": "circle + dot",
+        "rotation": "dual size",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-048",
+      "category": "figural",
+      "type": "fill_change",
+      "difficulty": "easy",
+      "instruction": "Pilih isian berikutnya.",
+      "question": "Isi bentuk berubah kosong, abu-abu, penuh, lalu mengulang.",
+      "question_image": "/assets/figural/FIG-048-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-048-A.svg",
+        "B": "/assets/figural/FIG-048-B.svg",
+        "C": "/assets/figural/FIG-048-C.svg",
+        "D": "/assets/figural/FIG-048-D.svg",
+        "E": "/assets/figural/FIG-048-E.svg"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Siklus isian tiga tahap: kosong → abu-abu → penuh.",
+        "steps": [
+          "Panel 1 dan 4 sama.",
+          "Berikutnya kembali ke abu-abu."
+        ]
+      },
+      "explanation": "Siklus isian tiga tahap: kosong → abu-abu → penuh. Opsi A benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: B: Opsi tersebut memakai isian yang tidak sesuai dengan siklus isian. C: Opsi tersebut memakai isian yang tidak sesuai dengan siklus isian. D: Opsi tersebut memakai isian yang tidak sesuai dengan siklus isian. E: Opsi tersebut memakai isian yang tidak sesuai dengan siklus isian.",
+      "metadata": {
+        "shape": "square",
+        "rotation": "empty-gray-full",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-049",
+      "category": "figural",
+      "type": "matrix",
+      "difficulty": "hard",
+      "instruction": "Tentukan sel kosong.",
+      "question": "Lengkapi pola matriks: bentuk berubah menurut baris, arah menurut kolom.",
+      "question_image": "/assets/figural/FIG-049-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-049-A.svg",
+        "B": "/assets/figural/FIG-049-B.svg",
+        "C": "/assets/figural/FIG-049-C.svg",
+        "D": "/assets/figural/FIG-049-D.svg",
+        "E": "/assets/figural/FIG-049-E.svg"
+      },
+      "answer": "D",
+      "rule": {
+        "description": "Baris ketiga selalu diamond; kolom ketiga melanjutkan orientasi 180° dari baris pertama untuk bentuk yang memiliki orientasi visual simetris.",
+        "steps": [
+          "Bentuk baris: triangle, square, diamond.",
+          "Kolom ketiga adalah posisi ketiga; jawaban yang mempertahankan bentuk diamond adalah A."
+        ]
+      },
+      "explanation": "Baris ketiga selalu diamond; kolom ketiga melanjutkan orientasi 180° dari baris pertama untuk bentuk yang memiliki orientasi visual simetris. Opsi B benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut gagal memenuhi hubungan bentuk, ukuran, jumlah, atau posisi pada baris/kolom. C: Opsi tersebut gagal memenuhi hubungan bentuk, ukuran, jumlah, atau posisi pada baris/kolom. D: Opsi tersebut gagal memenuhi hubungan bentuk, ukuran, jumlah, atau posisi pada baris/kolom. E: Opsi tersebut gagal memenuhi hubungan bentuk, ukuran, jumlah, atau posisi pada baris/kolom.",
+      "metadata": {
+        "shape": "3x3",
+        "rotation": "shape by row",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-050",
+      "category": "figural",
+      "type": "analogy",
+      "difficulty": "medium",
+      "instruction": "Tentukan hasil yang benar.",
+      "question": "A→B menunjukkan penambahan satu sisi pada bentuk. Terapkan ke C.",
+      "question_image": "/assets/figural/FIG-050-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-050-A.svg",
+        "B": "/assets/figural/FIG-050-B.svg",
+        "C": "/assets/figural/FIG-050-C.svg",
+        "D": "/assets/figural/FIG-050-D.svg",
+        "E": "/assets/figural/FIG-050-E.svg"
+      },
+      "answer": "E",
+      "rule": {
+        "description": "A→B menambah satu sisi. Terapkan pada C.",
+        "steps": [
+          "Triangle = 3 sisi → square = 4 sisi.",
+          "Diamond = 4 sisi → pentagon = 5 sisi.",
+          "Opsi A adalah pentagon."
+        ]
+      },
+      "explanation": "A→B menambah satu sisi. Terapkan pada C. Opsi C benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut menerapkan transformasi yang berbeda dari hubungan A→B. B: Opsi tersebut menerapkan transformasi yang berbeda dari hubungan A→B. D: Opsi tersebut menerapkan transformasi yang berbeda dari hubungan A→B. E: Opsi tersebut menerapkan transformasi yang berbeda dari hubungan A→B.",
+      "metadata": {
+        "shape": "triangle→square; diamond→5 sides",
+        "rotation": "+1 side",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-051",
+      "category": "figural",
+      "type": "sequence",
+      "difficulty": "hard",
+      "instruction": "Pilih panel berikutnya.",
+      "question": "Bentuk berganti, tetapi arah panah meningkat dua langkah sekaligus.",
+      "question_image": "/assets/figural/FIG-051-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-051-A.svg",
+        "B": "/assets/figural/FIG-051-B.svg",
+        "C": "/assets/figural/FIG-051-C.svg",
+        "D": "/assets/figural/FIG-051-D.svg",
+        "E": "/assets/figural/FIG-051-E.svg"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Posisi ganjil berisi panah yang berotasi 180°; posisi genap berisi bentuk geometris.",
+        "steps": [
+          "Panel ganjil: arrow 0°, arrow 180°, maka berikutnya arrow 0°.",
+          "Panel genap bukan bagian yang berubah pada langkah kelima."
+        ]
+      },
+      "explanation": "Posisi ganjil berisi panah yang berotasi 180°; posisi genap berisi bentuk geometris. Opsi D benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut memutus urutan gabungan atribut yang sedang berulang. B: Opsi tersebut memutus urutan gabungan atribut yang sedang berulang. C: Opsi tersebut memutus urutan gabungan atribut yang sedang berulang. E: Opsi tersebut memutus urutan gabungan atribut yang sedang berulang.",
+      "metadata": {
+        "shape": "arrow + alternating shape",
+        "rotation": "odd/even",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-052",
+      "category": "figural",
+      "type": "decomposition",
+      "difficulty": "hard",
+      "instruction": "Pilih hasil dekomposisi berikutnya.",
+      "question": "Bentuk luar tetap, tetapi satu komponen internal dihilangkan setiap langkah.",
+      "question_image": "/assets/figural/FIG-052-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-052-A.svg",
+        "B": "/assets/figural/FIG-052-B.svg",
+        "C": "/assets/figural/FIG-052-C.svg",
+        "D": "/assets/figural/FIG-052-D.svg",
+        "E": "/assets/figural/FIG-052-E.svg"
+      },
+      "answer": "B",
+      "rule": {
+        "description": "Komponen internal dihilangkan satu per satu: dua titik → satu titik → tanpa titik → hanya satu garis → tanpa garis.",
+        "steps": [
+          "Setelah empat tahap, komponen internal habis.",
+          "Maka berikutnya hanya persegi luar."
+        ]
+      },
+      "explanation": "Komponen internal dihilangkan satu per satu: dua titik → satu titik → tanpa titik → hanya satu garis → tanpa garis. Opsi E benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut menyisakan atau menghilangkan komponen yang tidak sesuai tahap dekomposisi. B: Opsi tersebut menyisakan atau menghilangkan komponen yang tidak sesuai tahap dekomposisi. C: Opsi tersebut menyisakan atau menghilangkan komponen yang tidak sesuai tahap dekomposisi. D: Opsi tersebut menyisakan atau menghilangkan komponen yang tidak sesuai tahap dekomposisi.",
+      "metadata": {
+        "shape": "square + decreasing inner components",
+        "rotation": "decomposition",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-053",
+      "category": "figural",
+      "type": "rotation",
+      "difficulty": "medium",
+      "instruction": "Pilih posisi penanda berikutnya.",
+      "question": "Sebuah bintang memiliki penanda titik di satu ujung. Penanda berpindah searah jarum jam.",
+      "question_image": "/assets/figural/FIG-053-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-053-A.svg",
+        "B": "/assets/figural/FIG-053-B.svg",
+        "C": "/assets/figural/FIG-053-C.svg",
+        "D": "/assets/figural/FIG-053-D.svg",
+        "E": "/assets/figural/FIG-053-E.svg"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Penanda berpindah dari ujung atas ke kanan-atas, kanan-bawah, kiri-bawah, lalu kiri-atas.",
+        "steps": [
+          "Urutan lima titik mengelilingi bintang.",
+          "Setelah kiri-bawah, berikutnya kiri-atas."
+        ]
+      },
+      "explanation": "Penanda berpindah dari ujung atas ke kanan-atas, kanan-bawah, kiri-bawah, lalu kiri-atas. Opsi C benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut memiliki orientasi yang tidak sesuai dengan sudut rotasi berikutnya. B: Opsi tersebut memiliki orientasi yang tidak sesuai dengan sudut rotasi berikutnya. D: Opsi tersebut memiliki orientasi yang tidak sesuai dengan sudut rotasi berikutnya. E: Opsi tersebut memiliki orientasi yang tidak sesuai dengan sudut rotasi berikutnya.",
+      "metadata": {
+        "shape": "star + dot",
+        "rotation": "clockwise 5-position",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-054",
+      "category": "figural",
+      "type": "reflection",
+      "difficulty": "easy",
+      "instruction": "Pilih hasil berikutnya.",
+      "question": "Bentuk dicerminkan kiri-kanan secara bergantian.",
+      "question_image": "/assets/figural/FIG-054-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-054-A.svg",
+        "B": "/assets/figural/FIG-054-B.svg",
+        "C": "/assets/figural/FIG-054-C.svg",
+        "D": "/assets/figural/FIG-054-D.svg",
+        "E": "/assets/figural/FIG-054-E.svg"
+      },
+      "answer": "D",
+      "rule": {
+        "description": "Orientasi bergantian antara 30° dan 150° akibat pencerminan.",
+        "steps": [
+          "30° → 150° → 30° → 150°.",
+          "Berikutnya 30°."
+        ]
+      },
+      "explanation": "Orientasi bergantian antara 30° dan 150° akibat pencerminan. Opsi D benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut tidak merupakan hasil pencerminan yang ditentukan. B: Opsi tersebut tidak merupakan hasil pencerminan yang ditentukan. C: Opsi tersebut tidak merupakan hasil pencerminan yang ditentukan. E: Opsi tersebut tidak merupakan hasil pencerminan yang ditentukan.",
+      "metadata": {
+        "shape": "triangle",
+        "rotation": "mirror alternation",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-055",
+      "category": "figural",
+      "type": "count_change",
+      "difficulty": "medium",
+      "instruction": "Pilih panel berikutnya.",
+      "question": "Jumlah garis vertikal bertambah satu setiap langkah.",
+      "question_image": "/assets/figural/FIG-055-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-055-A.svg",
+        "B": "/assets/figural/FIG-055-B.svg",
+        "C": "/assets/figural/FIG-055-C.svg",
+        "D": "/assets/figural/FIG-055-D.svg",
+        "E": "/assets/figural/FIG-055-E.svg"
+      },
+      "answer": "E",
+      "rule": {
+        "description": "Jumlah garis: 1 → 2 → 3 → 4.",
+        "steps": [
+          "Tambah satu garis vertikal setiap langkah.",
+          "Panel berikutnya memiliki empat garis."
+        ]
+      },
+      "explanation": "Jumlah garis: 1 → 2 → 3 → 4. Opsi E benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut memiliki jumlah elemen yang tidak sesuai dengan perubahan jumlah pada pola. B: Opsi tersebut memiliki jumlah elemen yang tidak sesuai dengan perubahan jumlah pada pola. C: Opsi tersebut memiliki jumlah elemen yang tidak sesuai dengan perubahan jumlah pada pola. D: Opsi tersebut memiliki jumlah elemen yang tidak sesuai dengan perubahan jumlah pada pola.",
+      "metadata": {
+        "shape": "vertical lines",
+        "rotation": "count +1",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-056",
+      "category": "figural",
+      "type": "fill_change",
+      "difficulty": "hard",
+      "instruction": "Pilih kombinasi isian berikutnya.",
+      "question": "Dua bentuk memiliki pola isian yang bergerak berlawanan.",
+      "question_image": "/assets/figural/FIG-056-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-056-A.svg",
+        "B": "/assets/figural/FIG-056-B.svg",
+        "C": "/assets/figural/FIG-056-C.svg",
+        "D": "/assets/figural/FIG-056-D.svg",
+        "E": "/assets/figural/FIG-056-E.svg"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Ketika lingkaran kosong, persegi penuh; ketika lingkaran penuh, persegi kosong.",
+        "steps": [
+          "Dua kombinasi berulang ABAB.",
+          "Panel berikutnya sama dengan panel pertama."
+        ]
+      },
+      "explanation": "Ketika lingkaran kosong, persegi penuh; ketika lingkaran penuh, persegi kosong. Opsi A benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: B: Opsi tersebut memakai isian yang tidak sesuai dengan siklus isian. C: Opsi tersebut memakai isian yang tidak sesuai dengan siklus isian. D: Opsi tersebut memakai isian yang tidak sesuai dengan siklus isian. E: Opsi tersebut memakai isian yang tidak sesuai dengan siklus isian.",
+      "metadata": {
+        "shape": "circle/square",
+        "rotation": "opposite fill",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-057",
+      "category": "figural",
+      "type": "movement",
+      "difficulty": "hard",
+      "instruction": "Pilih posisi berikutnya.",
+      "question": "Dua titik bergerak simetris dari luar menuju pusat.",
+      "question_image": "/assets/figural/FIG-057-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-057-A.svg",
+        "B": "/assets/figural/FIG-057-B.svg",
+        "C": "/assets/figural/FIG-057-C.svg",
+        "D": "/assets/figural/FIG-057-D.svg",
+        "E": "/assets/figural/FIG-057-E.svg"
+      },
+      "answer": "B",
+      "rule": {
+        "description": "Jarak antarkedua titik berkurang 40 pada setiap langkah: 100 → 60 → 20 → 0.",
+        "steps": [
+          "Titik bergerak simetris menuju pusat.",
+          "Setelah jarak 20, langkah berikutnya keduanya bertemu di pusat."
+        ]
+      },
+      "explanation": "Jarak antarkedua titik berkurang 40 pada setiap langkah: 100 → 60 → 20 → 0. Opsi B benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. C: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. D: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan. E: Opsi tersebut menempatkan objek pada posisi yang tidak mengikuti lintasan perpindahan.",
+      "metadata": {
+        "shape": "two dots",
+        "rotation": "converging",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-058",
+      "category": "figural",
+      "type": "shape_change",
+      "difficulty": "hard",
+      "instruction": "Pilih bentuk berikutnya.",
+      "question": "Bentuk utama berganti dengan aturan: jumlah sisi naik, lalu turun satu.",
+      "question_image": "/assets/figural/FIG-058-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-058-A.svg",
+        "B": "/assets/figural/FIG-058-B.svg",
+        "C": "/assets/figural/FIG-058-C.svg",
+        "D": "/assets/figural/FIG-058-D.svg",
+        "E": "/assets/figural/FIG-058-E.svg"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pola jumlah sisi: 3 → 4 → 5 → 4, sehingga kembali 3.",
+        "steps": [
+          "Bentuk: triangle (3), square (4), pentagon (5), diamond (4).",
+          "Berikutnya kembali ke triangle (3)."
+        ]
+      },
+      "explanation": "Pola jumlah sisi: 3 → 4 → 5 → 4, sehingga kembali 3. Opsi C benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut menggunakan bentuk/jumlah sisi yang tidak melanjutkan urutan. B: Opsi tersebut menggunakan bentuk/jumlah sisi yang tidak melanjutkan urutan. D: Opsi tersebut menggunakan bentuk/jumlah sisi yang tidak melanjutkan urutan. E: Opsi tersebut menggunakan bentuk/jumlah sisi yang tidak melanjutkan urutan.",
+      "metadata": {
+        "shape": "polygon",
+        "rotation": "3-4-5-4-3",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-059",
+      "category": "figural",
+      "type": "matrix",
+      "difficulty": "medium",
+      "instruction": "Pilih sel yang hilang.",
+      "question": "Pada tiap baris, jumlah titik bertambah dua; pada tiap kolom, bentuk berpindah circle-square-triangle.",
+      "question_image": "/assets/figural/FIG-059-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-059-A.svg",
+        "B": "/assets/figural/FIG-059-B.svg",
+        "C": "/assets/figural/FIG-059-C.svg",
+        "D": "/assets/figural/FIG-059-D.svg",
+        "E": "/assets/figural/FIG-059-E.svg"
+      },
+      "answer": "D",
+      "rule": {
+        "description": "Bentuk mengikuti kolom: circle → square → triangle. Jumlah titik bertambah dua per baris.",
+        "steps": [
+          "Kolom ketiga harus triangle.",
+          "Baris ketiga memiliki dua titik lebih banyak daripada baris kedua, yaitu delapan titik.",
+          "Opsi A memenuhi keduanya."
+        ]
+      },
+      "explanation": "Bentuk mengikuti kolom: circle → square → triangle. Jumlah titik bertambah dua per baris. Opsi D benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut gagal memenuhi hubungan bentuk, ukuran, jumlah, atau posisi pada baris/kolom. B: Opsi tersebut gagal memenuhi hubungan bentuk, ukuran, jumlah, atau posisi pada baris/kolom. C: Opsi tersebut gagal memenuhi hubungan bentuk, ukuran, jumlah, atau posisi pada baris/kolom. E: Opsi tersebut gagal memenuhi hubungan bentuk, ukuran, jumlah, atau posisi pada baris/kolom.",
+      "metadata": {
+        "shape": "3x3",
+        "rotation": "shape by column + count by row",
+        "generator_version": "1.0"
+      }
+    },
+    {
+      "question_id": "FIG-060",
+      "category": "figural",
+      "type": "transformation",
+      "difficulty": "medium",
+      "instruction": "Pilih hasil penggabungan berikutnya.",
+      "question": "Setiap langkah menggabungkan dua titik terdekat menjadi satu titik pusat.",
+      "question_image": "/assets/figural/FIG-060-question.svg",
+      "options": {
+        "A": "/assets/figural/FIG-060-A.svg",
+        "B": "/assets/figural/FIG-060-B.svg",
+        "C": "/assets/figural/FIG-060-C.svg",
+        "D": "/assets/figural/FIG-060-D.svg",
+        "E": "/assets/figural/FIG-060-E.svg"
+      },
+      "answer": "E",
+      "rule": {
+        "description": "Jumlah titik berkurang karena dua titik bergabung menjadi satu pada setiap langkah.",
+        "steps": [
+          "3 titik → 2 titik → 1 titik.",
+          "Maka langkah berikutnya menghasilkan satu titik pusat akhir yang sama; untuk siklus, kembali menjadi titik pusat yang lebih kecil."
+        ]
+      },
+      "explanation": "Jumlah titik berkurang karena dua titik bergabung menjadi satu pada setiap langkah. Opsi E benar karena merupakan satu-satunya pilihan yang memenuhi seluruh aturan tersebut. Alasan opsi lain: A: Opsi tersebut tidak merupakan hasil transformasi yang diterapkan pada langkah berikutnya. B: Opsi tersebut tidak merupakan hasil transformasi yang diterapkan pada langkah berikutnya. C: Opsi tersebut tidak merupakan hasil transformasi yang diterapkan pada langkah berikutnya. D: Opsi tersebut tidak merupakan hasil transformasi yang diterapkan pada langkah berikutnya.",
+      "metadata": {
+        "shape": "dots",
+        "rotation": "merge",
+        "generator_version": "1.0"
+      }
+    }
+  ]
+}
