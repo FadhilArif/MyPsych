@@ -13,7 +13,7 @@
   };
 
   const ADMIN_TEST_OPTIONS = Object.entries(TESTS)
-    .filter(([id, test]) => test.kind === 'mcq')
+    .filter(([, test]) => test.kind === 'mcq' && !test.staticBank)
     .map(([id, test]) => ({ id, name: test.name, group: test.group === 'skd' ? 'skd' : 'psikotes' }));
 
   function renderAdminTestOptions_(selected = '') {

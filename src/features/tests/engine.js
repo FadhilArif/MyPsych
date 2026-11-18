@@ -17,7 +17,89 @@
     tkp: './soal_tkp.json',
   });
 
+  // Satu file per paket, dimuat langsung dari repo (bukan bank soal Supabase)
+  // karena soal TIU HOTS ini membawa stimulus tabel/wacana/konteks.
+  const SKD_PACKAGE_FILES = Object.freeze({
+    1: './data/skd/paket_1.json',
+    2: './data/skd/paket_2.json',
+    3: './data/skd/paket_3.json',
+    4: './data/skd/paket_4.json',
+    5: './data/skd/paket_5.json',
+    6: './data/skd/paket_6.json',
+    7: './data/skd/paket_7.json',
+    8: './data/skd/paket_8.json',
+    9: './data/skd/paket_9.json',
+    10: './data/skd/paket_10.json',
+  });
+
+  async function loadSKDPackage_(packageNumber) {
+    const packageKey = Number(packageNumber) || 1;
+    const filePath = SKD_PACKAGE_FILES[packageKey];
+
+    if (!filePath) {
+      throw new Error(
+        `Paket SKD ${packageNumber} tidak tersedia. Pilih paket 1–${TESTS.skd_paket.packages}.`
+      );
+    }
+
+    const response = await fetch(filePath, {
+      cache: 'no-cache',
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Gagal memuat paket ${packageNumber}. HTTP ${response.status}.`
+      );
+    }
+
+    const data = await response.json();
+
+    if (!data || !Array.isArray(data.soal) || !data.soal.length) {
+      throw new Error(
+        `Format ${filePath} tidak valid.`
+      );
+    }
+
+    return data.soal.map((item, index) => {
+      const optionEntries = Object.entries(item.options || {});
+
+      if (!optionEntries.length) {
+        throw new Error(
+          `Soal nomor ${index + 1} pada ${filePath} tidak memiliki opsi jawaban.`
+        );
+      }
+
+      const correctIndex = optionEntries.findIndex(
+        ([letter]) =>
+          String(letter).toUpperCase() ===
+          String(item.answer).trim().toUpperCase()
+      );
+
+      if (correctIndex === -1) {
+        throw new Error(
+          `Jawaban soal nomor ${index + 1} pada ${filePath} tidak valid.`
+        );
+      }
+
+      return {
+        id: item.question_id ?? index + 1,
+        text: String(item.question ?? ''),
+        options: optionEntries.map(([, value]) => String(value)),
+        correct: correctIndex,
+        discussion: String(item.explanation ?? ''),
+        instruction: String(item.instruction ?? ''),
+        stimulus: item.stimulus || null,
+      };
+    });
+  }
+
   async function loadQuestionPackage(testId, packageNumber) {
+    // Paket SKD selalu dari JSON statis: bank soal Supabase tidak menyimpan
+    // stimulus, sehingga soal tabel/wacana akan tidak bisa dijawab.
+    if (testId === 'skd_paket') {
+      return loadSKDPackage_(packageNumber);
+    }
+
     // Akun peserta terdaftar memprioritaskan bank soal di supabase.
     // Kalau bank belum dimigrasikan, fallback tetap menggunakan JSON GitHub lama.
     if (state.session?.token && !state.isGuest) {

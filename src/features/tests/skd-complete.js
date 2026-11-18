@@ -852,17 +852,75 @@
     startQuestionTimer();
   }
 
+  function mcqSecondsPerQuestion_() {
+    const seconds = Number(TESTS[state.test]?.secondsPerQuestion);
+    return Number.isFinite(seconds) && seconds > 0
+      ? seconds
+      : CONFIG.MCQ_SECONDS;
+  }
+
+  /**
+   * Stimulus dipakai soal TIU HOTS: tabel, wacana, atau konteks singkat.
+   * Tanpa blok ini soal analisa tabel dan penalaran analitis tidak bisa
+   * dijawab karena informasi soalnya tidak ikut tampil.
+   */
+  function renderStimulusHtml_(question) {
+    const stimulus = question?.stimulus;
+    if (!stimulus || typeof stimulus !== 'object') return '';
+
+    const blocks = [];
+
+    if (stimulus.tabel) {
+      blocks.push(
+        `<div class="test-stimulus test-stimulus-table"><pre>${escapeHtml(String(stimulus.tabel))}</pre></div>`
+      );
+    }
+
+    if (stimulus.wacana) {
+      blocks.push(
+        `<div class="test-stimulus"><p>${escapeHtml(String(stimulus.wacana))}</p></div>`
+      );
+    }
+
+    if (stimulus.konteks) {
+      blocks.push(
+        `<div class="test-stimulus"><p>${escapeHtml(String(stimulus.konteks))}</p></div>`
+      );
+    }
+
+    if (!blocks.length) {
+      // Jaga-jaga kalau format stimulus berubah di kemudian hari.
+      const text = Object.values(stimulus)
+        .filter((value) => typeof value === 'string' && value.trim())
+        .join('\n\n');
+      if (text) {
+        blocks.push(`<div class="test-stimulus"><p>${escapeHtml(text)}</p></div>`);
+      }
+    }
+
+    return blocks.join('');
+  }
+
   function renderMCQ() {
     const question = state.questions[state.index];
     if (!question) return;
 
+    const total = state.questions.length || CONFIG.MCQ_QUESTIONS;
+    const seconds = mcqSecondsPerQuestion_();
+
     $('testTypeLabel').textContent = TESTS[state.test].name;
-    $('questionCounter').textContent = `${state.index + 1}/${CONFIG.MCQ_QUESTIONS}`;
-    $('timeCounter').textContent = `${CONFIG.MCQ_SECONDS}s`;
-    $('progressBar').style.width = `${(state.index / CONFIG.MCQ_QUESTIONS) * 100}%`;
+    $('questionCounter').textContent = `${state.index + 1}/${total}`;
+    $('timeCounter').textContent = `${seconds}s`;
+    $('progressBar').style.width = `${(state.index / total) * 100}%`;
 
     $('testContent').innerHTML = `
+      ${renderStimulusHtml_(question)}
       <div class="test-question-label">PERTANYAAN ${state.index + 1}</div>
+      ${
+        question.instruction
+          ? `<p class="test-instruction">${escapeHtml(question.instruction)}</p>`
+          : ''
+      }
       <h2>${escapeHtml(question.text)}</h2>
     `;
 
@@ -878,12 +936,12 @@
       $('keypad').appendChild(button);
     });
 
-    $('testHint').textContent = `Pilih satu jawaban. Waktu per soal: ${CONFIG.MCQ_SECONDS} detik.`;
+    $('testHint').textContent = `Pilih satu jawaban. Waktu per soal: ${seconds} detik.`;
   }
 
   function startQuestionTimer() {
     stopTimer();
-    const end = Date.now() + CONFIG.MCQ_SECONDS * 1000;
+    const end = Date.now() + mcqSecondsPerQuestion_() * 1000;
 
     state.timerId = setInterval(() => {
       const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
@@ -914,7 +972,7 @@
     // Catat waktu yang dipakai untuk soal ini.
     // Batas maksimal mengikuti timer per soal.
     const elapsedSeconds = Math.min(
-      CONFIG.MCQ_SECONDS,
+      mcqSecondsPerQuestion_(),
       Math.max(
         0,
         (Date.now() - state.questionStartedAt) / 1000

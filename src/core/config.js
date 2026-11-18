@@ -92,6 +92,19 @@
         group: 'skd',
         logo: './assets/logos/logo_tkp.png',
       }),
+      skd_paket: Object.freeze({
+        name: 'Paket SKD',
+        fullName: 'TIU HOTS',
+        description: '10 paket soal TIU HOTS, 36 soal per paket, lengkap dengan pembahasan.',
+        kind: 'mcq',
+        group: 'skd',
+        packages: 10,
+        questionsPerPackage: 36,
+        secondsPerQuestion: 60,
+        // Bank soal statis di data/skd/, bukan question_bank Supabase.
+        staticBank: true,
+        logo: './assets/logos/logo_tiu.png',
+      }),
       skd_lengkap: Object.freeze({
         name: 'SKD Paket Lengkap',
         fullName: 'TWK + TIU + TKP',

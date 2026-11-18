@@ -3143,6 +3143,42 @@ body[data-view="admin"] .app-layout {
 .test-question-label {
   font-size:.62rem; font-weight:900; letter-spacing:.15em; color:var(--soft-text); margin-bottom:12px;
 }
+
+/* Stimulus soal TIU HOTS (tabel, wacana, konteks). */
+.test-stimulus {
+  width:min(760px,100%);
+  max-height:42vh;
+  overflow:auto;
+  margin-bottom:14px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--bg);
+  color:var(--text);
+  font-size:.9rem;
+  line-height:1.55;
+  text-align:left;
+}
+.test-stimulus p { margin:0; }
+.test-stimulus pre {
+  margin:0;
+  font-family:inherit;
+  font-size:.85rem;
+  line-height:1.5;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.test-instruction {
+  max-width:760px;
+  margin:0 0 10px;
+  color:var(--muted);
+  text-align:center;
+  font-size:.9rem;
+}
+
+/* Soal dengan stimulus bisa lebih tinggi dari layar, jadi area soal
+   di-scroll sementara topbar (timer) tetap terlihat. */
+.test-body { overflow-y:auto; overscroll-behavior:contain; }
 .test-keypad-numeric { grid-template-columns:repeat(3, 1fr); max-width:420px; }
 .test-digit { min-height:52px; }
 .test-digit.zero { grid-column:2; }
