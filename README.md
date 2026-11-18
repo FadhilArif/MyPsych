@@ -50,6 +50,7 @@ src/
   ui/                      # navigasi, view, sidebar
   styles/                  # base.css, overrides.css, landing.css
 soal_*.json, paket_*.json  # bank soal fallback untuk mode tamu
+data/skd/                  # 10 paket TIU HOTS (paket_1..10.json)
 assets/logos/              # logo tes + aset figural (SVG)
 docs/database-schema.md    # skema tabel Supabase (hasil pembacaan kode)
 ```
@@ -127,6 +128,24 @@ Error tak terduga dicatat di log function, bukan dikirim ke client.
 Penilaian MCQ dilakukan **di server** untuk bank soal Supabase, sehingga
 kunci jawaban tidak pernah dikirim ke client. Mode tamu memakai JSON lokal
 yang memang berisi kunci jawaban (skor tamu tidak pernah disimpan).
+
+## Paket SKD (TIU HOTS)
+
+Area terpisah di menu SKD: 10 paket yang bisa dipilih (Paket 1–10), masing-masing
+36 soal TIU dan 60 detik per soal.
+
+- Data ada di `data/skd/paket_1.json` … `paket_10.json`, satu file per paket.
+- **Selalu dibaca dari JSON statis**, termasuk untuk akun login, karena soal
+  membawa `stimulus` (tabel, wacana, konteks) yang tidak ada di `question_bank`.
+  Konsekuensinya kunci jawaban ada di client, sama seperti bank soal tamu —
+  jangan dipakai untuk penilaian resmi.
+- Enam tipe soal, 6 soal per tipe: `deret_bilangan`, `kecukupan_data`,
+  `bilangan_setara`, `penalaran_analitis`, `analisa_tabel`, `silogisme`.
+- Menambah paket baru: taruh filenya di `data/skd/`, daftarkan di
+  `SKD_PACKAGE_FILES` (`src/features/tests/engine.js`), lalu tambahkan
+  `<option>` di kartu `#skdView` (`index.html`).
+- `npm test` memvalidasi struktur semua file paket (36 soal, kunci valid,
+  6 soal per tipe, stimulus hanya pada tipe yang membutuhkannya).
 
 ## Test
 
