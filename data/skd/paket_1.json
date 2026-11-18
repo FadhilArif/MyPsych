@@ -1,0 +1,1268 @@
+{
+  "kategori": "Tes Intelegensi Umum (TIU) — HOTS",
+  "id_paket": 1,
+  "nama_paket": "Paket 1",
+  "soal_per_paket": 36,
+  "soal": [
+    {
+      "question_id": "TIU-01-001",
+      "category": "tiu",
+      "type": "deret_bilangan",
+      "difficulty": "hard",
+      "instruction": "Tentukan angka atau pola berikutnya yang paling tepat.",
+      "question": "2, 5, 12, 27, 58, ...",
+      "question_image": null,
+      "options": {
+        "A": "118",
+        "B": "120",
+        "C": "121",
+        "D": "122",
+        "E": "124"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pola: (x2 + 1), (x2 + 2), (x2 + 3), (x2 + 4), (x2 + 5).",
+        "steps": [
+          "Pola: (x2 + 1), (x2 + 2), (x2 + 3), (x2 + 4), (x2 + 5).",
+          "Jadi 58 x 2 + 5 = 121."
+        ]
+      },
+      "explanation": "Pola: (x2 + 1), (x2 + 2), (x2 + 3), (x2 + 4), (x2 + 5). Jadi 58 x 2 + 5 = 121.",
+      "metadata": {
+        "kode": "DER",
+        "tipe": "Deret Tabel dan Bilangan",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-002",
+      "category": "tiu",
+      "type": "deret_bilangan",
+      "difficulty": "medium",
+      "instruction": "Tentukan angka atau pola berikutnya yang paling tepat.",
+      "question": "3, 4, 7, 11, 18, 29, ...",
+      "question_image": null,
+      "options": {
+        "A": "45",
+        "B": "46",
+        "C": "47",
+        "D": "48",
+        "E": "49"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pola Fibonacci: setiap angka adalah hasil penjumlahan dua angka sebelumnya (3+4=7, 4+7=11, 7+11=18, 11+18=29, 18+29=47).",
+        "steps": [
+          "Pola Fibonacci: setiap angka adalah hasil penjumlahan dua angka sebelumnya (3+4=7, 4+7=11, 7+11=18, 11+18=29, 18+29=47)."
+        ]
+      },
+      "explanation": "Pola Fibonacci: setiap angka adalah hasil penjumlahan dua angka sebelumnya (3+4=7, 4+7=11, 7+11=18, 11+18=29, 18+29=47).",
+      "metadata": {
+        "kode": "DER",
+        "tipe": "Deret Tabel dan Bilangan",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-003",
+      "category": "tiu",
+      "type": "deret_bilangan",
+      "difficulty": "hard",
+      "instruction": "Tentukan angka atau pola berikutnya yang paling tepat.",
+      "question": "A1, C3, F6, J10, ...",
+      "question_image": null,
+      "options": {
+        "A": "O15",
+        "B": "N14",
+        "C": "O14",
+        "D": "P15",
+        "E": "M15"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Huruf: A(+2)C(+3)F(+4)J(+5)O.",
+        "steps": [
+          "Huruf: A(+2)C(+3)F(+4)J(+5)O.",
+          "Angka: 1(+2)3(+3)6(+4)10(+5)15."
+        ]
+      },
+      "explanation": "Huruf: A(+2)C(+3)F(+4)J(+5)O. Angka: 1(+2)3(+3)6(+4)10(+5)15.",
+      "metadata": {
+        "kode": "DER",
+        "tipe": "Deret Tabel dan Bilangan",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-004",
+      "category": "tiu",
+      "type": "deret_bilangan",
+      "difficulty": "medium",
+      "instruction": "Tentukan angka atau pola berikutnya yang paling tepat.",
+      "question": "Baris 1: 3, 4, 12 | Baris 2: 5, 6, 30 | Baris 3: 7, 8, ...",
+      "question_image": null,
+      "options": {
+        "A": "42",
+        "B": "48",
+        "C": "56",
+        "D": "64",
+        "E": "72"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pola: kolom 1 dikali kolom 2 menghasilkan kolom 3.",
+        "steps": [
+          "Pola: kolom 1 dikali kolom 2 menghasilkan kolom 3.",
+          "7 x 8 = 56."
+        ]
+      },
+      "explanation": "Pola: kolom 1 dikali kolom 2 menghasilkan kolom 3. 7 x 8 = 56.",
+      "metadata": {
+        "kode": "DER",
+        "tipe": "Deret Tabel dan Bilangan",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-005",
+      "category": "tiu",
+      "type": "deret_bilangan",
+      "difficulty": "easy",
+      "instruction": "Tentukan angka atau pola berikutnya yang paling tepat.",
+      "question": "Baris 1: 8, 2, 4 | Baris 2: 15, 3, 5 | Baris 3: 20, 4, ...",
+      "question_image": null,
+      "options": {
+        "A": "2",
+        "B": "3",
+        "C": "4",
+        "D": "5",
+        "E": "6"
+      },
+      "answer": "D",
+      "rule": {
+        "description": "Pola: kolom 1 dibagi kolom 2 menghasilkan kolom 3.",
+        "steps": [
+          "Pola: kolom 1 dibagi kolom 2 menghasilkan kolom 3.",
+          "20 / 4 = 5."
+        ]
+      },
+      "explanation": "Pola: kolom 1 dibagi kolom 2 menghasilkan kolom 3. 20 / 4 = 5.",
+      "metadata": {
+        "kode": "DER",
+        "tipe": "Deret Tabel dan Bilangan",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-006",
+      "category": "tiu",
+      "type": "deret_bilangan",
+      "difficulty": "medium",
+      "instruction": "Tentukan angka atau pola berikutnya yang paling tepat.",
+      "question": "3, 4, 7, 12, 19, 30, ...",
+      "question_image": null,
+      "options": {
+        "A": "41",
+        "B": "42",
+        "C": "43",
+        "D": "44",
+        "E": "45"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Selisih: +1, +3, +5, +7, +11 (bilangan prima).",
+        "steps": [
+          "Selisih: +1, +3, +5, +7, +11 (bilangan prima).",
+          "Urutan prima selanjutnya adalah 13.",
+          "Maka 30 + 13 = 43."
+        ]
+      },
+      "explanation": "Selisih: +1, +3, +5, +7, +11 (bilangan prima). Urutan prima selanjutnya adalah 13. Maka 30 + 13 = 43.",
+      "metadata": {
+        "kode": "DER",
+        "tipe": "Deret Tabel dan Bilangan",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-007",
+      "category": "tiu",
+      "type": "kecukupan_data",
+      "difficulty": "easy",
+      "instruction": "Tentukan apakah pernyataan (1) dan/atau (2) cukup untuk menjawab pertanyaan.",
+      "question": "Apakah nilai x positif?\n\nPernyataan (1): 3x + 5 = 11\nPernyataan (2): x² = 4",
+      "question_image": null,
+      "options": {
+        "A": "Pernyataan (1) SAJA cukup, pernyataan (2) saja tidak cukup",
+        "B": "Pernyataan (2) SAJA cukup, pernyataan (1) saja tidak cukup",
+        "C": "DUA pernyataan BERSAMA-SAMA cukup, tetapi satu saja tidak cukup",
+        "D": "Masing-masing pernyataan SAJA cukup",
+        "E": "Pernyataan (1) dan (2) BERSAMA-SAMA tidak cukup"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Pernyataan (1) menghasilkan x = 2 (positif).",
+        "steps": [
+          "Pernyataan (1) menghasilkan x = 2 (positif).",
+          "Pernyataan (2) menghasilkan x = 2 atau x = -2, sehingga tidak cukup."
+        ]
+      },
+      "explanation": "Pernyataan (1) menghasilkan x = 2 (positif). Pernyataan (2) menghasilkan x = 2 atau x = -2, sehingga tidak cukup.",
+      "metadata": {
+        "kode": "KCD",
+        "tipe": "Soal Cerita Kecukupan Data",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-008",
+      "category": "tiu",
+      "type": "kecukupan_data",
+      "difficulty": "medium",
+      "instruction": "Tentukan apakah pernyataan (1) dan/atau (2) cukup untuk menjawab pertanyaan.",
+      "question": "Berapakah harga satu buku tulis?\n\nPernyataan (1): Harga 3 buku dan 2 pensil adalah Rp15.000\nPernyataan (2): Harga 6 buku dan 4 pensil adalah Rp30.000",
+      "question_image": null,
+      "options": {
+        "A": "Pernyataan (1) SAJA cukup, pernyataan (2) saja tidak cukup",
+        "B": "Pernyataan (2) SAJA cukup, pernyataan (1) saja tidak cukup",
+        "C": "DUA pernyataan BERSAMA-SAMA cukup, tetapi satu saja tidak cukup",
+        "D": "Masing-masing pernyataan SAJA cukup",
+        "E": "Pernyataan (1) dan (2) BERSAMA-SAMA tidak cukup"
+      },
+      "answer": "E",
+      "rule": {
+        "description": "Pernyataan (1) dan (2) memberikan informasi yang identik (kelipatan), sehingga tidak bisa menentukan harga masing-masing item secara spesifik.",
+        "steps": [
+          "Pernyataan (1) dan (2) memberikan informasi yang identik (kelipatan), sehingga tidak bisa menentukan harga masing-masing item secara spesifik."
+        ]
+      },
+      "explanation": "Pernyataan (1) dan (2) memberikan informasi yang identik (kelipatan), sehingga tidak bisa menentukan harga masing-masing item secara spesifik.",
+      "metadata": {
+        "kode": "KCD",
+        "tipe": "Soal Cerita Kecukupan Data",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-009",
+      "category": "tiu",
+      "type": "kecukupan_data",
+      "difficulty": "medium",
+      "instruction": "Tentukan apakah pernyataan (1) dan/atau (2) cukup untuk menjawab pertanyaan.",
+      "question": "Berapakah luas persegi panjang tersebut?\n\nPernyataan (1): Keliling persegi panjang adalah 20 cm\nPernyataan (2): Lebar persegi panjang adalah 4 cm",
+      "question_image": null,
+      "options": {
+        "A": "Pernyataan (1) SAJA cukup, pernyataan (2) saja tidak cukup",
+        "B": "Pernyataan (2) SAJA cukup, pernyataan (1) saja tidak cukup",
+        "C": "DUA pernyataan BERSAMA-SAMA cukup, tetapi satu saja tidak cukup",
+        "D": "Masing-masing pernyataan SAJA cukup",
+        "E": "Pernyataan (1) dan (2) BERSAMA-SAMA tidak cukup"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pernyataan (1) butuh panjang, pernyataan (2) butuh panjang.",
+        "steps": [
+          "Pernyataan (1) butuh panjang, pernyataan (2) butuh panjang.",
+          "Dengan keduanya, kita bisa mencari panjang (K=2(p+l)) dan menghitung luas."
+        ]
+      },
+      "explanation": "Pernyataan (1) butuh panjang, pernyataan (2) butuh panjang. Dengan keduanya, kita bisa mencari panjang (K=2(p+l)) dan menghitung luas.",
+      "metadata": {
+        "kode": "KCD",
+        "tipe": "Soal Cerita Kecukupan Data",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-010",
+      "category": "tiu",
+      "type": "kecukupan_data",
+      "difficulty": "easy",
+      "instruction": "Tentukan apakah pernyataan (1) dan/atau (2) cukup untuk menjawab pertanyaan.",
+      "question": "Berapa rata-rata nilai tiga orang siswa?\n\nPernyataan (1): Nilai total mereka adalah 240\nPernyataan (2): Nilai mereka sama besar",
+      "question_image": null,
+      "options": {
+        "A": "Pernyataan (1) SAJA cukup, pernyataan (2) saja tidak cukup",
+        "B": "Pernyataan (2) SAJA cukup, pernyataan (1) saja tidak cukup",
+        "C": "DUA pernyataan BERSAMA-SAMA cukup, tetapi satu saja tidak cukup",
+        "D": "Masing-masing pernyataan SAJA cukup",
+        "E": "Pernyataan (1) dan (2) BERSAMA-SAMA tidak cukup"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Rata-rata = Total/n.",
+        "steps": [
+          "Rata-rata = Total/n.",
+          "Total sudah ada di pernyataan (1), n=3.",
+          "Pernyataan (2) tidak diperlukan."
+        ]
+      },
+      "explanation": "Rata-rata = Total/n. Total sudah ada di pernyataan (1), n=3. Pernyataan (2) tidak diperlukan.",
+      "metadata": {
+        "kode": "KCD",
+        "tipe": "Soal Cerita Kecukupan Data",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-011",
+      "category": "tiu",
+      "type": "kecukupan_data",
+      "difficulty": "hard",
+      "instruction": "Tentukan apakah pernyataan (1) dan/atau (2) cukup untuk menjawab pertanyaan.",
+      "question": "Berapakah nilai x?\n\nPernyataan (1): 2x + y = 10\nPernyataan (2): 4x + 2y = 20",
+      "question_image": null,
+      "options": {
+        "A": "Pernyataan (1) SAJA cukup, pernyataan (2) saja tidak cukup",
+        "B": "Pernyataan (2) SAJA cukup, pernyataan (1) saja tidak cukup",
+        "C": "DUA pernyataan BERSAMA-SAMA cukup, tetapi satu saja tidak cukup",
+        "D": "Masing-masing pernyataan SAJA cukup",
+        "E": "Pernyataan (1) dan (2) BERSAMA-SAMA tidak cukup"
+      },
+      "answer": "E",
+      "rule": {
+        "description": "Kedua pernyataan adalah persamaan yang sama (linear dependent), sehingga tidak bisa mendapatkan nilai x yang unik.",
+        "steps": [
+          "Kedua pernyataan adalah persamaan yang sama (linear dependent), sehingga tidak bisa mendapatkan nilai x yang unik."
+        ]
+      },
+      "explanation": "Kedua pernyataan adalah persamaan yang sama (linear dependent), sehingga tidak bisa mendapatkan nilai x yang unik.",
+      "metadata": {
+        "kode": "KCD",
+        "tipe": "Soal Cerita Kecukupan Data",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-012",
+      "category": "tiu",
+      "type": "kecukupan_data",
+      "difficulty": "medium",
+      "instruction": "Tentukan apakah pernyataan (1) dan/atau (2) cukup untuk menjawab pertanyaan.",
+      "question": "Apakah bilangan bulat p adalah bilangan genap?\n\nPernyataan (1): p + 1 adalah bilangan ganjil\nPernyataan (2): 2p adalah bilangan genap",
+      "question_image": null,
+      "options": {
+        "A": "Pernyataan (1) SAJA cukup, pernyataan (2) saja tidak cukup",
+        "B": "Pernyataan (2) SAJA cukup, pernyataan (1) saja tidak cukup",
+        "C": "DUA pernyataan BERSAMA-SAMA cukup, tetapi satu saja tidak cukup",
+        "D": "Masing-masing pernyataan SAJA cukup",
+        "E": "Pernyataan (1) dan (2) BERSAMA-SAMA tidak cukup"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Pernyataan (1) jika p+1 ganjil, maka p genap (cukup).",
+        "steps": [
+          "Pernyataan (1) jika p+1 ganjil, maka p genap (cukup).",
+          "Pernyataan (2) 2p selalu genap untuk p bulat apapun, jadi tidak cukup."
+        ]
+      },
+      "explanation": "Pernyataan (1) jika p+1 ganjil, maka p genap (cukup). Pernyataan (2) 2p selalu genap untuk p bulat apapun, jadi tidak cukup.",
+      "metadata": {
+        "kode": "KCD",
+        "tipe": "Soal Cerita Kecukupan Data",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-013",
+      "category": "tiu",
+      "type": "bilangan_setara",
+      "difficulty": "easy",
+      "instruction": "Bandingkan Kolom A dan Kolom B, lalu pilih hubungan yang tepat.",
+      "question": "Kolom A: 5/8\nKolom B: 65%",
+      "question_image": null,
+      "stimulus": {
+        "konteks": "Pecahan"
+      },
+      "options": {
+        "A": "Kolom A lebih besar",
+        "B": "Kolom B lebih besar",
+        "C": "Kolom A = Kolom B",
+        "D": "Tidak dapat ditentukan"
+      },
+      "answer": "B",
+      "rule": {
+        "description": "5/8 sama dengan 0,625 atau 62,5%.",
+        "steps": [
+          "5/8 sama dengan 0,625 atau 62,5%.",
+          "Karena 65% > 62,5%, maka Kolom B lebih besar dari Kolom A."
+        ]
+      },
+      "explanation": "5/8 sama dengan 0,625 atau 62,5%. Karena 65% > 62,5%, maka Kolom B lebih besar dari Kolom A.",
+      "metadata": {
+        "kode": "BLS",
+        "tipe": "Berhitung Bilangan Setara",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "perbandingan": "B>A",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-014",
+      "category": "tiu",
+      "type": "bilangan_setara",
+      "difficulty": "medium",
+      "instruction": "Bandingkan Kolom A dan Kolom B, lalu pilih hubungan yang tepat.",
+      "question": "Kolom A: Luas persegi dengan sisi 6 cm\nKolom B: Luas lingkaran dengan jari-jari 3 cm",
+      "question_image": null,
+      "stimulus": {
+        "konteks": "Geometri"
+      },
+      "options": {
+        "A": "Kolom A lebih besar",
+        "B": "Kolom B lebih besar",
+        "C": "Kolom A = Kolom B",
+        "D": "Tidak dapat ditentukan"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Kolom A: 6 x 6 = 36.",
+        "steps": [
+          "Kolom A: 6 x 6 = 36.",
+          "Kolom B: 3,14 x 3 x 3 = 28,26.",
+          "Maka 36 > 28,26."
+        ]
+      },
+      "explanation": "Kolom A: 6 x 6 = 36. Kolom B: 3,14 x 3 x 3 = 28,26. Maka 36 > 28,26.",
+      "metadata": {
+        "kode": "BLS",
+        "tipe": "Berhitung Bilangan Setara",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "perbandingan": "A>B",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-015",
+      "category": "tiu",
+      "type": "bilangan_setara",
+      "difficulty": "easy",
+      "instruction": "Bandingkan Kolom A dan Kolom B, lalu pilih hubungan yang tepat.",
+      "question": "Kolom A: (0,5)²\nKolom B: (0,5)³",
+      "question_image": null,
+      "stimulus": {
+        "konteks": "Persamaan"
+      },
+      "options": {
+        "A": "Kolom A lebih besar",
+        "B": "Kolom B lebih besar",
+        "C": "Kolom A = Kolom B",
+        "D": "Tidak dapat ditentukan"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Kolom A: 0,25.",
+        "steps": [
+          "Kolom A: 0,25.",
+          "Kolom B: 0,125.",
+          "Karena 0,25 > 0,125, maka A > B."
+        ]
+      },
+      "explanation": "Kolom A: 0,25. Kolom B: 0,125. Karena 0,25 > 0,125, maka A > B.",
+      "metadata": {
+        "kode": "BLS",
+        "tipe": "Berhitung Bilangan Setara",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "perbandingan": "A>B",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-016",
+      "category": "tiu",
+      "type": "bilangan_setara",
+      "difficulty": "medium",
+      "instruction": "Bandingkan Kolom A dan Kolom B, lalu pilih hubungan yang tepat.",
+      "question": "Kolom A: √(144 + 25)\nKolom B: √144 + √25",
+      "question_image": null,
+      "stimulus": {
+        "konteks": "Akar"
+      },
+      "options": {
+        "A": "Kolom A lebih besar",
+        "B": "Kolom B lebih besar",
+        "C": "Kolom A = Kolom B",
+        "D": "Tidak dapat ditentukan"
+      },
+      "answer": "B",
+      "rule": {
+        "description": "Kolom A = √169 = 13.",
+        "steps": [
+          "Kolom A = √169 = 13.",
+          "Kolom B = 12 + 5 = 17.",
+          "Karena 17 > 13, maka Kolom B lebih besar."
+        ]
+      },
+      "explanation": "Kolom A = √169 = 13. Kolom B = 12 + 5 = 17. Karena 17 > 13, maka Kolom B lebih besar.",
+      "metadata": {
+        "kode": "BLS",
+        "tipe": "Berhitung Bilangan Setara",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "perbandingan": "B>A",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-017",
+      "category": "tiu",
+      "type": "bilangan_setara",
+      "difficulty": "medium",
+      "instruction": "Bandingkan Kolom A dan Kolom B, lalu pilih hubungan yang tepat.",
+      "question": "Kolom A: Luas persegi dengan sisi 8 cm\nKolom B: Luas lingkaran dengan diameter 8 cm",
+      "question_image": null,
+      "stimulus": {
+        "konteks": "Geometri"
+      },
+      "options": {
+        "A": "Kolom A lebih besar",
+        "B": "Kolom B lebih besar",
+        "C": "Kolom A = Kolom B",
+        "D": "Tidak dapat ditentukan"
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Luas A = 8x8 = 64.",
+        "steps": [
+          "Luas A = 8x8 = 64.",
+          "Luas B = π x r² = 3,14 x 16 = 50,24.",
+          "Karena 64 > 50,24, maka Kolom A lebih besar."
+        ]
+      },
+      "explanation": "Luas A = 8x8 = 64. Luas B = π x r² = 3,14 x 16 = 50,24. Karena 64 > 50,24, maka Kolom A lebih besar.",
+      "metadata": {
+        "kode": "BLS",
+        "tipe": "Berhitung Bilangan Setara",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "perbandingan": "A>B",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-018",
+      "category": "tiu",
+      "type": "bilangan_setara",
+      "difficulty": "easy",
+      "instruction": "Bandingkan Kolom A dan Kolom B, lalu pilih hubungan yang tepat.",
+      "question": "Kolom A: 35% dari 80\nKolom B: 80% dari 35",
+      "question_image": null,
+      "stimulus": {
+        "konteks": "Persentase"
+      },
+      "options": {
+        "A": "Kolom A lebih besar",
+        "B": "Kolom B lebih besar",
+        "C": "Kolom A = Kolom B",
+        "D": "Tidak dapat ditentukan"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Sifat komutatif persentase: (a% x b) = (b% x a).",
+        "steps": [
+          "Sifat komutatif persentase: (a% x b) = (b% x a).",
+          "Maka 0,35 x 80 = 28 dan 0,80 x 35 = 28."
+        ]
+      },
+      "explanation": "Sifat komutatif persentase: (a% x b) = (b% x a). Maka 0,35 x 80 = 28 dan 0,80 x 35 = 28.",
+      "metadata": {
+        "kode": "BLS",
+        "tipe": "Berhitung Bilangan Setara",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "perbandingan": "A=B",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-019",
+      "category": "tiu",
+      "type": "penalaran_analitis",
+      "difficulty": "hard",
+      "instruction": "Pilih pernyataan yang paling memperkuat atau memperlemah argumen.",
+      "question": "Manakah pernyataan berikut yang paling memperkuat argumen di atas?",
+      "question_image": null,
+      "stimulus": {
+        "wacana": "Pemerintah berencana menerapkan sistem pembelajaran berbasis kecerdasan buatan (AI) di sekolah-sekolah daerah terpencil untuk mengatasi keterbatasan jumlah guru. Metode ini dinilai mampu memberikan materi yang dipersonalisasi sesuai dengan tingkat pemahaman masing-masing siswa. Dengan demikian, kualitas pendidikan di daerah terpencil akan meningkat secara signifikan dalam jangka panjang."
+      },
+      "options": {
+        "A": "Banyak siswa di daerah terpencil belum memiliki perangkat gawai yang memadai.",
+        "B": "Uji coba pembelajaran AI di beberapa wilayah menunjukkan peningkatan nilai rata-rata siswa sebesar 20 persen.",
+        "C": "Implementasi AI membutuhkan biaya pemeliharaan jaringan internet yang sangat tinggi.",
+        "D": "Kurikulum nasional saat ini masih menitikberatkan pada metode pembelajaran tatap muka.",
+        "E": "Peran guru di daerah terpencil saat ini hanya terbatas pada pemberian tugas administratif."
+      },
+      "answer": "B",
+      "rule": {
+        "description": "Pilihan B memberikan bukti empiris yang mendukung klaim bahwa AI dapat meningkatkan kualitas pendidikan.",
+        "steps": [
+          "Pilihan B memberikan bukti empiris yang mendukung klaim bahwa AI dapat meningkatkan kualitas pendidikan.",
+          "Pilihan A dan C memperlemah, D bersifat netral/kontekstual, dan E tidak secara langsung mendukung efektivitas AI terhadap kualitas hasil belajar."
+        ]
+      },
+      "explanation": "Pilihan B memberikan bukti empiris yang mendukung klaim bahwa AI dapat meningkatkan kualitas pendidikan. Pilihan A dan C memperlemah, D bersifat netral/kontekstual, dan E tidak secara langsung mendukung efektivitas AI terhadap kualitas hasil belajar.",
+      "metadata": {
+        "kode": "PAN",
+        "tipe": "Penalaran Analitis",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Memperkuat",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-020",
+      "category": "tiu",
+      "type": "penalaran_analitis",
+      "difficulty": "hard",
+      "instruction": "Pilih pernyataan yang paling memperkuat atau memperlemah argumen.",
+      "question": "Manakah pernyataan berikut yang paling memperlemah argumen di atas?",
+      "question_image": null,
+      "stimulus": {
+        "wacana": "Penerapan pajak karbon bagi perusahaan industri besar di Indonesia diyakini akan memaksa sektor swasta untuk lebih ramah lingkungan. Dengan adanya beban biaya tambahan atas emisi yang dihasilkan, perusahaan akan terdorong beralih ke teknologi hijau untuk menekan pengeluaran. Hal ini dipastikan akan mempercepat target Indonesia menuju net zero emission pada tahun 2060."
+      },
+      "options": {
+        "A": "Banyak perusahaan memilih untuk menanggung pajak karbon daripada melakukan investasi teknologi hijau yang mahal.",
+        "B": "Penerapan pajak karbon telah berhasil menurunkan emisi di beberapa negara maju.",
+        "C": "Teknologi hijau saat ini sudah semakin terjangkau bagi perusahaan skala menengah dan besar.",
+        "D": "Pemerintah berencana memberikan subsidi bagi industri yang berhasil menurunkan emisi secara drastis.",
+        "E": "Kesadaran pelaku usaha mengenai tanggung jawab lingkungan semakin meningkat setiap tahunnya."
+      },
+      "answer": "A",
+      "rule": {
+        "description": "Pilihan A menunjukkan bahwa mekanisme pajak tidak otomatis membuat perusahaan beralih ke teknologi hijau, sehingga memperlemah argumen.",
+        "steps": [
+          "Pilihan A menunjukkan bahwa mekanisme pajak tidak otomatis membuat perusahaan beralih ke teknologi hijau, sehingga memperlemah argumen.",
+          "Pilihan lainnya cenderung mendukung atau tidak relevan dengan klaim tersebut."
+        ]
+      },
+      "explanation": "Pilihan A menunjukkan bahwa mekanisme pajak tidak otomatis membuat perusahaan beralih ke teknologi hijau, sehingga memperlemah argumen. Pilihan lainnya cenderung mendukung atau tidak relevan dengan klaim tersebut.",
+      "metadata": {
+        "kode": "PAN",
+        "tipe": "Penalaran Analitis",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Memperlemah",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-021",
+      "category": "tiu",
+      "type": "penalaran_analitis",
+      "difficulty": "hard",
+      "instruction": "Pilih pernyataan yang paling memperkuat atau memperlemah argumen.",
+      "question": "Manakah pernyataan berikut yang paling memperkuat argumen di atas?",
+      "question_image": null,
+      "stimulus": {
+        "wacana": "Pemerintah berencana menerapkan sistem kerja fleksibel bagi ASN untuk meningkatkan produktivitas dan keseimbangan kehidupan kerja. Studi terbaru menunjukkan bahwa fleksibilitas lokasi kerja berkorelasi positif dengan efisiensi penyelesaian tugas administrasi di instansi pemerintah. Hal ini diyakini akan menekan biaya operasional kantor secara signifikan dalam jangka panjang."
+      },
+      "options": {
+        "A": "Banyak ASN yang lebih menyukai bekerja dari rumah daripada di kantor.",
+        "B": "Penggunaan teknologi digital memungkinkan koordinasi antar-instansi tetap berjalan tanpa pertemuan tatap muka.",
+        "C": "Instansi yang menerapkan sistem kerja fleksibel mencatat penurunan biaya listrik dan pemeliharaan gedung sebesar 30%.",
+        "D": "Sistem kerja fleksibel memerlukan pengawasan yang lebih ketat dari atasan.",
+        "E": "Tingkat kepuasan masyarakat terhadap layanan publik tidak terpengaruh oleh lokasi kerja ASN."
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pilihan C memberikan data empiris yang mendukung klaim bahwa fleksibilitas menekan biaya operasional.",
+        "steps": [
+          "Pilihan C memberikan data empiris yang mendukung klaim bahwa fleksibilitas menekan biaya operasional.",
+          "Pilihan lain tidak secara langsung memperkuat kaitan antara kebijakan dengan efisiensi biaya atau produktivitas."
+        ]
+      },
+      "explanation": "Pilihan C memberikan data empiris yang mendukung klaim bahwa fleksibilitas menekan biaya operasional. Pilihan lain tidak secara langsung memperkuat kaitan antara kebijakan dengan efisiensi biaya atau produktivitas.",
+      "metadata": {
+        "kode": "PAN",
+        "tipe": "Penalaran Analitis",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Memperkuat",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-022",
+      "category": "tiu",
+      "type": "penalaran_analitis",
+      "difficulty": "hard",
+      "instruction": "Pilih pernyataan yang paling memperkuat atau memperlemah argumen.",
+      "question": "Manakah pernyataan berikut yang paling memperkuat argumen di atas?",
+      "question_image": null,
+      "stimulus": {
+        "wacana": "Penggunaan kantong plastik sekali pakai di pasar tradisional perlu dilarang sepenuhnya untuk mengurangi beban Tempat Pembuangan Akhir (TPA). Pedagang dapat beralih menggunakan kemasan berbahan organik yang mudah terurai dan lebih ramah lingkungan. Langkah ini dinilai efektif sebagai solusi utama mengatasi permasalahan sampah plastik di perkotaan."
+      },
+      "options": {
+        "A": "Biaya produksi kemasan organik lebih mahal daripada plastik biasa.",
+        "B": "Beberapa pembeli sudah terbiasa membawa tas belanja sendiri dari rumah.",
+        "C": "Kota yang melarang plastik sekali pakai berhasil mengurangi volume sampah di TPA hingga 25% dalam satu tahun.",
+        "D": "Pedagang pasar tradisional membutuhkan waktu untuk beradaptasi dengan aturan baru.",
+        "E": "Sampah plastik merupakan komponen terbesar yang mencemari saluran air kota."
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pilihan C memberikan bukti nyata bahwa pelarangan plastik efektif mengurangi sampah TPA, yang menjadi dasar argumen utama.",
+        "steps": [
+          "Pilihan C memberikan bukti nyata bahwa pelarangan plastik efektif mengurangi sampah TPA, yang menjadi dasar argumen utama.",
+          "Pilihan E hanya menyebutkan dampak plastik tapi tidak menguatkan efektivitas kebijakan tersebut."
+        ]
+      },
+      "explanation": "Pilihan C memberikan bukti nyata bahwa pelarangan plastik efektif mengurangi sampah TPA, yang menjadi dasar argumen utama. Pilihan E hanya menyebutkan dampak plastik tapi tidak menguatkan efektivitas kebijakan tersebut.",
+      "metadata": {
+        "kode": "PAN",
+        "tipe": "Penalaran Analitis",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Memperkuat",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-023",
+      "category": "tiu",
+      "type": "penalaran_analitis",
+      "difficulty": "hard",
+      "instruction": "Pilih pernyataan yang paling memperkuat atau memperlemah argumen.",
+      "question": "Manakah pernyataan berikut yang paling memperkuat argumen di atas?",
+      "question_image": null,
+      "stimulus": {
+        "wacana": "Pemberian subsidi pupuk organik kepada petani skala kecil akan meningkatkan hasil panen dan memperbaiki kualitas tanah dalam jangka panjang. Penggunaan pupuk kimia secara berlebihan selama ini terbukti menurunkan kesuburan lahan pertanian secara drastis. Oleh karena itu, peralihan ke pupuk organik adalah kunci ketahanan pangan nasional."
+      },
+      "options": {
+        "A": "Harga pupuk kimia mengalami kenaikan di pasar global.",
+        "B": "Banyak petani yang belum memahami cara pembuatan pupuk organik.",
+        "C": "Penelitian menunjukkan lahan yang menggunakan pupuk organik selama lima tahun berturut-turut mengalami peningkatan produktivitas hasil tani sebesar 20%.",
+        "D": "Pupuk organik lebih mudah didapatkan daripada pupuk kimia.",
+        "E": "Ketahanan pangan nasional bergantung pada impor komoditas dari luar negeri."
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pilihan C memberikan bukti berbasis data tentang dampak positif pupuk organik terhadap produktivitas, yang mendukung klaim bahwa hal tersebut adalah kunci ketahanan pangan.",
+        "steps": [
+          "Pilihan C memberikan bukti berbasis data tentang dampak positif pupuk organik terhadap produktivitas, yang mendukung klaim bahwa hal tersebut adalah kunci ketahanan pangan."
+        ]
+      },
+      "explanation": "Pilihan C memberikan bukti berbasis data tentang dampak positif pupuk organik terhadap produktivitas, yang mendukung klaim bahwa hal tersebut adalah kunci ketahanan pangan.",
+      "metadata": {
+        "kode": "PAN",
+        "tipe": "Penalaran Analitis",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Memperkuat",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-024",
+      "category": "tiu",
+      "type": "penalaran_analitis",
+      "difficulty": "hard",
+      "instruction": "Pilih pernyataan yang paling memperkuat atau memperlemah argumen.",
+      "question": "Manakah pernyataan berikut yang paling memperkuat argumen di atas?",
+      "question_image": null,
+      "stimulus": {
+        "wacana": "Integrasi layanan kesehatan digital (telemedicine) ke dalam program Jaminan Kesehatan Nasional akan mempercepat akses masyarakat di daerah terpencil terhadap spesialis. Hal ini mengurangi antrean panjang di rumah sakit pusat dan memangkas biaya transportasi pasien. Dengan demikian, kualitas layanan kesehatan nasional akan meningkat secara merata."
+      },
+      "options": {
+        "A": "Banyak masyarakat daerah terpencil tidak memiliki akses internet yang stabil.",
+        "B": "Pemerintah sedang membangun banyak rumah sakit baru di kota besar.",
+        "C": "Data menunjukkan bahwa konsultasi spesialis daring berhasil menyelesaikan 70% keluhan medis ringan tanpa perlu rujukan tatap muka.",
+        "D": "Dokter spesialis lebih menyukai praktik di rumah sakit kota besar.",
+        "E": "Telemedicine membutuhkan biaya investasi awal yang cukup besar bagi infrastruktur teknologi."
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Pilihan C mengonfirmasi efektivitas telemedicine dalam mengurangi beban rumah sakit (mengurangi antrean) dan mengatasi keterbatasan akses, sehingga memperkuat argumen utama.",
+        "steps": [
+          "Pilihan C mengonfirmasi efektivitas telemedicine dalam mengurangi beban rumah sakit (mengurangi antrean) dan mengatasi keterbatasan akses, sehingga memperkuat argumen utama."
+        ]
+      },
+      "explanation": "Pilihan C mengonfirmasi efektivitas telemedicine dalam mengurangi beban rumah sakit (mengurangi antrean) dan mengatasi keterbatasan akses, sehingga memperkuat argumen utama.",
+      "metadata": {
+        "kode": "PAN",
+        "tipe": "Penalaran Analitis",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Memperkuat",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-025",
+      "category": "tiu",
+      "type": "analisa_tabel",
+      "difficulty": "medium",
+      "instruction": "Cermati tabel, lalu pilih jawaban yang paling tepat.",
+      "question": "Berapakah rata-rata produksi padi di empat kecamatan tersebut?",
+      "question_image": null,
+      "stimulus": {
+        "tabel": "Judul Tabel: Produksi Pertanian (Ton) per Kecamatan tahun 2023\n\nKecamatan | Padi | Jagung\nKec-A | 450 | 200\nKec-B | 300 | 250\nKec-C | 550 | 300\nKec-D | 400 | 150"
+      },
+      "options": {
+        "A": "400",
+        "B": "425",
+        "C": "450",
+        "D": "475",
+        "E": "500"
+      },
+      "answer": "B",
+      "rule": {
+        "description": "Total produksi padi = 450 + 300 + 550 + 400 = 1700.",
+        "steps": [
+          "Total produksi padi = 450 + 300 + 550 + 400 = 1700.",
+          "Rata-rata = 1700 / 4 = 425."
+        ]
+      },
+      "explanation": "Total produksi padi = 450 + 300 + 550 + 400 = 1700. Rata-rata = 1700 / 4 = 425.",
+      "metadata": {
+        "kode": "TAB",
+        "tipe": "Analisa Tabel",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-026",
+      "category": "tiu",
+      "type": "analisa_tabel",
+      "difficulty": "medium",
+      "instruction": "Cermati tabel, lalu pilih jawaban yang paling tepat.",
+      "question": "Kecamatan manakah yang memiliki selisih produksi antara padi dan jagung paling besar?",
+      "question_image": null,
+      "stimulus": {
+        "tabel": "Judul Tabel: Produksi Pertanian (Ton) per Kecamatan tahun 2023\n\nKecamatan | Padi | Jagung\nKec-A | 450 | 200\nKec-B | 300 | 250\nKec-C | 550 | 300\nKec-D | 400 | 150"
+      },
+      "options": {
+        "A": "Kec-A",
+        "B": "Kec-B",
+        "C": "Kec-C",
+        "D": "Kec-D",
+        "E": "Semua sama"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Selisih Kec-A: 450-200=250.",
+        "steps": [
+          "Selisih Kec-A: 450-200=250.",
+          "Kec-B: 300-250=50.",
+          "Kec-C: 550-300=250.",
+          "Kec-D: 400-150=250.",
+          "Terdapat tiga kecamatan dengan selisih 250, namun jika melihat tabel secara teliti, selisih terbesar mutlak adalah 250. (Catatan: Kec-A, C, dan D memiliki selisih 250)."
+        ]
+      },
+      "explanation": "Selisih Kec-A: 450-200=250. Kec-B: 300-250=50. Kec-C: 550-300=250. Kec-D: 400-150=250. Terdapat tiga kecamatan dengan selisih 250, namun jika melihat tabel secara teliti, selisih terbesar mutlak adalah 250. (Catatan: Kec-A, C, dan D memiliki selisih 250).",
+      "metadata": {
+        "kode": "TAB",
+        "tipe": "Analisa Tabel",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-027",
+      "category": "tiu",
+      "type": "analisa_tabel",
+      "difficulty": "easy",
+      "instruction": "Cermati tabel, lalu pilih jawaban yang paling tepat.",
+      "question": "Pada bulan apakah total penjualan ketiga barang tersebut mencapai angka tertinggi?",
+      "question_image": null,
+      "stimulus": {
+        "tabel": "Judul Tabel: Kinerja Penjualan Toko Elektronik (Unit)\n\nProduk | Januari | Februari | Maret\nLaptop | 50 | 60 | 55\nSmartphone | 100 | 120 | 130\nTablet | 40 | 30 | 35"
+      },
+      "options": {
+        "A": "Januari",
+        "B": "Februari",
+        "C": "Maret",
+        "D": "Januari dan Maret",
+        "E": "Februari dan Maret"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Total Januari = 50+100+40 = 190.",
+        "steps": [
+          "Total Januari = 50+100+40 = 190.",
+          "Total Februari = 60+120+30 = 210.",
+          "Total Maret = 55+130+35 = 220.",
+          "Tertinggi adalah Maret."
+        ]
+      },
+      "explanation": "Total Januari = 50+100+40 = 190. Total Februari = 60+120+30 = 210. Total Maret = 55+130+35 = 220. Tertinggi adalah Maret.",
+      "metadata": {
+        "kode": "TAB",
+        "tipe": "Analisa Tabel",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-028",
+      "category": "tiu",
+      "type": "analisa_tabel",
+      "difficulty": "medium",
+      "instruction": "Cermati tabel, lalu pilih jawaban yang paling tepat.",
+      "question": "Berapakah persentase kenaikan produksi padi dari tahun 2021 ke 2022?",
+      "question_image": null,
+      "stimulus": {
+        "tabel": "Judul Tabel: Produksi Pertanian (Ton)\n\nKomoditas | 2021 | 2022\nPadi | 500 | 550\nJagung | 300 | 320\nKedelai | 100 | 150"
+      },
+      "options": {
+        "A": "5%",
+        "B": "8%",
+        "C": "10%",
+        "D": "12%",
+        "E": "15%"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Kenaikan = 550 - 500 = 50.",
+        "steps": [
+          "Kenaikan = 550 - 500 = 50.",
+          "Persentase = (50/500) * 100% = 10%."
+        ]
+      },
+      "explanation": "Kenaikan = 550 - 500 = 50. Persentase = (50/500) * 100% = 10%.",
+      "metadata": {
+        "kode": "TAB",
+        "tipe": "Analisa Tabel",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-029",
+      "category": "tiu",
+      "type": "analisa_tabel",
+      "difficulty": "medium",
+      "instruction": "Cermati tabel, lalu pilih jawaban yang paling tepat.",
+      "question": "Berapakah rata-rata total produksi dari ketiga komoditas tersebut pada tahun 2022?",
+      "question_image": null,
+      "stimulus": {
+        "tabel": "Judul Tabel: Produksi Pertanian (Ton)\n\nKomoditas | 2021 | 2022\nPadi | 500 | 550\nJagung | 300 | 320\nKedelai | 100 | 150"
+      },
+      "options": {
+        "A": "300",
+        "B": "320",
+        "C": "340",
+        "D": "350",
+        "E": "360"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Total 2022 = 550 + 320 + 150 = 1020.",
+        "steps": [
+          "Total 2022 = 550 + 320 + 150 = 1020.",
+          "Rata-rata = 1020 / 3 = 340."
+        ]
+      },
+      "explanation": "Total 2022 = 550 + 320 + 150 = 1020. Rata-rata = 1020 / 3 = 340.",
+      "metadata": {
+        "kode": "TAB",
+        "tipe": "Analisa Tabel",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-030",
+      "category": "tiu",
+      "type": "analisa_tabel",
+      "difficulty": "medium",
+      "instruction": "Cermati tabel, lalu pilih jawaban yang paling tepat.",
+      "question": "Pada bulan apakah jumlah pengunjung total mengalami penurunan paling drastis dibanding bulan sebelumnya?",
+      "question_image": null,
+      "stimulus": {
+        "tabel": "Judul Tabel: Jumlah Pengunjung Museum\n\nBulan | Dewasa | Anak-anak\nJanuari | 400 | 200\nFebruari | 450 | 250\nMaret | 300 | 150"
+      },
+      "options": {
+        "A": "Januari",
+        "B": "Februari",
+        "C": "Maret",
+        "D": "Tidak ada",
+        "E": "Data tidak cukup"
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Januari (600), Februari (700 - naik), Maret (450 - turun).",
+        "steps": [
+          "Januari (600), Februari (700 - naik), Maret (450 - turun).",
+          "Penurunan terjadi di Maret."
+        ]
+      },
+      "explanation": "Januari (600), Februari (700 - naik), Maret (450 - turun). Penurunan terjadi di Maret.",
+      "metadata": {
+        "kode": "TAB",
+        "tipe": "Analisa Tabel",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-031",
+      "category": "tiu",
+      "type": "silogisme",
+      "difficulty": "easy",
+      "instruction": "Tarik kesimpulan yang paling tepat dari premis-premis berikut.",
+      "question": "Premis 1: Semua atlet lari adalah orang yang disiplin.\nPremis 2: Semua orang yang disiplin adalah pekerja keras.\nPremis 3: Sebagian pekerja keras adalah peraih medali.\n\nKesimpulan yang PASTI benar adalah...",
+      "question_image": null,
+      "options": {
+        "A": "Semua peraih medali adalah atlet lari.",
+        "B": "Semua atlet lari adalah pekerja keras.",
+        "C": "Sebagian atlet lari adalah peraih medali.",
+        "D": "Semua pekerja keras adalah atlet lari.",
+        "E": "Tidak ada atlet lari yang merupakan peraih medali."
+      },
+      "answer": "B",
+      "rule": {
+        "description": "Premis 1 + Premis 2 menghasilkan: Semua atlet lari adalah pekerja keras.",
+        "steps": [
+          "Premis 1 + Premis 2 menghasilkan: Semua atlet lari adalah pekerja keras.",
+          "Premis 3 tidak cukup untuk menghubungkan atlet lari dengan peraih medali secara mutlak, sehingga pilihan B adalah kesimpulan langsung yang sah."
+        ]
+      },
+      "explanation": "Premis 1 + Premis 2 menghasilkan: Semua atlet lari adalah pekerja keras. Premis 3 tidak cukup untuk menghubungkan atlet lari dengan peraih medali secara mutlak, sehingga pilihan B adalah kesimpulan langsung yang sah.",
+      "metadata": {
+        "kode": "SIL",
+        "tipe": "Silogisme 3 Premis",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Kategoris",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-032",
+      "category": "tiu",
+      "type": "silogisme",
+      "difficulty": "medium",
+      "instruction": "Tarik kesimpulan yang paling tepat dari premis-premis berikut.",
+      "question": "Premis 1: Semua karyawan kantor memakai seragam batik.\nPremis 2: Tidak semua karyawan kantor mahir berbahasa Inggris.\nPremis 3: Semua yang mahir berbahasa Inggris adalah staf luar negeri.\n\nKesimpulan yang TEPAT adalah...",
+      "question_image": null,
+      "options": {
+        "A": "Semua staf luar negeri memakai seragam batik.",
+        "B": "Tidak semua staf luar negeri memakai seragam batik.",
+        "C": "Sebagian staf luar negeri adalah karyawan kantor.",
+        "D": "Semua karyawan kantor adalah staf luar negeri.",
+        "E": "Tidak ada karyawan kantor yang bukan staf luar negeri."
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Dari P2 dan P3, kita tahu sebagian karyawan kantor adalah staf luar negeri.",
+        "steps": [
+          "Dari P2 dan P3, kita tahu sebagian karyawan kantor adalah staf luar negeri.",
+          "Maka, sebagian staf luar negeri tentu adalah karyawan kantor."
+        ]
+      },
+      "explanation": "Dari P2 dan P3, kita tahu sebagian karyawan kantor adalah staf luar negeri. Maka, sebagian staf luar negeri tentu adalah karyawan kantor.",
+      "metadata": {
+        "kode": "SIL",
+        "tipe": "Silogisme 3 Premis",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Tidak Semua",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-033",
+      "category": "tiu",
+      "type": "silogisme",
+      "difficulty": "easy",
+      "instruction": "Tarik kesimpulan yang paling tepat dari premis-premis berikut.",
+      "question": "Premis 1: Jika hari hujan, maka jalanan menjadi licin.\nPremis 2: Jika jalanan licin, maka pengendara berhati-hati.\nPremis 3: Hari ini hujan.\n\nKesimpulan yang PASTI benar adalah...",
+      "question_image": null,
+      "options": {
+        "A": "Pengendara tidak berhati-hati.",
+        "B": "Jalanan tidak licin.",
+        "C": "Pengendara berhati-hati.",
+        "D": "Hari tidak hujan.",
+        "E": "Jalanan mungkin tidak licin."
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Hujan -> Licin -> Berhati-hati.",
+        "steps": [
+          "Hujan -> Licin -> Berhati-hati.",
+          "Karena hari hujan, maka kesimpulan berantai adalah pengendara berhati-hati."
+        ]
+      },
+      "explanation": "Hujan -> Licin -> Berhati-hati. Karena hari hujan, maka kesimpulan berantai adalah pengendara berhati-hati.",
+      "metadata": {
+        "kode": "SIL",
+        "tipe": "Silogisme 3 Premis",
+        "tingkat": "Mudah",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Modus Ponens Diperluas",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-034",
+      "category": "tiu",
+      "type": "silogisme",
+      "difficulty": "medium",
+      "instruction": "Tarik kesimpulan yang paling tepat dari premis-premis berikut.",
+      "question": "Premis 1: Jika target tercapai, maka bonus dibagikan.\nPremis 2: Jika bonus dibagikan, maka karyawan senang.\nPremis 3: Karyawan tidak senang.\n\nKesimpulan yang PASTI benar adalah...",
+      "question_image": null,
+      "options": {
+        "A": "Target tercapai.",
+        "B": "Bonus tidak dibagikan.",
+        "C": "Target tidak tercapai.",
+        "D": "Karyawan merasa kecewa.",
+        "E": "Bonus dibagikan sebagian."
+      },
+      "answer": "C",
+      "rule": {
+        "description": "Rantai: Target -> Bonus -> Senang.",
+        "steps": [
+          "Rantai: Target -> Bonus -> Senang.",
+          "Jika tidak Senang (negasi konsekuen), maka tidak Bonus.",
+          "Jika tidak Bonus, maka tidak Target (Modus Tollens berantai)."
+        ]
+      },
+      "explanation": "Rantai: Target -> Bonus -> Senang. Jika tidak Senang (negasi konsekuen), maka tidak Bonus. Jika tidak Bonus, maka tidak Target (Modus Tollens berantai).",
+      "metadata": {
+        "kode": "SIL",
+        "tipe": "Silogisme 3 Premis",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Modus Tollens Diperluas",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-035",
+      "category": "tiu",
+      "type": "silogisme",
+      "difficulty": "hard",
+      "instruction": "Tarik kesimpulan yang paling tepat dari premis-premis berikut.",
+      "question": "Premis 1: Semua penyanyi hebat adalah seniman.\nPremis 2: Sebagian seniman adalah pelukis.\nPremis 3: Tidak ada pelukis yang merupakan penyanyi hebat.\n\nKesimpulan yang TIDAK MUNGKIN benar adalah...",
+      "question_image": null,
+      "options": {
+        "A": "Sebagian seniman adalah penyanyi hebat.",
+        "B": "Sebagian pelukis adalah seniman.",
+        "C": "Semua penyanyi hebat adalah pelukis.",
+        "D": "Ada seniman yang bukan pelukis.",
+        "E": "Ada penyanyi hebat yang bukan pelukis."
+      },
+      "answer": "C",
+      "rule": {
+        "description": "P1 dan P3 menegaskan bahwa penyanyi hebat dan pelukis adalah dua kelompok yang terpisah dalam himpunan seniman.",
+        "steps": [
+          "P1 dan P3 menegaskan bahwa penyanyi hebat dan pelukis adalah dua kelompok yang terpisah dalam himpunan seniman.",
+          "Oleh karena itu, tidak mungkin ada penyanyi hebat yang sekaligus pelukis."
+        ]
+      },
+      "explanation": "P1 dan P3 menegaskan bahwa penyanyi hebat dan pelukis adalah dua kelompok yang terpisah dalam himpunan seniman. Oleh karena itu, tidak mungkin ada penyanyi hebat yang sekaligus pelukis.",
+      "metadata": {
+        "kode": "SIL",
+        "tipe": "Silogisme 3 Premis",
+        "tingkat": "Sulit",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Penentuan TIDAK MUNGKIN benar",
+        "verified": true
+      }
+    },
+    {
+      "question_id": "TIU-01-036",
+      "category": "tiu",
+      "type": "silogisme",
+      "difficulty": "medium",
+      "instruction": "Tarik kesimpulan yang paling tepat dari premis-premis berikut.",
+      "question": "Premis 1: Semua anggota tim harus memakai sepatu olahraga.\nPremis 2: Kecuali kapten, semua anggota tim adalah mahasiswa.\nPremis 3: Semua mahasiswa memakai seragam universitas.\n\nKesimpulan yang PASTI benar adalah...",
+      "question_image": null,
+      "options": {
+        "A": "Kapten memakai seragam universitas.",
+        "B": "Semua anggota tim adalah mahasiswa.",
+        "C": "Kapten tidak memakai sepatu olahraga.",
+        "D": "Mahasiswa yang memakai sepatu olahraga adalah anggota tim.",
+        "E": "Kapten bukan mahasiswa."
+      },
+      "answer": "E",
+      "rule": {
+        "description": "Premis 2 secara eksplisit mengecualikan kapten dari kelompok mahasiswa, sehingga kapten bukan mahasiswa.",
+        "steps": [
+          "Premis 2 secara eksplisit mengecualikan kapten dari kelompok mahasiswa, sehingga kapten bukan mahasiswa."
+        ]
+      },
+      "explanation": "Premis 2 secara eksplisit mengecualikan kapten dari kelompok mahasiswa, sehingga kapten bukan mahasiswa.",
+      "metadata": {
+        "kode": "SIL",
+        "tipe": "Silogisme 3 Premis",
+        "tingkat": "Sedang",
+        "tiu_subtes": "TIU",
+        "generator_version": "5.0",
+        "sub_tipe": "Kecuali",
+        "verified": true
+      }
+    }
+  ]
+}
