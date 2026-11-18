@@ -29,9 +29,18 @@
         if (Array.isArray(backend.questions) && backend.questions.length) {
           return backend.questions.map((item, index) => {
             const optionEntries = Object.entries(item.options || {});
-            const correctIndex = optionEntries.findIndex(([letter]) => String(letter).toUpperCase() === String(item.answer || '').toUpperCase());
-            if (correctIndex < 0) throw new Error(`Jawaban soal nomor ${item.id ?? index + 1} tidak valid di QuestionBank.`);
-            return { id:item.id ?? index + 1, text:String(item.question ?? ''), options:optionEntries.map(([,value])=>String(value)), correct:correctIndex, discussion:String(item.discussion ?? '') };
+            if (!optionEntries.length) {
+              throw new Error(`Soal nomor ${item.id ?? index + 1} tidak memiliki opsi jawaban.`);
+            }
+            // `correct` sengaja null: kunci jawaban diambil dari server
+            // lewat checkAnswer / gradeTest, tidak ikut saat soal dimuat.
+            return {
+              id: item.id ?? index + 1,
+              text: String(item.question ?? ''),
+              options: optionEntries.map(([, value]) => String(value)),
+              correct: null,
+              discussion: '',
+            };
           });
         }
       } catch (error) {

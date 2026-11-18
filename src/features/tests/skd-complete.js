@@ -424,7 +424,19 @@
     };
   }
 
-  function calculateSKDComplete_() {
+  async function calculateSKDComplete_() {
+    for (const type of state.skdComplete.sectionOrder) {
+      const section = state.skdComplete.sections[type];
+      if (!section) continue;
+
+      try {
+        await ensureAnswerKeys_(section.questions, section.answers, type, state.skdComplete.package);
+      } catch (error) {
+        if (section.questions.some(question => typeof question.correct !== 'number')) throw error;
+        console.warn('Penilaian server gagal untuk bagian ' + type + ':', error.message);
+      }
+    }
+
     const sectionResults = {};
     let total = 0;
     let answered = 0;
@@ -619,7 +631,7 @@
     state.skdComplete.waiting = false;
     state.finished = true;
 
-    const result = calculateSKDComplete_();
+    const result = await calculateSKDComplete_();
     state.lastResult = result;
     state.currentTestId = result.testId || `SKD-${Date.now()}-${randomInt(100000)}`;
     clearPersistedSKDComplete_();
@@ -884,7 +896,7 @@
     }, 100);
   }
 
-  function answerMCQ(choice) {
+  async function answerMCQ(choice) {
     if (
       state.answers[state.index] !== null ||
       state.finished
@@ -916,6 +928,12 @@
 
     stopTimer();
 
+    // Kunci jawaban tidak lagi ikut saat soal dimuat; untuk bank soal
+    // Supabase, ambil kunci soal ini saja sebelum menandai tombol.
+    if (choice !== null) {
+      await revealAnswerKey_(question, choice, state.test, state.package);
+    }
+
     const buttons =
       $('keypad').querySelectorAll('button');
 
@@ -925,6 +943,7 @@
 
         if (
           choice !== null &&
+          typeof question.correct === 'number' &&
           buttonIndex === question.correct
         ) {
           button.classList.add('correct');
@@ -932,6 +951,7 @@
 
         if (
           choice !== null &&
+          typeof question.correct === 'number' &&
           buttonIndex === choice &&
           choice !== question.correct
         ) {

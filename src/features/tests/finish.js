@@ -187,9 +187,26 @@
     state.finished = true;
     stopTimer();
 
-    const result = TESTS[state.test].kind === 'kraepelin'
-      ? calculateKraepelin()
-      : calculateMCQ();
+    let result;
+    try {
+      result = TESTS[state.test].kind === 'kraepelin'
+        ? calculateKraepelin()
+        : await calculateMCQ();
+    } catch (error) {
+      // Penilaian server gagal (mis. jaringan) — jangan tampilkan hasil
+      // setengah jadi. Progress tetap tersimpan, dan notifikasi bisa
+      // diklik untuk mencoba menghitung ulang.
+      state.finished = false;
+      persistTest();
+      showView('test');
+      toast(
+        `${error.message || 'Gagal menghitung hasil.'} Klik untuk coba lagi.`,
+        'warning',
+        10000,
+        () => finishTest()
+      );
+      return;
+    }
 
     result.testId = state.currentTestId || `T-${Date.now()}-${randomInt(100000)}`;
     result.tanggal = new Date().toISOString();

@@ -109,7 +109,7 @@ Satu endpoint: `POST /api/gateway` dengan body `{ "action": "...", ...payload }`
 | Kelompok | Action |
 |---|---|
 | Auth | `register`, `login`, `logout`, `requestPasswordReset`, `resetPassword` |
-| Tes | `getQuestionPackage`, `gradeTest`, `saveHistory`, `getHistory`, `saveTestDetail`, `getTestDetail` |
+| Tes | `getQuestionPackage`, `checkAnswer`, `gradeTest`, `saveHistory`, `getHistory`, `saveTestDetail`, `getTestDetail` |
 | Publik | `stats`, `trackPdfDownload`, `subscribeInterest` |
 | Admin | `adminDashboard`, `adminGetUsers`, `adminCreateUser`, `adminResetUserPassword`, `adminDeleteUser`, `adminGetResults`, `adminGetQuestions`, `adminSaveQuestions`, `adminDeleteQuestion`, `adminDeleteQuestions`, `adminGetScoreLabels`, `adminSaveScoreLabels`, `adminGetInterests` |
 
@@ -127,6 +127,36 @@ Error tak terduga dicatat di log function, bukan dikirim ke client.
 Penilaian MCQ dilakukan **di server** untuk bank soal Supabase, sehingga
 kunci jawaban tidak pernah dikirim ke client. Mode tamu memakai JSON lokal
 yang memang berisi kunci jawaban (skor tamu tidak pernah disimpan).
+
+## Test
+
+```bash
+npm install
+npm test          # node --test
+```
+
+Test saat ini menutup helper murni di backend: escaping filter LIKE,
+pemetaan kunci jawaban ke indeks opsi, penentuan base URL link reset, dan
+validasi input auth. Test tidak menyentuh Supabase.
+
+## Keamanan
+
+- **Kunci jawaban tidak ikut saat soal dimuat.** `getQuestionPackage`
+  mengirim soal tanpa `answer`/`discussion`. Kunci hanya keluar lewat
+  `checkAnswer` (satu soal, untuk umpan balik) dan `gradeTest` (setelah
+  tes selesai).
+- **Umpan balik instan masih bisa dijadikan oracle.** Karena UI menandai
+  jawaban benar/salah segera setelah menjawab, kunci satu soal bisa
+  diperoleh satu per satu. Menutup celah ini sepenuhnya berarti
+  menghilangkan umpan balik instan — itu keputusan produk, belum diubah.
+- **Skor tetap dikirim client** ke `saveHistory`. Angka yang dikirim masih
+  bisa dipalsukan oleh pemilik akun sendiri; memindahkan seluruh
+  perhitungan metrik (speed/accuracy/consistency/endurance) ke server
+  adalah pekerjaan lanjutan.
+- Origin link reset tidak lagi diambil dari input client (mencegah
+  reset-link poisoning). Set `APP_BASE_URL` bila domain berubah.
+- Ganti password (mandiri maupun oleh admin) me-revoke semua sesi lama
+  lewat tabel `revoked_tokens`.
 
 ## Admin
 
