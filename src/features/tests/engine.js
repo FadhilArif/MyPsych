@@ -89,6 +89,8 @@
         discussion: String(item.explanation ?? ''),
         instruction: String(item.instruction ?? ''),
         stimulus: item.stimulus || null,
+        // Label topik untuk ditampilkan di atas soal, mis. "ANALISA TABEL".
+        topic: String(item.metadata?.tipe ?? item.type ?? ''),
       };
     });
   }

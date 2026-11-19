@@ -860,9 +860,9 @@
   }
 
   /**
-   * Stimulus dipakai soal TIU HOTS: tabel, wacana, atau konteks singkat.
-   * Tanpa blok ini soal analisa tabel dan penalaran analitis tidak bisa
-   * dijawab karena informasi soalnya tidak ikut tampil.
+   * Stimulus bacaan (tabel/wacana) dirender sebagai blok tersendiri.
+   * `konteks` tidak ikut di sini karena isinya hanya label topik singkat
+   * (mis. "Pecahan") dan lebih pas tampil sebagai chip.
    */
   function renderStimulusHtml_(question) {
     const stimulus = question?.stimulus;
@@ -882,23 +882,25 @@
       );
     }
 
-    if (stimulus.konteks) {
-      blocks.push(
-        `<div class="test-stimulus"><p>${escapeHtml(String(stimulus.konteks))}</p></div>`
-      );
-    }
+    if (blocks.length) return blocks.join('');
 
-    if (!blocks.length) {
-      // Jaga-jaga kalau format stimulus berubah di kemudian hari.
-      const text = Object.values(stimulus)
-        .filter((value) => typeof value === 'string' && value.trim())
-        .join('\n\n');
-      if (text) {
-        blocks.push(`<div class="test-stimulus"><p>${escapeHtml(text)}</p></div>`);
-      }
-    }
+    // Hanya `konteks` (label topik) — tampil sebagai chip, bukan blok bacaan.
+    if (stimulus.konteks) return '';
 
-    return blocks.join('');
+    // Jaga-jaga kalau format stimulus berubah di kemudian hari.
+    const text = Object.values(stimulus)
+      .filter((value) => typeof value === 'string' && value.trim())
+      .join('\n\n');
+
+    return text
+      ? `<div class="test-stimulus"><p>${escapeHtml(text)}</p></div>`
+      : '';
+  }
+
+  function renderStimulusChip_(question) {
+    const konteks = question?.stimulus?.konteks;
+    if (!konteks || typeof konteks !== 'string' || !konteks.trim()) return '';
+    return `<span class="test-context-chip">${escapeHtml(konteks.trim())}</span>`;
   }
 
   function renderMCQ() {
@@ -907,21 +909,33 @@
 
     const total = state.questions.length || CONFIG.MCQ_QUESTIONS;
     const seconds = mcqSecondsPerQuestion_();
+    const stimulusHtml = renderStimulusHtml_(question);
+    const topic = String(question.topic || '').trim();
 
     $('testTypeLabel').textContent = TESTS[state.test].name;
     $('questionCounter').textContent = `${state.index + 1}/${total}`;
     $('timeCounter').textContent = `${seconds}s`;
     $('progressBar').style.width = `${(state.index / total) * 100}%`;
 
+    // Kartu dua kolom hanya untuk soal yang punya bacaan/tabel, supaya
+    // opsi jawaban tidak terdorong ke bawah lipatan.
+    $('testContent').className = `test-question-card${stimulusHtml ? ' has-stimulus' : ''}`;
     $('testContent').innerHTML = `
-      ${renderStimulusHtml_(question)}
-      <div class="test-question-label">PERTANYAAN ${state.index + 1}</div>
-      ${
-        question.instruction
-          ? `<p class="test-instruction">${escapeHtml(question.instruction)}</p>`
-          : ''
-      }
-      <h2>${escapeHtml(question.text)}</h2>
+      ${stimulusHtml}
+      <div class="test-question-body">
+        <div class="test-question-head">
+          <div class="test-question-label">PERTANYAAN ${state.index + 1}${
+            topic ? ` · ${escapeHtml(topic.toUpperCase())}` : ''
+          }</div>
+          ${renderStimulusChip_(question)}
+        </div>
+        ${
+          question.instruction
+            ? `<p class="test-instruction">${escapeHtml(question.instruction)}</p>`
+            : ''
+        }
+        <h2>${escapeHtml(question.text)}</h2>
+      </div>
     `;
 
     $('keypad').innerHTML = '';
