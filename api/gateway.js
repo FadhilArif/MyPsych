@@ -1144,7 +1144,9 @@ async function adminSaveQuestions_(token, questions) {
     if (error && isMissingQuestionMetaColumn_(error)) {
       // Bank soal lama tetap bisa diunggah sebelum migrasi dijalankan,
       // tapi soal yang membawa stimulus harus menunggu kolom baru.
-      if (hasQuestionMeta_(record)) throw new Error(QUESTION_META_MIGRATION_HINT);
+      if (hasQuestionMeta_(record)) {
+        return { success: false, message: QUESTION_META_MIGRATION_HINT };
+      }
 
       const legacyRecord = { ...record };
       QUESTION_BANK_META_FIELDS.forEach(field => delete legacyRecord[field]);
