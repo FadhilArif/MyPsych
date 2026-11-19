@@ -26,8 +26,8 @@ const RESET_DAILY_LIMIT = 5;
 // Kolom tambahan untuk bank soal bertipe stimulus (Paket SKD/TIU HOTS).
 // Kalau migrasi SQL belum dijalankan, query otomatis jatuh ke kolom lama
 // supaya bank soal biasa tetap bisa dipakai.
-const QUESTION_BANK_COLUMNS_BASE = 'question_id, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active';
-const QUESTION_BANK_COLUMNS_WITH_META = 'question_id, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, stimulus, instruction, topic, active';
+const QUESTION_BANK_COLUMNS_BASE = 'question_id, test_type, package, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active';
+const QUESTION_BANK_COLUMNS_WITH_META = 'question_id, test_type, package, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, stimulus, instruction, topic, active';
 const QUESTION_BANK_META_FIELDS = ['stimulus', 'instruction', 'topic'];
 
 function isMissingQuestionMetaColumn_(error) {
@@ -1505,5 +1505,7 @@ module.exports.__internals = {
   resolveResetBase_,
   getClientIp_,
   isMissingQuestionMetaColumn_,
-  hasQuestionMeta_
+  hasQuestionMeta_,
+  QUESTION_BANK_COLUMNS_BASE,
+  QUESTION_BANK_COLUMNS_WITH_META
 };

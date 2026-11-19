@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 const gateway = require('../api/gateway');
 const auth = require('../api/_lib/auth');
 
-const { escapeLike_, resolveQuestionKey_, resolveResetBase_, isMissingQuestionMetaColumn_, hasQuestionMeta_ } = gateway.__internals;
+const { escapeLike_, resolveQuestionKey_, resolveResetBase_, isMissingQuestionMetaColumn_, hasQuestionMeta_, QUESTION_BANK_COLUMNS_BASE, QUESTION_BANK_COLUMNS_WITH_META } = gateway.__internals;
 
 test('escapeLike_ menetralkan wildcard LIKE', () => {
   assert.equal(escapeLike_('fadhil'), 'fadhil');
@@ -51,6 +51,23 @@ test('hasQuestionMeta_ hanya menandai soal yang punya metadata', () => {
   assert.equal(hasQuestionMeta_({ instruction: 'Tentukan pola berikutnya.' }), true);
   assert.equal(hasQuestionMeta_({ topic: 'Analisa Tabel' }), true);
   assert.equal(hasQuestionMeta_({ stimulus: { tabel: 'a | b' } }), true);
+});
+
+test('kolom bank soal mencakup field yang dipakai UI dan edit admin', () => {
+  const required = [
+    'question_id', 'test_type', 'package', 'no_soal', 'question',
+    'option_a', 'option_b', 'option_c', 'option_d', 'option_e',
+    'answer', 'discussion', 'active'
+  ];
+
+  [QUESTION_BANK_COLUMNS_BASE, QUESTION_BANK_COLUMNS_WITH_META].forEach((columns) => {
+    const fields = columns.split(',').map((field) => field.trim());
+    required.forEach((field) => assert.ok(fields.includes(field), `kolom ${field} hilang`));
+  });
+
+  assert.ok(QUESTION_BANK_COLUMNS_WITH_META.split(',').map((f) => f.trim()).includes('stimulus'));
+  assert.ok(QUESTION_BANK_COLUMNS_WITH_META.split(',').map((f) => f.trim()).includes('instruction'));
+  assert.ok(QUESTION_BANK_COLUMNS_WITH_META.split(',').map((f) => f.trim()).includes('topic'));
 });
 
 test('resolveResetBase_ mengabaikan origin dari client', () => {
