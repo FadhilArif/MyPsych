@@ -16,6 +16,7 @@
 | `test_history` | ringkasan hasil per tes | server |
 | `test_detail` | jawaban per soal | server |
 | `question_bank` | bank soal + kunci jawaban | server |
+| `test_package_access` | paket yang sudah dibuka admin per user | server |
 | `score_labels` | label interpretasi skor per jenis tes | server |
 | `pdf_downloads` | log unduhan PDF | server |
 | `revoked_tokens` | daftar sesi yang di-logout | server |
@@ -120,6 +121,22 @@ create index if not exists question_bank_lookup_idx
   on question_bank (test_type, package, no_soal);
 
 -- ============================================================
+-- AKSES PAKET BERBAYAR
+-- ============================================================
+create table if not exists test_package_access (
+  user_id     text not null,                 -- table_user."user-id"
+  test_type   text not null default 'skd_paket',
+  package     integer not null check (package > 0),
+  unlocked_at timestamptz not null default now(),
+  unlocked_by text default '',               -- admin yang membuka
+  note        text default '',
+  primary key (user_id, test_type, package)
+);
+
+create index if not exists test_package_access_user_idx
+  on test_package_access (user_id, test_type);
+
+-- ============================================================
 -- LAIN-LAIN
 -- ============================================================
 create table if not exists score_labels (
@@ -188,6 +205,9 @@ create unique index if not exists interest_signups_email_category_key
   (dengan `stimulus`, `instruction`, `topic`) bisa diunggah. Tanpa migrasi
   ini, bank soal lama tetap berjalan; hanya upload soal berstimulus yang
   ditolak dengan pesan yang jelas.
+- **Akses paket berbayar** memakai `test_package_access`, dibuat lewat
+  `docs/migrations/add-package-access.sql`. Tanpa tabel ini semua paket SKD
+  terkunci untuk user biasa (admin tetap bisa membuka semuanya).
 - **`test_id` di `test_detail` tidak punya foreign key** di kode; integritas
   dijaga manual (insert detail hanya untuk `test_id` milik user yang sama).
 - **Pembersihan `revoked_tokens`** belum otomatis. Tambahkan pg_cron:

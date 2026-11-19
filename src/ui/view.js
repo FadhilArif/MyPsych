@@ -41,6 +41,12 @@
       window.MyPsychCv?.init?.();
     }
 
+    if (name === 'skd' && typeof refreshSKDPackageAccess_ === 'function') {
+      // Muat ulang status akses setiap membuka halaman supaya perubahan
+      // dari admin langsung terlihat tanpa reload browser.
+      refreshSKDPackageAccess_({ silent: true });
+    }
+
     window.scrollTo(0, 0);
   }
 

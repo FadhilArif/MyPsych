@@ -110,9 +110,9 @@ Satu endpoint: `POST /api/gateway` dengan body `{ "action": "...", ...payload }`
 | Kelompok | Action |
 |---|---|
 | Auth | `register`, `login`, `logout`, `requestPasswordReset`, `resetPassword` |
-| Tes | `getQuestionPackage`, `checkAnswer`, `gradeTest`, `saveHistory`, `getHistory`, `saveTestDetail`, `getTestDetail` |
+| Tes | `getQuestionPackage`, `checkAnswer`, `gradeTest`, `saveHistory`, `getHistory`, `saveTestDetail`, `getTestDetail`, `getPackageAccess` |
 | Publik | `stats`, `trackPdfDownload`, `subscribeInterest` |
-| Admin | `adminDashboard`, `adminGetUsers`, `adminCreateUser`, `adminResetUserPassword`, `adminDeleteUser`, `adminGetResults`, `adminGetQuestions`, `adminSaveQuestions`, `adminDeleteQuestion`, `adminDeleteQuestions`, `adminGetScoreLabels`, `adminSaveScoreLabels`, `adminGetInterests` |
+| Admin | `adminDashboard`, `adminGetUsers`, `adminCreateUser`, `adminResetUserPassword`, `adminDeleteUser`, `adminGetResults`, `adminGetQuestions`, `adminSaveQuestions`, `adminDeleteQuestion`, `adminDeleteQuestions`, `adminGetScoreLabels`, `adminSaveScoreLabels`, `adminGetInterests`, `adminGetPackageAccess`, `adminSavePackageAccess` |
 
 Semua respons berstatus HTTP 200 dengan `{ success: boolean, message? }`.
 Error tak terduga dicatat di log function, bukan dikirim ke client.
@@ -152,6 +152,25 @@ statis** — soal diunggah admin ke `question_bank` dengan `test_type = 'skd_pak
 - Enam tipe soal, 6 soal per tipe: `deret_bilangan`, `kecukupan_data`,
   `bilangan_setara`, `penalaran_analitis`, `analisa_tabel`, `silogisme`.
 
+### Akses berbayar per paket
+
+Paket SKD bisa dikunci per peserta. Peserta harus membayar ke admin, lalu
+admin membuka paket yang dibeli. Tidak ada baris akses = paket terkunci.
+
+- Jalankan `docs/migrations/add-package-access.sql` sekali di Supabase SQL
+  Editor. Tabel `test_package_access` menyimpan satu baris per
+  `(user_id, test_type, package)` yang sudah dibuka.
+- Buka **Admin → Akses Paket**, pilih peserta, centang paket yang sudah
+  dibayar, lalu **Simpan Akses**. Tombol **Buka Semua** / **Kunci Semua**
+  membantu mengatur banyak paket sekaligus.
+- Peserta melihat status 🔓/🔒 di halaman SKD. Paket terkunci tidak bisa
+  dimulai; server juga menolak `getQuestionPackage`, `checkAnswer`, dan
+  `gradeTest` untuk paket yang belum dibuka, jadi membuka URL atau memanggil
+  API langsung tidak melewati kunci.
+- Admin selalu punya akses penuh dan tidak perlu diatur per paket.
+- Jika tabel belum dimigrasi, peserta melihat petunjuk migrasi dan semua
+  paket tetap terkunci (fail closed); admin masih bisa membuka bank soal.
+
 ## Test
 
 ```bash
@@ -160,8 +179,9 @@ npm test          # node --test
 ```
 
 Test saat ini menutup helper murni di backend: escaping filter LIKE,
-pemetaan kunci jawaban ke indeks opsi, penentuan base URL link reset, dan
-validasi input auth. Test tidak menyentuh Supabase.
+pemetaan kunci jawaban ke indeks opsi, penentuan base URL link reset,
+validasi input auth, deteksi kolom/tabel yang belum dimigrasi, dan
+normalisasi nomor paket berbayar. Test tidak menyentuh Supabase.
 
 ## Keamanan
 
@@ -173,6 +193,9 @@ validasi input auth. Test tidak menyentuh Supabase.
   jawaban benar/salah segera setelah menjawab, kunci satu soal bisa
   diperoleh satu per satu. Menutup celah ini sepenuhnya berarti
   menghilangkan umpan balik instan — itu keputusan produk, belum diubah.
+- **Akses paket berbayar ditegakkan di server.** `getQuestionPackage`,
+  `checkAnswer`, dan `gradeTest` menolak paket yang belum dibuka admin untuk
+  user tersebut. Status di client hanya untuk UX (label 🔓/🔒).
 - **Skor tetap dikirim client** ke `saveHistory`. Angka yang dikirim masih
   bisa dipalsukan oleh pemilik akun sendiri; memindahkan seluruh
   perhitungan metrik (speed/accuracy/consistency/endurance) ke server

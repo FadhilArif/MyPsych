@@ -7,6 +7,7 @@ const gateway = require('../api/gateway');
 const auth = require('../api/_lib/auth');
 
 const { escapeLike_, resolveQuestionKey_, resolveResetBase_, isMissingQuestionMetaColumn_, hasQuestionMeta_, QUESTION_BANK_COLUMNS_BASE, QUESTION_BANK_COLUMNS_WITH_META } = gateway.__internals;
+const { isMissingPackageAccessTable_, normalizeUnlockedPackages_, packageAccessTotal_ } = gateway.__internals;
 
 test('escapeLike_ menetralkan wildcard LIKE', () => {
   assert.equal(escapeLike_('fadhil'), 'fadhil');
@@ -110,4 +111,34 @@ test('validasi input auth', () => {
   assert.equal(auth.isValidUsername('nama dengan spasi'), false);
   assert.equal(auth.isValidEmail('a@b.co'), true);
   assert.equal(auth.isValidEmail('bukan-email'), false);
+});
+
+test('deteksi tabel akses paket yang belum dimigrasi', () => {
+  assert.equal(isMissingPackageAccessTable_({ code: '42P01' }), true);
+  assert.equal(isMissingPackageAccessTable_({ code: 'PGRST205' }), true);
+  assert.equal(isMissingPackageAccessTable_({
+    code: 'PGRST204',
+    message: "Could not find the table 'public.test_package_access' in the schema cache"
+  }), true);
+
+  assert.equal(isMissingPackageAccessTable_({ code: '23505', message: 'duplicate key value' }), false);
+  assert.equal(isMissingPackageAccessTable_({ code: '42501', message: 'permission denied for table test_package_access' }), false);
+  assert.equal(isMissingPackageAccessTable_(null), false);
+});
+
+test('normalizeUnlockedPackages_ membatasi dan merapikan nomor paket', () => {
+  assert.deepEqual(normalizeUnlockedPackages_([3, 1, 2, 2], 10), [1, 2, 3]);
+  assert.deepEqual(normalizeUnlockedPackages_(['4', 0, -1, 11, 5.5, '6'], 10), [4, 6]);
+  assert.deepEqual(normalizeUnlockedPackages_([1, 10], 10), [1, 10]);
+  assert.deepEqual(normalizeUnlockedPackages_([1, 2], 0), []);
+  assert.deepEqual(normalizeUnlockedPackages_(null, 10), []);
+  assert.deepEqual(normalizeUnlockedPackages_('1,2', 10), []);
+});
+
+test('packageAccessTotal_ hanya untuk tes berpaket', () => {
+  assert.equal(packageAccessTotal_('skd_paket'), 10);
+  assert.equal(packageAccessTotal_(' skd_paket '), 10);
+  assert.equal(packageAccessTotal_('kuantitatif'), 0);
+  assert.equal(packageAccessTotal_(''), 0);
+  assert.equal(packageAccessTotal_(null), 0);
 });

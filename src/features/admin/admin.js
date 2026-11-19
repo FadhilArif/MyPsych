@@ -9,7 +9,16 @@
     users: [],
     results: [],
     labels: [],
-    tab: 'overview'
+    tab: 'overview',
+    access: {
+      testType: 'skd_paket',
+      users: [],
+      total: 0,
+      selectedUser: '',
+      loaded: false,
+      loading: false,
+      failed: false
+    }
   };
 
   const ADMIN_TEST_OPTIONS = Object.entries(TESTS)
@@ -99,6 +108,7 @@
     });
 
     if (state.admin.tab === 'users') renderAdminUsers();
+    else if (state.admin.tab === 'access') renderAdminAccess();
     else if (state.admin.tab === 'results') renderAdminResults();
     else if (state.admin.tab === 'questions') renderAdminQuestions();
     else if (state.admin.tab === 'labels') renderAdminLabels();
@@ -145,6 +155,7 @@
           <p class="muted">Kelola data tanpa membuka database secara manual.</p>
           <div class="admin-quick-grid">
             <button type="button" class="secondary-btn" data-admin-tab="users">Kelola Peserta</button>
+            <button type="button" class="secondary-btn" data-admin-tab="access">Akses Paket</button>
             <button type="button" class="secondary-btn" data-admin-tab="results">Lihat Nilai</button>
             <button type="button" class="secondary-btn" data-admin-tab="questions">Bank Soal</button>
             <button type="button" class="secondary-btn" data-admin-tab="labels">Label Nilai</button>
@@ -250,6 +261,217 @@
       await refreshAdminUsers();
       await refreshAdminData();
     } catch (error) { toast(error.message, 'warning'); }
+  }
+
+  /* ---------- AKSES PAKET BERBAYAR ---------- */
+
+  function adminAccessTestOptions_() {
+    return Object.entries(TESTS)
+      .filter(([, test]) => Number(test.packages) > 0)
+      .map(([id, test]) => ({
+        id,
+        name: test.name,
+        fullName: test.fullName || '',
+        packages: Number(test.packages) || 0
+      }));
+  }
+
+  function adminAccessSelectedUser_() {
+    const access = state.admin.access;
+    return access.users.find((user) => String(user.user_id) === String(access.selectedUser)) || null;
+  }
+
+  async function loadAdminPackageAccess_() {
+    const access = state.admin.access;
+    if (access.loading) return;
+
+    access.loading = true;
+    try {
+      const response = await apiChecked('adminGetPackageAccess', {
+        token: state.session.token,
+        test_type: access.testType
+      });
+
+      access.users = Array.isArray(response.users) ? response.users : [];
+      access.total = Number(response.total) || 0;
+      access.loaded = true;
+      access.failed = false;
+
+      if (access.selectedUser && !adminAccessSelectedUser_()) access.selectedUser = '';
+
+      if (!access.selectedUser) {
+        const first = access.users.find((user) => user.role !== 'admin');
+        access.selectedUser = first ? String(first.user_id) : '';
+      }
+    } catch (error) {
+      access.loaded = false;
+      access.failed = true;
+      toast(error.message, 'warning', 6000);
+    } finally {
+      access.loading = false;
+    }
+
+    if (state.admin.tab === 'access') renderAdminAccess();
+  }
+
+  function renderAdminAccess() {
+    const access = state.admin.access;
+    const tests = adminAccessTestOptions_();
+
+    if (!tests.some((item) => item.id === access.testType)) {
+      access.testType = tests[0]?.id || 'skd_paket';
+    }
+
+    const selected = adminAccessSelectedUser_();
+    const isAdminUser = selected?.role === 'admin';
+    const unlocked = new Set((selected?.packages || []).map(Number));
+    const total = Number(access.total) || Number(TESTS[access.testType]?.packages) || 10;
+
+    const packageItems = Array.from({ length: total }, (_, index) => {
+      const number = index + 1;
+      return `<label class="admin-access-package-item">
+        <input type="checkbox" class="admin-access-package" value="${number}" ${unlocked.has(number) ? 'checked' : ''} ${(!selected || isAdminUser) ? 'disabled' : ''}>
+        <span>Paket ${number}</span>
+      </label>`;
+    }).join('');
+
+    const userOptions = ['<option value="">— pilih peserta —</option>']
+      .concat(access.users.map((user) => `<option value="${escapeHtml(user.user_id)}" ${String(user.user_id) === String(access.selectedUser) ? 'selected' : ''}>${escapeHtml(user.username)}${user.role === 'admin' ? ' (admin)' : ''}</option>`))
+      .join('');
+
+    const accessRows = access.users.length ? access.users.map((user) => {
+      const packages = Array.isArray(user.packages) ? user.packages.map(Number) : [];
+      const badge = user.role === 'admin'
+        ? '<span class="admin-badge">Semua (admin)</span>'
+        : (packages.length
+          ? `<span class="admin-badge">${packages.length}/${total} paket</span>`
+          : '<span class="admin-badge admin-badge-locked">Terkunci</span>');
+      return `<tr>
+        <td><strong>${escapeHtml(user.username)}</strong><small class="admin-sub">${escapeHtml(user.user_id)}</small></td>
+        <td>${escapeHtml(user.email || '—')}</td>
+        <td>${badge}</td>
+        <td>${user.role === 'admin' ? '<span class="admin-muted">Selalu terbuka</span>' : (packages.length ? packages.map((n) => `Paket ${n}`).join(', ') : '<span class="admin-muted">Belum ada paket dibuka</span>')}</td>
+        <td class="admin-actions-cell">${user.role === 'admin' ? '<span class="admin-muted">—</span>' : `<button type="button" class="secondary-btn admin-small-btn" data-access-edit="${escapeHtml(user.user_id)}">Atur</button>`}</td>
+      </tr>`;
+    }).join('') : `<tr><td colspan="5" class="admin-empty-cell">Belum ada peserta.</td></tr>`;
+
+    $('adminPanel').innerHTML = `
+      <div class="admin-panel-head">
+        <div>
+          <div class="eyebrow">AKSES PAKET</div>
+          <h2>Kunci &amp; buka paket berbayar</h2>
+          <p class="muted">Buka paket setelah pembayaran diterima. Paket yang tidak dicentang tetap terkunci untuk peserta.</p>
+        </div>
+        <button type="button" class="secondary-btn" id="adminAccessRefresh">↻ Refresh</button>
+      </div>
+      <div class="admin-card card">
+        <div class="admin-filter-grid admin-access-tools">
+          <label>Tes<select id="adminAccessTest">${tests.map((item) => `<option value="${item.id}" ${item.id === access.testType ? 'selected' : ''}>${escapeHtml(item.name)}${item.fullName ? ` — ${escapeHtml(item.fullName)}` : ''}</option>`).join('')}</select></label>
+          <label>Peserta<select id="adminAccessUser">${userOptions}</select></label>
+          <button type="button" class="primary-btn" id="adminAccessSave" ${(!selected || isAdminUser) ? 'disabled' : ''}>Simpan Akses</button>
+        </div>
+        <div class="admin-access-editor">
+          <div class="admin-access-editor-head">
+            <strong>${selected ? escapeHtml(selected.username) : 'Pilih peserta'}</strong>
+            <span class="admin-muted" id="adminAccessSelection">${selected ? (isAdminUser ? 'Admin selalu punya akses penuh.' : `${unlocked.size}/${total} paket dicentang`) : 'Belum ada peserta dipilih.'}</span>
+          </div>
+          ${(!selected || isAdminUser) ? '' : `<div class="admin-access-packages">${packageItems}</div>
+          <div class="admin-access-actions">
+            <button type="button" class="secondary-btn admin-small-btn" id="adminAccessAll">Buka Semua</button>
+            <button type="button" class="secondary-btn admin-small-btn" id="adminAccessNone">Kunci Semua</button>
+          </div>`}
+        </div>
+        <div class="warning-box"><strong>Catatan:</strong> perubahan langsung tersimpan ke database. Penegakan akses dilakukan di server, jadi paket terkunci tidak bisa dimuat atau dinilai meskipun URL dimanipulasi.</div>
+      </div>
+      <div class="admin-card card">
+        <div class="admin-table-title">
+          <h3>Akses per peserta</h3>
+          <span class="admin-muted" id="adminAccessCount">${access.users.length} peserta</span>
+        </div>
+        <div class="table-wrap admin-table-wrap">
+          <table><thead><tr><th>Peserta</th><th>Email</th><th>Status</th><th>Paket terbuka</th><th>Aksi</th></tr></thead>
+          <tbody>${accessRows}</tbody></table>
+        </div>
+      </div>
+    `;
+
+    $('adminAccessRefresh')?.addEventListener('click', async () => {
+      const button = $('adminAccessRefresh');
+      busy(button, 'Memuat…', true);
+      try {
+        access.loaded = false;
+        access.failed = false;
+        await loadAdminPackageAccess_();
+      } finally {
+        busy(button, '', false);
+      }
+    });
+
+    $('adminAccessTest')?.addEventListener('change', async () => {
+      access.testType = $('adminAccessTest').value;
+      access.selectedUser = '';
+      access.loaded = false;
+      access.failed = false;
+      await loadAdminPackageAccess_();
+    });
+
+    $('adminAccessUser')?.addEventListener('change', () => {
+      access.selectedUser = $('adminAccessUser').value;
+      renderAdminAccess();
+    });
+
+    $('adminAccessSave')?.addEventListener('click', adminSavePackageAccess);
+    $('adminAccessAll')?.addEventListener('click', () => {
+      document.querySelectorAll('.admin-access-package').forEach((checkbox) => { checkbox.checked = true; });
+      updateAdminAccessSelection_();
+    });
+    $('adminAccessNone')?.addEventListener('click', () => {
+      document.querySelectorAll('.admin-access-package').forEach((checkbox) => { checkbox.checked = false; });
+      updateAdminAccessSelection_();
+    });
+    document.querySelectorAll('.admin-access-package').forEach((checkbox) => checkbox.addEventListener('change', updateAdminAccessSelection_));
+    document.querySelectorAll('[data-access-edit]').forEach((button) => button.addEventListener('click', () => {
+      access.selectedUser = button.dataset.accessEdit;
+      renderAdminAccess();
+    }));
+
+    if (!access.loaded && !access.loading && !access.failed) loadAdminPackageAccess_();
+  }
+
+  function updateAdminAccessSelection_() {
+    const selection = $('adminAccessSelection');
+    if (!selection) return;
+    const total = document.querySelectorAll('.admin-access-package').length;
+    const checked = document.querySelectorAll('.admin-access-package:checked').length;
+    selection.textContent = `${checked}/${total} paket dicentang`;
+  }
+
+  async function adminSavePackageAccess() {
+    const access = state.admin.access;
+    const userId = $('adminAccessUser')?.value || '';
+    if (!userId) { toast('Pilih peserta dulu.', 'warning'); return; }
+
+    const packages = Array.from(document.querySelectorAll('.admin-access-package:checked'))
+      .map((checkbox) => Number(checkbox.value))
+      .filter((value) => Number.isInteger(value));
+
+    const button = $('adminAccessSave');
+    try {
+      busy(button, 'Menyimpan…', true);
+      const response = await apiChecked('adminSavePackageAccess', {
+        token: state.session.token,
+        user_id: userId,
+        test_type: access.testType,
+        packages
+      });
+      toast(response.message || 'Akses paket tersimpan.', 'success', 5000);
+      access.selectedUser = userId;
+      await loadAdminPackageAccess_();
+    } catch (error) {
+      toast(error.message, 'warning', 6000);
+    } finally {
+      busy(button, '', false);
+    }
   }
 
   function renderAdminResults() {

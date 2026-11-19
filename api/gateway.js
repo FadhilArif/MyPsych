@@ -67,6 +67,111 @@ const QUESTION_META_MIGRATION_HINT =
   'Kolom stimulus/instruction/topic belum ada di question_bank. ' +
   'Jalankan migrasi docs/migrations/add-question-bank-stimulus.sql di Supabase SQL Editor, lalu upload ulang.';
 
+// Paket yang aksesnya dijual per user. Nilai = jumlah paket.
+const PACKAGE_ACCESS_TESTS = Object.freeze({ skd_paket: 10 });
+const PACKAGE_ACCESS_MIGRATION_HINT =
+  'Tabel test_package_access belum ada. Jalankan migrasi docs/migrations/add-package-access.sql di Supabase SQL Editor.';
+
+function packageAccessTotal_(testType) {
+  return Number(PACKAGE_ACCESS_TESTS[String(testType || '').trim()]) || 0;
+}
+
+function isMissingPackageAccessTable_(error) {
+  if (!error) return false;
+  const code = String(error.code || '');
+  if (code === '42P01' || code === 'PGRST205') return true;
+  const message = `${error.message || ''} ${error.details || ''}`;
+  return /test_package_access/i.test(message)
+    && /(does not exist|not find|schema cache|relation)/i.test(message);
+}
+
+function normalizeUnlockedPackages_(packages, total) {
+  const max = Number(total) || 0;
+  return [...new Set((Array.isArray(packages) ? packages : [])
+    .map(value => Number(value))
+    .filter(value => Number.isInteger(value) && value >= 1 && value <= max))]
+    .sort((a, b) => a - b);
+}
+
+/**
+ * Cek apakah user boleh membuka paket tertentu.
+ * Admin selalu boleh; user biasa harus punya baris di test_package_access.
+ */
+async function checkPackageAccess_(token, testType, packageNumber) {
+  const type = String(testType || '').trim();
+  const total = packageAccessTotal_(type);
+  if (!total) return { ok: true };
+
+  const pkg = Number(packageNumber) || 0;
+  const session = await verifySessionWithRevocation_(token);
+  if (!session) {
+    return { ok: false, message: 'Paket ini hanya tersedia untuk akun yang login.' };
+  }
+  if (session.role === 'admin') return { ok: true, session, admin: true };
+
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('test_package_access')
+    .select('package')
+    .eq('user_id', session.user_id)
+    .eq('test_type', type)
+    .eq('package', pkg)
+    .limit(1);
+
+  if (error) {
+    if (isMissingPackageAccessTable_(error)) return { ok: false, message: PACKAGE_ACCESS_MIGRATION_HINT };
+    throw error;
+  }
+
+  if (!data || !data.length) {
+    return {
+      ok: false,
+      message: `Paket ${pkg} masih terkunci. Hubungi admin untuk membuka akses.`
+    };
+  }
+
+  return { ok: true, session };
+}
+
+async function getPackageAccess_(token, testType) {
+  const type = String(testType || 'skd_paket').trim();
+  const total = packageAccessTotal_(type);
+  if (!total) return { success: false, message: 'Tes ini tidak memakai akses paket.' };
+
+  const session = await verifySessionWithRevocation_(token);
+  if (!session) return { success: false, message: 'Sesi login sudah berakhir. Silakan masuk lagi.' };
+
+  if (session.role === 'admin') {
+    return {
+      success: true,
+      test_type: type,
+      total,
+      admin: true,
+      unlocked: Array.from({ length: total }, (_, index) => index + 1)
+    };
+  }
+
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from('test_package_access')
+    .select('package')
+    .eq('user_id', session.user_id)
+    .eq('test_type', type);
+
+  if (error) {
+    if (isMissingPackageAccessTable_(error)) return { success: false, message: PACKAGE_ACCESS_MIGRATION_HINT };
+    throw error;
+  }
+
+  return {
+    success: true,
+    test_type: type,
+    total,
+    admin: false,
+    unlocked: normalizeUnlockedPackages_((data || []).map(row => row.package), total)
+  };
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
@@ -147,15 +252,19 @@ case 'adminGetInterests':
         break;
 
       case 'getQuestionPackage':
-        result = await getQuestionPackage_(body.test_type, body.package);
+        result = await getQuestionPackage_(body.test_type, body.package, body.token);
         break;
 
       case 'gradeTest':
-        result = await gradeTest_(body.test_type, body.package, body.answers);
+        result = await gradeTest_(body.test_type, body.package, body.answers, body.token);
         break;
 
       case 'checkAnswer':
-        result = await checkAnswer_(body.test_type, body.package, body.question_id, body.answer);
+        result = await checkAnswer_(body.test_type, body.package, body.question_id, body.answer, body.token);
+        break;
+
+      case 'getPackageAccess':
+        result = await getPackageAccess_(body.token, body.test_type);
         break;
 
       case 'stats':
@@ -196,6 +305,14 @@ case 'adminGetInterests':
 
       case 'adminGetQuestions':
         result = await adminGetQuestions_(body.token, body.test_type, body.package, body.include_inactive);
+        break;
+
+      case 'adminGetPackageAccess':
+        result = await adminGetPackageAccess_(body.token, body.test_type);
+        break;
+
+      case 'adminSavePackageAccess':
+        result = await adminSavePackageAccess_(body.token, body.user_id, body.packages, body.test_type);
         break;
 
       case 'adminSaveQuestions':
@@ -559,10 +676,13 @@ async function logout_(token) {
   }
 }
 
-async function getQuestionPackage_(testType, packageNumber) {
+async function getQuestionPackage_(testType, packageNumber, token) {
   testType = String(testType || '').trim();
   const pkg = Number(packageNumber) || 0;
   if (!testType || !pkg) return { success: false, message: 'test_type dan package wajib diisi.' };
+
+  const access = await checkPackageAccess_(token, testType, pkg);
+  if (!access.ok) return { success: false, message: access.message };
 
   const supabase = getSupabaseAdmin();
   const { data: rows, error } = await selectQuestionBank_(
@@ -618,11 +738,14 @@ function resolveQuestionKey_(row) {
  * Nilai satu paket sekaligus. Dipanggil setelah tes selesai, sehingga
  * pengiriman kunci jawaban di sini tidak lagi membantu peserta mencontek.
  */
-async function gradeTest_(testType, packageNumber, answers) {
+async function gradeTest_(testType, packageNumber, answers, token) {
   testType = String(testType || '').trim();
   const pkg = Number(packageNumber) || 0;
   if (!testType || !pkg) return { success: false, message: 'test_type dan package wajib diisi.' };
   if (!Array.isArray(answers)) return { success: false, message: 'answers harus berupa array.' };
+
+  const access = await checkPackageAccess_(token, testType, pkg);
+  if (!access.ok) return { success: false, message: access.message };
 
   const supabase = getSupabaseAdmin();
   const { data: rows, error } = await supabase
@@ -667,11 +790,14 @@ async function gradeTest_(testType, packageNumber, answers) {
  * Cek satu jawaban untuk umpan balik instan. Tidak mengembalikan kunci
  * paket lain, hanya soal yang memang sedang dikerjakan.
  */
-async function checkAnswer_(testType, packageNumber, questionId, given) {
+async function checkAnswer_(testType, packageNumber, questionId, given, token) {
   testType = String(testType || '').trim();
   const pkg = Number(packageNumber) || 0;
   const id = String(questionId ?? '').trim();
   if (!testType || !pkg || !id) return { success: false, message: 'Parameter cek jawaban tidak lengkap.' };
+
+  const access = await checkPackageAccess_(token, testType, pkg);
+  if (!access.ok) return { success: false, message: access.message };
 
   const supabase = getSupabaseAdmin();
   const { data: rows, error } = await supabase
@@ -1163,6 +1289,122 @@ async function adminSaveQuestions_(token, questions) {
   return { success: true, added, updated, total: questions.length };
 }
 
+async function adminGetPackageAccess_(token, testType) {
+  const auth = await verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const type = String(testType || 'skd_paket').trim();
+  const total = packageAccessTotal_(type);
+  if (!total) return { success: false, message: 'Tes ini tidak memakai akses paket.' };
+
+  const supabase = getSupabaseAdmin();
+  const { data: users, error: usersError } = await supabase
+    .from('table_user')
+    .select('"user-id", username, email, role')
+    .order('username', { ascending: true });
+  if (usersError) throw usersError;
+
+  const { data: access, error: accessError } = await supabase
+    .from('test_package_access')
+    .select('user_id, package')
+    .eq('test_type', type);
+
+  if (accessError) {
+    if (isMissingPackageAccessTable_(accessError)) return { success: false, message: PACKAGE_ACCESS_MIGRATION_HINT };
+    throw accessError;
+  }
+
+  const byUser = new Map();
+  (access || []).forEach(row => {
+    const userId = String(row.user_id || '');
+    if (!byUser.has(userId)) byUser.set(userId, []);
+    byUser.get(userId).push(row.package);
+  });
+
+  return {
+    success: true,
+    test_type: type,
+    total,
+    users: (users || []).map(user => ({
+      user_id: user['user-id'],
+      username: user.username,
+      email: user.email || '',
+      role: user.role || 'user',
+      packages: normalizeUnlockedPackages_(byUser.get(String(user['user-id'])) || [], total)
+    }))
+  };
+}
+
+async function adminSavePackageAccess_(token, userId, packages, testType) {
+  const auth = await verifyAdmin_(token);
+  if (!auth.ok) return { success: false, message: auth.message };
+
+  const type = String(testType || 'skd_paket').trim();
+  const total = packageAccessTotal_(type);
+  if (!total) return { success: false, message: 'Tes ini tidak memakai akses paket.' };
+
+  const uid = String(userId || '').trim();
+  if (!uid) return { success: false, message: 'Peserta wajib dipilih.' };
+
+  const unlocked = normalizeUnlockedPackages_(packages, total);
+  const supabase = getSupabaseAdmin();
+
+  const { data: targets, error: targetError } = await supabase
+    .from('table_user')
+    .select('"user-id", username, role')
+    .eq('user-id', uid)
+    .limit(1);
+  if (targetError) throw targetError;
+
+  const target = (targets || [])[0];
+  if (!target) return { success: false, message: 'Peserta tidak ditemukan.' };
+  if (target.role === 'admin') {
+    return { success: false, message: 'Admin selalu punya akses penuh; tidak perlu diatur.' };
+  }
+
+  const { error: deleteError } = await supabase
+    .from('test_package_access')
+    .delete()
+    .eq('user_id', uid)
+    .eq('test_type', type);
+
+  if (deleteError) {
+    if (isMissingPackageAccessTable_(deleteError)) return { success: false, message: PACKAGE_ACCESS_MIGRATION_HINT };
+    throw deleteError;
+  }
+
+  if (unlocked.length) {
+    const { error: insertError } = await supabase.from('test_package_access').insert(
+      unlocked.map(pkg => ({
+        user_id: uid,
+        test_type: type,
+        package: pkg,
+        unlocked_by: auth.session.user_id,
+        note: ''
+      }))
+    );
+    if (insertError) {
+      if (isMissingPackageAccessTable_(insertError)) return { success: false, message: PACKAGE_ACCESS_MIGRATION_HINT };
+      throw insertError;
+    }
+  }
+
+  await logAdminAction_(
+    auth.session,
+    'adminSavePackageAccess',
+    uid,
+    `${type}: ${unlocked.join(',') || 'semua terkunci'}`,
+    true,
+    ''
+  );
+
+  return {
+    success: true,
+    message: `${unlocked.length} paket dibuka untuk ${target.username}.`,
+    unlocked
+  };
+}
+
 async function adminDeleteQuestions_(token, questionIds) {
   const auth = await verifyAdmin_(token);
   if (!auth.ok) return { success: false, message: auth.message };
@@ -1507,5 +1749,8 @@ module.exports.__internals = {
   isMissingQuestionMetaColumn_,
   hasQuestionMeta_,
   QUESTION_BANK_COLUMNS_BASE,
-  QUESTION_BANK_COLUMNS_WITH_META
+  QUESTION_BANK_COLUMNS_WITH_META,
+  isMissingPackageAccessTable_,
+  normalizeUnlockedPackages_,
+  packageAccessTotal_
 };

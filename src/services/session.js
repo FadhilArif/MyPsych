@@ -26,5 +26,6 @@
 
   function clearSession() {
     state.session = null;
+    state.packageAccess = {};
     localStorage.removeItem(CONFIG.SESSION_KEY);
   }

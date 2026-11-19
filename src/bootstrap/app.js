@@ -7,6 +7,7 @@
     '/src/ui/view.js',
     '/src/services/session.js',
     '/src/services/api.js',
+    '/src/features/tests/access.js',
     '/src/features/pdf/pdf-core.js',
     '/src/features/dashboard/dashboard.js',
     '/src/features/auth/auth.js',

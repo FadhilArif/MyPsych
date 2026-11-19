@@ -31,6 +31,7 @@
     if (state.session?.token && !state.isGuest) {
       try {
         const backend = await apiChecked('getQuestionPackage', {
+          token: state.session.token,
           test_type: testId,
           package: packageNumber,
         });
