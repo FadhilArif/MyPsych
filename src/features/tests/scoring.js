@@ -12,6 +12,77 @@
     return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0;
   }
 
+  /**
+   * Lengkapi kunci jawaban dari server untuk soal yang berasal dari
+   * question_bank (Supabase). Soal dari JSON lokal sudah membawa `correct`
+   * sehingga tidak ada request tambahan.
+   *
+   * Status mengerjakan disimpan di array `answers` milik pemanggil, karena
+   * tes MCQ memakai state.answers sedangkan SKD memakai answers per bagian.
+   */
+  async function ensureAnswerKeys_(questions, answers, testType, packageNumber) {
+    if (!Array.isArray(questions) || !questions.length) return;
+    if (!questions.some(question => typeof question.correct !== 'number')) return;
+
+    if (!state.session?.token) {
+      throw new Error('Sesi login tidak ditemukan. Silakan masuk lagi untuk melihat hasil.');
+    }
+
+    const graded = await apiChecked('gradeTest', {
+      token: state.session.token,
+      test_type: testType,
+      package: packageNumber,
+      answers: questions.map((question, index) => {
+        const answer = Array.isArray(answers) ? answers[index] : null;
+        return {
+          id: question?.id ?? (index + 1),
+          answer: answer === null || answer === undefined
+            ? ''
+            : String.fromCharCode(65 + Number(answer)),
+        };
+      }),
+    });
+
+    const byId = new Map((graded.items || []).map(item => [String(item.id), item]));
+
+    questions.forEach((question, index) => {
+      if (!question) return;
+      const item = byId.get(String(question.id ?? (index + 1)));
+      if (!item) return;
+      question.correct = Number(item.expected);
+      question.discussion = String(item.discussion || '');
+    });
+  }
+
+  /**
+   * Ambil kunci satu soal untuk umpan balik instan (warna benar/salah).
+   * Kegagalan di sini tidak boleh menghentikan tes — hanya highlight yang
+   * tidak muncul, dan penilaian akhir tetap diambil dari gradeTest.
+   */
+  async function revealAnswerKey_(question, choice, testType, packageNumber) {
+    if (!question || typeof question.correct === 'number') return;
+    if (!state.session?.token) return;
+
+    try {
+      const response = await apiChecked('checkAnswer', {
+        token: state.session.token,
+        test_type: testType,
+        package: packageNumber,
+        question_id: question.id,
+        answer: choice === null || choice === undefined
+          ? ''
+          : String.fromCharCode(65 + Number(choice)),
+      });
+
+      if (response && typeof response.expected === 'number') {
+        question.correct = Number(response.expected);
+        question.discussion = String(response.discussion || '');
+      }
+    } catch (error) {
+      console.warn('Cek jawaban gagal:', error);
+    }
+  }
+
   function level(score) {
     if (score >= 90) return 'Sangat baik';
     if (score >= 80) return 'Baik';
@@ -83,13 +154,27 @@
     };
   }
 
-  function calculateMCQ() {
+  async function calculateMCQ() {
+    try {
+      await ensureAnswerKeys_(state.questions, state.answers, state.test, state.package);
+    } catch (error) {
+      // Sebagian kunci mungkin sudah didapat dari checkAnswer saat menjawab.
+      // Kalau semua soal sudah punya kunci, skor tetap bisa dihitung lokal.
+      if (state.questions.some(question => typeof question.correct !== 'number')) throw error;
+      console.warn('Penilaian server gagal, memakai kunci yang sudah ada:', error.message);
+    }
+
     const total = state.questions.length;
 
     const answered = state.answers.filter((a) => a !== null).length;
     const correct = state.answers.reduce(
-      (sum, answer, index) =>
-        sum + (answer === state.questions[index].correct ? 1 : 0),
+      (sum, answer, index) => {
+        const expected = state.questions[index]?.correct;
+        // `expected` bisa null kalau kunci tidak tersedia; jangan pernah
+        // menganggap jawaban kosong sebagai benar.
+        if (answer === null || answer === undefined || typeof expected !== 'number') return sum;
+        return sum + (answer === expected ? 1 : 0);
+      },
       0
     );
 
@@ -108,7 +193,8 @@
       }
       return {
         time: Number(time || 0),
-        correct: answer === state.questions[index].correct,
+        correct: typeof state.questions[index].correct === 'number' &&
+          answer === state.questions[index].correct,
         answered: true,
       };
     });

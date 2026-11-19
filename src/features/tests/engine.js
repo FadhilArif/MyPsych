@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 // ============================================================
   // TEST ENGINE
@@ -29,9 +29,18 @@
         if (Array.isArray(backend.questions) && backend.questions.length) {
           return backend.questions.map((item, index) => {
             const optionEntries = Object.entries(item.options || {});
-            const correctIndex = optionEntries.findIndex(([letter]) => String(letter).toUpperCase() === String(item.answer || '').toUpperCase());
-            if (correctIndex < 0) throw new Error(`Jawaban soal nomor ${item.id ?? index + 1} tidak valid di QuestionBank.`);
-            return { id:item.id ?? index + 1, text:String(item.question ?? ''), options:optionEntries.map(([,value])=>String(value)), correct:correctIndex, discussion:String(item.discussion ?? '') };
+            if (!optionEntries.length) {
+              throw new Error(`Soal nomor ${item.id ?? index + 1} tidak memiliki opsi jawaban.`);
+            }
+            // `correct` sengaja null: kunci jawaban diambil dari server
+            // lewat checkAnswer / gradeTest, tidak ikut saat soal dimuat.
+            return {
+              id: item.id ?? index + 1,
+              text: String(item.question ?? ''),
+              options: optionEntries.map(([, value]) => String(value)),
+              correct: null,
+              discussion: '',
+            };
           });
         }
       } catch (error) {
@@ -123,73 +132,6 @@
       };
     });
   }
-async function loadKuantitatifPackage(packageNumber) {
-  const response = await fetch('./soal_kuantitatif.json', {
-    cache: 'no-cache',
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      `File soal kuantitatif gagal dimuat. HTTP ${response.status}.`
-    );
-  }
-
-  const data = await response.json();
-
-  if (
-    !data ||
-    !Array.isArray(data.paket)
-  ) {
-    throw new Error(
-      'Format soal_kuantitatif.json tidak valid.'
-    );
-  }
-
-  const selectedPackage = data.paket.find(
-    (item) =>
-      Number(item.id_paket) === Number(packageNumber)
-  );
-
-  if (!selectedPackage) {
-    throw new Error(
-      `Paket Kuantitatif ${packageNumber} tidak ditemukan.`
-    );
-  }
-
-  if (
-    !Array.isArray(selectedPackage.soal) ||
-    selectedPackage.soal.length !== CONFIG.MCQ_QUESTIONS
-  ) {
-    throw new Error(
-      `Paket ${packageNumber} harus memiliki ${CONFIG.MCQ_QUESTIONS} soal.`
-    );
-  }
-
-  state.questions = selectedPackage.soal.map((item) => {
-    const optionEntries = Object.entries(item.options);
-
-    const correctIndex = optionEntries.findIndex(
-      ([letter]) =>
-        letter.toUpperCase() === String(item.answer).toUpperCase()
-    );
-
-    if (correctIndex === -1) {
-      throw new Error(
-        `Jawaban soal nomor ${item.id} tidak valid.`
-      );
-    }
-
-    return {
-      id: item.id,
-      text: item.question,
-      options: optionEntries.map(([, text]) => text),
-      correct: correctIndex,
-      discussion: item.discussion || '',
-    };
-  });
-
-  return state.questions;
-}
   async function startTest() {
   if (!state.test || !TESTS[state.test]) {
     return;
@@ -204,7 +146,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
   state.currentTestId = `T-${Date.now()}-${randomInt(100000)}`;
   state.testStartedAt = Date.now();
 
-  busy(button, 'Memuat soal…', true);
+  busy(button, 'Memuat soalâ€¦', true);
 
   try {
     if (TESTS[state.test].kind === 'skd_complete') {

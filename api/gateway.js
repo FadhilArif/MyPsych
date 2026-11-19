@@ -17,6 +17,8 @@ const {
 const { sendResetPasswordEmail, sendNewPasswordEmail } = require('./_lib/mailer');
 
 const USER_COLUMNS = 'user-id, username, email, password_hash, salt, role, created_at';
+const CANONICAL_APP_URL = 'https://my-psych-five.vercel.app/';
+const SESSION_TTL_MS = 6 * 60 * 60 * 1000; // harus sama dengan SESSION_TTL di _lib/auth.js
 const RESET_TOKEN_TTL_MS = 30 * 60 * 1000;
 const RESET_COOLDOWN_MS = 5 * 60 * 1000;
 const RESET_DAILY_LIMIT = 5;
@@ -104,6 +106,14 @@ case 'adminGetInterests':
         result = await getQuestionPackage_(body.test_type, body.package);
         break;
 
+      case 'gradeTest':
+        result = await gradeTest_(body.test_type, body.package, body.answers);
+        break;
+
+      case 'checkAnswer':
+        result = await checkAnswer_(body.test_type, body.package, body.question_id, body.answer);
+        break;
+
       case 'stats':
         result = await stats_();
         break;
@@ -173,7 +183,7 @@ case 'adminGetInterests':
           };
           break;
         }
-        result = await requestPasswordReset_(body.identifier, body.appUrl);
+        result = await requestPasswordReset_(body.identifier, resolveResetBase_(req, body.appUrl));
         break;
       }
 
@@ -187,10 +197,10 @@ case 'adminGetInterests':
 
     return res.status(200).json(result);
   } catch (error) {
-    console.error('[gateway] action=%s error=%s', action, error && error.message);
+    console.error('[gateway] action=%s error=%s', action, (error && (error.stack || error.message)) || error);
     return res.status(200).json({
       success: false,
-      message: 'Terjadi kesalahan server: ' + String((error && error.message) || error)
+      message: 'Terjadi kesalahan pada server. Coba lagi beberapa saat lagi.'
     });
   }
 };
@@ -229,6 +239,33 @@ function getClientIp_(req) {
   const real = req.headers['x-real-ip'];
   if (real) return String(real);
   return 'unknown';
+}
+
+/**
+ * Escape karakter wildcard LIKE (%, _, \) supaya input user dicocokkan
+ * secara literal, bukan sebagai pattern.
+ */
+function escapeLike_(value) {
+  return String(value || '').replace(/[\\%_]/g, ch => '\\' + ch);
+}
+
+/**
+ * Tandai semua sesi milik user sebagai tidak valid.
+ * Dipakai setelah password diganti, karena JWT bersifat stateless dan
+ * token lama masih berlaku sampai TTL 6 jam habis.
+ */
+async function revokeUserSessions_(supabase, userId, reason = 'password_reset') {
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);
+
+  const { error } = await supabase.from('revoked_tokens').insert({
+    token_hash: `user:${userId}:${now.getTime()}`,
+    user_id: userId,
+    reason,
+    revoked_at: now.toISOString(),
+    expires_at: expiresAt.toISOString()
+  });
+  if (error) throw error;
 }
 
 async function logAdminAction_(session, action, targetId, targetLabel, success, message) {
@@ -325,6 +362,28 @@ async function verifySessionWithRevocation_(token) {
       return null;
     }
 
+    // Revokasi menyeluruh per user (mis. setelah ganti password).
+    // Sengaja dipisah dari query di atas dan best-effort supaya kegagalan
+    // di sini tidak mematikan pengecekan token per-token.
+    const userId = String(session.user_id || '');
+    const issuedAt = session.iat ? new Date(session.iat * 1000).toISOString() : null;
+
+    if (issuedAt && /^[A-Za-z0-9_-]{1,64}$/.test(userId)) {
+      try {
+        const { data: resetRows } = await supabase
+          .from('revoked_tokens')
+          .select('id')
+          .eq('user_id', userId)
+          .eq('reason', 'password_reset')
+          .gte('revoked_at', issuedAt)
+          .limit(1);
+
+        if (resetRows && resetRows.length) return null;
+      } catch (resetErr) {
+        console.error('[revocation] cek password_reset gagal:', resetErr && resetErr.message);
+      }
+    }
+
     return session;
   } catch (err) {
     console.error('[revocation] error:', err && err.message);
@@ -346,16 +405,30 @@ async function register_(username, password, email) {
   if (!isValidEmail(email)) return { success: false, message: 'Format email tidak valid.' };
 
   const supabase = getSupabaseAdmin();
-  const { data: existing, error: existingError } = await supabase
-    .from('table_user').select('"user-id", username, email');
-  if (existingError) throw existingError;
 
-  if (existing.some(r => String(r.username || '').toLowerCase() === username.toLowerCase()))
-    return { success: false, message: 'Username sudah digunakan.' };
-  if (existing.some(r => String(r.email || '').toLowerCase() === email))
-    return { success: false, message: 'Email sudah digunakan.' };
+  // Cek duplikat secara terarah (bukan menarik seluruh tabel) supaya tetap
+  // ringan saat jumlah user bertambah.
+  const [{ data: sameUsername, error: usernameError }, { data: sameEmail, error: emailError }] = await Promise.all([
+    supabase.from('table_user').select('"user-id"')
+      .ilike('username', escapeLike_(username)).limit(1),
+    supabase.from('table_user').select('"user-id"')
+      .eq('email', email).limit(1)
+  ]);
+  if (usernameError) throw usernameError;
+  if (emailError) throw emailError;
 
-  const userId = nextUserId(existing.map(r => r['user-id']));
+  if (sameUsername && sameUsername.length) return { success: false, message: 'Username sudah digunakan.' };
+  if (sameEmail && sameEmail.length) return { success: false, message: 'Email sudah digunakan.' };
+
+  // Ambil ID terakhir saja untuk menentukan urutan berikutnya.
+  // Catatan: format U + 5 digit menjaga urutan leksikal tetap sama dengan
+  // urutan numerik sampai 99.999 user.
+  const { data: lastRows, error: lastError } = await supabase
+    .from('table_user').select('"user-id"')
+    .order('"user-id"', { ascending: false }).limit(1);
+  if (lastError) throw lastError;
+
+  const userId = nextUserId((lastRows || []).map(r => r['user-id']));
   const passwordHash = await hashPassword(password);
 
   const { error: insertError } = await supabase.from('table_user').insert({
@@ -364,7 +437,14 @@ async function register_(username, password, email) {
     role: 'user',
     created_at: new Date().toISOString()
   });
-  if (insertError) throw insertError;
+
+  if (insertError) {
+    // Unique index (kalau ada) menangkap balapan dua registrasi bersamaan.
+    if (String(insertError.code || '') === '23505') {
+      return { success: false, message: 'Username atau email sudah digunakan.' };
+    }
+    throw insertError;
+  }
 
   const token = createSessionToken({ user_id: userId, username, role: 'user' });
   return { success: true, session: { token, user_id: userId, username, role: 'user', is_admin: false } };
@@ -459,16 +539,110 @@ async function getQuestionPackage_(testType, packageNumber) {
     if (row.option_c) options.C = row.option_c;
     if (row.option_d) options.D = row.option_d;
     if (row.option_e) options.E = row.option_e;
+    // Sengaja TANPA answer/discussion: kunci jawaban hanya boleh keluar
+    // lewat gradeTest/checkAnswer, bukan saat soal dimuat.
     return {
       id: row.no_soal ?? row.question_id,
       question: row.question,
-      options,
-      answer: row.answer,
-      discussion: row.discussion || ''
+      options
     };
   });
 
   return { success: true, questions };
+}
+
+/**
+ * Ambil kunci jawaban sebuah baris question_bank sebagai indeks opsi.
+ * Indeks mengikuti urutan opsi A..E yang benar-benar terisi, sama dengan
+ * cara client menyusun array options.
+ */
+function resolveQuestionKey_(row) {
+  const letters = ['A', 'B', 'C', 'D', 'E'].filter(letter => row['option_' + letter.toLowerCase()]);
+  const expected = letters.indexOf(String(row.answer || '').trim().toUpperCase());
+  if (expected < 0) return null;
+  return { letters, expected, discussion: row.discussion || '' };
+}
+
+/**
+ * Nilai satu paket sekaligus. Dipanggil setelah tes selesai, sehingga
+ * pengiriman kunci jawaban di sini tidak lagi membantu peserta mencontek.
+ */
+async function gradeTest_(testType, packageNumber, answers) {
+  testType = String(testType || '').trim();
+  const pkg = Number(packageNumber) || 0;
+  if (!testType || !pkg) return { success: false, message: 'test_type dan package wajib diisi.' };
+  if (!Array.isArray(answers)) return { success: false, message: 'answers harus berupa array.' };
+
+  const supabase = getSupabaseAdmin();
+  const { data: rows, error } = await supabase
+    .from('question_bank')
+    .select('no_soal, option_a, option_b, option_c, option_d, option_e, answer, discussion, active')
+    .eq('test_type', testType).eq('package', pkg)
+    .order('no_soal', { ascending: true });
+  if (error) throw error;
+
+  const activeRows = (rows || []).filter(row => row.active !== false);
+  if (!activeRows.length) {
+    return { success: false, message: 'Bank soal untuk ' + testType + ' paket ' + pkg + ' belum tersedia.' };
+  }
+
+  const byId = new Map(activeRows.map(row => [String(row.no_soal), row]));
+  const items = [];
+
+  answers.forEach((entry, index) => {
+    const id = String(entry?.id ?? (index + 1));
+    const row = byId.get(id);
+    if (!row) return;
+
+    const key = resolveQuestionKey_(row);
+    if (!key) return;
+
+    const given = String(entry?.answer || '').trim().toUpperCase();
+    const givenIndex = key.letters.indexOf(given);
+
+    items.push({
+      id: Number(id) || index + 1,
+      expected: key.expected,
+      answered: givenIndex >= 0,
+      correct: givenIndex >= 0 && givenIndex === key.expected,
+      discussion: key.discussion
+    });
+  });
+
+  return { success: true, total: activeRows.length, items };
+}
+
+/**
+ * Cek satu jawaban untuk umpan balik instan. Tidak mengembalikan kunci
+ * paket lain, hanya soal yang memang sedang dikerjakan.
+ */
+async function checkAnswer_(testType, packageNumber, questionId, given) {
+  testType = String(testType || '').trim();
+  const pkg = Number(packageNumber) || 0;
+  const id = String(questionId ?? '').trim();
+  if (!testType || !pkg || !id) return { success: false, message: 'Parameter cek jawaban tidak lengkap.' };
+
+  const supabase = getSupabaseAdmin();
+  const { data: rows, error } = await supabase
+    .from('question_bank')
+    .select('no_soal, option_a, option_b, option_c, option_d, option_e, answer, discussion, active')
+    .eq('test_type', testType).eq('package', pkg).eq('no_soal', Number(id)).limit(1);
+  if (error) throw error;
+
+  const row = (rows || []).find(item => item.active !== false);
+  if (!row) return { success: false, message: 'Soal tidak ditemukan.' };
+
+  const key = resolveQuestionKey_(row);
+  if (!key) return { success: false, message: 'Kunci jawaban soal belum lengkap.' };
+
+  const givenIndex = key.letters.indexOf(String(given || '').trim().toUpperCase());
+
+  return {
+    success: true,
+    expected: key.expected,
+    correct: givenIndex >= 0 && givenIndex === key.expected,
+    discussion: key.discussion
+  };
 }
 
 /* ============================================================
@@ -754,6 +928,13 @@ async function adminResetUserPassword_(token, userId, mode, password) {
   const { error: updErr } = await supabase
     .from('table_user').update({ password_hash: newHash, salt: '' }).eq('user-id', userId);
   if (updErr) throw updErr;
+
+  // Password diganti oleh admin → sesi lama user harus berhenti berlaku.
+  try {
+    await revokeUserSessions_(supabase, userId);
+  } catch (revokeError) {
+    console.error('[adminResetUserPassword] gagal revoke sesi lama:', revokeError && revokeError.message);
+  }
 
   if (row.email) {
     try { await sendNewPasswordEmail(row.email, row.username, newPassword); }
@@ -1083,23 +1264,77 @@ async function adminGetInterests_(token, category) {
    PASSWORD RESET
    ============================================================ */
 
-async function requestPasswordReset_(identifier, appUrl) {
+/**
+ * Tentukan base URL untuk link reset password.
+ *
+ * Origin TIDAK diambil dari input client: kalau bisa dikendalikan penyerang,
+ * link reset berisi token sah akan mengarah ke domain mereka
+ * (reset-link poisoning). Yang diambil dari client hanya pathname-nya,
+ * digabung dengan origin tepercaya.
+ */
+function resolveResetBase_(req, requestedUrl) {
+  const configured = String(process.env.APP_BASE_URL || '').trim();
+  let base = configured || CANONICAL_APP_URL;
+
+  if (!configured) {
+    const host = String(req.headers['x-forwarded-host'] || req.headers.host || '')
+      .split(',')[0].trim().toLowerCase();
+    const proto = String(req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim();
+    const hostAllowed =
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host === 'my-psych-five.vercel.app' ||
+      host.endsWith('.vercel.app');
+
+    if (host && hostAllowed) base = `${proto}://${host}/`;
+  }
+
+  let path = '/';
+  try {
+    const candidate = new URL(String(requestedUrl || ''), base);
+    path = candidate.pathname || '/';
+  } catch (_) {
+    path = '/';
+  }
+
+  if (!path.startsWith('/') || path.length > 200) path = '/';
+  return base.replace(/\/+$/, '') + path;
+}
+
+async function findUserForReset_(supabase, identifier) {
+  const columns = '"user-id", username, email, reset_requested_at, reset_request_count_today, reset_request_date';
+
+  // Email dicocokkan persis (disimpan lowercase), username pakai ilike
+  // dengan wildcard yang sudah di-escape. Tidak ada nilai user yang
+  // dirangkai ke dalam sintaks filter PostgREST.
+  if (identifier.includes('@')) {
+    const { data, error } = await supabase
+      .from('table_user').select(columns)
+      .eq('email', identifier.toLowerCase()).limit(1);
+    if (error) throw error;
+    if (data && data[0]) return data[0];
+  }
+
+  if (!isValidUsername(identifier)) return null;
+
+  const { data, error } = await supabase
+    .from('table_user').select(columns)
+    .ilike('username', escapeLike_(identifier)).limit(1);
+  if (error) throw error;
+
+  return (data && data[0]) || null;
+}
+
+async function requestPasswordReset_(identifier, resetBase) {
   identifier = String(identifier || '').trim();
   const genericSuccess = {
     success: true,
     message: 'Kalau akun ditemukan, link reset sudah dikirim ke email terdaftar.'
   };
-  if (!identifier) return { success: false, message: 'Username atau email wajib diisi.' };
+  if (!identifier || identifier.length > 254) return genericSuccess;
 
   const supabase = getSupabaseAdmin();
-  const { data: rows, error } = await supabase
-    .from('table_user')
-    .select('"user-id", username, email, reset_requested_at, reset_request_count_today, reset_request_date')
-    .or(`username.ilike.${identifier},email.ilike.${identifier}`)
-    .limit(1);
-  if (error) throw error;
-
-  const row = rows && rows[0];
+  const row = await findUserForReset_(supabase, identifier);
   if (!row || !row.email) return genericSuccess;
 
   const now = new Date();
@@ -1108,16 +1343,10 @@ async function requestPasswordReset_(identifier, appUrl) {
   if (row.reset_requested_at) {
     const elapsed = now.getTime() - new Date(row.reset_requested_at).getTime();
     if (elapsed < RESET_COOLDOWN_MS) {
-      const waitSec = Math.ceil((RESET_COOLDOWN_MS - elapsed) / 1000);
-      const minutes = Math.floor(waitSec / 60);
-      const seconds = waitSec % 60;
-      const label = minutes > 0
-        ? `${minutes} menit ${seconds} detik`
-        : `${seconds} detik`;
-      return {
-        success: false,
-        message: `Mohon tunggu ${label} sebelum meminta link reset lagi.`
-      };
+      // Respons tetap generik supaya tidak membocorkan bahwa akun ini ada
+      // dan sedang dalam masa cooldown.
+      console.warn('[reset] cooldown aktif user=%s', row['user-id']);
+      return genericSuccess;
     }
   }
 
@@ -1127,10 +1356,8 @@ async function requestPasswordReset_(identifier, appUrl) {
   }
 
   if (todayCount >= RESET_DAILY_LIMIT) {
-    return {
-      success: false,
-      message: `Batas permintaan reset hari ini sudah tercapai (${RESET_DAILY_LIMIT}x). Coba lagi besok atau hubungi admin.`
-    };
+    console.warn('[reset] batas harian tercapai user=%s', row['user-id']);
+    return genericSuccess;
   }
 
   const token = generateResetToken();
@@ -1148,9 +1375,8 @@ async function requestPasswordReset_(identifier, appUrl) {
     .eq('user-id', row['user-id']);
   if (updateError) throw updateError;
 
-  const base = String(appUrl || '').trim() || 'https://my-psych-five.vercel.app/';
-  const separator = base.indexOf('?') >= 0 ? '&' : '?';
-  const resetUrl = base + separator + 'reset=' + encodeURIComponent(token);
+  const base = resetBase || CANONICAL_APP_URL;
+  const resetUrl = base + '?reset=' + encodeURIComponent(token);
 
   await sendResetPasswordEmail(row.email, row.username, resetUrl).catch(sendError => {
     console.error('Gagal kirim email reset:', sendError);
@@ -1190,5 +1416,24 @@ async function resetPassword_(token, newPassword) {
     .eq('user-id', row['user-id']);
   if (updateError) throw updateError;
 
+  // Sesi lama (token 6 jam yang mungkin sudah beredar) harus mati.
+  try {
+    await revokeUserSessions_(supabase, row['user-id']);
+  } catch (revokeError) {
+    console.error('[resetPassword] gagal revoke sesi lama:', revokeError && revokeError.message);
+  }
+
   return { success: true, message: 'Password berhasil diganti. Silakan login menggunakan password baru.' };
 }
+
+/* ============================================================
+   EKSPOR UNTUK TEST
+   Handler tetap yang di-export utama; helper murni ditempel sebagai
+   properti supaya bisa diuji tanpa database. Tidak dipakai di produksi.
+   ============================================================ */
+module.exports.__internals = {
+  escapeLike_,
+  resolveQuestionKey_,
+  resolveResetBase_,
+  getClientIp_
+};
