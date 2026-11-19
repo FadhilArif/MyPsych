@@ -72,6 +72,7 @@ trackEvent('register_attempt');
       const response = await apiChecked('register', { username, password, email });
       state.session = response.session;
       state.isGuest = false;
+      state.packageAccess = {};
       saveSession();
       $('registerForm').reset();
       const pendingView = state.pendingProtectedView;

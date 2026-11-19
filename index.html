@@ -896,7 +896,7 @@
           <div>
             <div class="eyebrow">SELEKSI KOMPETENSI DASAR</div>
             <h2>SKD (CPNS &amp; PPPK)</h2>
-            <p class="muted">Pilih kategori latihan. Soal diambil dari bank soal yang dikelola melalui panel admin.</p>
+            <p class="muted">Pilih kategori latihan. Paket TIU HOTS tersedia dalam 10 paket, kategori lain memakai bank soal panel admin.</p>
           </div>
         </div>
         <button id="backFromSkdBtn" class="back-link" type="button">← Kembali ke Dashboard</button>
@@ -945,6 +945,36 @@
             <div class="skd-start-row"><select class="package-select" data-skd-package="tkp" aria-label="Paket TKP"><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select><button class="btn btn-primary" type="button" data-skd-start="tkp">Mulai TKP</button></div>
           </article>
         </div>
+
+        <article class="skd-card skd-complete-card">
+          <div class="skd-badge skd-complete-badge">10 PAKET TIU HOTS</div>
+          <div class="skd-icon icon-blue"><img src="./assets/logos/logo_tiu.png" alt="Paket SKD TIU HOTS"></div>
+          <h4>Paket SKD — TIU HOTS</h4>
+          <p class="skd-fullname">Tes Intelegensi Umum · Paket 1–10</p>
+          <p class="skd-complete-description">Setiap paket berisi 36 soal TIU tingkat sulit: deret bilangan, silogisme, kecukupan data, bilangan setara, penalaran analitis, dan analisa tabel.</p>
+          <div class="skd-complete-info">
+            <div><strong>10 paket</strong><span>bisa dipilih bebas</span></div>
+            <div><strong>36 soal</strong><span>60 detik per soal</span></div>
+            <div><strong>6 tipe</strong><span>tabel, wacana, konteks</span></div>
+          </div>
+          <div class="skd-meta"><span>360 soal</span><span>·</span><span>kunci ditandai langsung</span></div>
+          <p class="skd-access-status" id="skdPackageAccessStatus" data-state="loading" aria-live="polite">Memuat akses paket…</p>
+          <div class="skd-start-row">
+            <select class="package-select" data-skd-package="skd_paket" aria-label="Paket SKD TIU HOTS">
+              <option value="1">Paket 1</option>
+              <option value="2">Paket 2</option>
+              <option value="3">Paket 3</option>
+              <option value="4">Paket 4</option>
+              <option value="5">Paket 5</option>
+              <option value="6">Paket 6</option>
+              <option value="7">Paket 7</option>
+              <option value="8">Paket 8</option>
+              <option value="9">Paket 9</option>
+              <option value="10">Paket 10</option>
+            </select>
+            <button class="btn btn-primary" type="button" data-skd-start="skd_paket">Mulai Paket</button>
+          </div>
+        </article>
 
         <article class="skd-card skd-complete-card">
           <div class="skd-badge skd-complete-badge">SIMULASI LENGKAP</div>
@@ -1042,6 +1072,7 @@
     <nav class="admin-nav card" aria-label="Menu admin">
       <button type="button" data-admin-tab="overview">Overview</button>
       <button type="button" data-admin-tab="users">Peserta</button>
+      <button type="button" data-admin-tab="access">Akses Paket</button>
       <button type="button" data-admin-tab="results">Hasil Tes</button>
       <button type="button" data-admin-tab="questions">Bank Soal</button>
       <button type="button" data-admin-tab="labels">Label Nilai</button>

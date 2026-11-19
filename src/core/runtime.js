@@ -28,6 +28,7 @@ const views = {
     session: null,
     isGuest: false,
     history: [],
+    packageAccess: {},
     test: null,
     package: 1,
     currentTestId: null,

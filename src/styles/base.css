@@ -587,6 +587,42 @@ button { font: inherit; cursor: pointer; border: 0; background: none; }
   gap: 6px;
 }
 
+.skd-access-status {
+  margin: 10px 0 0;
+  padding: 9px 11px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.skd-access-status[data-state='open'],
+.skd-access-status[data-state='admin'] {
+  border-color: #bfe6cd;
+  background: #edf8f1;
+  color: #2d8b53;
+}
+
+.skd-access-status[data-state='partial'] {
+  border-color: #f3ddb3;
+  background: #fff8e8;
+  color: #9a6a1b;
+}
+
+.skd-access-status[data-state='locked'],
+.skd-access-status[data-state='error'] {
+  border-color: #f0c8c4;
+  background: #fff2f1;
+  color: #b94d48;
+}
+
+.skd-access-status[data-state='loading'] {
+  color: var(--soft-text);
+}
+
 /* ---------- Back link ---------- */
 .back-link {
   display: inline-flex;
@@ -2562,6 +2598,87 @@ body[data-view=test] .app-shell {
   font-size:.62rem;
 }
 
+/* ---------- Access packages ---------- */
+.admin-access-tools {
+  grid-template-columns:1fr 1fr auto;
+  margin-bottom:14px;
+}
+
+.admin-access-editor {
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fbfdff;
+}
+
+.admin-access-editor-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.admin-access-packages {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.admin-access-package-item {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin:0;
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  font-size:.72rem;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.admin-access-package-item:has(input:checked) {
+  border-color:#bfe6cd;
+  background:#edf8f1;
+  color:#2d8b53;
+}
+
+.admin-access-package-item input {
+  margin:0;
+}
+
+.admin-access-actions {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.admin-access-error {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.admin-badge-locked {
+  background:#fff2f1;
+  color:#b94d48;
+}
+
+@media (max-width:980px) {
+  .admin-access-packages { grid-template-columns:repeat(3,1fr); }
+}
+
+@media (max-width:640px) {
+  .admin-access-tools { grid-template-columns:1fr; }
+  .admin-access-packages { grid-template-columns:repeat(2,1fr); }
+  .admin-access-editor-head { flex-direction:column; align-items:flex-start; }
+}
+
 .admin-question-cell {
   min-width:360px;
   max-width:620px;
@@ -3143,10 +3260,122 @@ body[data-view="admin"] .app-layout {
 .test-question-label {
   font-size:.62rem; font-weight:900; letter-spacing:.15em; color:var(--soft-text); margin-bottom:12px;
 }
+
+/* Stimulus & layout soal TIU HOTS (tabel, wacana, konteks). */
+.test-stimulus {
+  width:min(760px,100%);
+  max-height:42vh;
+  overflow:auto;
+  margin-bottom:14px;
+  padding:14px 16px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--bg);
+  color:var(--text);
+  font-size:.92rem;
+  line-height:1.6;
+  text-align:left;
+}
+.test-stimulus p { margin:0; }
+.test-stimulus pre {
+  margin:0;
+  font-family:inherit;
+  font-size:.85rem;
+  line-height:1.5;
+  /* Tabel tetap rata kolom; menggeser ke samping lebih baik daripada
+     baris yang terlipat dan kolom yang berantakan. */
+  white-space:pre;
+  overflow-x:auto;
+}
+.test-instruction {
+  max-width:760px;
+  margin:0 0 10px;
+  color:var(--muted);
+  text-align:center;
+  font-size:.9rem;
+}
+
+.test-question-head {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px 10px;
+  margin-bottom:12px;
+}
+.test-question-head .test-question-label { margin-bottom:0; }
+.test-context-chip {
+  display:inline-flex;
+  align-items:center;
+  padding:2px 10px;
+  border-radius:999px;
+  background:rgba(47,125,242,.1);
+  color:#2f7df2;
+  font-size:.68rem;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+/* Soal dengan bacaan/tabel: dua kolom di layar lebar supaya opsi jawaban
+   tidak terdorong ke bawah lipatan. */
+.test-question-card.has-stimulus {
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:18px 22px;
+  align-items:center;
+  justify-content:stretch;
+  padding:18px 20px;
+  text-align:left;
+}
+.test-question-card.has-stimulus .test-stimulus {
+  width:100%;
+  max-height:50vh;
+  margin:0;
+}
+.test-question-card.has-stimulus .test-question-body {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  min-width:0;
+}
+.test-question-card.has-stimulus .test-question-head { justify-content:flex-start; }
+.test-question-card.has-stimulus .test-instruction { margin:0; text-align:left; }
+.test-question-card.has-stimulus h2 {
+  max-width:none;
+  margin:6px 0 0;
+  text-align:left;
+  font-size:clamp(1.05rem,1.4vw,1.45rem);
+  line-height:1.35;
+}
+
+@media (max-width:900px) {
+  .test-question-card.has-stimulus {
+    grid-template-columns:1fr;
+    gap:12px;
+    padding:16px;
+  }
+  .test-question-card.has-stimulus .test-stimulus { max-height:34vh; }
+  .test-question-card.has-stimulus h2 { font-size:clamp(1.05rem,3.4vw,1.35rem); }
+}
+
+/* Soal dengan stimulus bisa lebih tinggi dari layar, jadi area soal
+   di-scroll sementara topbar (timer) tetap terlihat. */
+.test-body { overflow-y:auto; overscroll-behavior:contain; }
 .test-keypad-numeric { grid-template-columns:repeat(3, 1fr); max-width:420px; }
 .test-digit { min-height:52px; }
 .test-digit.zero { grid-column:2; }
 .test-keypad-answer { grid-template-columns:1fr !important; max-width:640px; }
+
+/* Opsi untuk soal bacaan dibuat lebih lebar & ringkas supaya teks panjang
+   tidak selalu jadi dua baris dan daftar opsi tidak memanjang ke bawah. */
+.test-question-card.has-stimulus ~ .test-keypad-answer {
+  width:min(880px,100%);
+  max-width:880px;
+}
+.test-question-card.has-stimulus ~ .test-keypad-answer .test-answer {
+  min-height:48px;
+  padding:11px 15px;
+}
 .test-answer { text-align:left; }
 
 /* Legacy render classes are mapped onto the new visual language in case any

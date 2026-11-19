@@ -75,8 +75,10 @@
       return;
     }
 
-    const data = result.chart.slice(0, 20);
-    const maxTime = CONFIG.MCQ_SECONDS;
+    // Semua soal ditampilkan (bukan hanya 20) supaya paket 36 soal tetap utuh.
+    const data = result.chart.slice(0, 60);
+    const maxTime = mcqSecondsPerQuestion_();
+    const labelEvery = data.length > 25 ? 5 : 1;
 
     const left = 42;
     const right = 12;
@@ -98,8 +100,10 @@
     ctx.font = '10px Inter, sans-serif';
 
     // Karena batang yang tinggi berarti waktu lebih cepat,
-    // skala waktu dibalik: 0s di atas, 30s di bawah.
-    [0, 10, 20, 30].forEach((seconds) => {
+    // skala waktu dibalik: 0s di atas, batas waktu di bawah.
+    const tickCount = 3;
+    for (let tick = 0; tick <= tickCount; tick += 1) {
+      const seconds = Math.round((maxTime / tickCount) * tick);
       const ratio = seconds / maxTime;
       const y = height - bottom - (1 - ratio) * chartHeight;
 
@@ -111,7 +115,7 @@
 
       ctx.fillStyle = '#718099';
       ctx.fillText(`${seconds}s`, 8, y + 3);
-    });
+    }
 
     const gap = 5;
     const barWidth = Math.max(
@@ -160,11 +164,13 @@
       );
 
       ctx.fillStyle = '#718099';
-      ctx.fillText(
-        String(index + 1),
-        x + barWidth / 2 - 3,
-        height - 20
-      );
+      if (index % labelEvery === 0) {
+        ctx.fillText(
+          String(index + 1),
+          x + barWidth / 2 - 3,
+          height - 20
+        );
+      }
     });
   }
 

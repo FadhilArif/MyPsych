@@ -15,10 +15,26 @@
     });
 
     document.querySelectorAll('[data-skd-start]').forEach((button) => {
-      button.addEventListener('click', () => {
+      button.addEventListener('click', async () => {
         const testId = button.dataset.skdStart;
         const select = document.querySelector(`[data-skd-package="${testId}"]`);
-        openInstruction(testId, Number(select?.value) || 1);
+        const packageNumber = Number(select?.value) || 1;
+
+        if (testId === 'skd_paket') {
+          const access = await ensurePackageAccess_('skd_paket');
+          renderSKDPackageAccess_();
+
+          if (!hasPackageAccess_('skd_paket', packageNumber)) {
+            toast(
+              access.error || `Paket ${packageNumber} masih terkunci. Hubungi admin untuk membuka akses.`,
+              'warning',
+              6000
+            );
+            return;
+          }
+        }
+
+        openInstruction(testId, packageNumber);
       });
     });
 

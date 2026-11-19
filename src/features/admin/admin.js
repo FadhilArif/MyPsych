@@ -9,11 +9,21 @@
     users: [],
     results: [],
     labels: [],
-    tab: 'overview'
+    tab: 'overview',
+    access: {
+      testType: 'skd_paket',
+      users: [],
+      total: 0,
+      selectedUser: '',
+      loaded: false,
+      loading: false,
+      failed: false,
+      error: ''
+    }
   };
 
   const ADMIN_TEST_OPTIONS = Object.entries(TESTS)
-    .filter(([id, test]) => test.kind === 'mcq')
+    .filter(([, test]) => test.kind === 'mcq')
     .map(([id, test]) => ({ id, name: test.name, group: test.group === 'skd' ? 'skd' : 'psikotes' }));
 
   function renderAdminTestOptions_(selected = '') {
@@ -31,6 +41,19 @@
     }).join('');
   }
 
+  function adminPackageCount_(testId) {
+    const count = Number(TESTS[testId]?.packages);
+    return Number.isInteger(count) && count > 0 ? count : 3;
+  }
+
+  function renderAdminPackageOptions_(testId, selected = '') {
+    const options = ['<option value="">Semua Paket</option>'];
+    for (let number = 1; number <= adminPackageCount_(testId); number += 1) {
+      options.push(`<option value="${number}" ${String(selected) === String(number) ? 'selected' : ''}>Paket ${number}</option>`);
+    }
+    return options.join('');
+  }
+
   function isAdmin() {
     return state.session?.role === 'admin';
   }
@@ -46,6 +69,7 @@
   async function openAdminDashboard(tab = state.admin?.tab || 'overview') {
     if (!adminRequireAccess()) return;
     state.admin.tab = tab;
+    if (tab === 'access') state.admin.access.failed = false;
     try {
       await refreshAdminData();
       renderAdmin();
@@ -86,6 +110,7 @@
     });
 
     if (state.admin.tab === 'users') renderAdminUsers();
+    else if (state.admin.tab === 'access') renderAdminAccess();
     else if (state.admin.tab === 'results') renderAdminResults();
     else if (state.admin.tab === 'questions') renderAdminQuestions();
     else if (state.admin.tab === 'labels') renderAdminLabels();
@@ -132,6 +157,7 @@
           <p class="muted">Kelola data tanpa membuka database secara manual.</p>
           <div class="admin-quick-grid">
             <button type="button" class="secondary-btn" data-admin-tab="users">Kelola Peserta</button>
+            <button type="button" class="secondary-btn" data-admin-tab="access">Akses Paket</button>
             <button type="button" class="secondary-btn" data-admin-tab="results">Lihat Nilai</button>
             <button type="button" class="secondary-btn" data-admin-tab="questions">Bank Soal</button>
             <button type="button" class="secondary-btn" data-admin-tab="labels">Label Nilai</button>
@@ -239,6 +265,229 @@
     } catch (error) { toast(error.message, 'warning'); }
   }
 
+  /* ---------- AKSES PAKET BERBAYAR ---------- */
+
+  function adminAccessTestOptions_() {
+    return Object.entries(TESTS)
+      .filter(([, test]) => Number(test.packages) > 0)
+      .map(([id, test]) => ({
+        id,
+        name: test.name,
+        fullName: test.fullName || '',
+        packages: Number(test.packages) || 0
+      }));
+  }
+
+  function adminAccessSelectedUser_() {
+    const access = state.admin.access;
+    return access.users.find((user) => String(user.user_id) === String(access.selectedUser)) || null;
+  }
+
+  async function loadAdminPackageAccess_() {
+    const access = state.admin.access;
+    if (access.loading) return;
+
+    access.loading = true;
+    try {
+      const response = await apiChecked('adminGetPackageAccess', {
+        token: state.session.token,
+        test_type: access.testType
+      });
+
+      access.users = Array.isArray(response.users) ? response.users : [];
+      access.total = Number(response.total) || 0;
+      access.loaded = true;
+      access.failed = false;
+      access.error = '';
+
+      if (access.selectedUser && !adminAccessSelectedUser_()) access.selectedUser = '';
+
+      if (!access.selectedUser) {
+        const first = access.users.find((user) => user.role !== 'admin');
+        access.selectedUser = first ? String(first.user_id) : '';
+      }
+    } catch (error) {
+      access.loaded = false;
+      access.failed = true;
+      access.error = error.message || 'Gagal memuat data peserta.';
+      toast(access.error, 'warning', 6000);
+    } finally {
+      access.loading = false;
+    }
+
+    if (state.admin.tab === 'access') renderAdminAccess();
+  }
+
+  function renderAdminAccess() {
+    const access = state.admin.access;
+    const tests = adminAccessTestOptions_();
+
+    if (!tests.some((item) => item.id === access.testType)) {
+      access.testType = tests[0]?.id || 'skd_paket';
+    }
+
+    const selected = adminAccessSelectedUser_();
+    const isAdminUser = selected?.role === 'admin';
+    const unlocked = new Set((selected?.packages || []).map(Number));
+    const total = Number(access.total) || Number(TESTS[access.testType]?.packages) || 10;
+
+    const packageItems = Array.from({ length: total }, (_, index) => {
+      const number = index + 1;
+      return `<label class="admin-access-package-item">
+        <input type="checkbox" class="admin-access-package" value="${number}" ${unlocked.has(number) ? 'checked' : ''} ${(!selected || isAdminUser) ? 'disabled' : ''}>
+        <span>Paket ${number}</span>
+      </label>`;
+    }).join('');
+
+    const userOptions = ['<option value="">— pilih peserta —</option>']
+      .concat(access.users.map((user) => `<option value="${escapeHtml(user.user_id)}" ${String(user.user_id) === String(access.selectedUser) ? 'selected' : ''}>${escapeHtml(user.username)}${user.role === 'admin' ? ' (admin)' : ''}</option>`))
+      .join('');
+
+    const accessRows = access.users.length ? access.users.map((user) => {
+      const packages = Array.isArray(user.packages) ? user.packages.map(Number) : [];
+      const badge = user.role === 'admin'
+        ? '<span class="admin-badge">Semua (admin)</span>'
+        : (packages.length
+          ? `<span class="admin-badge">${packages.length}/${total} paket</span>`
+          : '<span class="admin-badge admin-badge-locked">Terkunci</span>');
+      return `<tr>
+        <td><strong>${escapeHtml(user.username)}</strong><small class="admin-sub">${escapeHtml(user.user_id)}</small></td>
+        <td>${escapeHtml(user.email || '—')}</td>
+        <td>${badge}</td>
+        <td>${user.role === 'admin' ? '<span class="admin-muted">Selalu terbuka</span>' : (packages.length ? packages.map((n) => `Paket ${n}`).join(', ') : '<span class="admin-muted">Belum ada paket dibuka</span>')}</td>
+        <td class="admin-actions-cell">${user.role === 'admin' ? '<span class="admin-muted">—</span>' : `<button type="button" class="secondary-btn admin-small-btn" data-access-edit="${escapeHtml(user.user_id)}">Atur</button>`}</td>
+      </tr>`;
+    }).join('') : `<tr><td colspan="5" class="admin-empty-cell">${access.failed ? 'Data peserta gagal dimuat. Klik tombol Coba Lagi di atas.' : 'Belum ada peserta.'}</td></tr>`;
+
+    $('adminPanel').innerHTML = `
+      <div class="admin-panel-head">
+        <div>
+          <div class="eyebrow">AKSES PAKET</div>
+          <h2>Kunci &amp; buka paket berbayar</h2>
+          <p class="muted">Buka paket setelah pembayaran diterima. Paket yang tidak dicentang tetap terkunci untuk peserta.</p>
+        </div>
+        <button type="button" class="secondary-btn" id="adminAccessRefresh">↻ Refresh</button>
+      </div>
+      ${access.failed ? `<div class="warning-box admin-access-error">
+        <div><strong>Data peserta gagal dimuat.</strong><br>${escapeHtml(access.error || 'Terjadi kesalahan pada server.')}</div>
+        <button type="button" class="secondary-btn admin-small-btn" id="adminAccessRetry">Coba Lagi</button>
+      </div>` : ''}
+      <div class="admin-card card">
+        <div class="admin-filter-grid admin-access-tools">
+          <label>Tes<select id="adminAccessTest">${tests.map((item) => `<option value="${item.id}" ${item.id === access.testType ? 'selected' : ''}>${escapeHtml(item.name)}${item.fullName ? ` — ${escapeHtml(item.fullName)}` : ''}</option>`).join('')}</select></label>
+          <label>Peserta<select id="adminAccessUser">${userOptions}</select></label>
+          <button type="button" class="primary-btn" id="adminAccessSave" ${(!selected || isAdminUser) ? 'disabled' : ''}>Simpan Akses</button>
+        </div>
+        <div class="admin-access-editor">
+          <div class="admin-access-editor-head">
+            <strong>${selected ? escapeHtml(selected.username) : 'Pilih peserta'}</strong>
+            <span class="admin-muted" id="adminAccessSelection">${selected ? (isAdminUser ? 'Admin selalu punya akses penuh.' : `${unlocked.size}/${total} paket dicentang`) : 'Belum ada peserta dipilih.'}</span>
+          </div>
+          ${(!selected || isAdminUser) ? '' : `<div class="admin-access-packages">${packageItems}</div>
+          <div class="admin-access-actions">
+            <button type="button" class="secondary-btn admin-small-btn" id="adminAccessAll">Buka Semua</button>
+            <button type="button" class="secondary-btn admin-small-btn" id="adminAccessNone">Kunci Semua</button>
+          </div>`}
+        </div>
+        <div class="warning-box"><strong>Catatan:</strong> perubahan langsung tersimpan ke database. Penegakan akses dilakukan di server, jadi paket terkunci tidak bisa dimuat atau dinilai meskipun URL dimanipulasi.</div>
+      </div>
+      <div class="admin-card card">
+        <div class="admin-table-title">
+          <h3>Akses per peserta</h3>
+          <span class="admin-muted" id="adminAccessCount">${access.users.length} peserta</span>
+        </div>
+        <div class="table-wrap admin-table-wrap">
+          <table><thead><tr><th>Peserta</th><th>Email</th><th>Status</th><th>Paket terbuka</th><th>Aksi</th></tr></thead>
+          <tbody>${accessRows}</tbody></table>
+        </div>
+      </div>
+    `;
+
+    $('adminAccessRefresh')?.addEventListener('click', async () => {
+      const button = $('adminAccessRefresh');
+      busy(button, 'Memuat…', true);
+      try {
+        access.loaded = false;
+        access.failed = false;
+        await loadAdminPackageAccess_();
+      } finally {
+        busy(button, '', false);
+      }
+    });
+
+    $('adminAccessRetry')?.addEventListener('click', async () => {
+      access.failed = false;
+      access.loaded = false;
+      await loadAdminPackageAccess_();
+    });
+
+    $('adminAccessTest')?.addEventListener('change', async () => {
+      access.testType = $('adminAccessTest').value;
+      access.selectedUser = '';
+      access.loaded = false;
+      access.failed = false;
+      await loadAdminPackageAccess_();
+    });
+
+    $('adminAccessUser')?.addEventListener('change', () => {
+      access.selectedUser = $('adminAccessUser').value;
+      renderAdminAccess();
+    });
+
+    $('adminAccessSave')?.addEventListener('click', adminSavePackageAccess);
+    $('adminAccessAll')?.addEventListener('click', () => {
+      document.querySelectorAll('.admin-access-package').forEach((checkbox) => { checkbox.checked = true; });
+      updateAdminAccessSelection_();
+    });
+    $('adminAccessNone')?.addEventListener('click', () => {
+      document.querySelectorAll('.admin-access-package').forEach((checkbox) => { checkbox.checked = false; });
+      updateAdminAccessSelection_();
+    });
+    document.querySelectorAll('.admin-access-package').forEach((checkbox) => checkbox.addEventListener('change', updateAdminAccessSelection_));
+    document.querySelectorAll('[data-access-edit]').forEach((button) => button.addEventListener('click', () => {
+      access.selectedUser = button.dataset.accessEdit;
+      renderAdminAccess();
+    }));
+
+    if (!access.loaded && !access.loading && !access.failed) loadAdminPackageAccess_();
+  }
+
+  function updateAdminAccessSelection_() {
+    const selection = $('adminAccessSelection');
+    if (!selection) return;
+    const total = document.querySelectorAll('.admin-access-package').length;
+    const checked = document.querySelectorAll('.admin-access-package:checked').length;
+    selection.textContent = `${checked}/${total} paket dicentang`;
+  }
+
+  async function adminSavePackageAccess() {
+    const access = state.admin.access;
+    const userId = $('adminAccessUser')?.value || '';
+    if (!userId) { toast('Pilih peserta dulu.', 'warning'); return; }
+
+    const packages = Array.from(document.querySelectorAll('.admin-access-package:checked'))
+      .map((checkbox) => Number(checkbox.value))
+      .filter((value) => Number.isInteger(value));
+
+    const button = $('adminAccessSave');
+    try {
+      busy(button, 'Menyimpan…', true);
+      const response = await apiChecked('adminSavePackageAccess', {
+        token: state.session.token,
+        user_id: userId,
+        test_type: access.testType,
+        packages
+      });
+      toast(response.message || 'Akses paket tersimpan.', 'success', 5000);
+      access.selectedUser = userId;
+      await loadAdminPackageAccess_();
+    } catch (error) {
+      toast(error.message, 'warning', 6000);
+    } finally {
+      busy(button, '', false);
+    }
+  }
+
   function renderAdminResults() {
     const resultRows = state.admin.results;
     $('adminPanel').innerHTML = `
@@ -281,19 +530,19 @@
         <div>
           <div class="eyebrow">BANK SOAL</div>
           <h2>Kelola Bank Soal</h2>
-          <p class="muted">Kelola bank soal Psikotes Umum dan SKD. Satu file JSON dapat berisi Paket 1, 2, dan 3 sekaligus.</p>
+          <p class="muted">Kelola bank soal Psikotes Umum dan SKD. Satu file JSON dapat berisi beberapa paket sekaligus.</p>
         </div>
       </div>
       <div class="admin-card card">
         <div class="admin-filter-grid admin-question-tools">
           <label>Tes<select id="adminQuestionTest">${renderAdminTestOptions_('kuantitatif')}</select></label>
-          <label>Paket (filter)<select id="adminQuestionPackage"><option value="">Semua Paket</option><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select></label>
+          <label>Paket (filter)<select id="adminQuestionPackage">${renderAdminPackageOptions_('kuantitatif')}</select></label>
           <label>Upload JSON<input id="adminQuestionFile" type="file" accept="application/json,.json"></label>
           <button type="button" class="primary-btn" id="adminUploadQuestionBtn">Upload JSON</button>
           <button type="button" class="secondary-btn" id="adminMigrateAllQuestionsBtn">Migrasikan Semua JSON</button>
           <button type="button" class="secondary-btn" id="adminLoadQuestionsBtn">Muat Soal</button>
         </div>
-        <div class="warning-box"><strong>Format:</strong> file JSON mengikuti struktur <code>kategori → paket[] → soal[]</code>. Upload tidak perlu memilih paket karena semua paket di dalam file akan diproses otomatis. Sistem mengirim maksimal 25 soal per request agar migrasi aman.</div>
+        <div class="warning-box"><strong>Format:</strong> file JSON dapat memakai struktur <code>paket[] → soal[]</code> (bank lama) atau satu paket <code>{ id_paket, soal[] }</code> seperti Paket SKD TIU HOTS. Upload tidak perlu memilih paket karena semua paket di dalam file akan diproses otomatis. Soal yang punya <code>stimulus</code>, <code>metadata.tipe</code>, dan <code>explanation</code> akan disimpan lengkap. Sistem mengirim maksimal 25 soal per request agar migrasi aman. Untuk Paket SKD, jalankan migrasi SQL lalu unggah satu file per paket.</div>
         <div id="adminQuestionProgress" class="admin-muted" style="margin-top:10px"></div>
       </div>
       <div class="admin-card card">
@@ -318,7 +567,10 @@
     $('adminUploadQuestionBtn').addEventListener('click', adminUploadQuestionFile);
     $('adminMigrateAllQuestionsBtn').addEventListener('click', adminMigrateAllQuestions);
     $('adminLoadQuestionsBtn').addEventListener('click', adminLoadQuestions);
-    $('adminQuestionTest').addEventListener('change', adminLoadQuestions);
+    $('adminQuestionTest').addEventListener('change', () => {
+      $('adminQuestionPackage').innerHTML = renderAdminPackageOptions_($('adminQuestionTest').value);
+      adminLoadQuestions();
+    });
     $('adminQuestionPackage').addEventListener('change', adminLoadQuestions);
     adminLoadQuestions();
   }
@@ -340,7 +592,10 @@
         <tr>
           <td class="admin-question-check-col">${q.active ? `<input type="checkbox" class="admin-question-check" data-q-check="${escapeHtml(q.question_id)}" aria-label="Pilih soal nomor ${Number(q.no_soal) || 0} paket ${Number(q.package) || 0}">` : ''}</td>
           <td>${Number(q.package) || 0}</td><td>${Number(q.no_soal) || 0}</td>
-          <td class="admin-question-cell">${escapeHtml(q.question)}</td>
+          <td class="admin-question-cell">
+            ${escapeHtml(q.question)}
+            ${q.topic ? `<div class="admin-muted" style="font-size:11px;margin-top:2px">${escapeHtml(q.topic)}${q.stimulus ? ' · ada stimulus' : ''}</div>` : ''}
+          </td>
           <td><strong>${escapeHtml(q.answer)}</strong></td>
           <td><span class="admin-role ${q.active ? '' : 'admin-role-off'}">${q.active ? 'Aktif' : 'Nonaktif'}</span></td>
           <td class="admin-actions-cell"><button type="button" class="secondary-btn admin-small-btn" data-q-edit="${escapeHtml(q.question_id)}">Edit</button>${q.active ? `<button type="button" class="danger-btn admin-small-btn" data-q-delete="${escapeHtml(q.question_id)}">Hapus</button>` : ''}</td>
@@ -362,17 +617,38 @@
 
   function normalizeQuestionPayloads_(data, testType) {
     const questions = [];
-    if (!data || !Array.isArray(data.paket)) {
-      throw new Error('JSON tidak memiliki array paket[].');
+
+    if (!data || typeof data !== 'object') {
+      throw new Error('File JSON kosong atau tidak valid.');
     }
 
-    data.paket.forEach((pkg) => {
-      const packageNumber = Number(pkg?.id_paket);
-      if (!Number.isInteger(packageNumber) || packageNumber < 1) return;
-      if (!Array.isArray(pkg.soal)) return;
+    // Dua format didukung:
+    // 1. Bank lama: { paket: [{ id_paket, soal: [] }] }
+    // 2. Paket SKD: { id_paket, soal: [] } (satu file = satu paket)
+    const packageGroups = [];
 
-      pkg.soal.forEach((q, index) => {
-        const noSoal = Number(q?.id) || index + 1;
+    if (Array.isArray(data.paket) && data.paket.length) {
+      packageGroups.push(...data.paket.map((pkg) => ({
+        packageNumber: Number(pkg?.id_paket),
+        soal: pkg?.soal
+      })));
+    } else if (Array.isArray(data.soal)) {
+      packageGroups.push({
+        packageNumber: Number(data.id_paket) || 1,
+        soal: data.soal
+      });
+    } else {
+      throw new Error('JSON tidak memiliki array paket[] atau soal[].');
+    }
+
+    packageGroups.forEach(({ packageNumber, soal }) => {
+      if (!Number.isInteger(packageNumber) || packageNumber < 1) return;
+      if (!Array.isArray(soal)) return;
+
+      soal.forEach((q, index) => {
+        const noSoal = Number(q?.id ?? q?.no_soal) || index + 1;
+        const stimulus = q?.stimulus && typeof q.stimulus === 'object' ? q.stimulus : null;
+
         questions.push({
           question_id: `${testType}-${packageNumber}-${noSoal}`,
           test_type: testType,
@@ -381,7 +657,10 @@
           question: q?.question,
           options: q?.options || {},
           answer: q?.answer,
-          discussion: q?.discussion || ''
+          discussion: String(q?.discussion ?? q?.explanation ?? ''),
+          instruction: String(q?.instruction ?? ''),
+          stimulus,
+          topic: String(q?.topic ?? q?.metadata?.tipe ?? q?.type ?? '').trim()
         });
       });
     });
@@ -540,11 +819,32 @@
   async function adminEditQuestion(questionId) {
     const question = adminQuestionsCache.find((item) => item.question_id === questionId);
     if (!question) return;
-    const raw = window.prompt('Edit soal dalam JSON. Setelah selesai, tekan OK.\n\nFormat contoh: {"question":"...","options":{"A":"...","B":"...","C":"...","D":"...","E":"..."},"answer":"A","discussion":"..."}', JSON.stringify({ question: question.question, options: { A:question.option_a, B:question.option_b, C:question.option_c, D:question.option_d, E:question.option_e }, answer:question.answer, discussion:question.discussion }, null, 2));
+    const editable = {
+      question: question.question,
+      options: { A:question.option_a, B:question.option_b, C:question.option_c, D:question.option_d, E:question.option_e },
+      answer: question.answer,
+      discussion: question.discussion,
+      instruction: question.instruction || '',
+      topic: question.topic || '',
+      stimulus: question.stimulus || null
+    };
+    const raw = window.prompt('Edit soal dalam JSON. Setelah selesai, tekan OK.\n\nFormat contoh: {"question":"...","options":{"A":"...","B":"...","C":"...","D":"...","E":"..."},"answer":"A","discussion":"...","instruction":"...","topic":"...","stimulus":null}', JSON.stringify(editable, null, 2));
     if (raw === null) return;
     try {
       const edited = JSON.parse(raw);
-      const payload = { question_id: question.question_id, test_type: question.test_type, package: question.package, no_soal: question.no_soal, question: edited.question, options: edited.options, answer: edited.answer, discussion: edited.discussion };
+      const payload = {
+        question_id: question.question_id,
+        test_type: question.test_type,
+        package: question.package,
+        no_soal: question.no_soal,
+        question: edited.question,
+        options: edited.options,
+        answer: edited.answer,
+        discussion: edited.discussion,
+        instruction: edited.instruction,
+        topic: edited.topic,
+        stimulus: edited.stimulus
+      };
       await apiChecked('adminSaveQuestions', { token: state.session.token, questions: [payload] });
       toast('Soal berhasil diperbarui.', 'success');
       await adminLoadQuestions();
@@ -596,6 +896,12 @@
 
   function bindAdminTabButtons() {
     document.querySelectorAll('[data-admin-tab]').forEach((button) => {
-      button.addEventListener('click', async () => { state.admin.tab = button.dataset.adminTab; if (state.admin.tab === 'labels' && !state.admin.labelTest) state.admin.labelTest='kuantitatif'; renderAdmin(); });
+      // Pakai onclick supaya render berulang tidak menumpuk listener.
+      button.onclick = async () => {
+        state.admin.tab = button.dataset.adminTab;
+        if (state.admin.tab === 'labels' && !state.admin.labelTest) state.admin.labelTest = 'kuantitatif';
+        if (state.admin.tab === 'access') state.admin.access.failed = false;
+        renderAdmin();
+      };
     });
   }

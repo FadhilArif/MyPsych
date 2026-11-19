@@ -8,6 +8,7 @@
     state.session = null;
     state.isGuest = true;
     state.history = [];
+    state.packageAccess = {};
     saveSession();
     $('welcomeName').textContent = 'Tamu';
     updateUserChrome_('Tamu', 'Mode tamu');
@@ -20,6 +21,7 @@
     state.isGuest = false;
     state.session = null;
     state.history = [];
+    state.packageAccess = {};
   }
 
   function renderCatalog() {
@@ -352,6 +354,7 @@
         // Ambil teks soal dari bank soal untuk memperkaya wrongDetails
         try {
           const qp = await api('getQuestionPackage', {
+            token: state.session?.token || '',
             test_type: item.test_type,
             package: item.package,
           });

@@ -18,11 +18,20 @@
   });
 
   async function loadQuestionPackage(testId, packageNumber) {
+    const isSKDPackage = testId === 'skd_paket';
+
+    // Paket SKD hanya ada di question_bank dan diunggah lewat panel admin.
+    // Area SKD memang khusus akun, jadi beri pesan yang jelas untuk tamu.
+    if (isSKDPackage && (!state.session?.token || state.isGuest)) {
+      throw new Error('Paket SKD hanya tersedia untuk akun yang login.');
+    }
+
     // Akun peserta terdaftar memprioritaskan bank soal di supabase.
     // Kalau bank belum dimigrasikan, fallback tetap menggunakan JSON GitHub lama.
     if (state.session?.token && !state.isGuest) {
       try {
         const backend = await apiChecked('getQuestionPackage', {
+          token: state.session.token,
           test_type: testId,
           package: packageNumber,
         });
@@ -40,10 +49,22 @@
               options: optionEntries.map(([, value]) => String(value)),
               correct: null,
               discussion: '',
+              instruction: String(item.instruction ?? ''),
+              stimulus: item.stimulus || null,
+              // Label topik untuk ditampilkan di atas soal, mis. "ANALISA TABEL".
+              topic: String(item.topic ?? ''),
             };
           });
         }
+        if (isSKDPackage) {
+          throw new Error(`Paket SKD ${packageNumber} belum diunggah admin.`);
+        }
       } catch (error) {
+        if (isSKDPackage) {
+          throw /belum tersedia|belum diunggah/i.test(String(error.message || ''))
+            ? new Error(`Paket SKD ${packageNumber} belum diunggah admin.`)
+            : error;
+        }
         console.warn('Bank soal Sheet belum siap, fallback ke JSON:', error);
       }
     }
@@ -146,7 +167,7 @@ trackEvent('test_start', { type: state.test, package: state.package });
   state.currentTestId = `T-${Date.now()}-${randomInt(100000)}`;
   state.testStartedAt = Date.now();
 
-  busy(button, 'Memuat soalâ€¦', true);
+  busy(button, 'Memuat soal…', true);
 
   try {
     if (TESTS[state.test].kind === 'skd_complete') {

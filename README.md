@@ -52,6 +52,7 @@ src/
 soal_*.json, paket_*.json  # bank soal fallback untuk mode tamu
 assets/logos/              # logo tes + aset figural (SVG)
 docs/database-schema.md    # skema tabel Supabase (hasil pembacaan kode)
+docs/migrations/           # SQL sekali-jalan (mis. metadata bank soal)
 ```
 
 ### Catatan penting soal modul
@@ -109,9 +110,9 @@ Satu endpoint: `POST /api/gateway` dengan body `{ "action": "...", ...payload }`
 | Kelompok | Action |
 |---|---|
 | Auth | `register`, `login`, `logout`, `requestPasswordReset`, `resetPassword` |
-| Tes | `getQuestionPackage`, `checkAnswer`, `gradeTest`, `saveHistory`, `getHistory`, `saveTestDetail`, `getTestDetail` |
+| Tes | `getQuestionPackage`, `checkAnswer`, `gradeTest`, `saveHistory`, `getHistory`, `saveTestDetail`, `getTestDetail`, `getPackageAccess` |
 | Publik | `stats`, `trackPdfDownload`, `subscribeInterest` |
-| Admin | `adminDashboard`, `adminGetUsers`, `adminCreateUser`, `adminResetUserPassword`, `adminDeleteUser`, `adminGetResults`, `adminGetQuestions`, `adminSaveQuestions`, `adminDeleteQuestion`, `adminDeleteQuestions`, `adminGetScoreLabels`, `adminSaveScoreLabels`, `adminGetInterests` |
+| Admin | `adminDashboard`, `adminGetUsers`, `adminCreateUser`, `adminResetUserPassword`, `adminDeleteUser`, `adminGetResults`, `adminGetQuestions`, `adminSaveQuestions`, `adminDeleteQuestion`, `adminDeleteQuestions`, `adminGetScoreLabels`, `adminSaveScoreLabels`, `adminGetInterests`, `adminGetPackageAccess`, `adminSavePackageAccess` |
 
 Semua respons berstatus HTTP 200 dengan `{ success: boolean, message? }`.
 Error tak terduga dicatat di log function, bukan dikirim ke client.
@@ -119,7 +120,7 @@ Error tak terduga dicatat di log function, bukan dikirim ke client.
 ## Alur tes
 
 1. Pilih tes → halaman instruksi → `startTest()`
-2. Soal dimuat dari `question_bank` (akun login) atau JSON statis (tamu)
+2. Soal dimuat dari `question_bank` (akun login, termasuk Paket SKD) atau JSON statis (tamu)
 3. Jawaban disimpan di memori + `localStorage` (`psychotest_active_v2`) agar bisa dilanjutkan
 4. `finishTest()` → penilaian → `saveHistory` (ringkasan) + `saveTestDetail` (per soal)
 5. Hasil dirender, PDF dibuat di browser, tracking download dicatat
@@ -127,6 +128,48 @@ Error tak terduga dicatat di log function, bukan dikirim ke client.
 Penilaian MCQ dilakukan **di server** untuk bank soal Supabase, sehingga
 kunci jawaban tidak pernah dikirim ke client. Mode tamu memakai JSON lokal
 yang memang berisi kunci jawaban (skor tamu tidak pernah disimpan).
+
+## Paket SKD (TIU HOTS)
+
+Area terpisah di menu SKD: 10 paket yang bisa dipilih (Paket 1–10), masing-masing
+36 soal TIU dan 60 detik per soal. **Bank soal tidak lagi disimpan sebagai file
+statis** — soal diunggah admin ke `question_bank` dengan `test_type = 'skd_paket'`.
+
+- Sebelum upload pertama, jalankan
+  `docs/migrations/add-question-bank-stimulus.sql` di Supabase SQL Editor.
+  Migrasi ini menambah kolom `stimulus` (jsonb), `instruction`, dan `topic`.
+- Buka **Admin → Bank Soal**, pilih tes **Paket SKD**, lalu upload file JSON
+  paket (format `{ id_paket, nama_paket, soal: [...] }`). Ulangi untuk Paket 1–10.
+- Upload bersifat idempoten: `question_id` dibentuk dari
+  `skd_paket-<paket>-<nomor>`, jadi upload ulang memperbarui soal yang sama,
+  bukan menduplikasi.
+- `stimulus`, `instruction`, `topic` (dari `metadata.tipe`), dan `discussion`
+  (dari `explanation`) ikut tersimpan sehingga tampilan dua kolom tetap jalan.
+- Kunci jawaban tidak dikirim saat soal dimuat; penilaian tetap lewat server
+  (`checkAnswer` / `gradeTest`).
+- Jika bank untuk paket yang dipilih belum diunggah, peserta melihat pesan
+  "Paket SKD <n> belum diunggah admin."
+- Enam tipe soal, 6 soal per tipe: `deret_bilangan`, `kecukupan_data`,
+  `bilangan_setara`, `penalaran_analitis`, `analisa_tabel`, `silogisme`.
+
+### Akses berbayar per paket
+
+Paket SKD bisa dikunci per peserta. Peserta harus membayar ke admin, lalu
+admin membuka paket yang dibeli. Tidak ada baris akses = paket terkunci.
+
+- Jalankan `docs/migrations/add-package-access.sql` sekali di Supabase SQL
+  Editor. Tabel `test_package_access` menyimpan satu baris per
+  `(user_id, test_type, package)` yang sudah dibuka.
+- Buka **Admin → Akses Paket**, pilih peserta, centang paket yang sudah
+  dibayar, lalu **Simpan Akses**. Tombol **Buka Semua** / **Kunci Semua**
+  membantu mengatur banyak paket sekaligus.
+- Peserta melihat status 🔓/🔒 di halaman SKD. Paket terkunci tidak bisa
+  dimulai; server juga menolak `getQuestionPackage`, `checkAnswer`, dan
+  `gradeTest` untuk paket yang belum dibuka, jadi membuka URL atau memanggil
+  API langsung tidak melewati kunci.
+- Admin selalu punya akses penuh dan tidak perlu diatur per paket.
+- Jika tabel belum dimigrasi, peserta melihat petunjuk migrasi dan semua
+  paket tetap terkunci (fail closed); admin masih bisa membuka bank soal.
 
 ## Test
 
@@ -136,8 +179,9 @@ npm test          # node --test
 ```
 
 Test saat ini menutup helper murni di backend: escaping filter LIKE,
-pemetaan kunci jawaban ke indeks opsi, penentuan base URL link reset, dan
-validasi input auth. Test tidak menyentuh Supabase.
+pemetaan kunci jawaban ke indeks opsi, penentuan base URL link reset,
+validasi input auth, deteksi kolom/tabel yang belum dimigrasi, dan
+normalisasi nomor paket berbayar. Test tidak menyentuh Supabase.
 
 ## Keamanan
 
@@ -149,6 +193,9 @@ validasi input auth. Test tidak menyentuh Supabase.
   jawaban benar/salah segera setelah menjawab, kunci satu soal bisa
   diperoleh satu per satu. Menutup celah ini sepenuhnya berarti
   menghilangkan umpan balik instan — itu keputusan produk, belum diubah.
+- **Akses paket berbayar ditegakkan di server.** `getQuestionPackage`,
+  `checkAnswer`, dan `gradeTest` menolak paket yang belum dibuka admin untuk
+  user tersebut. Status di client hanya untuk UX (label 🔓/🔒).
 - **Skor tetap dikirim client** ke `saveHistory`. Angka yang dikirim masih
   bisa dipalsukan oleh pemilik akun sendiri; memindahkan seluruh
   perhitungan metrik (speed/accuracy/consistency/endurance) ke server

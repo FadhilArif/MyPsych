@@ -6,7 +6,8 @@ const assert = require('node:assert/strict');
 const gateway = require('../api/gateway');
 const auth = require('../api/_lib/auth');
 
-const { escapeLike_, resolveQuestionKey_, resolveResetBase_ } = gateway.__internals;
+const { escapeLike_, resolveQuestionKey_, resolveResetBase_, isMissingQuestionMetaColumn_, hasQuestionMeta_, QUESTION_BANK_COLUMNS_BASE, QUESTION_BANK_COLUMNS_WITH_META } = gateway.__internals;
+const { isMissingPackageAccessTable_, normalizeUnlockedPackages_, packageAccessTotal_ } = gateway.__internals;
 
 test('escapeLike_ menetralkan wildcard LIKE', () => {
   assert.equal(escapeLike_('fadhil'), 'fadhil');
@@ -31,6 +32,43 @@ test('resolveQuestionKey_ memetakan huruf jawaban ke indeks opsi', () => {
 
   const withDiscussion = { option_a: 'a', option_b: 'b', answer: 'B', discussion: 'karena B' };
   assert.equal(resolveQuestionKey_(withDiscussion).discussion, 'karena B');
+});
+
+test('deteksi kolom metadata bank soal yang belum dimigrasi', () => {
+  assert.equal(isMissingQuestionMetaColumn_({ code: '42703' }), true);
+  assert.equal(isMissingQuestionMetaColumn_({
+    code: 'PGRST204',
+    message: "Could not find the 'stimulus' column of 'question_bank' in the schema cache"
+  }), true);
+
+  assert.equal(isMissingQuestionMetaColumn_({ code: '23505', message: 'duplicate key value' }), false);
+  assert.equal(isMissingQuestionMetaColumn_({ code: '42501', message: 'permission denied for table question_bank' }), false);
+  assert.equal(isMissingQuestionMetaColumn_(null), false);
+});
+
+test('hasQuestionMeta_ hanya menandai soal yang punya metadata', () => {
+  assert.equal(hasQuestionMeta_({ stimulus: null, instruction: '', topic: '' }), false);
+  assert.equal(hasQuestionMeta_({ stimulus: {}, instruction: '   ', topic: '' }), false);
+  assert.equal(hasQuestionMeta_({ instruction: 'Tentukan pola berikutnya.' }), true);
+  assert.equal(hasQuestionMeta_({ topic: 'Analisa Tabel' }), true);
+  assert.equal(hasQuestionMeta_({ stimulus: { tabel: 'a | b' } }), true);
+});
+
+test('kolom bank soal mencakup field yang dipakai UI dan edit admin', () => {
+  const required = [
+    'question_id', 'test_type', 'package', 'no_soal', 'question',
+    'option_a', 'option_b', 'option_c', 'option_d', 'option_e',
+    'answer', 'discussion', 'active'
+  ];
+
+  [QUESTION_BANK_COLUMNS_BASE, QUESTION_BANK_COLUMNS_WITH_META].forEach((columns) => {
+    const fields = columns.split(',').map((field) => field.trim());
+    required.forEach((field) => assert.ok(fields.includes(field), `kolom ${field} hilang`));
+  });
+
+  assert.ok(QUESTION_BANK_COLUMNS_WITH_META.split(',').map((f) => f.trim()).includes('stimulus'));
+  assert.ok(QUESTION_BANK_COLUMNS_WITH_META.split(',').map((f) => f.trim()).includes('instruction'));
+  assert.ok(QUESTION_BANK_COLUMNS_WITH_META.split(',').map((f) => f.trim()).includes('topic'));
 });
 
 test('resolveResetBase_ mengabaikan origin dari client', () => {
@@ -73,4 +111,34 @@ test('validasi input auth', () => {
   assert.equal(auth.isValidUsername('nama dengan spasi'), false);
   assert.equal(auth.isValidEmail('a@b.co'), true);
   assert.equal(auth.isValidEmail('bukan-email'), false);
+});
+
+test('deteksi tabel akses paket yang belum dimigrasi', () => {
+  assert.equal(isMissingPackageAccessTable_({ code: '42P01' }), true);
+  assert.equal(isMissingPackageAccessTable_({ code: 'PGRST205' }), true);
+  assert.equal(isMissingPackageAccessTable_({
+    code: 'PGRST204',
+    message: "Could not find the table 'public.test_package_access' in the schema cache"
+  }), true);
+
+  assert.equal(isMissingPackageAccessTable_({ code: '23505', message: 'duplicate key value' }), false);
+  assert.equal(isMissingPackageAccessTable_({ code: '42501', message: 'permission denied for table test_package_access' }), false);
+  assert.equal(isMissingPackageAccessTable_(null), false);
+});
+
+test('normalizeUnlockedPackages_ membatasi dan merapikan nomor paket', () => {
+  assert.deepEqual(normalizeUnlockedPackages_([3, 1, 2, 2], 10), [1, 2, 3]);
+  assert.deepEqual(normalizeUnlockedPackages_(['4', 0, -1, 11, 5.5, '6'], 10), [4, 6]);
+  assert.deepEqual(normalizeUnlockedPackages_([1, 10], 10), [1, 10]);
+  assert.deepEqual(normalizeUnlockedPackages_([1, 2], 0), []);
+  assert.deepEqual(normalizeUnlockedPackages_(null, 10), []);
+  assert.deepEqual(normalizeUnlockedPackages_('1,2', 10), []);
+});
+
+test('packageAccessTotal_ hanya untuk tes berpaket', () => {
+  assert.equal(packageAccessTotal_('skd_paket'), 10);
+  assert.equal(packageAccessTotal_(' skd_paket '), 10);
+  assert.equal(packageAccessTotal_('kuantitatif'), 0);
+  assert.equal(packageAccessTotal_(''), 0);
+  assert.equal(packageAccessTotal_(null), 0);
 });
