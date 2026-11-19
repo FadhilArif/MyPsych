@@ -17,7 +17,8 @@
       selectedUser: '',
       loaded: false,
       loading: false,
-      failed: false
+      failed: false,
+      error: ''
     }
   };
 
@@ -68,6 +69,7 @@
   async function openAdminDashboard(tab = state.admin?.tab || 'overview') {
     if (!adminRequireAccess()) return;
     state.admin.tab = tab;
+    if (tab === 'access') state.admin.access.failed = false;
     try {
       await refreshAdminData();
       renderAdmin();
@@ -296,6 +298,7 @@
       access.total = Number(response.total) || 0;
       access.loaded = true;
       access.failed = false;
+      access.error = '';
 
       if (access.selectedUser && !adminAccessSelectedUser_()) access.selectedUser = '';
 
@@ -306,7 +309,8 @@
     } catch (error) {
       access.loaded = false;
       access.failed = true;
-      toast(error.message, 'warning', 6000);
+      access.error = error.message || 'Gagal memuat data peserta.';
+      toast(access.error, 'warning', 6000);
     } finally {
       access.loading = false;
     }
@@ -353,7 +357,7 @@
         <td>${user.role === 'admin' ? '<span class="admin-muted">Selalu terbuka</span>' : (packages.length ? packages.map((n) => `Paket ${n}`).join(', ') : '<span class="admin-muted">Belum ada paket dibuka</span>')}</td>
         <td class="admin-actions-cell">${user.role === 'admin' ? '<span class="admin-muted">—</span>' : `<button type="button" class="secondary-btn admin-small-btn" data-access-edit="${escapeHtml(user.user_id)}">Atur</button>`}</td>
       </tr>`;
-    }).join('') : `<tr><td colspan="5" class="admin-empty-cell">Belum ada peserta.</td></tr>`;
+    }).join('') : `<tr><td colspan="5" class="admin-empty-cell">${access.failed ? 'Data peserta gagal dimuat. Klik tombol Coba Lagi di atas.' : 'Belum ada peserta.'}</td></tr>`;
 
     $('adminPanel').innerHTML = `
       <div class="admin-panel-head">
@@ -364,6 +368,10 @@
         </div>
         <button type="button" class="secondary-btn" id="adminAccessRefresh">↻ Refresh</button>
       </div>
+      ${access.failed ? `<div class="warning-box admin-access-error">
+        <div><strong>Data peserta gagal dimuat.</strong><br>${escapeHtml(access.error || 'Terjadi kesalahan pada server.')}</div>
+        <button type="button" class="secondary-btn admin-small-btn" id="adminAccessRetry">Coba Lagi</button>
+      </div>` : ''}
       <div class="admin-card card">
         <div class="admin-filter-grid admin-access-tools">
           <label>Tes<select id="adminAccessTest">${tests.map((item) => `<option value="${item.id}" ${item.id === access.testType ? 'selected' : ''}>${escapeHtml(item.name)}${item.fullName ? ` — ${escapeHtml(item.fullName)}` : ''}</option>`).join('')}</select></label>
@@ -405,6 +413,12 @@
       } finally {
         busy(button, '', false);
       }
+    });
+
+    $('adminAccessRetry')?.addEventListener('click', async () => {
+      access.failed = false;
+      access.loaded = false;
+      await loadAdminPackageAccess_();
     });
 
     $('adminAccessTest')?.addEventListener('change', async () => {
@@ -882,6 +896,12 @@
 
   function bindAdminTabButtons() {
     document.querySelectorAll('[data-admin-tab]').forEach((button) => {
-      button.addEventListener('click', async () => { state.admin.tab = button.dataset.adminTab; if (state.admin.tab === 'labels' && !state.admin.labelTest) state.admin.labelTest='kuantitatif'; renderAdmin(); });
+      // Pakai onclick supaya render berulang tidak menumpuk listener.
+      button.onclick = async () => {
+        state.admin.tab = button.dataset.adminTab;
+        if (state.admin.tab === 'labels' && !state.admin.labelTest) state.admin.labelTest = 'kuantitatif';
+        if (state.admin.tab === 'access') state.admin.access.failed = false;
+        renderAdmin();
+      };
     });
   }

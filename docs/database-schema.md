@@ -136,6 +136,11 @@ create table if not exists test_package_access (
 create index if not exists test_package_access_user_idx
   on test_package_access (user_id, test_type);
 
+-- Wajib: server memakai service_role untuk membaca/menulis tabel ini.
+grant select, insert, update, delete
+  on table public.test_package_access
+  to service_role;
+
 -- ============================================================
 -- LAIN-LAIN
 -- ============================================================

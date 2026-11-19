@@ -2656,6 +2656,14 @@ body[data-view=test] .app-shell {
   flex-wrap:wrap;
 }
 
+.admin-access-error {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
 .admin-badge-locked {
   background:#fff2f1;
   color:#b94d48;
