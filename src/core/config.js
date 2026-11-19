@@ -101,8 +101,6 @@
         packages: 10,
         questionsPerPackage: 36,
         secondsPerQuestion: 60,
-        // Bank soal statis di data/skd/, bukan question_bank Supabase.
-        staticBank: true,
         logo: './assets/logos/logo_tiu.png',
       }),
       skd_lengkap: Object.freeze({

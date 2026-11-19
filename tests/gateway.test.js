@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 const gateway = require('../api/gateway');
 const auth = require('../api/_lib/auth');
 
-const { escapeLike_, resolveQuestionKey_, resolveResetBase_ } = gateway.__internals;
+const { escapeLike_, resolveQuestionKey_, resolveResetBase_, isMissingQuestionMetaColumn_, hasQuestionMeta_ } = gateway.__internals;
 
 test('escapeLike_ menetralkan wildcard LIKE', () => {
   assert.equal(escapeLike_('fadhil'), 'fadhil');
@@ -31,6 +31,26 @@ test('resolveQuestionKey_ memetakan huruf jawaban ke indeks opsi', () => {
 
   const withDiscussion = { option_a: 'a', option_b: 'b', answer: 'B', discussion: 'karena B' };
   assert.equal(resolveQuestionKey_(withDiscussion).discussion, 'karena B');
+});
+
+test('deteksi kolom metadata bank soal yang belum dimigrasi', () => {
+  assert.equal(isMissingQuestionMetaColumn_({ code: '42703' }), true);
+  assert.equal(isMissingQuestionMetaColumn_({
+    code: 'PGRST204',
+    message: "Could not find the 'stimulus' column of 'question_bank' in the schema cache"
+  }), true);
+
+  assert.equal(isMissingQuestionMetaColumn_({ code: '23505', message: 'duplicate key value' }), false);
+  assert.equal(isMissingQuestionMetaColumn_({ code: '42501', message: 'permission denied for table question_bank' }), false);
+  assert.equal(isMissingQuestionMetaColumn_(null), false);
+});
+
+test('hasQuestionMeta_ hanya menandai soal yang punya metadata', () => {
+  assert.equal(hasQuestionMeta_({ stimulus: null, instruction: '', topic: '' }), false);
+  assert.equal(hasQuestionMeta_({ stimulus: {}, instruction: '   ', topic: '' }), false);
+  assert.equal(hasQuestionMeta_({ instruction: 'Tentukan pola berikutnya.' }), true);
+  assert.equal(hasQuestionMeta_({ topic: 'Analisa Tabel' }), true);
+  assert.equal(hasQuestionMeta_({ stimulus: { tabel: 'a | b' } }), true);
 });
 
 test('resolveResetBase_ mengabaikan origin dari client', () => {

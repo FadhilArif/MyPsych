@@ -23,6 +23,50 @@ const RESET_TOKEN_TTL_MS = 30 * 60 * 1000;
 const RESET_COOLDOWN_MS = 5 * 60 * 1000;
 const RESET_DAILY_LIMIT = 5;
 
+// Kolom tambahan untuk bank soal bertipe stimulus (Paket SKD/TIU HOTS).
+// Kalau migrasi SQL belum dijalankan, query otomatis jatuh ke kolom lama
+// supaya bank soal biasa tetap bisa dipakai.
+const QUESTION_BANK_COLUMNS_BASE = 'question_id, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active';
+const QUESTION_BANK_COLUMNS_WITH_META = 'question_id, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, stimulus, instruction, topic, active';
+const QUESTION_BANK_META_FIELDS = ['stimulus', 'instruction', 'topic'];
+
+function isMissingQuestionMetaColumn_(error) {
+  if (!error) return false;
+  const code = String(error.code || '');
+  if (code === '42703' || code === 'PGRST204') return true;
+  const message = `${error.message || ''} ${error.details || ''}`;
+  return QUESTION_BANK_META_FIELDS.some(field => new RegExp(field, 'i').test(message))
+    && /(column|schema cache|does not exist|not find)/i.test(message);
+}
+
+function hasQuestionMeta_(record) {
+  return QUESTION_BANK_META_FIELDS.some(field => {
+    const value = record[field];
+    if (value == null) return false;
+    if (typeof value === 'string') return value.trim().length > 0;
+    if (typeof value === 'object') return Object.keys(value).length > 0;
+    return true;
+  });
+}
+
+async function selectQuestionBank_(supabase, buildQuery) {
+  let result = await buildQuery(
+    supabase.from('question_bank').select(QUESTION_BANK_COLUMNS_WITH_META)
+  );
+
+  if (result.error && isMissingQuestionMetaColumn_(result.error)) {
+    result = await buildQuery(
+      supabase.from('question_bank').select(QUESTION_BANK_COLUMNS_BASE)
+    );
+  }
+
+  return result;
+}
+
+const QUESTION_META_MIGRATION_HINT =
+  'Kolom stimulus/instruction/topic belum ada di question_bank. ' +
+  'Jalankan migrasi docs/migrations/add-question-bank-stimulus.sql di Supabase SQL Editor, lalu upload ulang.';
+
 module.exports = async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
@@ -521,10 +565,12 @@ async function getQuestionPackage_(testType, packageNumber) {
   if (!testType || !pkg) return { success: false, message: 'test_type dan package wajib diisi.' };
 
   const supabase = getSupabaseAdmin();
-  const { data: rows, error } = await supabase
-    .from('question_bank')
-    .select('question_id, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active')
-    .eq('test_type', testType).eq('package', pkg).order('no_soal', { ascending: true });
+  const { data: rows, error } = await selectQuestionBank_(
+    supabase,
+    (query) => query
+      .eq('test_type', testType).eq('package', pkg)
+      .order('no_soal', { ascending: true })
+  );
   if (error) throw error;
 
   const activeRows = (rows || []).filter(row => row.active !== false);
@@ -544,7 +590,12 @@ async function getQuestionPackage_(testType, packageNumber) {
     return {
       id: row.no_soal ?? row.question_id,
       question: row.question,
-      options
+      options,
+      // Metadata stimulus untuk soal TIU HOTS. Kolom ini nullable, jadi
+      // bank soal lama tetap aman.
+      instruction: row.instruction || '',
+      stimulus: row.stimulus || null,
+      topic: row.topic || ''
     };
   });
 
@@ -1024,16 +1075,15 @@ async function adminGetQuestions_(token, testType, pkg, includeInactive) {
   if (!auth.ok) return { success: false, message: auth.message };
 
   const supabase = getSupabaseAdmin();
-  let query = supabase
-    .from('question_bank')
-    .select('question_id, test_type, package, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active')
-    .eq('test_type', String(testType || '').trim())
-    .order('package', { ascending: true }).order('no_soal', { ascending: true });
-
-  if (pkg && Number(pkg) > 0) query = query.eq('package', Number(pkg));
-  if (!includeInactive) query = query.eq('active', true);
-
-  const { data: rows, error } = await query;
+  const { data: rows, error } = await selectQuestionBank_(
+    supabase,
+    (query) => {
+      let next = query.eq('test_type', String(testType || '').trim());
+      if (pkg && Number(pkg) > 0) next = next.eq('package', Number(pkg));
+      if (!includeInactive) next = next.eq('active', true);
+      return next.order('package', { ascending: true }).order('no_soal', { ascending: true });
+    }
+  );
   if (error) throw error;
 
   return {
@@ -1042,7 +1092,9 @@ async function adminGetQuestions_(token, testType, pkg, includeInactive) {
       question_id: r.question_id, test_type: r.test_type, package: r.package, no_soal: r.no_soal,
       question: r.question, option_a: r.option_a, option_b: r.option_b, option_c: r.option_c,
       option_d: r.option_d, option_e: r.option_e, answer: r.answer,
-      discussion: r.discussion || '', active: r.active !== false
+      discussion: r.discussion || '', instruction: r.instruction || '',
+      stimulus: r.stimulus || null, topic: r.topic || '',
+      active: r.active !== false
     }))
   };
 }
@@ -1076,18 +1128,32 @@ async function adminSaveQuestions_(token, questions) {
       option_e: String(options.E ?? q.option_e ?? ''),
       answer: String(q.answer || '').trim().toUpperCase(),
       discussion: String(q.discussion || ''),
+      stimulus: q.stimulus && typeof q.stimulus === 'object' ? q.stimulus : null,
+      instruction: String(q.instruction || ''),
+      topic: String(q.topic || ''),
       active: true
     };
 
-    if (existingSet.has(qid)) {
-      const { error } = await supabase.from('question_bank').update(record).eq('question_id', qid);
-      if (error) throw error;
-      updated += 1;
-    } else {
-      const { error } = await supabase.from('question_bank').insert(record);
-      if (error) throw error;
-      added += 1;
+    const isUpdate = existingSet.has(qid);
+    const write = (payload) => isUpdate
+      ? supabase.from('question_bank').update(payload).eq('question_id', qid)
+      : supabase.from('question_bank').insert(payload);
+
+    let { error } = await write(record);
+
+    if (error && isMissingQuestionMetaColumn_(error)) {
+      // Bank soal lama tetap bisa diunggah sebelum migrasi dijalankan,
+      // tapi soal yang membawa stimulus harus menunggu kolom baru.
+      if (hasQuestionMeta_(record)) throw new Error(QUESTION_META_MIGRATION_HINT);
+
+      const legacyRecord = { ...record };
+      QUESTION_BANK_META_FIELDS.forEach(field => delete legacyRecord[field]);
+      ({ error } = await write(legacyRecord));
     }
+
+    if (error) throw error;
+    if (isUpdate) updated += 1;
+    else added += 1;
   }
 
   await logAdminAction_(auth.session, 'adminSaveQuestions', '', `${added} added, ${updated} updated`, true, '');
@@ -1435,5 +1501,7 @@ module.exports.__internals = {
   escapeLike_,
   resolveQuestionKey_,
   resolveResetBase_,
-  getClientIp_
+  getClientIp_,
+  isMissingQuestionMetaColumn_,
+  hasQuestionMeta_
 };

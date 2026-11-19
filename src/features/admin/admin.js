@@ -13,7 +13,7 @@
   };
 
   const ADMIN_TEST_OPTIONS = Object.entries(TESTS)
-    .filter(([, test]) => test.kind === 'mcq' && !test.staticBank)
+    .filter(([, test]) => test.kind === 'mcq')
     .map(([id, test]) => ({ id, name: test.name, group: test.group === 'skd' ? 'skd' : 'psikotes' }));
 
   function renderAdminTestOptions_(selected = '') {
@@ -29,6 +29,19 @@
         .join('');
       return options ? `<optgroup label="${label}">${options}</optgroup>` : '';
     }).join('');
+  }
+
+  function adminPackageCount_(testId) {
+    const count = Number(TESTS[testId]?.packages);
+    return Number.isInteger(count) && count > 0 ? count : 3;
+  }
+
+  function renderAdminPackageOptions_(testId, selected = '') {
+    const options = ['<option value="">Semua Paket</option>'];
+    for (let number = 1; number <= adminPackageCount_(testId); number += 1) {
+      options.push(`<option value="${number}" ${String(selected) === String(number) ? 'selected' : ''}>Paket ${number}</option>`);
+    }
+    return options.join('');
   }
 
   function isAdmin() {
@@ -281,19 +294,19 @@
         <div>
           <div class="eyebrow">BANK SOAL</div>
           <h2>Kelola Bank Soal</h2>
-          <p class="muted">Kelola bank soal Psikotes Umum dan SKD. Satu file JSON dapat berisi Paket 1, 2, dan 3 sekaligus.</p>
+          <p class="muted">Kelola bank soal Psikotes Umum dan SKD. Satu file JSON dapat berisi beberapa paket sekaligus.</p>
         </div>
       </div>
       <div class="admin-card card">
         <div class="admin-filter-grid admin-question-tools">
           <label>Tes<select id="adminQuestionTest">${renderAdminTestOptions_('kuantitatif')}</select></label>
-          <label>Paket (filter)<select id="adminQuestionPackage"><option value="">Semua Paket</option><option value="1">Paket 1</option><option value="2">Paket 2</option><option value="3">Paket 3</option></select></label>
+          <label>Paket (filter)<select id="adminQuestionPackage">${renderAdminPackageOptions_('kuantitatif')}</select></label>
           <label>Upload JSON<input id="adminQuestionFile" type="file" accept="application/json,.json"></label>
           <button type="button" class="primary-btn" id="adminUploadQuestionBtn">Upload JSON</button>
           <button type="button" class="secondary-btn" id="adminMigrateAllQuestionsBtn">Migrasikan Semua JSON</button>
           <button type="button" class="secondary-btn" id="adminLoadQuestionsBtn">Muat Soal</button>
         </div>
-        <div class="warning-box"><strong>Format:</strong> file JSON mengikuti struktur <code>kategori → paket[] → soal[]</code>. Upload tidak perlu memilih paket karena semua paket di dalam file akan diproses otomatis. Sistem mengirim maksimal 25 soal per request agar migrasi aman.</div>
+        <div class="warning-box"><strong>Format:</strong> file JSON dapat memakai struktur <code>paket[] → soal[]</code> (bank lama) atau satu paket <code>{ id_paket, soal[] }</code> seperti Paket SKD TIU HOTS. Upload tidak perlu memilih paket karena semua paket di dalam file akan diproses otomatis. Soal yang punya <code>stimulus</code>, <code>metadata.tipe</code>, dan <code>explanation</code> akan disimpan lengkap. Sistem mengirim maksimal 25 soal per request agar migrasi aman. Untuk Paket SKD, jalankan migrasi SQL lalu unggah satu file per paket.</div>
         <div id="adminQuestionProgress" class="admin-muted" style="margin-top:10px"></div>
       </div>
       <div class="admin-card card">
@@ -318,7 +331,10 @@
     $('adminUploadQuestionBtn').addEventListener('click', adminUploadQuestionFile);
     $('adminMigrateAllQuestionsBtn').addEventListener('click', adminMigrateAllQuestions);
     $('adminLoadQuestionsBtn').addEventListener('click', adminLoadQuestions);
-    $('adminQuestionTest').addEventListener('change', adminLoadQuestions);
+    $('adminQuestionTest').addEventListener('change', () => {
+      $('adminQuestionPackage').innerHTML = renderAdminPackageOptions_($('adminQuestionTest').value);
+      adminLoadQuestions();
+    });
     $('adminQuestionPackage').addEventListener('change', adminLoadQuestions);
     adminLoadQuestions();
   }
@@ -340,7 +356,10 @@
         <tr>
           <td class="admin-question-check-col">${q.active ? `<input type="checkbox" class="admin-question-check" data-q-check="${escapeHtml(q.question_id)}" aria-label="Pilih soal nomor ${Number(q.no_soal) || 0} paket ${Number(q.package) || 0}">` : ''}</td>
           <td>${Number(q.package) || 0}</td><td>${Number(q.no_soal) || 0}</td>
-          <td class="admin-question-cell">${escapeHtml(q.question)}</td>
+          <td class="admin-question-cell">
+            ${escapeHtml(q.question)}
+            ${q.topic ? `<div class="admin-muted" style="font-size:11px;margin-top:2px">${escapeHtml(q.topic)}${q.stimulus ? ' · ada stimulus' : ''}</div>` : ''}
+          </td>
           <td><strong>${escapeHtml(q.answer)}</strong></td>
           <td><span class="admin-role ${q.active ? '' : 'admin-role-off'}">${q.active ? 'Aktif' : 'Nonaktif'}</span></td>
           <td class="admin-actions-cell"><button type="button" class="secondary-btn admin-small-btn" data-q-edit="${escapeHtml(q.question_id)}">Edit</button>${q.active ? `<button type="button" class="danger-btn admin-small-btn" data-q-delete="${escapeHtml(q.question_id)}">Hapus</button>` : ''}</td>
@@ -362,17 +381,38 @@
 
   function normalizeQuestionPayloads_(data, testType) {
     const questions = [];
-    if (!data || !Array.isArray(data.paket)) {
-      throw new Error('JSON tidak memiliki array paket[].');
+
+    if (!data || typeof data !== 'object') {
+      throw new Error('File JSON kosong atau tidak valid.');
     }
 
-    data.paket.forEach((pkg) => {
-      const packageNumber = Number(pkg?.id_paket);
-      if (!Number.isInteger(packageNumber) || packageNumber < 1) return;
-      if (!Array.isArray(pkg.soal)) return;
+    // Dua format didukung:
+    // 1. Bank lama: { paket: [{ id_paket, soal: [] }] }
+    // 2. Paket SKD: { id_paket, soal: [] } (satu file = satu paket)
+    const packageGroups = [];
 
-      pkg.soal.forEach((q, index) => {
-        const noSoal = Number(q?.id) || index + 1;
+    if (Array.isArray(data.paket) && data.paket.length) {
+      packageGroups.push(...data.paket.map((pkg) => ({
+        packageNumber: Number(pkg?.id_paket),
+        soal: pkg?.soal
+      })));
+    } else if (Array.isArray(data.soal)) {
+      packageGroups.push({
+        packageNumber: Number(data.id_paket) || 1,
+        soal: data.soal
+      });
+    } else {
+      throw new Error('JSON tidak memiliki array paket[] atau soal[].');
+    }
+
+    packageGroups.forEach(({ packageNumber, soal }) => {
+      if (!Number.isInteger(packageNumber) || packageNumber < 1) return;
+      if (!Array.isArray(soal)) return;
+
+      soal.forEach((q, index) => {
+        const noSoal = Number(q?.id ?? q?.no_soal) || index + 1;
+        const stimulus = q?.stimulus && typeof q.stimulus === 'object' ? q.stimulus : null;
+
         questions.push({
           question_id: `${testType}-${packageNumber}-${noSoal}`,
           test_type: testType,
@@ -381,7 +421,10 @@
           question: q?.question,
           options: q?.options || {},
           answer: q?.answer,
-          discussion: q?.discussion || ''
+          discussion: String(q?.discussion ?? q?.explanation ?? ''),
+          instruction: String(q?.instruction ?? ''),
+          stimulus,
+          topic: String(q?.topic ?? q?.metadata?.tipe ?? q?.type ?? '').trim()
         });
       });
     });
@@ -540,11 +583,32 @@
   async function adminEditQuestion(questionId) {
     const question = adminQuestionsCache.find((item) => item.question_id === questionId);
     if (!question) return;
-    const raw = window.prompt('Edit soal dalam JSON. Setelah selesai, tekan OK.\n\nFormat contoh: {"question":"...","options":{"A":"...","B":"...","C":"...","D":"...","E":"..."},"answer":"A","discussion":"..."}', JSON.stringify({ question: question.question, options: { A:question.option_a, B:question.option_b, C:question.option_c, D:question.option_d, E:question.option_e }, answer:question.answer, discussion:question.discussion }, null, 2));
+    const editable = {
+      question: question.question,
+      options: { A:question.option_a, B:question.option_b, C:question.option_c, D:question.option_d, E:question.option_e },
+      answer: question.answer,
+      discussion: question.discussion,
+      instruction: question.instruction || '',
+      topic: question.topic || '',
+      stimulus: question.stimulus || null
+    };
+    const raw = window.prompt('Edit soal dalam JSON. Setelah selesai, tekan OK.\n\nFormat contoh: {"question":"...","options":{"A":"...","B":"...","C":"...","D":"...","E":"..."},"answer":"A","discussion":"...","instruction":"...","topic":"...","stimulus":null}', JSON.stringify(editable, null, 2));
     if (raw === null) return;
     try {
       const edited = JSON.parse(raw);
-      const payload = { question_id: question.question_id, test_type: question.test_type, package: question.package, no_soal: question.no_soal, question: edited.question, options: edited.options, answer: edited.answer, discussion: edited.discussion };
+      const payload = {
+        question_id: question.question_id,
+        test_type: question.test_type,
+        package: question.package,
+        no_soal: question.no_soal,
+        question: edited.question,
+        options: edited.options,
+        answer: edited.answer,
+        discussion: edited.discussion,
+        instruction: edited.instruction,
+        topic: edited.topic,
+        stimulus: edited.stimulus
+      };
       await apiChecked('adminSaveQuestions', { token: state.session.token, questions: [payload] });
       toast('Soal berhasil diperbarui.', 'success');
       await adminLoadQuestions();

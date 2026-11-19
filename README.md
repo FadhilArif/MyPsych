@@ -50,9 +50,9 @@ src/
   ui/                      # navigasi, view, sidebar
   styles/                  # base.css, overrides.css, landing.css
 soal_*.json, paket_*.json  # bank soal fallback untuk mode tamu
-data/skd/                  # 10 paket TIU HOTS (paket_1..10.json)
 assets/logos/              # logo tes + aset figural (SVG)
 docs/database-schema.md    # skema tabel Supabase (hasil pembacaan kode)
+docs/migrations/           # SQL sekali-jalan (mis. metadata bank soal)
 ```
 
 ### Catatan penting soal modul
@@ -120,7 +120,7 @@ Error tak terduga dicatat di log function, bukan dikirim ke client.
 ## Alur tes
 
 1. Pilih tes → halaman instruksi → `startTest()`
-2. Soal dimuat dari `question_bank` (akun login) atau JSON statis (tamu)
+2. Soal dimuat dari `question_bank` (akun login, termasuk Paket SKD) atau JSON statis (tamu)
 3. Jawaban disimpan di memori + `localStorage` (`psychotest_active_v2`) agar bisa dilanjutkan
 4. `finishTest()` → penilaian → `saveHistory` (ringkasan) + `saveTestDetail` (per soal)
 5. Hasil dirender, PDF dibuat di browser, tracking download dicatat
@@ -132,20 +132,25 @@ yang memang berisi kunci jawaban (skor tamu tidak pernah disimpan).
 ## Paket SKD (TIU HOTS)
 
 Area terpisah di menu SKD: 10 paket yang bisa dipilih (Paket 1–10), masing-masing
-36 soal TIU dan 60 detik per soal.
+36 soal TIU dan 60 detik per soal. **Bank soal tidak lagi disimpan sebagai file
+statis** — soal diunggah admin ke `question_bank` dengan `test_type = 'skd_paket'`.
 
-- Data ada di `data/skd/paket_1.json` … `paket_10.json`, satu file per paket.
-- **Selalu dibaca dari JSON statis**, termasuk untuk akun login, karena soal
-  membawa `stimulus` (tabel, wacana, konteks) yang tidak ada di `question_bank`.
-  Konsekuensinya kunci jawaban ada di client, sama seperti bank soal tamu —
-  jangan dipakai untuk penilaian resmi.
+- Sebelum upload pertama, jalankan
+  `docs/migrations/add-question-bank-stimulus.sql` di Supabase SQL Editor.
+  Migrasi ini menambah kolom `stimulus` (jsonb), `instruction`, dan `topic`.
+- Buka **Admin → Bank Soal**, pilih tes **Paket SKD**, lalu upload file JSON
+  paket (format `{ id_paket, nama_paket, soal: [...] }`). Ulangi untuk Paket 1–10.
+- Upload bersifat idempoten: `question_id` dibentuk dari
+  `skd_paket-<paket>-<nomor>`, jadi upload ulang memperbarui soal yang sama,
+  bukan menduplikasi.
+- `stimulus`, `instruction`, `topic` (dari `metadata.tipe`), dan `discussion`
+  (dari `explanation`) ikut tersimpan sehingga tampilan dua kolom tetap jalan.
+- Kunci jawaban tidak dikirim saat soal dimuat; penilaian tetap lewat server
+  (`checkAnswer` / `gradeTest`).
+- Jika bank untuk paket yang dipilih belum diunggah, peserta melihat pesan
+  "Paket SKD <n> belum diunggah admin."
 - Enam tipe soal, 6 soal per tipe: `deret_bilangan`, `kecukupan_data`,
   `bilangan_setara`, `penalaran_analitis`, `analisa_tabel`, `silogisme`.
-- Menambah paket baru: taruh filenya di `data/skd/`, daftarkan di
-  `SKD_PACKAGE_FILES` (`src/features/tests/engine.js`), lalu tambahkan
-  `<option>` di kartu `#skdView` (`index.html`).
-- `npm test` memvalidasi struktur semua file paket (36 soal, kunci valid,
-  6 soal per tipe, stimulus hanya pada tipe yang membutuhkannya).
 
 ## Test
 

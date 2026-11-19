@@ -110,6 +110,9 @@ create table if not exists question_bank (
   option_e    text,
   answer      text not null,          -- huruf opsi benar: A..E
   discussion  text default '',        -- pembahasan
+  stimulus    jsonb,                  -- { tabel | wacana | konteks } untuk soal HOTS
+  instruction text default '',        -- instruksi singkat di atas pertanyaan
+  topic       text default '',        -- label tipe soal, mis. "Analisa Tabel"
   active      boolean not null default true
 );
 
@@ -180,6 +183,11 @@ create unique index if not exists interest_signups_email_category_key
 
 ## Catatan operasional
 
+- **Database lama** yang sudah punya `question_bank` perlu menjalankan
+  `docs/migrations/add-question-bank-stimulus.sql` agar soal Paket SKD
+  (dengan `stimulus`, `instruction`, `topic`) bisa diunggah. Tanpa migrasi
+  ini, bank soal lama tetap berjalan; hanya upload soal berstimulus yang
+  ditolak dengan pesan yang jelas.
 - **`test_id` di `test_detail` tidak punya foreign key** di kode; integritas
   dijaga manual (insert detail hanya untuk `test_id` milik user yang sama).
 - **Pembersihan `revoked_tokens`** belum otomatis. Tambahkan pg_cron:
