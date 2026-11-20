@@ -206,7 +206,7 @@ create unique index if not exists interest_signups_email_category_key
 ## Catatan operasional
 
 - **Database lama** yang sudah punya `question_bank` perlu menjalankan
-  `docs/migrations/add-question-bank-stimulus.sql` agar soal Paket SKD
+  `docs/migrations/add-question-bank-stimulus.sql` agar soal SKD Lengkap
   (dengan `stimulus`, `instruction`, `topic`) bisa diunggah. Tanpa migrasi
   ini, bank soal lama tetap berjalan; hanya upload soal berstimulus yang
   ditolak dengan pesan yang jelas.

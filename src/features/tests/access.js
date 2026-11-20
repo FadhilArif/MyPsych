@@ -1,7 +1,7 @@
 'use strict';
 
 // ============================================================
-// AKSES PAKET BERBAYAR (SKD / TIU HOTS)
+// AKSES PAKET BERBAYAR (SKD LENGKAP)
 // ============================================================
 //
 // Admin membuka paket per user lewat panel admin. Di client, status

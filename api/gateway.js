@@ -23,7 +23,7 @@ const RESET_TOKEN_TTL_MS = 30 * 60 * 1000;
 const RESET_COOLDOWN_MS = 5 * 60 * 1000;
 const RESET_DAILY_LIMIT = 5;
 
-// Kolom tambahan untuk bank soal bertipe stimulus (Paket SKD/TIU HOTS).
+// Kolom tambahan untuk bank soal bertipe stimulus (SKD Lengkap).
 // Kalau migrasi SQL belum dijalankan, query otomatis jatuh ke kolom lama
 // supaya bank soal biasa tetap bisa dipakai.
 const QUESTION_BANK_COLUMNS_BASE = 'question_id, test_type, package, no_soal, question, option_a, option_b, option_c, option_d, option_e, answer, discussion, active';
@@ -711,7 +711,7 @@ async function getQuestionPackage_(testType, packageNumber, token) {
       id: row.no_soal ?? row.question_id,
       question: row.question,
       options,
-      // Metadata stimulus untuk soal TIU HOTS. Kolom ini nullable, jadi
+      // Metadata stimulus untuk soal SKD Lengkap. Kolom ini nullable, jadi
       // bank soal lama tetap aman.
       instruction: row.instruction || '',
       stimulus: row.stimulus || null,

@@ -1,5 +1,5 @@
 -- ============================================================
--- Migrasi: metadata stimulus untuk bank soal (Paket SKD TIU HOTS)
+-- Migrasi: metadata stimulus untuk bank soal (SKD Lengkap)
 -- Jalankan sekali di Supabase SQL Editor sebelum mengunggah paket
 -- SKD lewat panel admin (Bank Soal).
 -- ============================================================

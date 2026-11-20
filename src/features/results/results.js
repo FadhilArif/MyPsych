@@ -75,7 +75,7 @@
       return;
     }
 
-    // Semua soal ditampilkan (bukan hanya 20) supaya paket 36 soal tetap utuh.
+    // Semua soal ditampilkan (bukan hanya 20) supaya paket 110 soal tetap utuh.
     const data = result.chart.slice(0, 60);
     const maxTime = mcqSecondsPerQuestion_();
     const labelEvery = data.length > 25 ? 5 : 1;

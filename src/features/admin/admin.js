@@ -542,7 +542,7 @@
           <button type="button" class="secondary-btn" id="adminMigrateAllQuestionsBtn">Migrasikan Semua JSON</button>
           <button type="button" class="secondary-btn" id="adminLoadQuestionsBtn">Muat Soal</button>
         </div>
-        <div class="warning-box"><strong>Format:</strong> file JSON dapat memakai struktur <code>paket[] → soal[]</code> (bank lama) atau satu paket <code>{ id_paket, soal[] }</code> seperti Paket SKD TIU HOTS. Upload tidak perlu memilih paket karena semua paket di dalam file akan diproses otomatis. Soal yang punya <code>stimulus</code>, <code>metadata.tipe</code>, dan <code>explanation</code> akan disimpan lengkap. Sistem mengirim maksimal 25 soal per request agar migrasi aman. Untuk Paket SKD, jalankan migrasi SQL lalu unggah satu file per paket.</div>
+        <div class="warning-box"><strong>Format:</strong> file JSON dapat memakai struktur <code>paket[] → soal[]</code> (bank lama) atau satu paket <code>{ id_paket, soal[] }</code> seperti SKD Lengkap. Upload tidak perlu memilih paket karena semua paket di dalam file akan diproses otomatis. Soal yang punya <code>stimulus</code> atau <code>stimulus_text</code>, <code>metadata.tipe</code>, dan <code>explanation</code> akan disimpan lengkap. Sistem mengirim maksimal 25 soal per request agar migrasi aman. Untuk paket berbayar, jalankan migrasi SQL lalu unggah satu file per paket.</div>
         <div id="adminQuestionProgress" class="admin-muted" style="margin-top:10px"></div>
       </div>
       <div class="admin-card card">
@@ -624,7 +624,7 @@
 
     // Dua format didukung:
     // 1. Bank lama: { paket: [{ id_paket, soal: [] }] }
-    // 2. Paket SKD: { id_paket, soal: [] } (satu file = satu paket)
+    // 2. SKD Lengkap: { id_paket, soal: [] } (satu file = satu paket)
     const packageGroups = [];
 
     if (Array.isArray(data.paket) && data.paket.length) {
@@ -647,7 +647,18 @@
 
       soal.forEach((q, index) => {
         const noSoal = Number(q?.id ?? q?.no_soal) || index + 1;
-        const stimulus = q?.stimulus && typeof q.stimulus === 'object' ? q.stimulus : null;
+        const rawStimulus = q?.stimulus;
+        const stimulusText = String(q?.stimulus_text ?? '').trim();
+        let stimulus = null;
+
+        if (rawStimulus && typeof rawStimulus === 'object') {
+          stimulus = rawStimulus;
+        } else if (typeof rawStimulus === 'string' && rawStimulus.trim()) {
+          stimulus = { wacana: rawStimulus.trim() };
+        } else if (stimulusText) {
+          // Format SKD LENGKAP menyimpan bacaan di `stimulus_text`.
+          stimulus = { wacana: stimulusText };
+        }
 
         questions.push({
           question_id: `${testType}-${packageNumber}-${noSoal}`,

@@ -3261,7 +3261,7 @@ body[data-view="admin"] .app-layout {
   font-size:.62rem; font-weight:900; letter-spacing:.15em; color:var(--soft-text); margin-bottom:12px;
 }
 
-/* Stimulus & layout soal TIU HOTS (tabel, wacana, konteks). */
+/* Stimulus & layout soal SKD Lengkap (tabel, wacana, konteks). */
 .test-stimulus {
   width:min(760px,100%);
   max-height:42vh;

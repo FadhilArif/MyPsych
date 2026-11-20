@@ -41,16 +41,16 @@
 
     if (testId === 'skd_paket') {
       $('instructionLead').innerHTML =
-        'Paket ini berisi <strong>36 soal TIU HOTS</strong>. Sebagian soal membawa tabel, wacana, atau konteks yang harus dibaca lebih dulu.';
+        'Paket ini berisi <strong>110 soal SKD lengkap</strong>: 30 TWK, 35 TIU, dan 45 TKP. Sebagian soal membawa tabel, wacana, atau konteks yang harus dibaca lebih dulu.';
       $('instructionBody').innerHTML = `
         <div class="instruction-grid">
-          <div class="tip"><b>36 soal</b><small>Enam tipe soal TIU, masing-masing 6 soal.</small></div>
-          <div class="tip"><b>60 detik/soal</b><small>Timer otomatis pindah bila waktu habis.</small></div>
+          <div class="tip"><b>110 soal</b><small>30 TWK · 35 TIU · 45 TKP dalam satu paket.</small></div>
+          <div class="tip"><b>60 detik/soal</b><small>Total waktu maksimal 110 menit.</small></div>
           <div class="tip"><b>10 paket</b><small>Paket 1–10 dapat dipilih sebelum mulai.</small></div>
-          <div class="tip"><b>Kunci langsung</b><small>Jawaban benar ditandai setelah kamu memilih.</small></div>
+          <div class="tip"><b>Kunci &amp; pembahasan</b><small>Jawaban benar ditandai setelah kamu memilih.</small></div>
         </div>
         <div class="warning-box" style="margin-top:16px;">
-          <strong>Catatan:</strong> soal TIU HOTS ini berada di atas tingkat kesulitan soal biasa. Baca stimulus dengan teliti sebelum memilih jawaban.
+          <strong>Catatan:</strong> baca stimulus dengan teliti sebelum memilih jawaban. Setiap soal dinilai benar bila memilih kunci terbaik; pada TKP kunci terbaik adalah opsi dengan skor tertinggi.
         </div>
       `;
       showView('instruction');

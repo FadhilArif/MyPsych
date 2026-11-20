@@ -20,10 +20,10 @@
   async function loadQuestionPackage(testId, packageNumber) {
     const isSKDPackage = testId === 'skd_paket';
 
-    // Paket SKD hanya ada di question_bank dan diunggah lewat panel admin.
+    // SKD Lengkap hanya ada di question_bank dan diunggah lewat panel admin.
     // Area SKD memang khusus akun, jadi beri pesan yang jelas untuk tamu.
     if (isSKDPackage && (!state.session?.token || state.isGuest)) {
-      throw new Error('Paket SKD hanya tersedia untuk akun yang login.');
+      throw new Error('SKD Lengkap hanya tersedia untuk akun yang login.');
     }
 
     // Akun peserta terdaftar memprioritaskan bank soal di supabase.
@@ -57,12 +57,12 @@
           });
         }
         if (isSKDPackage) {
-          throw new Error(`Paket SKD ${packageNumber} belum diunggah admin.`);
+          throw new Error(`SKD Lengkap paket ${packageNumber} belum diunggah admin.`);
         }
       } catch (error) {
         if (isSKDPackage) {
           throw /belum tersedia|belum diunggah/i.test(String(error.message || ''))
-            ? new Error(`Paket SKD ${packageNumber} belum diunggah admin.`)
+            ? new Error(`SKD Lengkap paket ${packageNumber} belum diunggah admin.`)
             : error;
         }
         console.warn('Bank soal Sheet belum siap, fallback ke JSON:', error);
